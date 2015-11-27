@@ -6,6 +6,7 @@ A contact management app, built on link:isis.apache.org[Apache Isis].
 
 image::http://yuml.me/95c33b14[link="http://yuml.me/95c33b14"]
 
+(from link:yuml.me[yuml.me])
 
 [source]
 ----
@@ -14,7 +15,6 @@ image::http://yuml.me/95c33b14[link="http://yuml.me/95c33b14"]
 [ContactRole]*-[ContactGroup|name]
 [ContactGroup]*-[Country|name]
 ----
-
 
 == Security
 
