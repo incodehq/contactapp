@@ -21,11 +21,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.isisaddons.app</groupId>
-    <artifactId>quickstart</artifactId>
+    <groupId>org.incode.app</groupId>
+    <artifactId>contactapp</artifactId>
     <version>1.11.0-SNAPSHOT</version>
 
-    <name>Isis Addons Quickstart</name>
+    <name>Incode ContactApp</name>
 
     <packaging>pom</packaging>
 
@@ -300,32 +300,32 @@
             <!-- this project's own modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-app</artifactId>
+                <artifactId>contactapp-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-canonical</artifactId>
+                <artifactId>contactapp-canonical</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-dom</artifactId>
+                <artifactId>contactapp-dom</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-fixture</artifactId>
+                <artifactId>contactapp-fixture</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-integtests</artifactId>
+                <artifactId>contactapp-integtests</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>quickstart-webapp</artifactId>
+                <artifactId>contactapp-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

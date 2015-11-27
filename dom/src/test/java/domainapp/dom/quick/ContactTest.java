@@ -19,30 +19,31 @@ package domainapp.dom.quick;
 import org.junit.Before;
 import org.junit.Test;
 
+import domainapp.dom.contacts.Contact;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class QuickObjectTest {
+public class ContactTest {
 
-    QuickObject quickObject;
+    Contact contact;
 
     @Before
     public void setUp() throws Exception {
-        quickObject = new QuickObject();
+        contact = new Contact();
     }
 
-    public static class Name extends QuickObjectTest {
+    public static class Name extends ContactTest {
 
         @Test
         public void happyCase() throws Exception {
             // given
             String name = "Foobar";
-            assertThat(quickObject.getName()).isNull();
+            assertThat(contact.getName()).isNull();
 
             // when
-            quickObject.setName(name);
+            contact.setName(name);
 
             // then
-            assertThat(quickObject.getName()).isEqualTo(name);
+            assertThat(contact.getName()).isEqualTo(name);
         }
     }
 

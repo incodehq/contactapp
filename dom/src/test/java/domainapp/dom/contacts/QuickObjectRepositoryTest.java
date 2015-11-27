@@ -14,11 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package domainapp.dom.quick;
-
-import java.util.List;
-
-import com.google.common.collect.Lists;
+package domainapp.dom.contacts;
 
 import org.jmock.Expectations;
 import org.jmock.Sequence;
@@ -31,7 +27,10 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 
+import domainapp.dom.number.ContactNumber;
+import domainapp.dom.number.ContactNumberRepository;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class QuickObjectRepositoryTest {
 
@@ -40,13 +39,16 @@ public class QuickObjectRepositoryTest {
 
     @Mock
     DomainObjectContainer mockContainer;
-    
-    QuickObjectRepository quickObjectRepository;
+    @Mock
+    ContactNumberRepository mockContactNumberRepository;
+
+    ContactRepository contactRepository;
 
     @Before
     public void setUp() throws Exception {
-        quickObjectRepository = new QuickObjectRepository();
-        quickObjectRepository.container = mockContainer;
+        contactRepository = new ContactRepository();
+        contactRepository.container = mockContainer;
+
     }
 
     public static class Create extends QuickObjectRepositoryTest {
@@ -55,50 +57,33 @@ public class QuickObjectRepositoryTest {
         public void happyCase() throws Exception {
 
             // given
-            final QuickObject quickObject = new QuickObject();
+            final Contact contact = new Contact();
+            contact.contactNumberRepository = mockContactNumberRepository;
 
             final Sequence seq = context.sequence("create");
             context.checking(new Expectations() {
                 {
-                    oneOf(mockContainer).newTransientInstance(QuickObject.class);
+                    oneOf(mockContainer).newTransientInstance(Contact.class);
                     inSequence(seq);
-                    will(returnValue(quickObject));
+                    will(returnValue(contact));
 
-                    oneOf(mockContainer).persistIfNotAlready(quickObject);
+                    oneOf(mockContainer).persistIfNotAlready(contact);
                     inSequence(seq);
+
+                    exactly(3).of(mockContactNumberRepository).findOrCreate(
+                            with(equalTo(contact)), with(any(String.class)), with(any(String.class)));
                 }
             });
 
             // when
-            final QuickObject obj = quickObjectRepository.create("Foobar");
+            final Contact obj = contactRepository
+                    .create("a name", "a company", "an email", "some notes", "an office number", "a mobile number", "a home number");
 
             // then
-            assertThat(obj).isEqualTo(quickObject);
-            assertThat(obj.getName()).isEqualTo("Foobar");
+            assertThat(obj).isEqualTo(contact);
+            assertThat(obj.getName()).isEqualTo("a name");
         }
 
     }
 
-    public static class ListAll extends QuickObjectRepositoryTest {
-
-        @Test
-        public void happyCase() throws Exception {
-
-            // given
-            final List<QuickObject> all = Lists.newArrayList();
-
-            context.checking(new Expectations() {
-                {
-                    oneOf(mockContainer).allInstances(QuickObject.class);
-                    will(returnValue(all));
-                }
-            });
-
-            // when
-            final List<QuickObject> list = quickObjectRepository.listAll();
-
-            // then
-            assertThat(list).isEqualTo(all);
-        }
-    }
 }

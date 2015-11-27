@@ -49,6 +49,10 @@ import lombok.Setter;
 )
 public class ContactRole implements Comparable<ContactRole> {
 
+    public String title() {
+        return getRoleName() != null? getRoleName() : getContactGroup().getName() + "/" + getContact().getName();
+    }
+
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter

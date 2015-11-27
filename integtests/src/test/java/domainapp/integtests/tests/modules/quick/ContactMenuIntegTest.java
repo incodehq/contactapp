@@ -18,7 +18,6 @@
  */
 package domainapp.integtests.tests.modules.quick;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,27 +27,27 @@ import com.google.common.base.Throwables;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import domainapp.dom.quick.QuickObject;
-import domainapp.dom.quick.QuickObjectMenu;
-import domainapp.fixture.dom.quick.QuickObjectsTearDown;
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.contacts.ContactMenu;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class QuickObjectMenuIntegTest extends DomainAppIntegTest {
+public class ContactMenuIntegTest extends DomainAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
-    QuickObjectMenu quickObjectMenu;
+    ContactMenu contactMenu;
 
-    public static class ListAll extends QuickObjectMenuIntegTest {
+    public static class ListAll extends ContactMenuIntegTest {
 
+        @Ignore // TODO
         @Test
         public void happyCase() throws Exception {
 
@@ -58,66 +57,18 @@ public class QuickObjectMenuIntegTest extends DomainAppIntegTest {
             nextTransaction();
 
             // when
-            final List<QuickObject> all = wrap(quickObjectMenu).listAll();
+            final List<Contact> all = wrap(contactMenu).listAll();
 
             // then
-            assertThat(all).hasSize(fs.getQuickObjects().size());
+            assertThat(all).hasSize(fs.getContacts().size());
 
-            QuickObject quickObject = wrap(all.get(0));
-            assertThat(quickObject.getName()).isEqualTo(fs.getQuickObjects().get(0).getName());
+            Contact contact = wrap(all.get(0));
+            assertThat(contact.getName()).isEqualTo(fs.getContacts().get(0).getName());
         }
 
-        @Test
-        public void whenNone() throws Exception {
-
-            // given
-            FixtureScript fs = new QuickObjectsTearDown();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-
-            // when
-            final List<QuickObject> all = wrap(quickObjectMenu).listAll();
-
-            // then
-            assertThat(all).hasSize(0);
-        }
     }
 
-    public static class Create extends QuickObjectMenuIntegTest {
-
-        @Test
-        public void happyCase() throws Exception {
-
-            // given
-            FixtureScript fs = new QuickObjectsTearDown();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-
-            // when
-            wrap(quickObjectMenu).create("Faz");
-
-            // then
-            final List<QuickObject> all = wrap(quickObjectMenu).listAll();
-            assertThat(all).hasSize(1);
-        }
-
-        @Test
-        public void whenAlreadyExists() throws Exception {
-
-            // given
-            FixtureScript fs = new QuickObjectsTearDown();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-            wrap(quickObjectMenu).create("Faz");
-            nextTransaction();
-
-            // then
-            expectedExceptions.expectCause(causalChainContains(SQLIntegrityConstraintViolationException.class));
-
-            // when
-            wrap(quickObjectMenu).create("Faz");
-            nextTransaction();
-        }
+    public static class Create extends ContactMenuIntegTest {
 
         private static Matcher<? extends Throwable> causalChainContains(final Class<?> cls) {
             return new TypeSafeMatcher<Throwable>() {

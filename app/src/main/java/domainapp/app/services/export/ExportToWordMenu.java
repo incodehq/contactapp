@@ -44,12 +44,12 @@ import org.isisaddons.module.docx.dom.DocxService;
 import org.isisaddons.module.docx.dom.LoadTemplateException;
 import org.isisaddons.module.docx.dom.MergeException;
 
-import domainapp.dom.quick.QuickObject;
-import domainapp.dom.quick.QuickObjectMenu;
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.contacts.ContactRepository;
 
 //@DomainService
 @DomainServiceLayout(
-        named="Quick Objects",
+        named="Contacts",
         menuOrder = "30"
 )
 public class ExportToWordMenu {
@@ -65,7 +65,7 @@ public class ExportToWordMenu {
     @MemberOrder(sequence = "10")
     public Blob exportToWordDoc() throws IOException, JDOMException, MergeException {
 
-        final List<QuickObject> list = quickObjectMenu.listAll();
+        final List<Contact> list = contactRepository.listAll();
         return exportToWordDoc(list);
     }
 
@@ -73,14 +73,14 @@ public class ExportToWordMenu {
 
     //region > exportToWordDoc (programmatic)
     @Programmatic
-    public Blob exportToWordDoc(final List<QuickObject> items) {
+    public Blob exportToWordDoc(final List<Contact> items) {
         return exportToWordDocCatchExceptions(items);
     }
 
-    private Blob exportToWordDocCatchExceptions(final List<QuickObject> quickObjects)  {
+    private Blob exportToWordDocCatchExceptions(final List<Contact> contacts)  {
         final org.w3c.dom.Document w3cDocument;
         try {
-            w3cDocument = asInputW3cDocument(quickObjects);
+            w3cDocument = asInputW3cDocument(contacts);
 
             final ByteArrayOutputStream docxTarget = new ByteArrayOutputStream();
             docxService.merge(w3cDocument, getWordprocessingMLPackage(), docxTarget, DocxService.MatchingPolicy.LAX);
@@ -100,14 +100,14 @@ public class ExportToWordMenu {
         return clockService.nowAsLocalDateTime().toString("yyyyMMdd'_'HHmmss");
     }
 
-    private org.w3c.dom.Document asInputW3cDocument(final List<QuickObject> items) throws JDOMException {
+    private org.w3c.dom.Document asInputW3cDocument(final List<Contact> items) throws JDOMException {
         final Document jdomDoc = asInputDocument(items);
 
         final DOMOutputter domOutputter = new DOMOutputter();
         return domOutputter.output(jdomDoc);
     }
 
-    private Document asInputDocument(final List<QuickObject> quickObjects) {
+    private Document asInputDocument(final List<Contact> contacts) {
 
         final Element html = new Element("html");
         final Document document = new Document(html);
@@ -118,7 +118,7 @@ public class ExportToWordMenu {
         addPara(body, "ExportedOn", "date", clockService.nowAsLocalDateTime().toString("dd-MMM-yyyy"));
 
         final Element table = addTable(body, "SimpleObjects");
-        for(final QuickObject quickObject : quickObjects) {
+        for(final Contact quickObject : contacts) {
             addTableRow(table,
                     new String[] { quickObject.getName() });
         }
@@ -151,12 +151,7 @@ public class ExportToWordMenu {
 
     //region > helpers
 
-    private static final Function<String, String> TRIM = new Function<String, String>() {
-        @Override
-        public String apply(final String input) {
-            return input.trim();
-        }
-    };
+    private static final Function<String, String> TRIM = input -> input.trim();
 
     private static void addPara(final Element body, final String id, final String clazz, final String text) {
         final Element p = new Element("p");
@@ -218,7 +213,7 @@ public class ExportToWordMenu {
     private DocxService docxService;
 
     @javax.inject.Inject
-    private QuickObjectMenu quickObjectMenu;
+    private ContactRepository contactRepository;
 
     @javax.inject.Inject
     private ClockService clockService;

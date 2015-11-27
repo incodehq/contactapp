@@ -26,13 +26,11 @@ import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 import domainapp.dom.group.ContactGroup;
@@ -76,17 +74,17 @@ import lombok.Setter;
 )
 public class Country implements Comparable<Country> {
 
+    public String title() {
+        return getName();
+    }
+
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private String name;
 
-
     @Persistent(mappedBy = "country", dependentElement = "true")
     @Collection()
-    @CollectionLayout(
-            render = RenderType.EAGERLY
-    )
     @Getter @Setter
     private SortedSet<ContactGroup> contactGroups = new TreeSet<ContactGroup>();
 

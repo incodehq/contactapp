@@ -22,13 +22,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.isisaddons.app</groupId>
-        <artifactId>quickstart</artifactId>
+        <groupId>org.incode.app</groupId>
+        <artifactId>contactapp</artifactId>
         <version>1.11.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quickstart-fixture</artifactId>
-    <name>Isis Addons quickstart Fixtures</name>
+    <artifactId>contactapp-fixture</artifactId>
+    <name>Incode ContactApp Fixtures</name>
 
     <build>
         <resources>
@@ -52,7 +52,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>quickstart-dom</artifactId>
+            <artifactId>contactapp-dom</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- so don't pick up transitive dependency to asm 4.0.0 -->

@@ -31,9 +31,11 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
 import domainapp.dom.contacts.Contact;
-import domainapp.dom.quick.QuickObject;
-import domainapp.fixture.dom.contact.ContactRowHandler;
-import domainapp.fixture.dom.quick.QuickObjectsTearDown;
+import domainapp.fixture.dom.contact.ContactTearDown;
+import domainapp.fixture.dom.country.CountryTearDown;
+import domainapp.fixture.dom.group.ContactGroupTearDown;
+import domainapp.fixture.dom.number.ContactNumberTearDown;
+import domainapp.fixture.dom.role.ContactRoleTearDown;
 import lombok.Getter;
 
 public class DemoFixture extends FixtureScript {
@@ -43,20 +45,20 @@ public class DemoFixture extends FixtureScript {
     }
 
     @Getter
-    private final List<QuickObject> quickObjects = Lists.newArrayList();
-
-    @Getter
     private final List<Contact> contacts = Lists.newArrayList();
 
     @Override
     protected void execute(final ExecutionContext ec) {
 
         // zap everything
-        ec.executeChild(this, new QuickObjectsTearDown());
+        ec.executeChild(this, new ContactRoleTearDown());
+        ec.executeChild(this, new ContactNumberTearDown());
+        ec.executeChild(this, new ContactTearDown());
+        ec.executeChild(this, new ContactGroupTearDown());
+        ec.executeChild(this, new CountryTearDown());
 
         // load data from spreadsheet
-        final URL spreadsheet = Resources.getResource(DemoFixture.class, getSpreadsheetBasename()
-                + ".xlsx");
+        final URL spreadsheet = Resources.getResource(DemoFixture.class, getSpreadsheetBasename() + ".xlsx");
         final ExcelFixture fs = new ExcelFixture(spreadsheet, getHandlers());
         ec.executeChild(this, fs);
 

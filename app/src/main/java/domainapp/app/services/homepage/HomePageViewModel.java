@@ -22,8 +22,8 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.quick.QuickObject;
-import domainapp.dom.quick.QuickObjectRepository;
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.contacts.ContactRepository;
 
 @ViewModel
 public class HomePageViewModel {
@@ -36,15 +36,15 @@ public class HomePageViewModel {
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<QuickObject> getObjects() {
-        return quickObjectRepository.listAll();
+    public List<Contact> getObjects() {
+        return contactRepository.listAll();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    QuickObjectRepository quickObjectRepository;
+    ContactRepository contactRepository;
 
     //endregion
 }

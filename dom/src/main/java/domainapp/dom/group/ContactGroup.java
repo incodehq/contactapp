@@ -48,6 +48,10 @@ import lombok.Setter;
 )
 public class ContactGroup implements Comparable<ContactGroup> {
 
+    public String title() {
+        return getCountry().getName() + (getName() != null? " (" + getName() + ")" : "");
+    }
+
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter

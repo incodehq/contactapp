@@ -1,4 +1,4 @@
-package domainapp.fixture.dom.contact;
+package domainapp.fixture.scenarios.demo;
 
 import java.util.Collections;
 

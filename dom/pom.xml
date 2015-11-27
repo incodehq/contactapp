@@ -21,13 +21,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.isisaddons.app</groupId>
-        <artifactId>quickstart</artifactId>
+        <groupId>org.incode.app</groupId>
+        <artifactId>contactapp</artifactId>
         <version>1.11.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quickstart-dom</artifactId>
-    <name>Isis Addons quickstart DOM</name>
+    <artifactId>contactapp-dom</artifactId>
+    <name>Incode ContactApp DOM</name>
 
     <build>
         <resources>
@@ -52,7 +52,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>quickstart-canonical</artifactId>
+            <artifactId>contactapp-canonical</artifactId>
         </dependency>
 
         <dependency>
@@ -183,7 +183,7 @@
                         <dependencies>
                             <dependency>
                                 <groupId>${project.groupId}</groupId>
-                                <artifactId>quickstart-dom</artifactId>
+                                <artifactId>contactapp-dom</artifactId>
                                 <version>${project.version}</version>
                             </dependency>
                             <!--
