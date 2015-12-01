@@ -1,8 +1,14 @@
 package domainapp.dom.contacts;
 
+import com.google.inject.Inject;
+import domainapp.dom.group.ContactGroup;
+import domainapp.dom.role.ContactRole;
+import domainapp.dom.role.ContactRoleRepository;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+
+import java.util.ArrayList;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -35,6 +41,21 @@ public class ContactRepository {
                         Contact.class,
                         "findByNameContains",
                         "name", name));
+    }
+
+    @Programmatic
+    public java.util.List<Contact> findByContactGroup(
+            ContactGroup contactGroup
+    ) {
+        java.util.List<Contact> resContacts = new ArrayList<Contact>();
+        for(Contact contact : listAll()) {
+            for(ContactRole contactRole : contact.getContactRoles()) {
+                if(contactRole.getContactGroup() == contactGroup) {
+                    resContacts.add(contact);
+                }
+            }
+        }
+        return resContacts;
     }
 
     @Programmatic

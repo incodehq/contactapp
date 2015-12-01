@@ -31,6 +31,16 @@ public class ContactRoleRepository {
     }
 
     @Programmatic
+    public java.util.List<ContactRole> findByContact(
+            final Contact contact) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactRole.class,
+                        "findByContact",
+                        "contact", contact));
+    }
+
+    @Programmatic
     public ContactRole create(final Contact contact, final ContactGroup contactGroup, final String roleName) {
         final ContactRole contactRole = container.newTransientInstance(ContactRole.class);
         contactRole.setContact(contact);

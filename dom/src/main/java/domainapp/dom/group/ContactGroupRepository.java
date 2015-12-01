@@ -10,7 +10,7 @@ import domainapp.dom.country.Country;
         nature = NatureOfService.DOMAIN,
         repositoryFor = ContactGroup.class
 )
-public class ContactGroupRepository {
+public class  ContactGroupRepository {
 
     @Programmatic
     public java.util.List<ContactGroup> listAll() {

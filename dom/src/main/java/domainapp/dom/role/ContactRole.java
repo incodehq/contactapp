@@ -38,7 +38,12 @@ import lombok.Setter;
                 name = "findByContactAndContactGroup", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.role.ContactRole "
-                        + "WHERE contact == :contact && contactGroup == :contactGroup ")
+                        + "WHERE contact == :contact && contactGroup == :contactGroup "),
+        @Query(
+                name = "findByContact", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.role.ContactRole "
+                        + "WHERE contact == :contact ")
 })
 @Unique(name = "ContactRole_roleName_UNQ", members = { "contact", "contactGroup" })
 @DomainObject(
