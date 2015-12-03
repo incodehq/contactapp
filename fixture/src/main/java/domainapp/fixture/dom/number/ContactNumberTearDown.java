@@ -7,7 +7,7 @@ public class ContactNumberTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"number\".\"ContactNumber\"");
+        isisJdoSupport.executeUpdate("delete from \"ContactNumber\"");
     }
 
     @javax.inject.Inject

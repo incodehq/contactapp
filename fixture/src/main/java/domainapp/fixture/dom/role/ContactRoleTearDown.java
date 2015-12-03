@@ -7,7 +7,7 @@ public class ContactRoleTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"role\".\"ContactRole\"");
+        isisJdoSupport.executeUpdate("delete from \"ContactRole\"");
     }
 
     @javax.inject.Inject

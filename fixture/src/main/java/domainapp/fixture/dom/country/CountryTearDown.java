@@ -7,7 +7,7 @@ public class CountryTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"country\".\"Country\"");
+        isisJdoSupport.executeUpdate("delete from \"Country\"");
     }
 
     @javax.inject.Inject
