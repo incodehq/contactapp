@@ -67,7 +67,8 @@ import lombok.Setter;
 })
 @Unique(name = "Country_name_UNQ", members = { "name" })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        bounded = true
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
