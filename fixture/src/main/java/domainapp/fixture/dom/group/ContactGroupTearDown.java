@@ -7,7 +7,7 @@ public class ContactGroupTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"group\".\"ContactGroup\"");
+        isisJdoSupport.executeUpdate("delete from \"ContactGroup\"");
     }
 
     @javax.inject.Inject
