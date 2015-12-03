@@ -23,9 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @PersistenceCapable(
-        identityType = IdentityType.DATASTORE,
-        schema = "role",
-        table = "ContactRole"
+        identityType = IdentityType.DATASTORE
 )
 @DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
@@ -47,7 +45,8 @@ import lombok.Setter;
 })
 @Unique(name = "ContactRole_roleName_UNQ", members = { "contact", "contactGroup" })
 @DomainObject(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        bounded = true
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT

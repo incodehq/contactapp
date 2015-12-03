@@ -44,9 +44,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @PersistenceCapable(
-        identityType = IdentityType.DATASTORE,
-        schema = "contacts",
-        table = "Contact"
+        identityType = IdentityType.DATASTORE
 )
 @DatastoreIdentity(
         strategy = IdGeneratorStrategy.IDENTITY,
