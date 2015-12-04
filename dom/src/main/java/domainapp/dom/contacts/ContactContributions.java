@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import domainapp.dom.group.ContactGroup;
+import domainapp.dom.role.ContactRole;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
@@ -24,6 +25,13 @@ public class ContactContributions {
     @ActionLayout(contributed = Contributed.AS_ASSOCIATION)
     public List<Contact> contacts(ContactGroup contactGroup){
         return contactRepository.findByContactGroup(contactGroup);
+    }
+
+    @CollectionLayout(render = RenderType.EAGERLY)
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(contributed = Contributed.AS_ASSOCIATION)
+    public List<Contact> contactsWithTheSameRole(ContactRole contactRole){
+        return contactRepository.findByContactRole(contactRole);
     }
 
     @Inject

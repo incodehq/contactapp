@@ -59,6 +59,21 @@ public class ContactRepository {
     }
 
     @Programmatic
+    public java.util.List<Contact> findByContactRole(
+            ContactRole contactRole
+    ) {
+        java.util.List<Contact> resContacts = new ArrayList<Contact>();
+        for(Contact contact : listAll()) {
+            for(ContactRole cR : contact.getContactRoles()) {
+                if(cR.getRoleName() == contactRole.getRoleName()) {
+                    resContacts.add(contact);
+                }
+            }
+        }
+        return resContacts;
+    }
+
+    @Programmatic
     public Contact create(
             final String name,
             final String company,
