@@ -7,7 +7,7 @@ public class ContactTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"contacts\".\"Contact\"");
+        isisJdoSupport.executeUpdate("delete from \"Contact\"");
     }
 
     @javax.inject.Inject

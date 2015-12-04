@@ -57,7 +57,7 @@ public class ContactRowHandler implements org.isisaddons.module.excel.dom.ExcelF
         if(company != null && company.equals("(none)")) company = null;
 
         Country country = countryRepository.findOrCreate(this.country);
-        ContactGroup contactGroup = contactGroupRepository.findOrCreate(country, name);
+        ContactGroup contactGroup = contactGroupRepository.findOrCreate(country, group);
 
         if(name == null) {
             name = this.country + "/" + this.role;
