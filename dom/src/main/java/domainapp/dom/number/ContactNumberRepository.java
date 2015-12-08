@@ -5,8 +5,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
-import domainapp.dom.contacts.Contact;
-
 @DomainService(
         nature = NatureOfService.DOMAIN,
         repositoryFor = ContactNumber.class
