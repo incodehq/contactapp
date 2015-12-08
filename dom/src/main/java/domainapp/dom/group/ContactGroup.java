@@ -1,16 +1,8 @@
 package domainapp.dom.group;
 
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-import javax.jdo.annotations.Unique;
-import javax.jdo.annotations.Version;
-import javax.jdo.annotations.VersionStrategy;
+import javax.jdo.annotations.*;
 
+import domainapp.dom.contactable.ContactableEntity;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
@@ -21,15 +13,8 @@ import domainapp.dom.country.Country;
 import lombok.Getter;
 import lombok.Setter;
 
-@PersistenceCapable(
-        identityType = IdentityType.DATASTORE
-)
-@DatastoreIdentity(
-        strategy = IdGeneratorStrategy.IDENTITY,
-        column = "id")
-@Version(
-        strategy = VersionStrategy.VERSION_NUMBER,
-        column = "version")
+@PersistenceCapable
+@javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @Queries({
         @Query(
                 name = "findByCountryAndName", language = "JDOQL",
@@ -37,40 +22,19 @@ import lombok.Setter;
                         + "FROM domainapp.dom.group.ContactGroup "
                         + "WHERE country == :country && name == :name ")
 })
-@Unique(name = "ContactGroup_name_UNQ", members = { "country", "name" })
 @DomainObject(
         editing = Editing.DISABLED,
         bounded = true
 )
-@DomainObjectLayout(
-        bookmarking = BookmarkPolicy.AS_ROOT
-)
-public class ContactGroup implements Comparable<ContactGroup> {
+public class ContactGroup extends ContactableEntity {
 
     public String title() {
-        return getCountry().getName() + (getName() != null? " (" + getName() + ")" : "");
+        return getCountry().getName() + (getName() != null ? " (" + getName() + ")" : "");
     }
 
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private Country country;
-
-    @Column(allowsNull = "false")
-    @Property()
-    @Getter @Setter
-    private String name;
-
-    //region > compareTo, toString
-    @Override
-    public int compareTo(final ContactGroup other) {
-        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "country", "name");
-    }
-
-    @Override
-    public String toString() {
-        return org.apache.isis.applib.util.ObjectContracts.toString(this, "country", "name");
-    }
-    //endregion
 
 }

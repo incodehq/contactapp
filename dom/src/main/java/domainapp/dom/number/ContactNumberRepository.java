@@ -1,5 +1,6 @@
 package domainapp.dom.number;
 
+import domainapp.dom.contactable.ContactableEntity;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -19,20 +20,20 @@ public class ContactNumberRepository {
 
     @Programmatic
     public ContactNumber findByContactAndType(
-            final Contact contact,
+            final ContactableEntity contactableEntity,
             final String type) {
         return container.uniqueMatch(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactNumber.class,
                         "findByContactAndType",
-                        "contact", contact,
+                        "contactableEntity", contactableEntity,
                         "type", type));
     }
 
     @Programmatic
-    public ContactNumber create(final Contact contact, final String type, final String number) {
+    public ContactNumber create(final ContactableEntity contactableEntity, final String type, final String number) {
         final ContactNumber contactNumber = container.newTransientInstance(ContactNumber.class);
-        contactNumber.setContact(contact);
+        contactNumber.setContactableEntity(contactableEntity);
         contactNumber.setType(type);
         contactNumber.setNumber(number);
         container.persistIfNotAlready(contactNumber);
@@ -41,12 +42,12 @@ public class ContactNumberRepository {
 
     @Programmatic
     public ContactNumber findOrCreate(
-            final Contact contact,
+            final ContactableEntity contactableEntity,
             final String type,
             final String number) {
-        ContactNumber contactNumber = findByContactAndType(contact, type);
+        ContactNumber contactNumber = findByContactAndType(contactableEntity, type);
         if (contactNumber == null) {
-            contactNumber = create(contact, type, number);
+            contactNumber = create(contactableEntity, type, number);
         }
         return contactNumber;
     }
