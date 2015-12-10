@@ -1,22 +1,12 @@
 package domainapp.dom.role;
 
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-import javax.jdo.annotations.Unique;
-import javax.jdo.annotations.Version;
-import javax.jdo.annotations.VersionStrategy;
-
-import org.apache.isis.applib.annotation.*;
-
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.group.ContactGroup;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+
+import javax.jdo.annotations.*;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -29,6 +19,11 @@ import lombok.Setter;
         column = "version")
 @Queries({
         @Query(
+                name = "findByNameContains", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.role.ContactRole "
+                        + "WHERE roleName.indexOf(:roleName) >= 0 "),
+        @Query(
                 name = "findByContactAndContactGroup", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.role.ContactRole "
@@ -37,7 +32,12 @@ import lombok.Setter;
                 name = "findByContact", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.role.ContactRole "
-                        + "WHERE contact == :contact ")
+                        + "WHERE contact == :contact "),
+        @Query(
+                name = "findByContactGroup", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.role.ContactRole "
+                        + "WHERE contactGroup == :contactGroup ")
 })
 @Unique(name = "ContactRole_roleName_UNQ", members = { "contact", "contactGroup" })
 @DomainObject(

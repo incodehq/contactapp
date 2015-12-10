@@ -1,16 +1,7 @@
 package domainapp.dom.contacts;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.RestrictTo;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import domainapp.dom.group.ContactGroup;
+import org.apache.isis.applib.annotation.*;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
@@ -47,8 +38,34 @@ public class ContactMenu {
     }
 
     @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+            bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "3")
+    public java.util.List<Contact> findByGroup(
+            final ContactGroup group
+    ) {
+        return contactrepository.findByContactGroup(group);
+    }
+
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "4")
+    public java.util.List<Contact> findByRole(
+            final String roleName
+    ) {
+        return contactrepository.findByContactRoleNameContains(roleName);
+    }
+
+    @Action(
+    )
+    @MemberOrder(sequence = "5")
     public Contact create(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)

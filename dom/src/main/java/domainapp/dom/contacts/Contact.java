@@ -1,27 +1,23 @@
 package domainapp.dom.contacts;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
-import javax.jdo.annotations.*;
-
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import domainapp.dom.contactable.ContactableEntity;
-import org.apache.isis.applib.annotation.*;
-
 import domainapp.dom.group.ContactGroup;
-import domainapp.dom.number.ContactNumber;
 import domainapp.dom.number.ContactNumberRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+
+import javax.inject.Inject;
+import javax.jdo.annotations.*;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)

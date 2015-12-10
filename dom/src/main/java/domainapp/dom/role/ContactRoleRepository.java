@@ -1,11 +1,10 @@
 package domainapp.dom.role;
 
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.group.ContactGroup;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-
-import domainapp.dom.contacts.Contact;
-import domainapp.dom.group.ContactGroup;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -21,7 +20,8 @@ public class ContactRoleRepository {
     @Programmatic
     public ContactRole findByContactAndContactGroup(
             final Contact contact,
-            final ContactGroup contactGroup) {
+            final ContactGroup contactGroup
+    ) {
         return container.uniqueMatch(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactRole.class,
@@ -31,13 +31,36 @@ public class ContactRoleRepository {
     }
 
     @Programmatic
+    public java.util.List<ContactRole> findByNameContains(
+            final String roleName
+    ) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactRole.class,
+                        "findByNameContains",
+                        "roleName", roleName));
+    }
+
+    @Programmatic
     public java.util.List<ContactRole> findByContact(
-            final Contact contact) {
+            final Contact contact
+    ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactRole.class,
                         "findByContact",
                         "contact", contact));
+    }
+
+    @Programmatic
+    public java.util.List<ContactRole> findByGroup(
+            final ContactGroup contactGroup
+    ) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactRole.class,
+                        "findByContactGroup",
+                        "contactGroup", contactGroup));
     }
 
     @Programmatic
@@ -54,7 +77,8 @@ public class ContactRoleRepository {
     public ContactRole findOrCreate(
             final Contact contact,
             final ContactGroup contactGroup,
-            final String roleName) {
+            final String roleName
+    ) {
         ContactRole contactRole = findByContactAndContactGroup(contact, contactGroup);
         if (contactRole == null) {
             contactRole = create(contact, contactGroup, roleName);

@@ -1,6 +1,5 @@
 package domainapp.dom.contacts;
 
-import com.google.inject.Inject;
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
@@ -8,6 +7,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 @DomainService(
@@ -48,28 +48,24 @@ public class ContactRepository {
             ContactGroup contactGroup
     ) {
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
-        for(Contact contact : listAll()) {
-            for(ContactRole contactRole : contact.getContactRoles()) {
-                if(contactRole.getContactGroup() == contactGroup) {
-                    resContacts.add(contact);
-                }
-            }
+
+        for(ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
+            resContacts.add(contactRole.getContact());
         }
         return resContacts;
     }
 
     @Programmatic
-    public java.util.List<Contact> findByContactRole(
-            ContactRole contactRole
+    public java.util.List<Contact> findByContactRoleNameContains(
+            String roleName
     ) {
+        if(roleName == null) roleName = "";
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
-        for(Contact contact : listAll()) {
-            for(ContactRole cR : contact.getContactRoles()) {
-                if(cR.getRoleName() == contactRole.getRoleName()) {
-                    resContacts.add(contact);
-                }
-            }
+
+        for(ContactRole contactRole : contactRoleRepository.findByNameContains(roleName)) {
+            resContacts.add(contactRole.getContact());
         }
+
         return resContacts;
     }
 
@@ -120,4 +116,7 @@ public class ContactRepository {
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
+    @Inject
+    ContactRoleRepository contactRoleRepository;
 }
