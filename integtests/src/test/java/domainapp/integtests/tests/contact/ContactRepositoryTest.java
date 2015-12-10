@@ -56,6 +56,7 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
         public void happyCase() throws Exception {
             // given, when
             final List<Contact> contacts = contactRepository.listAll();
+
             // then
             assertThat(contacts.size()).isEqualTo(13);
         }
@@ -66,27 +67,26 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
 
         @Test
         public void happyCase() throws Exception {
-            // given, when
+            // given
             final String contactName = contactRepository.listAll().get(0).getName();
-            final Contact contact = contactRepository.findByName(contactName);
-            final Contact notContact = contactRepository.findByName("Not a name");
-            // then
-            assertThat(contact).isNotNull();
-            assertThat(notContact).isNull();
-        }
-    }
 
-    public static class FindByNameContains extends ContactRepositoryTest {
+            // when
+            final List<Contact> contacts = contactRepository.findByName(contactName);
 
-        @Test
-        public void happyCase() throws Exception {
-            // given, when
-            final String contactName = contactRepository.listAll().get(0).getName().split(" ")[0];
-            final List<Contact> contacts = contactRepository.findByNameContains(contactName);
-            final List<Contact> notContacts = contactRepository.findByNameContains("Not a name");
             // then
             assertThat(contacts.size()).isGreaterThan(0);
-            assertThat(notContacts.size()).isEqualTo(0);
+        }
+
+        @Test
+        public void sadCase() throws Exception {
+            // given
+            final String contactName = "Not a name";
+
+            // when
+            final List<Contact> contacts = contactRepository.findByName(contactName);
+
+            // then
+            assertThat(contacts.size()).isEqualTo(0);
         }
     }
 
@@ -97,31 +97,56 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
 
         @Test
         public void happyCase() throws Exception {
-            // given, when
-            final ContactGroup existingContactGroup = contactGroupRepository.listAll().get(0);
-            final ContactGroup notExistingContactGroup = new ContactGroup();
-            final List<Contact> contacts = contactRepository.findByContactGroup(existingContactGroup);
-            final List<Contact> notContacts = contactRepository.findByContactGroup(notExistingContactGroup);
+            // given
+            final ContactGroup contactGroup = contactGroupRepository.listAll().get(0);
+
+            // when
+            final List<Contact> contacts = contactRepository.findByContactGroup(contactGroup);
+
             // then
             assertThat(contacts.size()).isGreaterThan(0);
-            assertThat(notContacts.size()).isEqualTo(0);
+        }
+
+        @Test
+        public void sadCase() throws Exception {
+            // given
+            final ContactGroup contactGroup = new ContactGroup();
+
+            // when
+            final List<Contact> contacts = contactRepository.findByContactGroup(contactGroup);
+
+            // then
+            assertThat(contacts.size()).isEqualTo(0);
         }
     }
 
-    public static class FindByContactRoleNameContains extends ContactRepositoryTest {
+    public static class FindByContactRoleName extends ContactRepositoryTest {
 
         @Inject
         ContactRoleRepository contactRoleRepository;
 
         @Test
         public void happyCase() throws Exception {
-            // given, when
-            String existingRoleName = contactRoleRepository.listAll().get(0).getRoleName();
-            final List<Contact> contacts = contactRepository.findByContactRoleNameContains(existingRoleName);
-            final List<Contact> notContacts = contactRepository.findByContactRoleNameContains("Not a role");
+            // given
+            final String roleName = contactRoleRepository.listAll().get(0).getRoleName();
+
+            // when
+            final List<Contact> contacts = contactRepository.findByContactRoleName(roleName);
+
             // then
             assertThat(contacts.size()).isGreaterThan(0);
-            assertThat(notContacts.size()).isEqualTo(0);
+        }
+
+        @Test
+        public void sadCase() throws Exception {
+            // given
+            final String roleName = "Not a role";
+
+            // when
+            final List<Contact> contacts = contactRepository.findByContactRoleName(roleName);
+
+            // then
+            assertThat(contacts.size()).isEqualTo(0);
         }
     }
 

@@ -19,7 +19,7 @@ import javax.jdo.annotations.*;
         column = "version")
 @Queries({
         @Query(
-                name = "findByNameContains", language = "JDOQL",
+                name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.role.ContactRole "
                         + "WHERE roleName.indexOf(:roleName) >= 0 "),

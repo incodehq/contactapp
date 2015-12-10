@@ -31,13 +31,13 @@ public class ContactRoleRepository {
     }
 
     @Programmatic
-    public java.util.List<ContactRole> findByNameContains(
+    public java.util.List<ContactRole> findByName(
             final String roleName
     ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactRole.class,
-                        "findByNameContains",
+                        "findByName",
                         "roleName", roleName));
     }
 

@@ -34,7 +34,7 @@ public class ContactMenu {
     public java.util.List<Contact> findByName(
             final String name
     ) {
-        return contactrepository.findByNameContains(name);
+        return contactrepository.findByName(name);
     }
 
     @Action(
@@ -58,9 +58,9 @@ public class ContactMenu {
     )
     @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByRole(
-            final String roleName
+            @Parameter(optionality = Optionality.OPTIONAL) String roleName
     ) {
-        return contactrepository.findByContactRoleNameContains(roleName);
+        return contactrepository.findByContactRoleName(roleName);
     }
 
     @Action(

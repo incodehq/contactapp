@@ -23,15 +23,10 @@ import java.util.TreeSet;
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @Queries({
         @Query(
-                name = "findByNameContains", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.contacts.Contact "
-                        + "WHERE name.indexOf(:name) >= 0 "),
-        @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.contacts.Contact "
-                        + "WHERE name == :name ")
+                        + "WHERE name.indexOf(:name) >= 0 ")
 })
 @DomainObject(
         editing = Editing.DISABLED

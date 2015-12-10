@@ -24,7 +24,7 @@ public class ContactContributions {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(contributed = Contributed.AS_ASSOCIATION)
     public List<Contact> contactsWithTheSameRole(ContactRole contactRole){
-        return contactRepository.findByContactRoleNameContains(contactRole.getRoleName());
+        return contactRepository.findByContactRoleName(contactRole.getRoleName());
     }
 
     @Inject

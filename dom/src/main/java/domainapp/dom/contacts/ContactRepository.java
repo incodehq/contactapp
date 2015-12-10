@@ -22,24 +22,13 @@ public class ContactRepository {
     }
 
     @Programmatic
-    public Contact findByName(
-            final String name
-    ) {
-        return container.uniqueMatch(
-                new org.apache.isis.applib.query.QueryDefault<>(
-                        Contact.class,
-                        "findByName",
-                        "name", name));
-    }
-
-    @Programmatic
-    public java.util.List<Contact> findByNameContains(
+    public java.util.List<Contact> findByName(
             final String name
     ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Contact.class,
-                        "findByNameContains",
+                        "findByName",
                         "name", name));
     }
 
@@ -56,13 +45,13 @@ public class ContactRepository {
     }
 
     @Programmatic
-    public java.util.List<Contact> findByContactRoleNameContains(
+    public java.util.List<Contact> findByContactRoleName(
             String roleName
     ) {
         if(roleName == null) roleName = "";
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
 
-        for(ContactRole contactRole : contactRoleRepository.findByNameContains(roleName)) {
+        for(ContactRole contactRole : contactRoleRepository.findByName(roleName)) {
             resContacts.add(contactRole.getContact());
         }
 
@@ -107,9 +96,12 @@ public class ContactRepository {
             final String officeNumber,
             final String mobileNumber,
             final String homeNumber) {
-        Contact contact = findByName(name);
-        if (contact == null) {
+        java.util.List<Contact> contacts = findByName(name);
+        Contact contact;
+        if (contacts.size() == 0) {
             contact = create(name, company, email, notes, officeNumber, mobileNumber, homeNumber);
+        } else {
+            contact = contacts.get(0);
         }
         return contact;
     }
