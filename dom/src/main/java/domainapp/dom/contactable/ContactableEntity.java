@@ -62,6 +62,18 @@ public class ContactableEntity implements Comparable<ContactableEntity> {
     @Getter @Setter
     private String notes;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit Notes")
+    @MemberOrder(name = "notes", sequence = "1")
+    public ContactableEntity changeNotes(@ParameterLayout(multiLine = 6, named = "Notes") String notes) {
+        setNotes(notes);
+        return this;
+    }
+
+    public String default0ChangeNotes() {
+        return getNotes();
+    }
+
     @Persistent(mappedBy = "contactableEntity", dependentElement = "true")
     @Collection()
     @CollectionLayout(render = RenderType.EAGERLY)
