@@ -22,16 +22,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.*;
 
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
@@ -71,6 +62,9 @@ import lombok.Setter;
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
+@MemberGroupLayout(
+        columnSpans={4,0,0,12}
+)
 public class Country implements Comparable<Country> {
 
     public String title() {
@@ -84,6 +78,7 @@ public class Country implements Comparable<Country> {
 
     @Persistent(mappedBy = "country", dependentElement = "true")
     @Collection()
+    @CollectionLayout(render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactGroup> contactGroups = new TreeSet<ContactGroup>();
 

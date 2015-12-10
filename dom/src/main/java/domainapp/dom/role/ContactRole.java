@@ -11,11 +11,7 @@ import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.*;
 
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.group.ContactGroup;
@@ -50,6 +46,9 @@ import lombok.Setter;
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
+)
+@MemberGroupLayout(
+        columnSpans={6,0,0,6}
 )
 public class ContactRole implements Comparable<ContactRole> {
 

@@ -1,5 +1,6 @@
 package domainapp.fixture.dom.contact;
 
+import domainapp.dom.contacts.Contact;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 

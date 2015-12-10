@@ -11,6 +11,7 @@ import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 
+import domainapp.dom.contactable.ContactableEntity;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
@@ -35,10 +36,10 @@ import lombok.Setter;
                 name = "findByContactAndType", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.number.ContactNumber "
-                        + "WHERE contact == :contact "
+                        + "WHERE contactableEntity == :contactableEntity "
                         + "   && type == :type ")
 })
-@Unique(name = "ContactNumber_label_UNQ", members = { "contact", "type" })
+@Unique(name = "ContactNumber_label_UNQ", members = { "contactableEntity", "type" })
 @DomainObject(
         editing = Editing.DISABLED
 )
@@ -50,7 +51,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
-    private Contact contact;
+    private ContactableEntity contactableEntity;
 
     @Column(allowsNull = "false")
     @Property()
@@ -65,12 +66,12 @@ public class ContactNumber implements Comparable<ContactNumber> {
     //region > compareTo, toString
     @Override
     public int compareTo(final ContactNumber other) {
-        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "contact", "type");
+        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "contactableEntity", "type");
     }
 
     @Override
     public String toString() {
-        return org.apache.isis.applib.util.ObjectContracts.toString(this, "contact", "type");
+        return org.apache.isis.applib.util.ObjectContracts.toString(this, "contactableEntity", "type");
     }
     //endregion
 
