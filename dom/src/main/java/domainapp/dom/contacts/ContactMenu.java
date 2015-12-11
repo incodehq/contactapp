@@ -21,7 +21,7 @@ public class ContactMenu {
     )
     @MemberOrder(sequence = "1")
     public java.util.List<Contact> listAll() {
-        return contactrepository.listAll();
+        return contactRepository.listAll();
     }
 
     @Action(
@@ -31,10 +31,11 @@ public class ContactMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public java.util.List<Contact> findByName(
-            final String name
+    public java.util.List<Contact> find(
+            final String query
     ) {
-        return contactrepository.findByName(name);
+        String regex = "(?i).*" + query + ".*";
+        return contactRepository.find(query);
     }
 
     @Action(
@@ -44,10 +45,11 @@ public class ContactMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "3")
-    public java.util.List<Contact> findByGroup(
-            final ContactGroup group
+    public java.util.List<Contact> findByName(
+            final String name
     ) {
-        return contactrepository.findByContactGroup(group);
+        String regex = "(?i).*" + name + ".*";
+        return contactRepository.findByName(regex);
     }
 
     @Action(
@@ -57,15 +59,29 @@ public class ContactMenu {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "4")
+    public java.util.List<Contact> findByGroup(
+            final ContactGroup group
+    ) {
+        return contactRepository.findByContactGroup(group);
+    }
+
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "5")
     public java.util.List<Contact> findByRole(
             @Parameter(optionality = Optionality.OPTIONAL) String roleName
     ) {
-        return contactrepository.findByContactRoleName(roleName);
+        String regex = "(?i).*" + roleName + ".*";
+        return contactRepository.findByContactRoleName(roleName);
     }
 
     @Action(
     )
-    @MemberOrder(sequence = "5")
+    @MemberOrder(sequence = "6")
     public Contact create(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)
@@ -78,9 +94,9 @@ public class ContactMenu {
             final String homeNumber,
             @Parameter(optionality = Optionality.OPTIONAL)
             final String email) {
-        return contactrepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
+        return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
     }
 
     @javax.inject.Inject
-    ContactRepository contactrepository;
+    ContactRepository contactRepository;
 }

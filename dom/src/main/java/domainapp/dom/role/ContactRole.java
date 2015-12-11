@@ -22,7 +22,7 @@ import javax.jdo.annotations.*;
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.role.ContactRole "
-                        + "WHERE roleName.indexOf(:roleName) >= 0 "),
+                        + "WHERE roleName.matches(:regex) "),
         @Query(
                 name = "findByContactAndContactGroup", language = "JDOQL",
                 value = "SELECT "

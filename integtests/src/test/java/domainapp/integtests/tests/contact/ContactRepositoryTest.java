@@ -128,10 +128,11 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            final String roleName = contactRoleRepository.listAll().get(0).getRoleName();
-
+            String regex = contactRoleRepository.listAll().get(0).getRoleName();
+            if(regex == null) regex = "";
+            regex = "(?i).*" + regex + ".*";
             // when
-            final List<Contact> contacts = contactRepository.findByContactRoleName(roleName);
+            final List<Contact> contacts = contactRepository.findByContactRoleName(regex);
 
             // then
             assertThat(contacts.size()).isGreaterThan(0);

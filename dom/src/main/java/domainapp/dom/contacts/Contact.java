@@ -26,7 +26,7 @@ import java.util.TreeSet;
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.contacts.Contact "
-                        + "WHERE name.indexOf(:name) >= 0 ")
+                        + "WHERE name.matches(:regex) ")
 })
 @DomainObject(
         editing = Editing.DISABLED

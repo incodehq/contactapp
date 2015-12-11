@@ -32,13 +32,13 @@ public class ContactRoleRepository {
 
     @Programmatic
     public java.util.List<ContactRole> findByName(
-            final String roleName
+            final String regex
     ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactRole.class,
                         "findByName",
-                        "roleName", roleName));
+                        "regex", regex));
     }
 
     @Programmatic

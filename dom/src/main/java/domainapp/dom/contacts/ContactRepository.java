@@ -1,6 +1,7 @@
 package domainapp.dom.contacts;
 
 import domainapp.dom.group.ContactGroup;
+import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import org.apache.isis.applib.annotation.DomainService;
@@ -9,6 +10,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -21,15 +23,32 @@ public class ContactRepository {
         return container.allInstances(Contact.class);
     }
 
+    public java.util.List<Contact> find(
+            final String regex
+    ) {
+        java.util.Set<Contact> results = new HashSet<Contact>();
+
+        results.addAll(findByName(regex));
+        results.addAll(findByContactRoleName(regex));
+        for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
+            results.addAll(findByContactGroup(contactGroup));
+        }
+
+        java.util.List<Contact> resultsList = new ArrayList<Contact>();
+        resultsList.addAll(results);
+
+        return resultsList;
+    }
+
     @Programmatic
     public java.util.List<Contact> findByName(
-            final String name
+            final String regex
     ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Contact.class,
                         "findByName",
-                        "name", name));
+                        "regex", regex));
     }
 
     @Programmatic
@@ -46,12 +65,11 @@ public class ContactRepository {
 
     @Programmatic
     public java.util.List<Contact> findByContactRoleName(
-            String roleName
+            String regex
     ) {
-        if(roleName == null) roleName = "";
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
 
-        for(ContactRole contactRole : contactRoleRepository.findByName(roleName)) {
+        for(ContactRole contactRole : contactRoleRepository.findByName(regex)) {
             resContacts.add(contactRole.getContact());
         }
 
@@ -110,5 +128,8 @@ public class ContactRepository {
     org.apache.isis.applib.DomainObjectContainer container;
 
     @Inject
-    ContactRoleRepository contactRoleRepository;
+    private ContactRoleRepository contactRoleRepository;
+
+    @Inject
+    private ContactGroupRepository contactGroupRepository;
 }
