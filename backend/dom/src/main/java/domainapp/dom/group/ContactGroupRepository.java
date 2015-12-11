@@ -30,6 +30,17 @@ public class  ContactGroupRepository {
                         "name", name));
     }
 
+    @Programmatic
+    public java.util.List<ContactGroup> findByName(
+            String regex
+    ) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactGroup.class,
+                        "findByName",
+                        "regex", regex));
+    }
+
 
     @Programmatic
     public ContactGroup create(final Country country, final String name) {

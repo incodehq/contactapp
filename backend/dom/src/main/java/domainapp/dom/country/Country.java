@@ -1,33 +1,20 @@
 package domainapp.dom.country;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-import javax.jdo.annotations.Unique;
-import javax.jdo.annotations.Version;
-import javax.jdo.annotations.VersionStrategy;
-
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import org.apache.isis.applib.annotation.*;
-
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+
+import javax.inject.Inject;
+import javax.jdo.annotations.*;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -40,19 +27,10 @@ import lombok.Setter;
         column = "version")
 @Queries({
         @Query(
-                name = "find", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.country.Country "),
-        @Query(
-                name = "findByNameContains", language = "JDOQL",
-                value = "SELECT "
-                        + "FROM domainapp.dom.country.Country "
-                        + "WHERE name.indexOf(:name) >= 0 "),
-        @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.country.Country "
-                        + "WHERE name == :name ")
+                        + "WHERE name.indexOf(:name) >= 0 ")
 })
 @Unique(name = "Country_name_UNQ", members = { "name" })
 @DomainObject(

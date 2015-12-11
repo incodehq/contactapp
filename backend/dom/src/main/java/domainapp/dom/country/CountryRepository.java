@@ -27,17 +27,6 @@ public class CountryRepository {
     }
 
     @Programmatic
-    public java.util.List<Country> findByNameContains(
-            final String name
-    ) {
-        return container.allMatches(
-                new org.apache.isis.applib.query.QueryDefault<>(
-                        Country.class,
-                        "findByNameContains",
-                        "name", name));
-    }
-
-    @Programmatic
     public Country create(final String name) {
         final Country country = container.newTransientInstance(Country.class);
         country.setName(name);

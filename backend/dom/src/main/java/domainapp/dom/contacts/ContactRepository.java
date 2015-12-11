@@ -1,14 +1,16 @@
 package domainapp.dom.contacts;
 
-import com.google.inject.Inject;
 import domainapp.dom.group.ContactGroup;
+import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -21,26 +23,32 @@ public class ContactRepository {
         return container.allInstances(Contact.class);
     }
 
-    @Programmatic
-    public Contact findByName(
-            final String name
+    public java.util.List<Contact> find(
+            final String regex
     ) {
-        return container.uniqueMatch(
-                new org.apache.isis.applib.query.QueryDefault<>(
-                        Contact.class,
-                        "findByName",
-                        "name", name));
+        java.util.Set<Contact> results = new HashSet<Contact>();
+
+        results.addAll(findByName(regex));
+        results.addAll(findByContactRoleName(regex));
+        for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
+            results.addAll(findByContactGroup(contactGroup));
+        }
+
+        java.util.List<Contact> resultsList = new ArrayList<Contact>();
+        resultsList.addAll(results);
+
+        return resultsList;
     }
 
     @Programmatic
-    public java.util.List<Contact> findByNameContains(
-            final String name
+    public java.util.List<Contact> findByName(
+            final String regex
     ) {
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Contact.class,
-                        "findByNameContains",
-                        "name", name));
+                        "findByName",
+                        "regex", regex));
     }
 
     @Programmatic
@@ -48,28 +56,23 @@ public class ContactRepository {
             ContactGroup contactGroup
     ) {
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
-        for(Contact contact : listAll()) {
-            for(ContactRole contactRole : contact.getContactRoles()) {
-                if(contactRole.getContactGroup() == contactGroup) {
-                    resContacts.add(contact);
-                }
-            }
+
+        for(ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
+            resContacts.add(contactRole.getContact());
         }
         return resContacts;
     }
 
     @Programmatic
-    public java.util.List<Contact> findByContactRole(
-            ContactRole contactRole
+    public java.util.List<Contact> findByContactRoleName(
+            String regex
     ) {
         java.util.List<Contact> resContacts = new ArrayList<Contact>();
-        for(Contact contact : listAll()) {
-            for(ContactRole cR : contact.getContactRoles()) {
-                if(cR.getRoleName() == contactRole.getRoleName()) {
-                    resContacts.add(contact);
-                }
-            }
+
+        for(ContactRole contactRole : contactRoleRepository.findByName(regex)) {
+            resContacts.add(contactRole.getContact());
         }
+
         return resContacts;
     }
 
@@ -111,13 +114,22 @@ public class ContactRepository {
             final String officeNumber,
             final String mobileNumber,
             final String homeNumber) {
-        Contact contact = findByName(name);
-        if (contact == null) {
+        java.util.List<Contact> contacts = findByName(name);
+        Contact contact;
+        if (contacts.size() == 0) {
             contact = create(name, company, email, notes, officeNumber, mobileNumber, homeNumber);
+        } else {
+            contact = contacts.get(0);
         }
         return contact;
     }
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
+    @Inject
+    private ContactRoleRepository contactRoleRepository;
+
+    @Inject
+    private ContactGroupRepository contactGroupRepository;
 }
