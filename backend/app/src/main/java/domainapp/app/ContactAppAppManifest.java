@@ -35,7 +35,7 @@ import org.isisaddons.module.security.facets.TenantedAuthorizationFacetFactory;
 import domainapp.dom.DomainAppDomainModule;
 import domainapp.fixture.DomainAppFixtureModule;
 
-public class DomainAppAppManifest implements AppManifest {
+public class ContactAppAppManifest implements AppManifest {
 
     @Override
     public List<Class<?>> getModules() {
@@ -43,7 +43,7 @@ public class DomainAppAppManifest implements AppManifest {
 
                 DomainAppDomainModule.class     // entities and domain services
                 ,DomainAppFixtureModule.class   // fixture scripts and FixtureScriptsSpecificationProvider
-                ,DomainAppAppModule.class     // DomainAppRolesAndPermissionsSeedService (requires security module)
+                ,ContactAppAppModule.class     // DomainAppRolesAndPermissionsSeedService (requires security module)
 
                 ,org.isisaddons.module.excel.ExcelModule.class // to run fixtures
                 ,org.isisaddons.module.settings.SettingsModule.class // used by DomainAppUserSettingsThemeProvider

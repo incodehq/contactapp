@@ -18,7 +18,7 @@
  */
 package domainapp.app;
 
-public class DomainAppAppManifestWithFixturesBypassSecurity extends DomainAppAppManifestWithFixtures {
+public class ContactAppAppManifestWithFixturesBypassSecurity extends ContactAppAppManifestWithFixtures {
 
     @Override
     public String getAuthenticationMechanism() {

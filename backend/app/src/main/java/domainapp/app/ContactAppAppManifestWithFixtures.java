@@ -27,7 +27,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import domainapp.fixture.scenarios.demo.DemoFixture;
 
-public class DomainAppAppManifestWithFixtures extends DomainAppAppManifest {
+public class ContactAppAppManifestWithFixtures extends ContactAppAppManifest {
 
     /**
      * Fixtures to be installed.

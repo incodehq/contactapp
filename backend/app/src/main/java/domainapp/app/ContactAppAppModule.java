@@ -18,6 +18,6 @@
  */
 package domainapp.app;
 
-public final class DomainAppAppModule {
-    private DomainAppAppModule(){}
+public final class ContactAppAppModule {
+    private ContactAppAppModule(){}
 }
