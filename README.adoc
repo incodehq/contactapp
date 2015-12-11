@@ -1,33 +1,68 @@
-= incode-app-contactapp
+= contact mgmt app
 
-image:https://travis-ci.org/incodehq/contactapp.png?branch=master[Build Status,link=https://travis-ci.org/incodehq/contactapp]
+The back-end is an Apache Isis app surfacing a REST API, with Swagger-generated stubs for Typescript
 
-A contact management app, built on link:isis.apache.org[Apache Isis].
+The front-end is an Ionic/Angular app using Typescript.
 
-image::http://yuml.me/95c33b14[link="http://yuml.me/95c33b14"]
 
-(from link:yuml.me[yuml.me])
+== ionic front-end
 
-[source]
+=== prereqs
+
+per: http://ionicframework.com/getting-started/
+
+* install Node.js v4: https://nodejs.org
+
+* install ionic command line tools: https://www.npmjs.com/package/ionic +
++
+[source,bash]
 ----
-[Contact|name;company;email;notes]-*[ContactRole|roleName]
-[Contact|firstName;lastName]<->*[ContactNumber|type;number]
-[ContactRole]*-[ContactGroup|name]
-[ContactGroup]*-[Country|name]
+npm install -g ionic
 ----
 
-== Security
+* install/upgrade cordova +
++
+[source,bash]
+----
+npm install -g cordova
+----
 
-* seed service `org.isisaddons.module.security.seed.SeedSecurityModuleService` for security
-** sets up `isis-module-security-admin/pass` user and roles
-* seed service `domainapp.app.seed.DomainAppRolesAndPermissionsSeedService` for app
-** sets up `domainapp-admin/pass` and roles)
+* install gulp +
++
+[source,bash]
+----
+npm install -g gulp
+npm install -g typescript
+----
+
+sanity check: `tsc csv` should return v1.7.3 (or thereabouts)
+
+optional: install Visual Studio Code (cross-platform) or similar
 
 
-== App Manifests
+=== example app
 
-* `domainapp.app.DomainAppAppManifest`
-* `domainapp.app.DomainAppAppManifestWithFixtures`
-* `domainapp.app.DomainAppAppManifestWithFixturesBypassSecurity`
+Used as the basis for our front-end
+
+per: http://blog.ionic.io/ionic-and-typescript-part-3/
+
+copy of https://github.com/driftyco/ionic-typescript-example
+
+To build:
+
+[source,bash]
+----
+npm install
+npm install tsd -g
+tsd install
+----
+
+To run:
+
+[source,bash]
+----
+ionic serve
+----
+
 
 

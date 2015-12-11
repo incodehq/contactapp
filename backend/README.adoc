@@ -1,0 +1,33 @@
+= incode-app-contactapp
+
+image:https://travis-ci.org/incodehq/contactapp.png?branch=master[Build Status,link=https://travis-ci.org/incodehq/contactapp]
+
+A contact management app, built on link:isis.apache.org[Apache Isis].
+
+image::http://yuml.me/95c33b14[link="http://yuml.me/95c33b14"]
+
+(from link:yuml.me[yuml.me])
+
+[source]
+----
+[Contact|name;company;email;notes]-*[ContactRole|roleName]
+[Contact|firstName;lastName]<->*[ContactNumber|type;number]
+[ContactRole]*-[ContactGroup|name]
+[ContactGroup]*-[Country|name]
+----
+
+== Security
+
+* seed service `org.isisaddons.module.security.seed.SeedSecurityModuleService` for security
+** sets up `isis-module-security-admin/pass` user and roles
+* seed service `domainapp.app.seed.DomainAppRolesAndPermissionsSeedService` for app
+** sets up `domainapp-admin/pass` and roles)
+
+
+== App Manifests
+
+* `domainapp.app.DomainAppAppManifest`
+* `domainapp.app.DomainAppAppManifestWithFixtures`
+* `domainapp.app.DomainAppAppManifestWithFixturesBypassSecurity`
+
+
