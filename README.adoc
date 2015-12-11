@@ -1,0 +1,68 @@
+= contact mgmt app
+
+The back-end is an Apache Isis app surfacing a REST API, with Swagger-generated stubs for Typescript
+
+The front-end is an Ionic/Angular app using Typescript.
+
+
+== ionic front-end
+
+=== prereqs
+
+per: http://ionicframework.com/getting-started/
+
+* install Node.js v4: https://nodejs.org
+
+* install ionic command line tools: https://www.npmjs.com/package/ionic +
++
+[source,bash]
+----
+npm install -g ionic
+----
+
+* install/upgrade cordova +
++
+[source,bash]
+----
+npm install -g cordova
+----
+
+* install gulp +
++
+[source,bash]
+----
+npm install -g gulp
+npm install -g typescript
+----
+
+sanity check: `tsc csv` should return v1.7.3 (or thereabouts)
+
+optional: install Visual Studio Code (cross-platform) or similar
+
+
+=== example app
+
+Used as the basis for our front-end
+
+per: http://blog.ionic.io/ionic-and-typescript-part-3/
+
+copy of https://github.com/driftyco/ionic-typescript-example
+
+To build:
+
+[source,bash]
+----
+npm install
+npm install tsd -g
+tsd install
+----
+
+To run:
+
+[source,bash]
+----
+ionic serve
+----
+
+
+

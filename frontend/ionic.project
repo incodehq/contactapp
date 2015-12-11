@@ -1,0 +1,13 @@
+{
+  "name": "ionic-typescript",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "compile",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}
