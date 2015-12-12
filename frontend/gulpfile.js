@@ -9,7 +9,8 @@ var sh = require('shelljs');
 var typescript = require('gulp-tsc');
 var paths = {
   sass: ['./scss/**/*.scss'],
-  src: ['./src/**/*.ts']
+  src: ['./src/**/*.ts'],
+  srcjs: ['./src/**/*.js']
 };
 
 gulp.task('default', ['sass']);
@@ -19,6 +20,9 @@ gulp.task('compile', function() {
     .pipe(typescript({
       emitError: false
     }))
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'));
+
+  gulp.src(paths.srcjs)
     .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'))
 })
 
@@ -41,6 +45,7 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.src, ['compile']);
+  gulp.watch(paths.srcjs, ['compile']);
 });
 
 gulp.task('install', ['git-check'], function() {
