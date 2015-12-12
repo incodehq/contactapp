@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         views: {
             'tab-chats': {
                 templateUrl: 'templates/tab-chats.html',
-                controller: 'ChatsCtrl as chats'
+                controller: 'ChatsCtrl as ctrl'
             }
         }
     })
@@ -39,7 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         views: {
             'tab-chats': {
                 templateUrl: 'templates/chat-detail.html',
-                controller: 'ChatDetailCtrl as chat'
+                controller: 'ChatDetailCtrl as ctrl'
             }
         }
     });

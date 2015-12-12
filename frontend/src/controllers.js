@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
     .controller('ChatsCtrl', function($scope, $http) {
-          
+        var ctrl = this;  
         $http.get(
             "/restful/services/HomePageService/actions/homePage/invoke",
             {
@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                $scope.chats = resp.data.objects;
+                ctrl.chats = resp.data.objects;
             }, 
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
@@ -22,6 +22,7 @@ angular.module('starter.controllers', [])
     
     .controller('ChatDetailCtrl', function($scope, $http, $stateParams) {
       
+        var ctrl = this;
         $http.get(
             "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
             {
@@ -33,7 +34,7 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                $scope.chat = resp.data
+                ctrl.chat = resp.data
             }, 
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
