@@ -26,7 +26,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(
-        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY // trick to suppress the actions from the top-level menu
+        nature = NatureOfService.VIEW_REST_ONLY // suppresses actions from the top-level menu, but makes available for REST API
 )
 public class HomePageService {
 

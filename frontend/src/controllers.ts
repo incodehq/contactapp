@@ -9,9 +9,6 @@ class ChatsCtrl {
   constructor(public Chats: any) {
     this.chats = Chats.all();
   }
-  public remove(chat) {
-    this.Chats.remove(chat)
-  }
 }
 
 class ChatDetailCtrl {
@@ -21,23 +18,9 @@ class ChatDetailCtrl {
     public Chats: any,
     public $stateParams: ng.ui.IStateParamsService
     ) {
-    this.chat = Chats.get($stateParams.chatId);
-  }
-}
-class AccountCtrl {
-  settings: Object;
-  constructor() {
-    this.settings = {
-      enableFriends: true
-    }
+    this.chat = Chats.get($stateParams["instanceId"]);
   }
 }
 angular.module('starter.controllers', [])
-
-  .controller('DashCtrl', DashCtrl)
-
   .controller('ChatsCtrl', ChatsCtrl)
-
-  .controller('ChatDetailCtrl', ChatDetailCtrl)
-
-  .controller('AccountCtrl', AccountCtrl);
+  .controller('ChatDetailCtrl', ChatDetailCtrl);

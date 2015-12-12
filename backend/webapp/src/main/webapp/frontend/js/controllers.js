@@ -10,9 +10,6 @@ var ChatsCtrl = (function () {
         this.$inject = ['Chats'];
         this.chats = Chats.all();
     }
-    ChatsCtrl.prototype.remove = function (chat) {
-        this.Chats.remove(chat);
-    };
     return ChatsCtrl;
 })();
 var ChatDetailCtrl = (function () {
@@ -20,20 +17,10 @@ var ChatDetailCtrl = (function () {
         this.Chats = Chats;
         this.$stateParams = $stateParams;
         this.$inject = ['Chats', '$stateParams'];
-        this.chat = Chats.get($stateParams.chatId);
+        this.chat = Chats.get($stateParams["instanceId"]);
     }
     return ChatDetailCtrl;
 })();
-var AccountCtrl = (function () {
-    function AccountCtrl() {
-        this.settings = {
-            enableFriends: true
-        };
-    }
-    return AccountCtrl;
-})();
 angular.module('starter.controllers', [])
-    .controller('DashCtrl', DashCtrl)
     .controller('ChatsCtrl', ChatsCtrl)
-    .controller('ChatDetailCtrl', ChatDetailCtrl)
-    .controller('AccountCtrl', AccountCtrl);
+    .controller('ChatDetailCtrl', ChatDetailCtrl);

@@ -25,15 +25,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         abstract: true,
         templateUrl: 'templates/tabs.html'
     })
-        .state('tab.dash', {
-        url: '/dash',
-        views: {
-            'tab-dash': {
-                templateUrl: 'templates/tab-dash.html',
-                controller: 'DashCtrl as dash'
-            }
-        }
-    })
         .state('tab.chats', {
         url: '/chats',
         views: {
@@ -44,23 +35,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
     })
         .state('tab.chat-detail', {
-        url: '/chats/:chatId',
+        url: '/chats/:instanceId',
         views: {
             'tab-chats': {
                 templateUrl: 'templates/chat-detail.html',
                 controller: 'ChatDetailCtrl as chat'
             }
         }
-    })
-        .state('tab.account', {
-        url: '/account',
-        views: {
-            'tab-account': {
-                templateUrl: 'templates/tab-account.html',
-                controller: 'AccountCtrl as account'
-            }
-        }
     });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/dash');
+    $urlRouterProvider.otherwise('/tab/chats');
 });
