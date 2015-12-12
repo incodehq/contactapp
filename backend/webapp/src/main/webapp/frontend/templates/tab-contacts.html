@@ -1,9 +1,10 @@
 <ion-view view-title="Contacts">
-  <ion-content>
+  <ion-content scroll="true" overflow-scroll="true">
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="contact in ctrl.contacts" type="item-text-wrap" href="#/tab/contacts/{{contact.$$instanceId}}" >
-        <h2>{{contact.name}}</h2>
-        <p>{{contact.email}}</p>
+      <ion-item class="item-remove-animate item-avatar item-icon-left" 
+      ng-repeat="contact in ctrl.contacts" type="item-text-wrap" href="#/tab/contacts/{{contact.$$instanceId}}" >
+        <h1>{{contact.name}}</h1>
+        <p>{{contact.company}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>

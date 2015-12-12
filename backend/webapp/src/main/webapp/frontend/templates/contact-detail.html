@@ -7,26 +7,42 @@
 <ion-view view-title="{{ctrl.contact.name}}">
     
     <ion-content class="padding">
-    
-        <h2>{{ctrl.contact.name}}</h2>
-        <p>{{ctrl.contact.company}}</p>
-        <p>{{ctrl.contact.email}}</p>
 
-        <p>Roles:</p>        
-        <ion-list>
-            <ion-item ng-repeat="contactRole in ctrl.contact.contactRoles">
-                <p>{{contactRole.contactGroup.title}} <span ng-if="{{contactRole.contactGroup.roleName}}">({{contactRole.contactGroup.roleName}})</span></p>
-            </ion-item>
-        </ion-list>
+        <div class="row">
+            <div class="col">
+                <h1>{{ctrl.contact.name}}</h1> 
+            </div>
+        </div>
 
-        <p>Phone numbers:</p>        
-        <ion-list>
-            <ion-item ng-repeat="contactNumber in ctrl.contact.contactNumbers">
-                <p>{{contactNumber.type}}: {{contactNumber.number}}</p>
-            </ion-item>
-        </ion-list>
+        <div class="list">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Company</span>
+                <input type="text" value="{{ctrl.contact.company}}" disabled>
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Email</span>
+                <input type="text" value="{{ctrl.contact.email}}" disabled>
+            </label>
+        </div>
+       
 
-        <p>{{chat.notes}}</p>
+        <div class="list">
+            <label class="item item-input item-stacked-label"  ng-repeat="contactNumber in ctrl.contact.contactNumbers">
+                <span class="input-label">{{contactNumber.type}}</span>
+                <input type="text" value="{{contactNumber.number}}" disabled>
+            </label>
+        </div>
+
+        <div class="list">
+            <label class="item item-input item-stacked-label"  ng-repeat="contactRole in ctrl.contact.contactRoles">
+                <span class="input-label">Role</span>
+                <input ng-if="contactRole.contactGroup.roleName" type="text" value="{{contactRole.contactGroup.title}} ({{contactRole.contactGroup.roleName}}" disabled>
+                <input ng-if="contactRole.contactGroup.roleName === undefined" type="text" value="{{contactRole.contactGroup.title}}" disabled>
+            </label>
+        </div>
+
+
+        <h4>{{chat.notes}}</h4>
             
     </ion-content>
 </ion-view>
