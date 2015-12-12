@@ -4,24 +4,24 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{ctrl.chat.name}}">
+<ion-view view-title="{{ctrl.contact.name}}">
     
     <ion-content class="padding">
     
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.company}}</p>
-        <p>{{chat.email}}</p>
+        <h2>{{ctrl.contact.name}}</h2>
+        <p>{{ctrl.contact.company}}</p>
+        <p>{{ctrl.contact.email}}</p>
 
         <p>Roles:</p>        
         <ion-list>
-            <ion-item ng-repeat="contactRole in ctrl.chat.contactRoles">
+            <ion-item ng-repeat="contactRole in ctrl.contact.contactRoles">
                 <p>{{contactRole.contactGroup.title}} <span ng-if="{{contactRole.contactGroup.roleName}}">({{contactRole.contactGroup.roleName}})</span></p>
             </ion-item>
         </ion-list>
 
         <p>Phone numbers:</p>        
         <ion-list>
-            <ion-item ng-repeat="contactNumber in ctrl.chat.contactNumbers">
+            <ion-item ng-repeat="contactNumber in ctrl.contact.contactNumbers">
                 <p>{{contactNumber.type}}: {{contactNumber.number}}</p>
             </ion-item>
         </ion-list>

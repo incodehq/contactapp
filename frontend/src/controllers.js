@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                ctrl.chats = resp.data.objects;
+                ctrl.contacts = resp.data.objects;
             }, 
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
@@ -34,7 +34,7 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                ctrl.chat = resp.data
+                ctrl.contact = resp.data
             }, 
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
