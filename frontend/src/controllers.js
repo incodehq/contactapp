@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
     .controller('ChatsCtrl', function($scope, $http) {
           
         $http.get(
-            "http://localhost:8080/restful/services/HomePageService/actions/homePage/invoke",
+            "/restful/services/HomePageService/actions/homePage/invoke",
             {
                 headers: {
 //                'Authorization': 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
     .controller('ChatDetailCtrl', function($scope, $http, $stateParams) {
       
         $http.get(
-            "http://localhost:8080/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
+            "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
             {
                 headers: {
 //                  'Authorization': 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
