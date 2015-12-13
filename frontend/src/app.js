@@ -22,21 +22,37 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
 })
  
 
-.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
-  return {
-    responseError: function (response) {
-      $rootScope.$broadcast({
-        401: AUTH_EVENTS.notAuthenticated,
-        403: AUTH_EVENTS.notAuthorized,
-      }[response.status], response);
-      return $q.reject(response);
-    }
-  };
-})
+    .factory('AuthInterceptor', 
+    ['$rootScope', '$q', '$injector', 'AUTH_EVENTS',
+    function ($rootScope, $q, $injector, AUTH_EVENTS) {
+        return {
+            responseError: function (response) {
+                $rootScope.$broadcast(
+                    {
+                        401: AUTH_EVENTS.notAuthenticated,
+                        403: AUTH_EVENTS.notAuthorized,
+                    }[response.status], 
+                    response);
+                    
+                /*
+                // redirect back to login page if not coming *from* the login page
+                // not working reliably...
+                var $state = $injector.get("$state");
+                var AuthService = $injector.get("AuthService");
+                if($state.current.name !== "login") {
+                     AuthService.logout();
+                    $state.go('login', {}, {reload: true});
+                }
+                */
+                                        
+                return $q.reject(response);
+            }
+        };
+    }])
  
-.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('AuthInterceptor');
-})
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push('AuthInterceptor');
+    })
 
     .service('Base64', function () {
         /* jshint ignore:start */
