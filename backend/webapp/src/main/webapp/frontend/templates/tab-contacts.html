@@ -1,13 +1,15 @@
-<ion-nav-bar class="bar-stable">
-  <ion-nav-back-button>
-  </ion-nav-back-button>
-  <ion-nav-buttons side="right">
-    <button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">Logout</button>
-  </ion-nav-buttons>
-</ion-nav-bar>
-
 <ion-view view-title="Contacts">
-  <ion-content scroll="true" overflow-scroll="true">
+
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">Logout</nav-button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content scroll="true" overflow-scroll="true">
+
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-left" 
       ng-repeat="contact in ctrl.contacts" type="item-text-wrap" href="#/tab/contacts/{{contact.$$instanceId}}" >

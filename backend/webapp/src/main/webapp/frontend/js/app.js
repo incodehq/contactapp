@@ -21,11 +21,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
   notAuthorized: 'auth-not-authorized'
 })
  
-.constant('USER_ROLES', {
-  admin: 'admin_role',
-  public: 'public_role'
-})
-
 
 .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
   return {
@@ -130,8 +125,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
     })
 
 .service('AuthService', 
-           ['$q','$http','Base64','$rootScope'/*,'$cookieStore'*/, 'USER_ROLES', 
-    function($q, $http, Base64, $rootScope, /*$cookieStore,*/ USER_ROLES) {
+           ['$q','$http','Base64','$rootScope' /*,'$cookieStore'*/, 
+    function($q, $http, Base64, $rootScope /*,$cookieStore*/ ) {
         
   var LOCAL_TOKEN_KEY = 'yourTokenKey';
   var username = '';
@@ -155,13 +150,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
     username = token.split('.')[0];
     isAuthenticated = true;
     authToken = token;
- 
-    if (username == 'admin') {
-      role = USER_ROLES.admin
-    }
-    if (username == 'user') {
-      role = USER_ROLES.public
-    }
  
     // Set the token as header for your requests!
     $http.defaults.headers.common['X-Auth-Token'] = token;

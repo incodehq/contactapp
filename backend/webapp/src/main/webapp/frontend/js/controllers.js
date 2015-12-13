@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
     ['$scope','$state','$ionicPopup','AuthService',
     function($scope, $state, $ionicPopup, AuthService) {
         
-        $scope.data = {};
+        $scope.data = {}
  
         $scope.login = 
             function(data) {
@@ -13,19 +13,23 @@ angular.module('starter.controllers', [])
                 
                 AuthService.login(username, password).then(
                     function(authenticated) {
-                        $scope.data.username = ""
-                        $scope.data.password = ""
+                        $scope.data = {}
+                        $scope.error = ""
+                        
                         $state.go('tab.contacts', {}, {reload: true});
                         //$scope.setCurrentUsername($scope.data.username);
                     }, function(err) {
-                        
+
+                        $scope.data = {}
+                        $scope.error = "Incorrect username or password"
+
+                        /*                        
                         var alertPopup = $ionicPopup.alert({
                             title: 'Login failed!',
                             template: 'Please check your credentials!'
                         }).then(function() {
-                            $scope.data.username = ""
-                            $scope.data.password = ""
                         });
+                        */
                         
                     });
         };
@@ -88,8 +92,8 @@ angular.module('starter.controllers', [])
     }])
     
     .controller('ContactDetailCtrl', 
-    ['$http','$stateParams', '$state', 'AuthService',
-    function($http, $stateParams, $state, AuthService) {
+    ['$scope', '$http','$stateParams', '$state', 'AuthService',
+    function($scope, $http, $stateParams, $state, AuthService) {
 
         var ctrl = this;
 
