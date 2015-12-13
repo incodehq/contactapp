@@ -33,6 +33,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
     
         // setup an abstract state for the tabs directive
         .state('tab', {
+            cache: false,
             url: '/tab',
             abstract: true,
             templateUrl: 'templates/tabs.html'
@@ -40,6 +41,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
     
         // Each tab has its own nav history stack:
         .state('tab.contacts', {
+            cache: false,
             url: '/contacts',
             views: {
                 'tab-contacts': {
@@ -49,6 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
             }
         })
         .state('tab.contact-detail', {
+            cache: false,
             url: '/contacts/:instanceId',
             views: {
                 'tab-contacts': {

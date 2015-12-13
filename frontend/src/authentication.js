@@ -5,6 +5,11 @@ angular.module('starter')
     function ($rootScope, $q, $injector) {
         return {
             responseError: function (response) {
+
+                // whenever we get a 401 from the server.
+                // * if this happesn during the initial login attempt (see AuthService.login) when 
+                //   we are testing the provided username+password against /restful/user, then we just ignore
+                // * if this happens otherwise then it means that we've lost the session, should go back to the login page
                 if(response.status === 401) {
                     
                     var $state = $injector.get("$state");
@@ -21,6 +26,7 @@ angular.module('starter')
         };
     }])
  
+    // install our interceptor for any $http requests 
     .config(function ($httpProvider) {
         $httpProvider.interceptors.push('AuthInterceptor');
     })

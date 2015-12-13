@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
                 AuthService.login(username, password).then(
                     function(authenticated) {
                         $scope.data = {}
-                        $scope.error = ""
+                        $scope.error = undefined
                         $state.go('tab.contacts', {}, {reload: true});
                     }, function(err) {
                         $scope.data = {}
@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
         var ctrl = this;
 
         ctrl.username = AuthService.username();
-        
+
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
