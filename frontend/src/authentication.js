@@ -1,29 +1,21 @@
 angular.module('starter')
 
-    .constant('AUTH_EVENTS', {
-        notAuthenticated: 'auth-not-authenticated'
-    })
- 
     .factory('AuthInterceptor', 
-    ['$rootScope', '$q', '$injector', 'AUTH_EVENTS',
-    function ($rootScope, $q, $injector, AUTH_EVENTS) {
+    ['$rootScope', '$q', '$injector',
+    function ($rootScope, $q, $injector) {
         return {
             responseError: function (response) {
                 if(response.status === 401) {
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated. response)   
+                    
+                    var $state = $injector.get("$state");
+                    var AuthService = $injector.get("AuthService");
+
+                    if($state.current.name !== "login") {
+                        AuthService.logout();
+                        $state.go('login', {}, {reload: true});
+                    }
                 }
                     
-                /*
-                // redirect back to login page if not coming *from* the login page
-                // not working reliably...
-                var $state = $injector.get("$state");
-                var AuthService = $injector.get("AuthService");
-                if($state.current.name !== "login") {
-                     AuthService.logout();
-                    $state.go('login', {}, {reload: true});
-                }
-                */
-                                        
                 return $q.reject(response);
             }
         };
@@ -34,47 +26,48 @@ angular.module('starter')
     })
 
     .service('AuthService', 
-            ['$q','$http','Base64','$rootScope' /*,'$cookieStore'*/, 
-        function($q, $http, Base64, $rootScope /*,$cookieStore*/ ) {
+            ['$q','$http','Base64','$rootScope', 
+        function($q, $http, Base64, $rootScope ) {
             
-        var LOCAL_TOKEN_KEY = 'yourTokenKey';
+        var LOCAL_TOKEN_KEY = 'contactapp';
         var username = '';
         var isAuthenticated = false;
-        var role = '';
-        var authToken;
+        var basicAuth;
         
         function loadUserCredentials() {
             var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
             if (token) {
-            useCredentials(token);
+                useCredentials(token);
             }
         }
         
-        function storeUserCredentials(token) {
-            window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+        function storeUserCredentials(name, basicAuth) {
+            var token =  name + "." + basicAuth;
+            window.localStorage.setItem(LOCAL_TOKEN_KEY, name + "." + basicAuth);
             useCredentials(token);
         }
         
         function useCredentials(token) {
             username = token.split('.')[0];
+            basicAuth = token.split('.')[1];
             isAuthenticated = true;
-            authToken = token;
         
             // Set the token as header for your requests!
-            $http.defaults.headers.common['X-Auth-Token'] = token;
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + basicAuth;
         }
         
         function destroyUserCredentials() {
-            authToken = undefined;
+            basicAuth = undefined;
             username = '';
             isAuthenticated = false;
-            $http.defaults.headers.common['X-Auth-Token'] = undefined;
+            $http.defaults.headers.common['Authorization'] = undefined;
             window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         }
         
         var login = function(name, pw) {
             return $q(function(resolve, reject) {
                 
+                // attempt to access any resource using the provided name and password
                 var basicAuth = Base64.encode(name + ":" + pw);
                 $http.get("/restful/user",
                         {
@@ -87,18 +80,7 @@ angular.module('starter')
                         }
                     )
                     .success(function() {
-                        storeUserCredentials(name + '.yourServerToken');
-                        
-                        $rootScope.globals = {
-                            currentUser: {
-                                username: name,
-                                authdata: basicAuth
-                            }
-                        };
-            
-                        $http.defaults.headers.common['Authorization'] = 'Basic ' + basicAuth;
-                        //$cookieStore.put('globals', $rootScope.globals);
-                        
+                        storeUserCredentials(name, basicAuth);
                         resolve('Login success.');        
                     })
                     .error(function(){
@@ -109,16 +91,7 @@ angular.module('starter')
         
         var logout = function() {
             destroyUserCredentials();
-            $rootScope.globals = {};
-            //$cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic ';
-        };
-        
-        var isAuthorized = function(authorizedRoles) {
-            if (!angular.isArray(authorizedRoles)) {
-            authorizedRoles = [authorizedRoles];
-            }
-            return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
         };
         
         loadUserCredentials();
@@ -126,10 +99,12 @@ angular.module('starter')
         return {
             login: login,
             logout: logout,
-            isAuthorized: isAuthorized,
-            isAuthenticated: function() {return isAuthenticated;},
-            username: function() {return username;},
-            role: function() {return role;}
+            isAuthenticated: function() {
+                return isAuthenticated
+            },
+            username: function() {
+                return username
+            }
         };
 
     }])

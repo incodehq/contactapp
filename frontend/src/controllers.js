@@ -15,60 +15,22 @@ angular.module('starter.controllers', [])
                     function(authenticated) {
                         $scope.data = {}
                         $scope.error = ""
-                        
                         $state.go('tab.contacts', {}, {reload: true});
-                        //$scope.setCurrentUsername($scope.data.username);
                     }, function(err) {
-
                         $scope.data = {}
-                        $scope.error = "Incorrect username or password"
-
-                        /*                        
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Login failed!',
-                            template: 'Please check your credentials!'
-                        }).then(function() {
-                        });
-                        */
-                        
+                        $scope.error = "Incorrect username or password"                      
                     });
         };
     }])
  
-    .controller('AppCtrl', 
-    ['$scope', '$state', '$ionicPopup', 'AuthService', 'AUTH_EVENTS',
-    function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
-    
-        $scope.username = AuthService.username();
-        
-        $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-            var alertPopup = $ionicPopup.alert({
-            title: 'Unauthorized!',
-            template: 'You are not allowed to access this resource.'
-            });
-        });
-        
-        $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-            AuthService.logout();
-            $state.go('login');
-            var alertPopup = $ionicPopup.alert({
-            title: 'Session Lost!',
-            template: 'Sorry, You have to login again.'
-            });
-        });
-        
-        $scope.setCurrentUsername = function(name) {
-            $scope.username = name;
-        };
-    
-    }])
-
     .controller('ContactsCtrl', 
     ['$scope','$http', '$state', 'AuthService',
     function($scope, $http, $state, AuthService) {
 
         var ctrl = this;
 
+        ctrl.username = AuthService.username();
+        
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
@@ -96,6 +58,8 @@ angular.module('starter.controllers', [])
     function($scope, $http, $stateParams, $state, AuthService) {
 
         var ctrl = this;
+
+        ctrl.username = AuthService.username();
 
         ctrl.logout = function() {
             AuthService.logout();
