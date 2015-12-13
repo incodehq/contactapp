@@ -2,15 +2,16 @@ angular.module('starter.controllers', [])
 
 
     .controller('ContactsCtrl', 
-    ['$scope','$http', '$state', 'Base64', 'AuthService',
-    function($scope, $http, $state, Base64, AuthService) {
+    ['$scope','$http', '$state', 'AuthService',
+    function($scope, $http, $state, AuthService) {
+
+        var ctrl = this;
 
         $scope.logout = function() {
             AuthService.logout();
             $state.go('login');
         }
-        
-        var ctrl = this;
+
         $http.get(
             "/restful/services/HomePageService/actions/homePage/invoke",
             {
@@ -29,15 +30,16 @@ angular.module('starter.controllers', [])
     }])
     
     .controller('ContactDetailCtrl', 
-    ['$scope','$http','$stateParams', '$state', 'Base64', 'AuthService',
-    function($scope, $http, $stateParams, $state, Base64, AuthService) {
+    ['$scope','$http','$stateParams', '$state', 'AuthService',
+    function($scope, $http, $stateParams, $state, AuthService) {
+
+        var ctrl = this;
 
         $scope.logout = function() {
             AuthService.logout();
             $state.go('login');
         }
-       
-        var ctrl = this;
+
         $http.get(
             "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
             {
