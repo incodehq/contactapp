@@ -58,22 +58,23 @@ angular.module('starter')
             basicAuth = token.split('.')[1];
             isAuthenticated = true;
         
-            // Set the token as header for your requests!
             $http.defaults.headers.common['Authorization'] = 'Basic ' + basicAuth;
         }
         
         function destroyUserCredentials() {
-            basicAuth = undefined;
             username = '';
+            basicAuth = undefined;
             isAuthenticated = false;
-            $http.defaults.headers.common['Authorization'] = undefined;
+
+            $http.defaults.headers.common.Authorization = 'Basic ';
             window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         }
         
         var login = function(name, pw) {
             return $q(function(resolve, reject) {
                 
-                // attempt to access any resource using the provided name and password
+                // attempt to access a resource (we happen to use /restful/user) 
+                // using the provided name and password
                 var basicAuth = Base64.encode(name + ":" + pw);
                 $http.get("/restful/user",
                         {
@@ -86,6 +87,8 @@ angular.module('starter')
                         }
                     )
                     .success(function() {
+                        // the user/password is good, so store away in local storage, and also   
+                        // configure the $http service so that all subsequent calls  use the same 'Authorization' header
                         storeUserCredentials(name, basicAuth);
                         resolve('Login success.');        
                     })
@@ -97,7 +100,6 @@ angular.module('starter')
         
         var logout = function() {
             destroyUserCredentials();
-            $http.defaults.headers.common.Authorization = 'Basic ';
         };
         
         loadUserCredentials();

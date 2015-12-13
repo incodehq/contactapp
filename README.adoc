@@ -65,4 +65,15 @@ ionic serve
 ----
 
 
+== Next steps
+
+* Change the login page to use a form
+
+* Finders
+
+** since the data is not large, might make sense to do client-side filtering using, eg https://github.com/djett41/ionic-filter-bar
+
+* Make it pretty
+
+** eg using http://ionicmaterial.com/
 

@@ -292,6 +292,10 @@
             <param-name>whenNoSession</param-name>
             <param-value>unauthorized</param-value>
         </init-param>
+        <init-param>
+            <param-name>passThru</param-name>
+            <param-value>/restful/swagger</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <!-- this is mapped to the entire app; however the IsisSessionFilter will "notice" if the session filter has already been

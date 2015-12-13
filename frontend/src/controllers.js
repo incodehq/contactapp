@@ -30,7 +30,6 @@ angular.module('starter.controllers', [])
         var ctrl = this;
 
         ctrl.username = AuthService.username();
-
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
@@ -60,7 +59,6 @@ angular.module('starter.controllers', [])
         var ctrl = this;
 
         ctrl.username = AuthService.username();
-
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
