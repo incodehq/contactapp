@@ -1,5 +1,63 @@
 angular.module('starter.controllers', [])
 
+    .controller('LoginCtrl', 
+    ['$scope','$state','$ionicPopup','AuthService',
+    function($scope, $state, $ionicPopup, AuthService) {
+        
+        $scope.data = {};
+ 
+        $scope.login = 
+            function(data) {
+                var username=$scope.data.username
+                var password=$scope.data.password
+                
+                AuthService.login(username, password).then(
+                    function(authenticated) {
+                        $scope.data.username = ""
+                        $scope.data.password = ""
+                        $state.go('tab.contacts', {}, {reload: true});
+                        //$scope.setCurrentUsername($scope.data.username);
+                    }, function(err) {
+                        
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Login failed!',
+                            template: 'Please check your credentials!'
+                        }).then(function() {
+                            $scope.data.username = ""
+                            $scope.data.password = ""
+                        });
+                        
+                    });
+        };
+    }])
+ 
+    .controller('AppCtrl', 
+    ['$scope', '$state', '$ionicPopup', 'AuthService', 'AUTH_EVENTS',
+    function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+    
+        $scope.username = AuthService.username();
+        
+        $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+            var alertPopup = $ionicPopup.alert({
+            title: 'Unauthorized!',
+            template: 'You are not allowed to access this resource.'
+            });
+        });
+        
+        $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+            AuthService.logout();
+            $state.go('login');
+            var alertPopup = $ionicPopup.alert({
+            title: 'Session Lost!',
+            template: 'Sorry, You have to login again.'
+            });
+        });
+        
+        $scope.setCurrentUsername = function(name) {
+            $scope.username = name;
+        };
+    
+    }])
 
     .controller('ContactsCtrl', 
     ['$scope','$http', '$state', 'AuthService',
@@ -7,9 +65,9 @@ angular.module('starter.controllers', [])
 
         var ctrl = this;
 
-        $scope.logout = function() {
+        ctrl.logout = function() {
             AuthService.logout();
-            $state.go('login');
+            $state.go('login', {}, {reload: true});
         }
 
         $http.get(
@@ -30,14 +88,14 @@ angular.module('starter.controllers', [])
     }])
     
     .controller('ContactDetailCtrl', 
-    ['$scope','$http','$stateParams', '$state', 'AuthService',
-    function($scope, $http, $stateParams, $state, AuthService) {
+    ['$http','$stateParams', '$state', 'AuthService',
+    function($http, $stateParams, $state, AuthService) {
 
         var ctrl = this;
 
-        $scope.logout = function() {
+        ctrl.logout = function() {
             AuthService.logout();
-            $state.go('login');
+            $state.go('login', {}, {reload: true});
         }
 
         $http.get(
@@ -57,29 +115,6 @@ angular.module('starter.controllers', [])
             })
     }])
     
-    .controller('LoginCtrl', 
-    ['$scope','$state','$ionicPopup','AuthService',
-    function($scope, $state, $ionicPopup, AuthService) {
-        
-        $scope.data = {};
- 
-        $scope.login = 
-            function(data) {
-                
-                AuthService.login($scope.data.username, $scope.data.password).then(
-                    function(authenticated) {
-                        $state.go('tab.contacts', {}, {reload: true});
-                        //$scope.setCurrentUsername($scope.data.username);
-                    }, function(err) {
-                        var alertPopup = $ionicPopup.alert({
-                        title: 'Login failed!',
-                        template: 'Please check your credentials!'
-                    });
-                });
-                
-                //$state.go('tab.contacts', {}, {reload: true});
-        };
-    }])
-    
+   
     ;
     

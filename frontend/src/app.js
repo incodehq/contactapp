@@ -1,7 +1,3 @@
-/// <reference path="../typings/tsd.d.ts" />
-angular.module('Authentication', []);
-
-//angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'http-auth-interceptor'])
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
 
 .run(function($ionicPlatform) {
@@ -211,15 +207,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
             .error(function(){
                 reject('Login Failed.');        
             });
-            
-/*            
-      if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
-        storeUserCredentials(name + '.yourServerToken');
-        resolve('Login success.');
-      } else {
-        reject('Login Failed.');
-      }
-*/      
     });
   };
  
@@ -250,43 +237,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
 }])
 
 
-.controller('AppCtrl', function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
-
-  $scope.username = AuthService.username();
- 
-  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Unauthorized!',
-      template: 'You are not allowed to access this resource.'
-    });
-  });
- 
-  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-    AuthService.logout();
-    $state.go('login');
-    var alertPopup = $ionicPopup.alert({
-      title: 'Session Lost!',
-      template: 'Sorry, You have to login again.'
-    });
-  });
- 
-  $scope.setCurrentUsername = function(name) {
-    $scope.username = name;
-  };
-  
-})
-
-/*
-
-.controller('AppCtrl', function($rootScope,$log,$scope) {
-
-    $scope.$on('event:auth-loginConfirmed', function(event, data){
-    $rootScope.isLoggedin = true;
-    $log.log(data)
-  })
-
-})
-*/
 
   
 .config(function($stateProvider, $urlRouterProvider) {
