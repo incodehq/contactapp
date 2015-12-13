@@ -1,8 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 angular.module('Authentication', []);
-/*
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'http-auth-interceptor'])
-*/
+
+//angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'http-auth-interceptor'])
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
 
 .run(function($ionicPlatform) {
@@ -48,125 +47,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
   $httpProvider.interceptors.push('AuthInterceptor');
 })
 
-.service('AuthService', function($q, $http, USER_ROLES) {
-  var LOCAL_TOKEN_KEY = 'yourTokenKey';
-  var username = '';
-  var isAuthenticated = false;
-  var role = '';
-  var authToken;
- 
-  function loadUserCredentials() {
-    var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
-    if (token) {
-      useCredentials(token);
-    }
-  }
- 
-  function storeUserCredentials(token) {
-    window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-    useCredentials(token);
-  }
- 
-  function useCredentials(token) {
-    username = token.split('.')[0];
-    isAuthenticated = true;
-    authToken = token;
- 
-    if (username == 'admin') {
-      role = USER_ROLES.admin
-    }
-    if (username == 'user') {
-      role = USER_ROLES.public
-    }
- 
-    // Set the token as header for your requests!
-    $http.defaults.headers.common['X-Auth-Token'] = token;
-  }
- 
-  function destroyUserCredentials() {
-    authToken = undefined;
-    username = '';
-    isAuthenticated = false;
-    $http.defaults.headers.common['X-Auth-Token'] = undefined;
-    window.localStorage.removeItem(LOCAL_TOKEN_KEY);
-  }
- 
-  var login = function(name, pw) {
-    return $q(function(resolve, reject) {
-      if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
-        // Make a request and receive your auth token from your server
-        storeUserCredentials(name + '.yourServerToken');
-        resolve('Login success.');
-      } else {
-        reject('Login Failed.');
-      }
-    });
-  };
- 
-  var logout = function() {
-    destroyUserCredentials();
-  };
- 
-  var isAuthorized = function(authorizedRoles) {
-    if (!angular.isArray(authorizedRoles)) {
-      authorizedRoles = [authorizedRoles];
-    }
-    return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
-  };
- 
-  loadUserCredentials();
- 
-  return {
-    login: login,
-    logout: logout,
-    isAuthorized: isAuthorized,
-    isAuthenticated: function() {return isAuthenticated;},
-    username: function() {return username;},
-    role: function() {return role;}
-  };
-})
-
-
-.controller('AppCtrl', function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
-
-  $scope.username = AuthService.username();
- 
-  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Unauthorized!',
-      template: 'You are not allowed to access this resource.'
-    });
-  });
- 
-  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-    AuthService.logout();
-    $state.go('login');
-    var alertPopup = $ionicPopup.alert({
-      title: 'Session Lost!',
-      template: 'Sorry, You have to login again.'
-    });
-  });
- 
-  $scope.setCurrentUsername = function(name) {
-    $scope.username = name;
-  };
-  
-})
-
-/*
-
-.controller('AppCtrl', function($rootScope,$log,$scope) {
-
-    $scope.$on('event:auth-loginConfirmed', function(event, data){
-    $rootScope.isLoggedin = true;
-    $log.log(data)
-  })
-
-})
-*/
-
-
-    .factory('Base64', function () {
+    .service('Base64', function () {
         /* jshint ignore:start */
     
         var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -251,6 +132,162 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
     
         /* jshint ignore:end */
     })
+
+.service('AuthService', 
+           ['$q','$http','Base64','$rootScope'/*,'$cookieStore'*/, 'USER_ROLES', 
+    function($q, $http, Base64, $rootScope, /*$cookieStore,*/ USER_ROLES) {
+        
+  var LOCAL_TOKEN_KEY = 'yourTokenKey';
+  var username = '';
+  var isAuthenticated = false;
+  var role = '';
+  var authToken;
+ 
+  function loadUserCredentials() {
+    var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+    if (token) {
+      useCredentials(token);
+    }
+  }
+ 
+  function storeUserCredentials(token) {
+    window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+    useCredentials(token);
+  }
+ 
+  function useCredentials(token) {
+    username = token.split('.')[0];
+    isAuthenticated = true;
+    authToken = token;
+ 
+    if (username == 'admin') {
+      role = USER_ROLES.admin
+    }
+    if (username == 'user') {
+      role = USER_ROLES.public
+    }
+ 
+    // Set the token as header for your requests!
+    $http.defaults.headers.common['X-Auth-Token'] = token;
+  }
+ 
+  function destroyUserCredentials() {
+    authToken = undefined;
+    username = '';
+    isAuthenticated = false;
+    $http.defaults.headers.common['X-Auth-Token'] = undefined;
+    window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+  }
+ 
+  var login = function(name, pw) {
+    return $q(function(resolve, reject) {
+        
+        var basicAuth = Base64.encode(name + ":" + pw);
+        $http.get("/restful/user",
+                {
+                    headers: { 
+                        'Authorization': 'Basic ' + basicAuth, 
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT' // a long time ago
+                    }
+                }
+            )
+            .success(function() {
+                storeUserCredentials(name + '.yourServerToken');
+                
+                $rootScope.globals = {
+                    currentUser: {
+                        username: name,
+                        authdata: basicAuth
+                    }
+                };
+    
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + basicAuth;
+                //$cookieStore.put('globals', $rootScope.globals);
+                
+                resolve('Login success.');        
+            })
+            .error(function(){
+                reject('Login Failed.');        
+            });
+            
+/*            
+      if ((name == 'admin' && pw == '1') || (name == 'user' && pw == '1')) {
+        storeUserCredentials(name + '.yourServerToken');
+        resolve('Login success.');
+      } else {
+        reject('Login Failed.');
+      }
+*/      
+    });
+  };
+ 
+  var logout = function() {
+    destroyUserCredentials();
+     $rootScope.globals = {};
+     //$cookieStore.remove('globals');
+     $http.defaults.headers.common.Authorization = 'Basic ';
+  };
+ 
+  var isAuthorized = function(authorizedRoles) {
+    if (!angular.isArray(authorizedRoles)) {
+      authorizedRoles = [authorizedRoles];
+    }
+    return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
+  };
+ 
+  loadUserCredentials();
+ 
+  return {
+    login: login,
+    logout: logout,
+    isAuthorized: isAuthorized,
+    isAuthenticated: function() {return isAuthenticated;},
+    username: function() {return username;},
+    role: function() {return role;}
+  };
+}])
+
+
+.controller('AppCtrl', function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+
+  $scope.username = AuthService.username();
+ 
+  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Unauthorized!',
+      template: 'You are not allowed to access this resource.'
+    });
+  });
+ 
+  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+    AuthService.logout();
+    $state.go('login');
+    var alertPopup = $ionicPopup.alert({
+      title: 'Session Lost!',
+      template: 'Sorry, You have to login again.'
+    });
+  });
+ 
+  $scope.setCurrentUsername = function(name) {
+    $scope.username = name;
+  };
+  
+})
+
+/*
+
+.controller('AppCtrl', function($rootScope,$log,$scope) {
+
+    $scope.$on('event:auth-loginConfirmed', function(event, data){
+    $rootScope.isLoggedin = true;
+    $log.log(data)
+  })
+
+})
+*/
+
   
 .config(function($stateProvider, $urlRouterProvider) {
 
