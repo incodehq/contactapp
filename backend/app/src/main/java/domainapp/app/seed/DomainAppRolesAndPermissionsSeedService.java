@@ -39,6 +39,7 @@ import domainapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import domainapp.dom.seed.tenancies.DomainAppAdminUserTenancy;
 import domainapp.dom.seed.tenancies.UsersTenancy;
 import domainapp.dom.seed.users.DomainAppAdminUser;
+import domainapp.dom.seed.users.SvenRegularUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -83,6 +84,7 @@ public class DomainAppRolesAndPermissionsSeedService {
 
             executionContext.executeChild(this, new DomainAppAdminUserTenancy());
             executionContext.executeChild(this, new DomainAppAdminUser());
+            executionContext.executeChild(this, new SvenRegularUser());
         }
 
     }
