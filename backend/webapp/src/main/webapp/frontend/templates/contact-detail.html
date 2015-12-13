@@ -1,9 +1,12 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
+<ion-nav-bar class="bar-stable">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+        <button class="button icon-left ion-log-out button-stable" ng-click="logout()">Logout</button>
+    </ion-nav-buttons>
+</ion-nav-bar>
+
+
 <ion-view view-title="{{ctrl.contact.name}}">
     
     <ion-content class="padding">
@@ -44,6 +47,5 @@
 
         <h4>{{ctrl.contact.notes}}</h4>
 
-        <button class="button icon-left ion-log-out button-stable" ng-click="logout()">Logout</button>
     </ion-content>
 </ion-view>
