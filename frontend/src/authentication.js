@@ -1,7 +1,58 @@
-angular.module('starter.controllers', [])
-
-
-    .service('Base64', function () {
+'use strict';
+  
+angular.module('Authentication')
+  
+    .factory('AuthenticationService',
+        ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
+        function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+            var service = {};
+    
+            service.Login = function (username, password, callback) {
+    
+                /* Dummy authentication for testing, uses $timeout to simulate api call
+                ----------------------------------------------*/
+                $timeout(function(){
+                    var response = { success: username === 'test' && password === 'test' };
+                    if(!response.success) {
+                        response.message = 'Username or password is incorrect';
+                    }
+                    callback(response);
+                }, 1000);
+    
+    
+                /* Use this for real authentication
+                ----------------------------------------------*/
+                //$http.post('/api/authenticate', { username: username, password: password })
+                //    .success(function (response) {
+                //        callback(response);
+                //    });
+    
+            };
+    
+            service.SetCredentials = function (username, password) {
+                var authdata = Base64.encode(username + ':' + password);
+    
+                $rootScope.globals = {
+                    currentUser: {
+                        username: username,
+                        authdata: authdata
+                    }
+                };
+    
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                $cookieStore.put('globals', $rootScope.globals);
+            };
+    
+            service.ClearCredentials = function () {
+                $rootScope.globals = {};
+                $cookieStore.remove('globals');
+                $http.defaults.headers.common.Authorization = 'Basic ';
+            };
+    
+            return service;
+        }])
+    
+    .factory('Base64', function () {
         /* jshint ignore:start */
     
         var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -85,89 +136,5 @@ angular.module('starter.controllers', [])
         };
     
         /* jshint ignore:end */
-    })
-
-    .controller('ContactsCtrl', 
-    ['$scope','$http', '$state', 'Base64', 'AuthService',
-    function($scope, $http, $state, Base64, AuthService) {
-
-        $scope.logout = function() {
-            AuthService.logout();
-            $state.go('login');
-        }
-        
-        var ctrl = this;
-        var basicAuth = Base64.encode("sven:pass");  
-        $http.get(
-            "/restful/services/HomePageService/actions/homePage/invoke",
-            {
-                headers: {
-                    'Authorization': 'Basic ' + basicAuth,
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1'
-                }
-            }
-        )
-        .then(
-            function(resp) {
-                ctrl.contacts = resp.data.objects;
-            }, 
-            function(err) {
-                console.error('ERR', err); //  err.status will contain the status code
-            })
-    }])
-    
-    .controller('ContactDetailCtrl', 
-    ['$scope','$http','$stateParams', '$state', 'Base64', 'AuthService',
-    function($scope, $http, $stateParams, $state, Base64, AuthService) {
-
-        $scope.logout = function() {
-            AuthService.logout();
-            $state.go('login');
-        }
-       
-        var ctrl = this;
-        var basicAuth = Base64.encode("sven:pass");  
-        $http.get(
-            "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
-            {
-                headers: {
-                    'Authorization': 'Basic ' + basicAuth,
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1'
-                }
-            }
-        )
-        .then(
-            function(resp) {
-                ctrl.contact = resp.data
-            }, 
-            function(err) {
-                console.error('ERR', err); //  err.status will contain the status code
-            })
-    }])
-    
-    .controller('LoginCtrl', 
-    ['$scope','$state','$ionicPopup','AuthService',
-    function($scope, $state, $ionicPopup, AuthService) {
-        
-        $scope.data = {};
- 
-        $scope.login = 
-            function(data) {
-                /*
-                AuthService.login($scope.data.username, $scope.data.password).then(
-                    function(authenticated) {
-                        $state.go('tab.contacts', {}, {reload: true});
-                        $scope.setCurrentUsername($scope.data.username);
-                    }, function(err) {
-                        var alertPopup = $ionicPopup.alert({
-                        title: 'Login failed!',
-                        template: 'Please check your credentials!'
-                    });
-                });
-                */
-                $state.go('tab.contacts', {}, {reload: true});
-        };
-    }])
-    
-    ;
+    });    
     

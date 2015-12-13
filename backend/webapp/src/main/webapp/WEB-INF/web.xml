@@ -288,9 +288,9 @@
             <param-value>org.apache.isis.viewer.restfulobjects.server.authentication.AuthenticationSessionStrategyBasicAuth</param-value>
         </init-param>
         <init-param>
-            <!-- what to do if no session was found; we indicate to issue a 401 basic authentication challenge -->
+            <!-- what to do if no session was found; we simply return a 401 (a basic authentication challenge causes browser to populate) -->
             <param-name>whenNoSession</param-name>
-            <param-value>basicAuthChallenge</param-value>
+            <param-value>unauthorized</param-value>
         </init-param>
     </filter>
     <filter-mapping>
