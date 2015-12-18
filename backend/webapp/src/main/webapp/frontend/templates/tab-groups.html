@@ -1,4 +1,4 @@
-<ion-view view-title="Contacts">
+<ion-view view-title="Groups">
 
     <ion-nav-bar class="bar-stable">
         <ion-nav-back-button>
@@ -18,13 +18,13 @@
     <ion-content scroll="true" overflow-scroll="true">
 
         <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-left" 
-      ng-repeat="contact in ctrl.contacts" type="item-text-wrap" href="#/tab/contacts/{{contact.$$instanceId}}" >
-        <h1>{{contact.name}}</h1>
-        <p>{{contact.company}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-    </ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-left"
+                      ng-repeat="group in ctrl.groups" type="item-text-wrap" href="#/tab/groups/{{group.$$instanceId}}" >
+                <h1>{{group.name}}</h1>
+                <p>{{group.country.title}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
 
   </ion-content>
 </ion-view>
