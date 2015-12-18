@@ -24,8 +24,8 @@ angular.module('starter.controllers', [])
     }])
  
     .controller('ContactsCtrl', 
-    ['$scope','$http', '$state', 'AuthService',
-    function($scope, $http, $state, AuthService) {
+    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar',
+    function($scope, $http, $state, AuthService, $ionicFilterBar) {
 
         var ctrl = this;
 
@@ -33,6 +33,16 @@ angular.module('starter.controllers', [])
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
+        }
+
+        ctrl.showFilterBar = function() {
+            ctrl.filterBarInstance =
+                $ionicFilterBar.show({
+                    items: ctrl.contacts,
+                    update: function (filteredItems, filterText) {
+                        ctrl.contacts = filteredItems;
+                    }
+                });
         }
 
         $http.get(
