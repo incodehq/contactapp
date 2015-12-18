@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
 
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {

@@ -17,4 +17,7 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  <platform name="ios">
+    <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+  </platform>
 </widget>

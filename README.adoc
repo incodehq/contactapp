@@ -93,7 +93,87 @@ backend... open up IntelliJ
 
 
 
+== Dan's setup of ionic-filter-bar
+
+=== Stepping stones
+
+first, had a go at building the ionic-filter-bar itself:
+
+[source,bash]
+----
+clone repo
+
+npm install
+bower install
+gulp   # failed, per https://github.com/dlmanning/gulp-sass/issues/185
+npm install gulp-sass
+gulp
+----
+
+this just ran the component's own integration tests.  so I realized I needed to do the same in the `demo` folder:
 
 
+[source,bash]
+----
+cd demo
+npm install
+bower install
+gulp   # failed, again per https://github.com/dlmanning/gulp-sass/issues/185
+npm install gulp-sass
+gulp
+----
+
+Could then run:
+
+[source,bash]
+----
+ionic serve
+----
+
+and all was happy.
+
+
+=== Configuring contactapp to use...
+
+following the setup instructions at https://github.com/djett41/ionic-filter-bar#setup:
+
+[source,bash]
+----
+cd frontend
+bower install ionic-filter-bar
+----
+
+installs the component over in `backend/webapp/src/main/webapp/frontend/lib`.
+
+update `config.xml` with:
+
+[source,xml]
+----
+<platform name="ios">
+    <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
+</platform>
+----
+
+update `index.html` (adjusting for our location of js library files):
+
+[source,html]
+----
+<link rel="stylesheet" href="lib/ionic-filter-bar/dist/ionic.filter.bar.css">
+<script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+----
+
+update `app.js`:
+
+[source,javascript]
+----
+angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
+----
+
+update `ionic.app`:
+
+[source]
+----
+@import "../backend/webapp/src/main/webapp/frontend/lib/ionic-filter-bar/scss/ionic.filter.bar";
+----
 
 
