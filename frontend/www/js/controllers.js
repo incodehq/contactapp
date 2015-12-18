@@ -46,7 +46,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "http://localhost:8080/restful/services/HomePageService/actions/homePage/invoke",
+            "/restful/services/HomePageService/actions/homePage/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1'
@@ -75,7 +75,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "http://localhost:8080/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
+            "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1'

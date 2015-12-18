@@ -10,5 +10,11 @@
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"
+  ],
+  "proxies": [
+    {
+      "path": "/restful",
+      "proxyUrl": "http://localhost:8080/restful"
+    }
   ]
 }
