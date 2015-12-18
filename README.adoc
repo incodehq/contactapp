@@ -77,3 +77,23 @@ ionic serve
 
 ** eg using http://ionicmaterial.com/
 
+
+
+== Rosco's setup
+
+[source,bash]
+----
+git clone
+cd frontend
+npm install gulp gulp-util bower gulp-contact gulp-sass gulk-minify-css gulp-rename shelljs gulp-tsc
+ionic serve
+----
+
+backend... open up IntelliJ
+
+
+
+
+
+
+
