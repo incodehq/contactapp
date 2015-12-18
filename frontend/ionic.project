@@ -6,9 +6,9 @@
     "compile",
     "watch"
   ],
-  "documentRoot": "../backend/webapp/src/main/webapp/frontend",
+  "documentRoot": "www",
   "watchPatterns": [
-    "../backend/webapp/src/main/webapp/frontend/**/*",
-    "!../backend/webapp/src/main/webapp/frontend/lib/**/*"
+    "www/**/*",
+    "!www/lib/**/*"
   ]
 }

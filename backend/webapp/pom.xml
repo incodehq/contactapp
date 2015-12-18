@@ -217,6 +217,13 @@
           </exclusions>
         </dependency>
 
+        <!-- https://github.com/ebay/cors-filter -->
+        <dependency>
+            <groupId>org.ebaysf.web</groupId>
+            <artifactId>cors-filter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>

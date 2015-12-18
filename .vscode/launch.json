@@ -6,7 +6,7 @@
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:8080/frontend/index.html",
-            "webRoot": "backend/webapp/src/main/webapp/frontend/js"
+            "webRoot": "www/js"
         }
     ]
 }

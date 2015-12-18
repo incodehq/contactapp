@@ -20,10 +20,10 @@ gulp.task('compile', function() {
     .pipe(typescript({
       emitError: false
     }))
-    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'));
+    .pipe(gulp.dest('www/js/'));
 
   gulp.src(paths.srcjs)
-    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'))
+    .pipe(gulp.dest('www/js/'))
 })
 
 gulp.task('sass', function(done) {
@@ -31,14 +31,14 @@ gulp.task('sass', function(done) {
     .pipe(sass({
       errLogToConsole: true
     }))
-    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/css/'))
+    .pipe(gulp.dest('www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({
       extname: '.min.css'
     }))
-    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/css/'))
+    .pipe(gulp.dest('www/css/'))
     .on('end', done);
 });
 

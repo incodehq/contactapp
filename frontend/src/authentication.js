@@ -76,10 +76,11 @@ angular.module('starter')
                 // attempt to access a resource (we happen to use /restful/user) 
                 // using the provided name and password
                 var basicAuth = Base64.encode(name + ":" + pw);
-                $http.get("/restful/user",
+                $http.get("http://localhost:8080/restful/user",
                         {
                             headers: { 
                                 'Authorization': 'Basic ' + basicAuth, 
+//                                'Access-Control-Allow-Origin': '*',
                                 'Cache-Control': 'no-cache',
                                 'Pragma': 'no-cache',
                                 'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT' // a long time ago

@@ -177,3 +177,13 @@ update `ionic.app`:
 ----
 
 
+== Ionic testing
+
+per http://ionicframework.com/docs/guide/testing.html
+
+
+[source,bash]
+----
+ionic build android
+ionic emulate android
+----
