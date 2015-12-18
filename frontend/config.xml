@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.ionictypescript491552" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ionic-typescript</name>
+  <name>ecp-contactapp</name>
   <description>
-        An Ionic Framework and Cordova project.
+        EuroCommercial's ContactApp
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
+  <author email="jvanderwal@incode.org" href="http://incode.org/">
       Ionic Framework Team
     </author>
   <content src="index.html"/>

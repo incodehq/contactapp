@@ -65,6 +65,9 @@ ionic serve
 ----
 
 
+
+
+
 == Next steps
 
 * Change the login page to use a form
@@ -174,6 +177,20 @@ update `ionic.app`:
 [source]
 ----
 @import "../backend/webapp/src/main/webapp/frontend/lib/ionic-filter-bar/scss/ionic.filter.bar";
+----
+
+
+== CORS testing
+
+Moved `../backend/webapp/src/main/webapp/frontend` back to `www`.
+
+Now run via `ionic serve`, which is localhost:8100 connecting to localhost:8080 (hardcoded)
+
+To run, recommend:
+
+[source,bash]
+----
+ionic serve --lab
 ----
 
 

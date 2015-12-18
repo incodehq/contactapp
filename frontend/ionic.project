@@ -1,5 +1,5 @@
 {
-  "name": "ionic-typescript",
+  "name": "ECP ContactApp",
   "app_id": "",
   "gulpStartupTasks": [
     "sass",

@@ -1,7 +1,7 @@
 {
-  "name": "ionic-typescript",
-  "version": "1.0.0",
-  "description": "ionic-typescript: An Ionic project",
+  "name": "ecp-contactapp",
+  "version": "0.0.1",
+  "description": "EuroCommercial Properties' ContactApp",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
