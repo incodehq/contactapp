@@ -196,11 +196,52 @@ ionic serve --lab
 
 == Ionic testing
 
-per http://ionicframework.com/docs/guide/testing.html
 
+per http://ionicframework.com/docs/guide/installation.html
+
+* install Ant
+* install Android SDK (24.4.1 at time of writing)
+* using Android SDK Manager
+  * install platform-tools (23.1)
+  * install
+* update `$ANDROID_HOME` to location
+* update `$PATH` to include `$ANDROID_HOME/tools` and `$ANDROID_HOME/platform-tools`
+
+
+per http://ionicframework.com/docs/cli/run.html
+
+[source,bash]
+----
+ionic platform add ios
+ionic platform add android
+----
+
+
+per http://ionicframework.com/docs/guide/testing.html
 
 [source,bash]
 ----
 ionic build android
+----
+
+to emulate, need to create an emulator image (avd).  According to the error message, use (adjust for platform):
+
+[source,bash]
+----
+C:\Android-SDK\v24.4.1\tools\android.BAT avd
+----
+
+* download an intel image (I chose x86_64, since on a 64-bit windows)
+* download the HAXM device driver
+
+* enable VT-x in the bios...
+
+then run the install:
+
+* C:\Android-SDK\v24.4.1\extras\intel\Hardware_Accelerated_Execution_Manager\intelhaxm-android.exe
+
+
+[source,bash]
+----
 ionic emulate android
 ----
