@@ -18,12 +18,11 @@
  */
 package domainapp.app.services.homepage;
 
-import java.util.List;
-
+import domainapp.dom.group.ContactGroup;
+import domainapp.dom.group.ContactGroupRepository;
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.contacts.Contact;
-import domainapp.dom.contacts.ContactRepository;
+import java.util.List;
 
 @ViewModel
 public class HomePageViewModel {
@@ -36,15 +35,15 @@ public class HomePageViewModel {
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<Contact> getObjects() {
-        return contactRepository.listAll();
+    public List<ContactGroup> getObjects() {
+        return contactGroupRepository.listAll();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    ContactRepository contactRepository;
+    ContactGroupRepository contactGroupRepository;
 
     //endregion
 }

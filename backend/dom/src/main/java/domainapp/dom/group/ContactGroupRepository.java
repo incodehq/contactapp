@@ -1,18 +1,16 @@
 package domainapp.dom.group;
 
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.*;
 
 import domainapp.dom.country.Country;
 
 @DomainService(
-        nature = NatureOfService.DOMAIN,
+        nature = NatureOfService.VIEW_REST_ONLY,
         repositoryFor = ContactGroup.class
 )
 public class  ContactGroupRepository {
 
-    @Programmatic
+    @Action(semantics = SemanticsOf.SAFE)
     public java.util.List<ContactGroup> listAll() {
         return container.allInstances(ContactGroup.class);
     }

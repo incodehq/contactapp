@@ -4,25 +4,24 @@ import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.*;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 @DomainService(
-        nature = NatureOfService.DOMAIN,
+        nature = NatureOfService.VIEW_REST_ONLY,
         repositoryFor = Contact.class
 )
 public class ContactRepository {
 
-    @Programmatic
+    @Action(semantics = SemanticsOf.SAFE)
     public java.util.List<Contact> listAll() {
         return container.allInstances(Contact.class);
     }
 
+    @Programmatic
     public java.util.List<Contact> find(
             final String regex
     ) {
