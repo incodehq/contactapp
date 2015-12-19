@@ -10,7 +10,10 @@ var typescript = require('gulp-tsc');
 var paths = {
   sass: ['./scss/**/*.scss'],
   src: ['./src/**/*.ts'],
-  srcjs: ['./src/**/*.js']
+  srcjs: ['./src/**/*.js'],
+  wwwindex: ['./www/index.html'],
+  wwwtemplates: ['./www/templates/**/*.html'],
+  wwwimg: ['./www/img/**/*.png']
 };
 
 gulp.task('default', ['sass']);
@@ -20,10 +23,21 @@ gulp.task('compile', function() {
     .pipe(typescript({
       emitError: false
     }))
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'))
     .pipe(gulp.dest('www/js/'));
 
   gulp.src(paths.srcjs)
-    .pipe(gulp.dest('www/js/'))
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/js/'))
+    .pipe(gulp.dest('www/js/'));
+
+  gulp.src(paths.wwwindex)
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/'));
+
+  gulp.src(paths.wwwtemplates)
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/templates/'));
+
+  gulp.src(paths.wwwimg)
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/img/'));
 })
 
 gulp.task('sass', function(done) {
@@ -31,6 +45,7 @@ gulp.task('sass', function(done) {
     .pipe(sass({
       errLogToConsole: true
     }))
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/css/'))
     .pipe(gulp.dest('www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
@@ -38,6 +53,7 @@ gulp.task('sass', function(done) {
     .pipe(rename({
       extname: '.min.css'
     }))
+    .pipe(gulp.dest('../backend/webapp/src/main/webapp/frontend/css/'))
     .pipe(gulp.dest('www/css/'))
     .on('end', done);
 });
