@@ -39,7 +39,7 @@
         <filter-class>org.ebaysf.web.cors.CORSFilter</filter-class>
         <init-param>
             <param-name>cors.allowed.origins</param-name>
-            <param-value>http://localhost:8100</param-value>
+            <param-value>*</param-value>
         </init-param>
         <init-param>
             <param-name>cors.allowed.headers</param-name>
