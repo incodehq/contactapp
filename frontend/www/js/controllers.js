@@ -1,16 +1,16 @@
 angular.module('starter.controllers', [])
 
-    .controller('LoginCtrl', 
+    .controller('LoginCtrl',
     ['$scope','$state','$ionicPopup','AuthService',
     function($scope, $state, $ionicPopup, AuthService) {
-        
+
         $scope.data = {}
- 
-        $scope.login = 
+
+        $scope.login =
             function(data) {
                 var username=$scope.data.username
                 var password=$scope.data.password
-                
+
                 AuthService.login(username, password).then(
                     function(authenticated) {
                         $scope.data = {}
@@ -18,12 +18,12 @@ angular.module('starter.controllers', [])
                         $state.go('tab.contacts', {}, {reload: true});
                     }, function(err) {
                         $scope.data = {}
-                        $scope.error = "Incorrect username or password"                      
+                        $scope.error = "Incorrect username or password"
                     });
         };
     }])
- 
-    .controller('ContactsCtrl', 
+
+    .controller('ContactsCtrl',
     ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar',
     function($scope, $http, $state, AuthService, $ionicFilterBar) {
 
@@ -46,23 +46,23 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "/restful/services/HomePageService/actions/homePage/invoke",
+            "/restful/services/ContactRepository/actions/listAll/invoke",
             {
                 headers: {
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1'
+                    'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
                 }
             }
         )
         .then(
             function(resp) {
-                ctrl.contacts = resp.data.objects;
-            }, 
+                ctrl.contacts = resp.data;
+            },
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
     }])
-    
-    .controller('ContactDetailCtrl', 
+
+    .controller('ContactDetailCtrl',
     ['$scope', '$http','$stateParams', '$state', 'AuthService',
     function($scope, $http, $stateParams, $state, AuthService) {
 
@@ -85,12 +85,79 @@ angular.module('starter.controllers', [])
         .then(
             function(resp) {
                 ctrl.contact = resp.data
-            }, 
+            },
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
     }])
-    
-   
+
+    .controller('GroupsCtrl',
+    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar',
+    function($scope, $http, $state, AuthService, $ionicFilterBar) {
+
+        var ctrl = this;
+
+        ctrl.username = AuthService.username();
+        ctrl.logout = function() {
+            AuthService.logout();
+            $state.go('login', {}, {reload: true});
+        }
+
+        ctrl.showFilterBar = function() {
+            ctrl.filterBarInstance =
+                $ionicFilterBar.show({
+                    items: ctrl.groups,
+                    update: function (filteredItems, filterText) {
+                        ctrl.groups = filteredItems;
+                    }
+                });
+        }
+
+        $http.get(
+            "/restful/services/ContactGroupRepository/actions/listAll/invoke",
+            {
+                headers: {
+                    'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
+                }
+            }
+        )
+        .then(
+            function(resp) {
+                ctrl.groups = resp.data;
+            },
+            function(err) {
+                console.error('ERR', err); //  err.status will contain the status code
+            })
+    }])
+
+    .controller('GroupDetailCtrl',
+        ['$scope', '$http','$stateParams', '$state', 'AuthService',
+            function($scope, $http, $stateParams, $state, AuthService) {
+
+                var ctrl = this;
+
+                ctrl.username = AuthService.username();
+                ctrl.logout = function() {
+                    AuthService.logout();
+                    $state.go('login', {}, {reload: true});
+                }
+
+                $http.get(
+                      "/restful/objects/domainapp.dom.group.ContactGroup/" + $stateParams.instanceId,
+                    {
+                        headers: {
+                            'Accept': 'application/json;profile=urn:org.apache.isis/v1'
+                        }
+                    }
+                    )
+                    .then(
+                        function(resp) {
+                            ctrl.group = resp.data
+                        },
+                        function(err) {
+                            console.error('ERR', err); //  err.status will contain the status code
+                        })
+            }])
+
     ;
-    
+
