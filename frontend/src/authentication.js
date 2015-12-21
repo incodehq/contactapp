@@ -32,8 +32,8 @@ angular.module('starter')
     })
 
     .service('AuthService', 
-            ['$q','$http','Base64','$rootScope', 
-        function($q, $http, Base64, $rootScope ) {
+            ['$q','$http','Base64','$rootScope', 'AppConfig',
+        function($q, $http, Base64, $rootScope, AppConfig ) {
             
         var LOCAL_TOKEN_KEY = 'contactapp';
         var username = '';
@@ -76,7 +76,7 @@ angular.module('starter')
                 // attempt to access a resource (we happen to use /restful/user) 
                 // using the provided name and password
                 var basicAuth = Base64.encode(name + ":" + pw);
-                $http.get("/restful/user",
+                $http.get(AppConfig.baseUrl + "/restful/user",
                         {
                             headers: { 
                                 'Authorization': 'Basic ' + basicAuth, 

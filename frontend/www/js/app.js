@@ -1,5 +1,9 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
 
+    .constant('AppConfig', {
+        baseUrl: "http://10.0.0.7:8080"
+    })
+
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

@@ -24,8 +24,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactsCtrl',
-    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar',
-    function($scope, $http, $state, AuthService, $ionicFilterBar) {
+    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig',
+    function($scope, $http, $state, AuthService, $ionicFilterBar, AppConfig) {
 
         var ctrl = this;
 
@@ -46,7 +46,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "/restful/services/ContactRepository/actions/listAll/invoke",
+            AppConfig.baseUrl + "/restful/services/ContactRepository/actions/listAll/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -63,8 +63,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactDetailCtrl',
-    ['$scope', '$http','$stateParams', '$state', 'AuthService',
-    function($scope, $http, $stateParams, $state, AuthService) {
+    ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
+    function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
 
         var ctrl = this;
 
@@ -75,7 +75,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
+            AppConfig.baseUrl + "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1'
@@ -92,8 +92,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('GroupsCtrl',
-    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar',
-    function($scope, $http, $state, AuthService, $ionicFilterBar) {
+    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig',
+    function($scope, $http, $state, AuthService, $ionicFilterBar, AppConfig) {
 
         var ctrl = this;
 
@@ -114,7 +114,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            "/restful/services/ContactGroupRepository/actions/listAll/invoke",
+            AppConfig.baseUrl + "/restful/services/ContactGroupRepository/actions/listAll/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -131,8 +131,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('GroupDetailCtrl',
-        ['$scope', '$http','$stateParams', '$state', 'AuthService',
-            function($scope, $http, $stateParams, $state, AuthService) {
+        ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
+            function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
 
                 var ctrl = this;
 
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
                 }
 
                 $http.get(
-                      "/restful/objects/domainapp.dom.group.ContactGroup/" + $stateParams.instanceId,
+                      AppConfig.baseUrl + "/restful/objects/domainapp.dom.group.ContactGroup/" + $stateParams.instanceId,
                     {
                         headers: {
                             'Accept': 'application/json;profile=urn:org.apache.isis/v1'
