@@ -241,7 +241,25 @@ then run the install:
 * C:\Android-SDK\v24.4.1\extras\intel\Hardware_Accelerated_Execution_Manager\intelhaxm-android.exe
 
 
+
+
+per http://docs.ionic.io/docs/cordova-whitelist
+
+
 [source,bash]
 ----
-ionic emulate android
+ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
 ----
+
+then edited `config.xml`
+
+
+could then deploy
+
+[source,bash]
+----
+ionic run android
+----
+
+
+nb: for debugging, use the link:https://developers.google.com/chrome-developer-tools/docs/remote-debugging[adb extension for Chrome]
