@@ -1,14 +1,21 @@
 package domainapp.dom.group;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Queries;
+import javax.jdo.annotations.Query;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
+
 import domainapp.dom.contactable.ContactableEntity;
 import domainapp.dom.country.Country;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Property;
-
-import javax.jdo.annotations.*;
 
 @PersistenceCapable
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
@@ -28,6 +35,7 @@ import javax.jdo.annotations.*;
         editing = Editing.DISABLED,
         bounded = true
 )
+@XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactGroup extends ContactableEntity {
 
     public String title() {

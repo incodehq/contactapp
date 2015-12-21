@@ -5,12 +5,12 @@ import org.apache.isis.applib.annotation.*;
 import domainapp.dom.country.Country;
 
 @DomainService(
-        nature = NatureOfService.VIEW_REST_ONLY,
+        nature = NatureOfService.DOMAIN,
         repositoryFor = ContactGroup.class
 )
 public class  ContactGroupRepository {
 
-    @Action(semantics = SemanticsOf.SAFE)
+    @Programmatic
     public java.util.List<ContactGroup> listAll() {
         return container.allInstances(ContactGroup.class);
     }

@@ -10,15 +10,17 @@ import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
 import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import domainapp.dom.contactable.ContactableEntity;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
-import domainapp.dom.contacts.Contact;
+import domainapp.dom.contactable.ContactableEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,6 +48,7 @@ import lombok.Setter;
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
+@XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactNumber implements Comparable<ContactNumber> {
 
     @Column(allowsNull = "false")
@@ -60,6 +63,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
 
     @Column(allowsNull = "false")
     @Property
+    @Title
     @Getter @Setter
     private String number;
 

@@ -263,3 +263,9 @@ ionic run android
 
 
 nb: for debugging, use the link:https://developers.google.com/chrome-developer-tools/docs/remote-debugging[adb extension for Chrome]
+
+
+note that the `./plugins` directory is ignored (via `.gitignore`); looks like can use `ionic state restore` to restore all plugins.
+
+
+

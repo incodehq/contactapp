@@ -46,7 +46,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            AppConfig.baseUrl + "/restful/services/ContactRepository/actions/listAll/invoke",
+            AppConfig.baseUrl + "/restful/services/ContactViewModelRepository/actions/listAll/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -75,7 +75,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            AppConfig.baseUrl + "/restful/objects/domainapp.dom.contacts.Contact/" + $stateParams.instanceId,
+            AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.contacts.ContactViewModel/" + $stateParams.instanceId,
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1'
@@ -114,7 +114,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            AppConfig.baseUrl + "/restful/services/ContactGroupRepository/actions/listAll/invoke",
+            AppConfig.baseUrl + "/restful/services/ContactGroupViewModelRepository/actions/listAll/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
                 }
 
                 $http.get(
-                      AppConfig.baseUrl + "/restful/objects/domainapp.dom.group.ContactGroup/" + $stateParams.instanceId,
+                      AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.group.ContactGroupViewModel/" + $stateParams.instanceId,
                     {
                         headers: {
                             'Accept': 'application/json;profile=urn:org.apache.isis/v1'
