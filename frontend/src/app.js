@@ -1,7 +1,7 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
 
-    .constant('AppConfig', {
-        baseUrl: "http://10.0.0.7:8080"
+    .value('AppConfig', {
+        baseUrl: "http://127.0.0.1:8080"
     })
 
     .run(function($ionicPlatform) {

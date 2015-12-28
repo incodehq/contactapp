@@ -1,23 +1,32 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl',
-    ['$scope','$state','$ionicPopup','AuthService',
-    function($scope, $state, $ionicPopup, AuthService) {
-
+    ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
+    function($scope, $state, $ionicPopup, AuthService, AppConfig) {
+        var environments = {
+            Dev: "http://localhost:8080",
+            Test: "https://contactapp-test.eurocommercialproperties.com",
+            Production: "https://contactapp.eurocommercialproperties.com"
+        }
         $scope.data = {}
+        $scope.data.environment = "Dev"
 
         $scope.login =
             function(data) {
                 var username=$scope.data.username
                 var password=$scope.data.password
 
+                AppConfig.baseUrl = environments[$scope.data.environment]
+
                 AuthService.login(username, password).then(
                     function(authenticated) {
-                        $scope.data = {}
+                        $scope.data.username = null
+                        $scope.data.password = null
                         $scope.error = undefined
                         $state.go('tab.contacts', {}, {reload: true});
                     }, function(err) {
-                        $scope.data = {}
+                        $scope.data.username = null
+                        $scope.data.password = null
                         $scope.error = "Incorrect username or password"
                     });
         };
