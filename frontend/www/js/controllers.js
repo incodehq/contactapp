@@ -4,12 +4,12 @@ angular.module('starter.controllers', [])
     ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
     function($scope, $state, $ionicPopup, AuthService, AppConfig) {
         var environments = {
-            Dev: "http://localhost:8080",
+            Development: "http://localhost:8080",
             Test: "https://contactapp-test.eurocommercialproperties.com",
             Production: "https://contactapp.eurocommercialproperties.com"
         }
         $scope.data = {}
-        $scope.data.environment = "Dev"
+        $scope.data.environment = "Development"
 
         $scope.login =
             function(data) {
