@@ -10,6 +10,16 @@
         </div>
 
         <div class="list list-inset">
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Environment
+                </div>
+                <select ng-model="data.environment">
+                    <option>Development</option>
+                    <option>Test</option>
+                    <option>Production</option>
+                </select>
+            </label>
             <label class="item item-input">
                 <input type="text" placeholder="Username" ng-model="data.username" >
             </label>
