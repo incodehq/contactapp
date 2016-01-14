@@ -34,7 +34,7 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.11.0-SNAPSHOT</isis.version>
+        <isis.version>1.12.0-SNAPSHOT</isis.version>
 
         <isis-metamodel-paraname8.version>1.10.0</isis-metamodel-paraname8.version>
 
@@ -42,7 +42,7 @@
         <isis-module-command.version>1.10.0</isis-module-command.version>
         <isis-module-devutils.version>1.10.0</isis-module-devutils.version>
         <isis-module-docx.version>1.10.0</isis-module-docx.version>
-        <isis-module-excel.version>1.10.0</isis-module-excel.version>
+        <isis-module-excel.version>1.12.0-SNAPSHOT</isis-module-excel.version>
         <isis-module-fakedata.version>1.10.0</isis-module-fakedata.version>
         <isis-module-poly.version>1.10.0</isis-module-poly.version>
         <isis-module-publishing.version>1.10.0</isis-module-publishing.version>

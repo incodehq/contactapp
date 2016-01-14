@@ -65,7 +65,7 @@ public class DemoFixture extends FixtureScript {
         // make objects created by ExcelFixture available to our caller.
         final Map<Class, List<Object>> objectsByClass = fs.getObjectsByClass();
 
-        getContacts().addAll((List) objectsByClass.get(ContactRowHandler.class));
+        getContacts().addAll((List) objectsByClass.get(ContactImport.class));
     }
 
     protected String getSpreadsheetBasename() {
@@ -74,7 +74,7 @@ public class DemoFixture extends FixtureScript {
 
     private Class[] getHandlers() {
         return new Class[]{
-                ContactRowHandler.class,
+                ContactImport.class,
         };
     }
 }
