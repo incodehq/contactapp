@@ -269,3 +269,9 @@ note that the `./plugins` directory is ignored (via `.gitignore`); looks like ca
 
 
 
+
+
+== Using swagger-ui
+
+The `web.xml` is set up using "auto" for the security challenge.  The `swagger-ui/index.html` doesn't (not sure why) seem to be logging in correctly.  the workaround is to access the `/restful/swagger/public` URI directly from the web browser (causing an HTTP Basic auth challenge),
+
