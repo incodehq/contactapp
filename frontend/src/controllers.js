@@ -5,8 +5,8 @@ angular.module('starter.controllers', [])
     function($scope, $state, $ionicPopup, AuthService, AppConfig) {
         var environments = {
             Development: "http://localhost:8080",
-            Test: "https://contactapp-test.eurocommercialproperties.com",
-            Production: "https://contactapp.eurocommercialproperties.com"
+            Test: "http://contacts-test.ecpnv.com",
+            Production: "http://contacts.ecpnv.com"
         }
         $scope.data = {}
         $scope.data.environment = "Development"
