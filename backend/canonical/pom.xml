@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.incode.app</groupId>
         <artifactId>contactapp</artifactId>
-        <version>1.11.0-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>contactapp-canonical</artifactId>
