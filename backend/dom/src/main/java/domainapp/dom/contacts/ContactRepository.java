@@ -13,6 +13,7 @@ import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
+import domainapp.dom.utils.StringUtils;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -29,11 +30,12 @@ public class ContactRepository {
     public java.util.List<Contact> find(
             final String regex
     ) {
+        String pattern = StringUtils.wildcardToCaseInsensitiveRegex(regex);
         java.util.Set<Contact> results = new HashSet<Contact>();
 
-        results.addAll(findByName(regex));
-        results.addAll(findByContactRoleName(regex));
-        for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
+        results.addAll(findByName(pattern));
+        results.addAll(findByContactRoleName(pattern));
+        for(ContactGroup contactGroup : contactGroupRepository.findByName(pattern)) {
             results.addAll(findByContactGroup(contactGroup));
         }
 
@@ -47,11 +49,12 @@ public class ContactRepository {
     public java.util.List<Contact> findByName(
             final String regex
     ) {
+        String pattern = StringUtils.wildcardToCaseInsensitiveRegex(regex);
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Contact.class,
                         "findByName",
-                        "regex", regex));
+                        "regex", pattern));
     }
 
     @Programmatic

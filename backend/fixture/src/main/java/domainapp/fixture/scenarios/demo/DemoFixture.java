@@ -66,6 +66,7 @@ public class DemoFixture extends FixtureScript {
         final Map<Class, List<Object>> objectsByClass = fs.getObjectsByClass();
 
         getContacts().addAll((List) objectsByClass.get(ContactImport.class));
+
     }
 
     protected String getSpreadsheetBasename() {

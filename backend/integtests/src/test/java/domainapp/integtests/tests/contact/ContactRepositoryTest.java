@@ -32,6 +32,7 @@ import domainapp.dom.contacts.Contact;
 import domainapp.dom.contacts.ContactRepository;
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
+import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
@@ -130,9 +131,18 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            String regex = contactRoleRepository.listAll().get(0).getRoleName();
-            if(regex == null) regex = "";
-            regex = "(?i).*" + regex + ".*";
+            List<ContactRole> list = contactRoleRepository.listAll();
+            String regex = "No ContactRoleName in fixtures";
+
+            int i = 0;
+            while(i < list.size()) {
+                if(list.get(i).getRoleName() != null) {
+                    regex = list.get(i).getRoleName();
+                    break;
+                }
+                i++;
+            }
+
             // when
             final List<Contact> contacts = contactRepository.findByContactRoleName(regex);
 
@@ -147,6 +157,39 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
 
             // when
             final List<Contact> contacts = contactRepository.findByContactRoleName(roleName);
+
+            // then
+            assertThat(contacts.size()).isEqualTo(0);
+        }
+    }
+
+    public static class FindByNameUsingRexEx extends ContactRepositoryTest {
+
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            String contactName = contactRepository.listAll().get(0).getName();
+            contactName = contactName.split(" ")[0];
+
+            // when
+            final String regex1 = contactName;
+            final String regex2 = contactName + "*";
+
+            final List<Contact> contacts1 = contactRepository.findByName(regex1);
+            final List<Contact> contacts2 = contactRepository.findByName(regex2);
+
+            // then
+            assertThat(contacts1.size()).isEqualTo(0);
+            assertThat(contacts2.size()).isGreaterThan(0);
+        }
+
+        @Test
+        public void sadCase() throws Exception {
+            // given
+            final String contactName = "*Not a name*";
+
+            // when
+            final List<Contact> contacts = contactRepository.findByName(contactName);
 
             // then
             assertThat(contacts.size()).isEqualTo(0);

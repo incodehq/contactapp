@@ -18,18 +18,20 @@
  */
 package domainapp.integtests.tests.group;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.inject.Inject;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactGroupRepositoryTest extends DomainAppIntegTest {
@@ -52,7 +54,7 @@ public class ContactGroupRepositoryTest extends DomainAppIntegTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            final String searchStr = "(?i).*a.*";
+            final String searchStr = "*a*";
 
             // when
             final List<ContactGroup> contacts = contactGroupRepository.findByName(searchStr);

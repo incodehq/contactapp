@@ -3,6 +3,7 @@ package domainapp.dom.group;
 import org.apache.isis.applib.annotation.*;
 
 import domainapp.dom.country.Country;
+import domainapp.dom.utils.StringUtils;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -32,11 +33,12 @@ public class  ContactGroupRepository {
     public java.util.List<ContactGroup> findByName(
             String regex
     ) {
+        String pattern = StringUtils.wildcardToCaseInsensitiveRegex(regex);
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactGroup.class,
                         "findByName",
-                        "regex", regex));
+                        "regex", pattern));
     }
 
 

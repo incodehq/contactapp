@@ -1,10 +1,12 @@
 package domainapp.dom.role;
 
-import domainapp.dom.contacts.Contact;
-import domainapp.dom.group.ContactGroup;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.group.ContactGroup;
+import domainapp.dom.utils.StringUtils;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -34,11 +36,12 @@ public class ContactRoleRepository {
     public java.util.List<ContactRole> findByName(
             final String regex
     ) {
+        String pattern = StringUtils.wildcardToCaseInsensitiveRegex(regex);
         return container.allMatches(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactRole.class,
                         "findByName",
-                        "regex", regex));
+                        "regex", pattern));
     }
 
     @Programmatic
