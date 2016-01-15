@@ -15,9 +15,9 @@
                     Environment
                 </div>
                 <select ng-model="data.environment">
-                    <option>Development</option>
-                    <option>Test</option>
                     <option>Production</option>
+                    <option>Test</option>
+                    <option>Development</option>
                 </select>
             </label>
             <label class="item item-input">
@@ -28,5 +28,16 @@
             </label>
         </div>
         <button class="button button-block button-calm" ng-click="login()">Login</button>
+
+
+
     </ion-content>
+    <div class="bar bar-footer bar-balanced" ng-if="data.environment == 'Production'">
+        <button class="button button-primary " ng-click="checkForUpdates()">
+            Check for updates
+        </button>
+        <button class="button button-pulse" ng-if="hasUpdate" ng-click="doUpdate()">
+            download update
+        </button>
+    </div>
 </ion-view>
