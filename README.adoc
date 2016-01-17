@@ -275,3 +275,67 @@ note that the `./plugins` directory is ignored (via `.gitignore`); looks like ca
 
 The `web.xml` is set up using "auto" for the security challenge.  The `swagger-ui/index.html` doesn't (not sure why) seem to be logging in correctly.  the workaround is to access the `/restful/swagger/public` URI directly from the web browser (causing an HTTP Basic auth challenge),
 
+
+
+
+== Uploading
+
+for use by ionic viewer
+
+[source,bash]
+----
+ionic upload --note "first attempt, configured to talk to contacts.ecpnv.com over http"
+----
+
+
+generates an output such as:
+
+[source,bash]
+----
+Email: dan@XXXXXX
+Password: XXXXXXXXXXXXX
+Logged in! :)
+Uploading app....
+Saved app_id, writing to ionic.io.bundle.min.js...
+Successfully uploaded (123d567f)
+
+----
+
+
+
+
+== Publishing/Releasing
+
+=== Google Play
+
+for real, to the google play store
+
+per http://ionicframework.com/docs/guide/publishing.html
+
+
+[source,bash]
+----
+cordova build -release android
+----
+
+
+[source,bash]
+----
+mkdir keystore
+$JAVA_HOME/bin/keytool -genkey -v -keystore keystore/my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+----
+
+[source,bash]
+----
+$JAVA_HOME/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore/my-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
+----
+
+zip align:
+
+[source,bash]
+----
+cd platforms/android/build/outputs/apk/
+$ANDROID_HOME/build-tools/23.0.2/zipalign -v 4 android-release-unsigned.apk ecp-contactapp.apk
+----
+
+
