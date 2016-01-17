@@ -43,8 +43,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             templateUrl: 'templates/tabs.html'
         })
 
-        // Each tab has its own nav history stack:
-        .state('tab.contacts', {
+        .state('tabs', {
+            url: '/tabs',
+            templateUrl: 'templates/tabs-container.html',
+            controller: 'TabsContainerCtrl as ctrl'
+        })
+
+        .state('tabs.contacts', {
             cache: false,
             url: '/contacts',
             views: {
@@ -54,7 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 }
             }
         })
-        .state('tab.contact-detail', {
+        .state('tabs.contact-detail', {
             cache: false,
             url: '/contacts/:instanceId',
             views: {
@@ -64,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 }
             }
         })
-        .state('tab.groups', {
+        .state('tabs.groups', {
             cache: false,
             url: '/groups',
             views: {
@@ -74,7 +79,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 }
             }
         })
-        .state('tab.group-detail', {
+        .state('tabs.group-detail', {
             cache: false,
             url: '/groups/:instanceId',
             views: {

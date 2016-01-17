@@ -27,4 +27,14 @@
     </ion-list>
 
   </ion-content>
+
+
+    <!-- TABS -->
+    <div class="tabs tabs-icon-top">
+        <a class="tab-item" ng-click="ctrl.goContacts()" ng-class="{ active : settings.tab == 'contacts' }">
+            <i class="icon ion-android-contact"></i> Contacts</a>
+        <a class="tab-item" ng-click="ctrl.goContactGroups()" ng-class="{ active : settings.tab == 'contactGroups' }">
+            <i class="icon ion-android-contacts"></i> Contact Groups</a>
+    </div>
+
 </ion-view>

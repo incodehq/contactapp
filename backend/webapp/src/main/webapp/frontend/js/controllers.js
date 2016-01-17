@@ -1,15 +1,15 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl',
-    ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
-    function($scope, $state, $ionicPopup, AuthService, AppConfig) {
+    ['$rootScope','$scope','$state','$ionicPopup','AuthService', 'AppConfig',
+    function($rootScope,$scope, $state, $ionicPopup, AuthService, AppConfig) {
         var environments = {
             Development: "http://localhost:8080",
             Test: "http://contacts-test.ecpnv.com",
             Production: "http://contacts.ecpnv.com"
         }
         $scope.data = {}
-        $scope.data.environment = "Production"
+        $scope.data.environment = "Development"
 
         $scope.login =
             function(data) {
@@ -23,13 +23,35 @@ angular.module('starter.controllers', [])
                         $scope.data.username = null
                         $scope.data.password = null
                         $scope.error = undefined
-                        $state.go('tab.contacts', {}, {reload: true});
+                        $rootScope.settings = { tab: 'contacts' }
+                        $state.go('tabs.contacts', {}, {reload: true})
                     }, function(err) {
                         $scope.data.username = null
                         $scope.data.password = null
                         $scope.error = "Incorrect username or password"
                     });
         };
+    }])
+
+    .controller('TabsContainerCtrl',
+    ['$rootScope','$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig', '$ionicConfig',
+    function($rootScope, $scope, $http, $state, AuthService, $ionicFilterBar, AppConfig, $ionicConfig) {
+
+        var ctrl = this;
+
+        ctrl.goContacts = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.contacts', {}, {reload: true})
+
+            //$rootScope.settings.tab = 'contacts'
+        }
+        ctrl.goContactGroups = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.groups', {}, {reload: true})
+
+            //$rootScope.settings.tab = 'contactGroups'
+        }
+
     }])
 
     .controller('ContactsCtrl',
@@ -69,6 +91,21 @@ angular.module('starter.controllers', [])
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
+
+
+        ctrl.goContacts = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.contacts')
+
+            $rootScope.settings.tab = 'contacts'
+        }
+        ctrl.goContactGroups = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.groups')
+
+            $rootScope.settings.tab = 'contactGroups'
+        }
+
     }])
 
     .controller('ContactDetailCtrl',
@@ -98,6 +135,20 @@ angular.module('starter.controllers', [])
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
+
+        ctrl.goContacts = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.contacts')
+
+            $rootScope.settings.tab = 'contacts'
+        }
+        ctrl.goContactGroups = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.groups')
+
+            $rootScope.settings.tab = 'contactGroups'
+        }
+
     }])
 
     .controller('GroupsCtrl',
@@ -137,36 +188,65 @@ angular.module('starter.controllers', [])
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
+
+        ctrl.goContacts = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.contacts')
+
+            $rootScope.settings.tab = 'contacts'
+        }
+        ctrl.goContactGroups = function() {
+            $ionicConfig.views.transition('platform');
+            $state.go('tabs.groups')
+
+            $rootScope.settings.tab = 'contactGroups'
+        }
+
     }])
 
     .controller('GroupDetailCtrl',
         ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
-            function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
+        function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
 
-                var ctrl = this;
+            var ctrl = this;
 
-                ctrl.username = AuthService.username();
-                ctrl.logout = function() {
-                    AuthService.logout();
-                    $state.go('login', {}, {reload: true});
-                }
+            ctrl.username = AuthService.username();
+            ctrl.logout = function() {
+                AuthService.logout();
+                $state.go('login', {}, {reload: true});
+            }
 
-                $http.get(
-                      AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.group.ContactGroupViewModel/" + $stateParams.instanceId,
-                    {
-                        headers: {
-                            'Accept': 'application/json;profile=urn:org.apache.isis/v1'
-                        }
+            $http.get(
+                AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.group.ContactGroupViewModel/" + $stateParams.instanceId,
+                {
+                    headers: {
+                        'Accept': 'application/json;profile=urn:org.apache.isis/v1'
                     }
-                    )
-                    .then(
-                        function(resp) {
-                            ctrl.group = resp.data
-                        },
-                        function(err) {
-                            console.error('ERR', err); //  err.status will contain the status code
-                        })
-            }])
+                }
+            )
+            .then(
+                function(resp) {
+                    ctrl.group = resp.data
+                },
+                function(err) {
+                    console.error('ERR', err); //  err.status will contain the status code
+                })
+
+            ctrl.goContacts = function() {
+                $ionicConfig.views.transition('platform');
+                $state.go('tabs.contacts')
+
+                $rootScope.settings.tab = 'contacts'
+            }
+            ctrl.goContactGroups = function() {
+                $ionicConfig.views.transition('platform');
+                $state.go('tabs.groups')
+
+                $rootScope.settings.tab = 'contactGroups'
+            }
+
+
+        }])
 
     ;
 
