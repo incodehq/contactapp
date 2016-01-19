@@ -34,8 +34,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactablesCtrl',
-    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig',
-    function($scope, $http, $state, AuthService, $ionicFilterBar, AppConfig) {
+    ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar',
+    function($scope, HttpService, $state, AuthService, $ionicFilterBar) {
 
         var ctrl = this;
 
@@ -52,33 +52,25 @@ angular.module('starter.controllers', [])
                     update: function (filteredItems, filterText) {
                         ctrl.contactables = filteredItems;
                     }
-                    /*,
-                    filter: function(items, filterText) {
-                        return items;
-                    }*/
                 });
         }
 
-        $http.get(
-            AppConfig.baseUrl + "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
-            {
-                headers: {
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
-                }
-            }
-        )
-        .then(
-            function(resp) {
-                ctrl.contactables = resp.data;
+        HttpService.get(
+            "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
+            function(respData) {
+                ctrl.contactables = respData
             },
-            function(err) {
+            function(respData, err) {
+                ctrl.contactables = respData || []
                 console.error('ERR', err); //  err.status will contain the status code
-            })
+            }
+            )
+
     }])
 
     .controller('ContactableDetailCtrl',
-    ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
-    function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
+    ['$scope', 'HttpService', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
+    function($scope, HttpService, $http, $stateParams, $state, AuthService, AppConfig) {
 
         var ctrl = this;
 

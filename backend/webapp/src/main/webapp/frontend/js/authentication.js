@@ -7,7 +7,7 @@ angular.module('starter')
             responseError: function (response) {
 
                 // whenever we get a 401 from the server.
-                // * if this happesn during the initial login attempt (see AuthService.login) when 
+                // * if this happens during the initial login attempt (see AuthService.login) when
                 //   we are testing the provided username+password against /restful/user, then we just ignore
                 // * if this happens otherwise then it means that we've lost the session, should go back to the login page
                 if(response.status === 401) {
@@ -32,8 +32,8 @@ angular.module('starter')
     })
 
     .service('AuthService', 
-            ['$q','$http','Base64','$rootScope', 'AppConfig',
-        function($q, $http, Base64, $rootScope, AppConfig ) {
+            ['$q', 'HttpService', '$http', 'Base64', '$rootScope', 'AppConfig',
+        function($q, HttpService, $http, Base64, $rootScope, AppConfig ) {
             
         var LOCAL_TOKEN_KEY = 'contactapp';
         var username = '';
@@ -41,15 +41,19 @@ angular.module('starter')
         var basicAuth;
         
         function loadUserCredentials() {
-            var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+            var token = readUserCredentials();
             if (token) {
                 useCredentials(token);
             }
         }
         
+        function readUserCredentials() {
+            return window.localStorage[LOCAL_TOKEN_KEY];
+        }
+
         function storeUserCredentials(name, basicAuth) {
             var token =  name + "." + basicAuth;
-            window.localStorage.setItem(LOCAL_TOKEN_KEY, name + "." + basicAuth);
+            window.localStorage[LOCAL_TOKEN_KEY] = name + "." + basicAuth;
             useCredentials(token);
         }
         
@@ -67,7 +71,9 @@ angular.module('starter')
             isAuthenticated = false;
 
             $http.defaults.headers.common.Authorization = 'Basic ';
-            window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+
+            // we no longer do this, to allow for off-line access
+            // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         }
         
         var login = function(name, pw) {
@@ -84,17 +90,23 @@ angular.module('starter')
                                 'Pragma': 'no-cache',
                                 'If-Modified-Since': 'Mon, 26 Jul 1997 05:00:00 GMT' // a long time ago
                             }
-                        }
-                    )
-                    .success(function() {
-                        // the user/password is good, so store away in local storage, and also   
-                        // configure the $http service so that all subsequent calls  use the same 'Authorization' header
-                        storeUserCredentials(name, basicAuth);
-                        resolve('Login success.');        
-                    })
-                    .error(function(){
-                        reject('Login Failed.');        
-                    });
+                        })
+                    .then(
+                        function() {
+                            // the user/password is good, so store away in local storage, and also
+                            // configure the $http service so that all subsequent calls  use the same 'Authorization' header
+                            storeUserCredentials(name, basicAuth);
+                            resolve('Login success.');
+                        },
+                        function(x) {
+                            var storedCredentials = readUserCredentials(name);
+                            var enteredCredentials = name + "." + basicAuth;
+                            if(x.status === 0 && storedCredentials === enteredCredentials) {
+                                resolve('Offline access.');
+                            } else {
+                                reject('Login Failed.');
+                            }
+                        });
             });
         };
         
