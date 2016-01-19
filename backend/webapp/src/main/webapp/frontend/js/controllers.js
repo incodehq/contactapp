@@ -9,7 +9,8 @@ angular.module('starter.controllers', [])
             Production: "http://contacts.ecpnv.com"
         }
         $scope.data = {}
-        $scope.data.environment = "Development"
+        //$scope.data.environment = "Development"
+        $scope.data.environment = "Production"
 
         $scope.login =
             function(data) {

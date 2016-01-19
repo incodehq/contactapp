@@ -23,12 +23,13 @@
           <div ng-if="contactable.type == 'Contact'">
               <h3>{{contactable.name}}</h3>
               <p>{{contactable.company}}</p>
+              <i class="icon ion-android-contact"></i>
           </div>
           <div ng-if="contactable.type == 'Contact Group'">
               <h3>{{contactable.name}}</h3>
               <p>{{contactable.country.title}}</p>
+              <i class="icon ion-android-contacts"></i>
           </div>
-        <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
 

@@ -30,14 +30,26 @@
                 </label>
             </div>
 
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-left"
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contactGroup.href)}}" >
+                    <div>
+                        <h3>{{contactRole.contactGroup.title}}</h3>
+                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                    </div>
+                    <i class="icon ion-android-contacts"></i>
+                </ion-item>
+            </ion-list>
+
+            <br/>
+
             <div class="list">
-                <label class="item item-input item-stacked-label"  ng-repeat="contactRole in ctrl.contactable.contactRoles">
-                    <input ng-show="isDefined(contactRole.roleName)" type="text" value="{{contactRole.contactGroup.title}} ({{contactRole.roleName}})" disabled>
-                    <input ng-show="isUndefined(contactRole.roleName)" type="text" value="{{contactRole.contactGroup.title}}" disabled>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Notes</span>
+                    <input type="text" value="{{ctrl.contactable.notes}}" disabled>
                 </label>
             </div>
 
-            <h4>{{ctrl.contactable.notes}}</h4>
         </div>
 
         <div ng-if="ctrl.contactable.type == 'Contact Group'">
@@ -54,31 +66,35 @@
                     <span class="input-label">Email</span>
                     <input type="text" value="{{ctrl.contactable.email}}" disabled>
                 </label>
-                <label class="item item-input item-stacked-label"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                <label class="item item-input"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
                     <span class="input-label">{{contactNumber.type}}</span>
                     <input type="text" value="{{contactNumber.number}}" disabled>
                 </label>
             </div>
+
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-left"
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contact.href)}}" >
+                    <div>
+                        <h3>{{contactRole.contact.title}}</h3>
+                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                    </div>
+                    <i class="icon ion-android-contact"></i>
+                </ion-item>
+            </ion-list>
+
+            <br/>
 
             <div class="list">
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Address</span>
                     <input type="text" value="{{ctrl.contactable.address}}" disabled>
                 </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Notes</span>
+                    <input type="text" value="{{ctrl.contactable.notes}}" disabled>
+                </label>
             </div>
-
-            <ion-list>
-                <ion-item class="item-remove-animate item-avatar item-icon-left"
-                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
-                    <div>
-                        <h3>{{contactRole.contact.title}}</h3>
-                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
-                    </div>
-                    <i class="icon ion-chevron-right icon-accessory"></i>
-                </ion-item>
-            </ion-list>
-
-            <h4>{{ctrl.contactable.notes}}</h4>
 
         </div>
 
