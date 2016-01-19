@@ -69,8 +69,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactableDetailCtrl',
-    ['$scope', 'HttpService', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
-    function($scope, HttpService, $http, $stateParams, $state, AuthService, AppConfig) {
+    ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService',
+    function($scope, HttpService, $stateParams, $state, AuthService) {
 
         var ctrl = this;
 
@@ -80,19 +80,13 @@ angular.module('starter.controllers', [])
             $state.go('login', {}, {reload: true});
         }
 
-        $http.get(
-            AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
-            {
-                headers: {
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1'
-                }
-            }
-        )
-        .then(
-            function(resp) {
-                ctrl.contactable = resp.data
+        HttpService.get(
+            "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
+            function(respData) {
+                ctrl.contactable = respData
             },
-            function(err) {
+            function(respData, err) {
+                ctrl.contactable = respData || {}
                 console.error('ERR', err); //  err.status will contain the status code
             })
 
