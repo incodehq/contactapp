@@ -78,7 +78,8 @@
                           ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contact.href)}}" >
                     <div>
                         <h3>{{contactRole.contact.title}}</h3>
-                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                        <p><span ng-show="isDefined(contactRole.companyName)">{{contactRole.companyName}}</span>
+                        <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span></p>
                     </div>
                     <i class="icon ion-android-contact"></i>
                 </ion-item>
