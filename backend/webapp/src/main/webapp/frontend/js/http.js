@@ -1,12 +1,15 @@
 angular.module('starter')
 
     .service('HttpService',
-            ['$http', 'AppConfig',
-            function($http, AppConfig) {
+            ['$http', '$ionicLoading', 'AppConfig',
+            function($http, $ionicLoading, AppConfig) {
 
         var getWithHeaders = function(relativeUrl, headers, onOK, onError) {
             var url = AppConfig.baseUrl + relativeUrl
             var localStorageKey = AppConfig.appPrefix + "." + url
+            $ionicLoading.show({
+                 delay: 200
+             })
             $http.get(
                 url,
                 {
@@ -15,12 +18,14 @@ angular.module('starter')
             )
             .then(
                 function(resp) {
+                    $ionicLoading.hide()
                     if(onOK) {
                         onOK(resp.data)
                     }
                     window.localStorage[localStorageKey] = JSON.stringify( { resp: resp, date: new Date() })
                 },
                 function(err) {
+                    $ionicLoading.hide()
                     if(onError) {
                         var stored = window.localStorage[localStorageKey]
                         if(stored) {
