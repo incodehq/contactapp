@@ -1,7 +1,8 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
 
     .value('AppConfig', {
-        baseUrl: "http://127.0.0.1:8080"
+        baseUrl: "http://127.0.0.1:8080",
+        appPrefix: 'contactapp'  // for localStorage
     })
 
     .run(function($ionicPlatform) {

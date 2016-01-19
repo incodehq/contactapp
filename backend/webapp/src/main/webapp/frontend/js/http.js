@@ -6,6 +6,7 @@ angular.module('starter')
 
         var getWithHeaders = function(relativeUrl, headers, onOK, onError) {
             var url = AppConfig.baseUrl + relativeUrl
+            var localStorageKey = AppConfig.appPrefix + "." + url
             $http.get(
                 url,
                 {
@@ -17,15 +18,16 @@ angular.module('starter')
                     if(onOK) {
                         onOK(resp.data)
                     }
-                    window.localStorage[url] = JSON.stringify(resp.data)
+                    window.localStorage[localStorageKey] = JSON.stringify( { resp: resp, date: new Date() })
                 },
                 function(err) {
                     if(onError) {
-                        var stored = window.localStorage[url]
+                        var stored = window.localStorage[localStorageKey]
                         if(stored) {
-                            onError(JSON.parse(stored), err)
+                            var stored = JSON.parse(stored)
+                            onError(err, stored.resp.data, stored.date, stored.resp)
                         } else {
-                            onError(null, err)
+                            onError(err, null, null, null)
                         }
                     }
                 })

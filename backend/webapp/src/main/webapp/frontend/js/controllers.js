@@ -34,8 +34,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactablesCtrl',
-    ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar',
-    function($scope, HttpService, $state, AuthService, $ionicFilterBar) {
+    ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar', '$filter',
+    function($scope, HttpService, $state, AuthService, $ionicFilterBar, $filter) {
 
         var ctrl = this;
 
@@ -60,17 +60,21 @@ angular.module('starter.controllers', [])
             function(respData) {
                 ctrl.contactables = respData
             },
-            function(respData, err) {
+            function(err, respData, date, resp) {
                 ctrl.contactables = respData || []
-                console.error('ERR', err); //  err.status will contain the status code
+                if(date) {
+                    ctrl.message = "Data from " + $filter('date')(date, 'd MMM, HH:mm')
+                } else {
+                    ctrl.message = "No data available"
+                }
             }
-            )
+        )
 
     }])
 
     .controller('ContactableDetailCtrl',
-    ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService',
-    function($scope, HttpService, $stateParams, $state, AuthService) {
+    ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService', '$filter',
+    function($scope, HttpService, $stateParams, $state, AuthService, $filter) {
 
         var ctrl = this;
 
@@ -85,9 +89,13 @@ angular.module('starter.controllers', [])
             function(respData) {
                 ctrl.contactable = respData
             },
-            function(respData, err) {
+            function(err, respData, date, resp) {
                 ctrl.contactable = respData || {}
-                console.error('ERR', err); //  err.status will contain the status code
+                if(date) {
+                    ctrl.message = "Data from " + $filter('date')(date, 'd MMM, HH:mm')
+                } else {
+                    ctrl.message = "No data available"
+                }
             })
 
         $scope.instanceId = function(href) {

@@ -35,7 +35,7 @@ angular.module('starter')
             ['$q', 'HttpService', '$http', 'Base64', '$rootScope', 'AppConfig',
         function($q, HttpService, $http, Base64, $rootScope, AppConfig ) {
             
-        var LOCAL_TOKEN_KEY = 'contactapp';
+        var LOCAL_TOKEN_KEY = AppConfig.appPrefix + ".authToken"
         var username = '';
         var isAuthenticated = false;
         var basicAuth;
