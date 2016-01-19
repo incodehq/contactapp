@@ -11,6 +11,7 @@ import com.google.common.base.Function;
 import org.apache.isis.applib.DomainObjectContainer;
 
 import domainapp.app.rest.v1.contacts.ContactableViewModel;
+import domainapp.dom.contacts.Contact;
 import domainapp.dom.role.ContactRole;
 
 @XmlRootElement(name = "contact-role")
@@ -55,6 +56,14 @@ public class ContactRoleViewModel {
     @XmlTransient
     public String getRoleName() {
         return underlying.getRoleName();
+    }
+
+    /**
+     * The {@link #getContact()}'s {@link Contact#getCompany() company}.
+     */
+    @XmlTransient
+    public String getCompanyName() {
+        return underlying.getContact().getCompany();
     }
 
     public String title() {
