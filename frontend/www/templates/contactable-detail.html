@@ -1,0 +1,103 @@
+<ion-view view-title="{{ctrl.contactable.name}}">
+
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">&nbsp;{{ctrl.username}}</nav-button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content class="padding">
+
+        <div ng-if="ctrl.contactable.type == 'Contact'">
+
+            <div class="row">
+                <div class="col">
+                    <h1>{{ctrl.contactable.name}}</h1>
+                    <p>&nbsp;{{ctrl.contactable.company}}</p>
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" value="{{ctrl.contactable.email}}" disabled>
+                </label>
+                <label class="item item-input "  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <span class="input-label">{{contactNumber.type}}</span>
+                    <input type="text" value="{{contactNumber.number}}" disabled>
+                </label>
+            </div>
+
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-left"
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contactGroup.href)}}" >
+                    <div>
+                        <h3>{{contactRole.contactGroup.title}}</h3>
+                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                    </div>
+                    <i class="icon ion-android-contacts"></i>
+                </ion-item>
+            </ion-list>
+
+            <br/>
+
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Notes</span>
+                    <input type="text" value="{{ctrl.contactable.notes}}" disabled>
+                </label>
+            </div>
+
+        </div>
+
+        <div ng-if="ctrl.contactable.type == 'Contact Group'">
+
+            <div class="row">
+                <div class="col">
+                    <h1>{{ctrl.contactable.name}}</h1>
+                    <p>&nbsp;{{ctrl.contactable.country.title}}</p>
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" value="{{ctrl.contactable.email}}" disabled>
+                </label>
+                <label class="item item-input"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <span class="input-label">{{contactNumber.type}}</span>
+                    <input type="text" value="{{contactNumber.number}}" disabled>
+                </label>
+            </div>
+
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-left"
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contact.href)}}" >
+                    <div>
+                        <h3>{{contactRole.contact.title}}</h3>
+                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                    </div>
+                    <i class="icon ion-android-contact"></i>
+                </ion-item>
+            </ion-list>
+
+            <br/>
+
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Address</span>
+                    <input type="text" value="{{ctrl.contactable.address}}" disabled>
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Notes</span>
+                    <input type="text" value="{{ctrl.contactable.notes}}" disabled>
+                </label>
+            </div>
+
+        </div>
+
+
+    </ion-content>
+</ion-view>

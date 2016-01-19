@@ -1,0 +1,87 @@
+<ion-view view-title="{{ctrl.contactable.name}}">
+
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+        <ion-nav-buttons side="right">
+            <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">&nbsp;{{ctrl.username}}</nav-button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content class="padding">
+
+        <div ng-if="ctrl.contactable.type == 'Contact'">
+
+            <div class="row">
+                <div class="col">
+                    <h1>{{ctrl.contactable.name}}</h1>
+                    <p>&nbsp;{{ctrl.contactable.company}}</p>
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" value="{{ctrl.contactable.email}}" disabled>
+                </label>
+                <label class="item item-input "  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <span class="input-label">{{contactNumber.type}}</span>
+                    <input type="text" value="{{contactNumber.number}}" disabled>
+                </label>
+            </div>
+
+            <div class="list">
+                <label class="item item-input item-stacked-label"  ng-repeat="contactRole in ctrl.contactable.contactRoles">
+                    <input ng-show="isDefined(contactRole.roleName)" type="text" value="{{contactRole.contactGroup.title}} ({{contactRole.roleName}})" disabled>
+                    <input ng-show="isUndefined(contactRole.roleName)" type="text" value="{{contactRole.contactGroup.title}}" disabled>
+                </label>
+            </div>
+
+            <h4>{{ctrl.contactable.notes}}</h4>
+        </div>
+
+        <div ng-if="ctrl.contactable.type == 'Contact Group'">
+
+            <div class="row">
+                <div class="col">
+                    <h1>{{ctrl.contactable.name}}</h1>
+                    <p>&nbsp;{{ctrl.contactable.country.title}}</p>
+                </div>
+            </div>
+
+            <div class="list">
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="text" value="{{ctrl.contactable.email}}" disabled>
+                </label>
+                <label class="item item-input item-stacked-label"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <span class="input-label">{{contactNumber.type}}</span>
+                    <input type="text" value="{{contactNumber.number}}" disabled>
+                </label>
+            </div>
+
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Address</span>
+                    <input type="text" value="{{ctrl.contactable.address}}" disabled>
+                </label>
+            </div>
+
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-left"
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
+                    <div>
+                        <h3>{{contactRole.contact.title}}</h3>
+                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                    </div>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </ion-item>
+            </ion-list>
+
+            <h4>{{ctrl.contactable.notes}}</h4>
+
+        </div>
+
+
+    </ion-content>
+</ion-view>

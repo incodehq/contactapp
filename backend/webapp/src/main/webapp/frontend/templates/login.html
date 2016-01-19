@@ -1,6 +1,11 @@
 <ion-view view-title="Login" name="login-view">
-    <ion-content class="padding">
 
+    <ion-header-bar align-title="center" class="bar-dark">
+        <h1 class="title">ECP Contacts</h1>
+    </ion-header-bar>
+
+
+    <ion-content class="padding">
         <div class="card" ng-show="error">
 
             <div class="item item-text-wrap assertive">
@@ -10,16 +15,6 @@
         </div>
 
         <div class="list list-inset">
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Environment
-                </div>
-                <select ng-model="data.environment">
-                    <option>Production</option>
-                    <option>Test</option>
-                    <option>Development</option>
-                </select>
-            </label>
             <label class="item item-input">
                 <input type="text" placeholder="Username" ng-model="data.username" >
             </label>
@@ -30,14 +25,23 @@
         <button class="button button-block button-calm" ng-click="login()">Login</button>
 
 
-
     </ion-content>
-    <div class="bar bar-footer bar-balanced" ng-if="data.environment == 'Production'">
-        <button class="button button-primary " ng-click="checkForUpdates()">
-            Check for updates
-        </button>
-        <button class="button button-pulse" ng-if="hasUpdate" ng-click="doUpdate()">
-            download update
-        </button>
+
+    <div class="bar bar-footer bar-dark">
+        <div class="button-bar">
+            <select ng-model="data.environment" class="button">
+                <option>Production</option>
+                <option>Test</option>
+                <option>Development</option>
+            </select>
+            <button class="button button-primary"  ng-if="data.environment == 'Production' && !hasUpdate"
+                    ng-click="checkForUpdates()">
+                Check for updates
+            </button>
+            <button class="button button-pulse"  ng-if="data.environment == 'Production' && hasUpdate" ng-click="doUpdate()">
+                Download update
+            </button>
+        </div>
+
     </div>
 </ion-view>

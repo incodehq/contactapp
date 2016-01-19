@@ -35,7 +35,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             controller: 'LoginCtrl'
         })
 
-        // setup an abstract state for the tabs directive
         .state('tab', {
             cache: false,
             url: '/tab',
@@ -43,44 +42,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             templateUrl: 'templates/tabs.html'
         })
 
-        // Each tab has its own nav history stack:
-        .state('tab.contacts', {
+        .state('tab.contactables', {
             cache: false,
-            url: '/contacts',
+            url: '/contactables',
             views: {
-                'tab-contacts': {
-                templateUrl: 'templates/tab-contacts.html',
-                controller: 'ContactsCtrl as ctrl'
+                'tab-contactables': {
+                templateUrl: 'templates/tab-contactables.html',
+                controller: 'ContactablesCtrl as ctrl'
                 }
             }
         })
-        .state('tab.contact-detail', {
+        .state('tab.contactable-detail', {
             cache: false,
-            url: '/contacts/:instanceId',
+            url: '/contactables/:instanceId',
             views: {
-                'tab-contacts': {
-                    templateUrl: 'templates/contact-detail.html',
-                    controller: 'ContactDetailCtrl as ctrl'
-                }
-            }
-        })
-        .state('tab.groups', {
-            cache: false,
-            url: '/groups',
-            views: {
-                'tab-groups': {
-                    templateUrl: 'templates/tab-groups.html',
-                    controller: 'GroupsCtrl as ctrl'
-                }
-            }
-        })
-        .state('tab.group-detail', {
-            cache: false,
-            url: '/groups/:instanceId',
-            views: {
-                'tab-groups': {
-                    templateUrl: 'templates/group-detail.html',
-                    controller: 'GroupDetailCtrl as ctrl'
+                'tab-contactables': {
+                    templateUrl: 'templates/contactable-detail.html',
+                    controller: 'ContactableDetailCtrl as ctrl'
                 }
             }
         });

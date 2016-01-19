@@ -1,0 +1,37 @@
+<ion-view view-title="Contacts">
+
+    <ion-nav-bar class="bar-stable">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="secondary">
+            <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">&nbsp;{{ctrl.username}}</nav-button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
+            </button>
+        </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+    <ion-content scroll="true" overflow-scroll="true">
+
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-left" 
+      ng-repeat="contactable in ctrl.contactables" type="item-text-wrap" href="#/tab/contactables/{{contactable.$$instanceId}}" >
+          <div ng-if="contactable.type == 'Contact'">
+              <h3>{{contactable.name}}</h3>
+              <p>{{contactable.company}}</p>
+              <i class="icon ion-android-contact"></i>
+          </div>
+          <div ng-if="contactable.type == 'Contact Group'">
+              <h3>{{contactable.name}}</h3>
+              <p>{{contactable.country.title}}</p>
+              <i class="icon ion-android-contacts"></i>
+          </div>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

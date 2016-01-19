@@ -9,7 +9,7 @@ angular.module('starter.controllers', [])
             Production: "http://contacts.ecpnv.com"
         }
         $scope.data = {}
-        $scope.data.environment = "Production"
+        $scope.data.environment = "Development"
 
         $scope.login =
             function(data) {
@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
                         $scope.data.username = null
                         $scope.data.password = null
                         $scope.error = undefined
-                        $state.go('tab.contacts', {}, {reload: true});
+                        $state.go('tab.contactables', {}, {reload: true});
                     }, function(err) {
                         $scope.data.username = null
                         $scope.data.password = null
@@ -32,7 +32,7 @@ angular.module('starter.controllers', [])
         };
     }])
 
-    .controller('ContactsCtrl',
+    .controller('ContactablesCtrl',
     ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig',
     function($scope, $http, $state, AuthService, $ionicFilterBar, AppConfig) {
 
@@ -47,15 +47,19 @@ angular.module('starter.controllers', [])
         ctrl.showFilterBar = function() {
             ctrl.filterBarInstance =
                 $ionicFilterBar.show({
-                    items: ctrl.contacts,
+                    items: ctrl.contactables,
                     update: function (filteredItems, filterText) {
-                        ctrl.contacts = filteredItems;
+                        ctrl.contactables = filteredItems;
                     }
+                    /*,
+                    filter: function(items, filterText) {
+                        return items;
+                    }*/
                 });
         }
 
         $http.get(
-            AppConfig.baseUrl + "/restful/services/ContactViewModelRepository/actions/listAll/invoke",
+            AppConfig.baseUrl + "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -64,14 +68,14 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                ctrl.contacts = resp.data;
+                ctrl.contactables = resp.data;
             },
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
     }])
 
-    .controller('ContactDetailCtrl',
+    .controller('ContactableDetailCtrl',
     ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
     function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
 
@@ -84,7 +88,7 @@ angular.module('starter.controllers', [])
         }
 
         $http.get(
-            AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.contacts.ContactViewModel/" + $stateParams.instanceId,
+            AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
             {
                 headers: {
                     'Accept': 'application/json;profile=urn:org.apache.isis/v1'
@@ -93,80 +97,26 @@ angular.module('starter.controllers', [])
         )
         .then(
             function(resp) {
-                ctrl.contact = resp.data
+                ctrl.contactable = resp.data
             },
             function(err) {
                 console.error('ERR', err); //  err.status will contain the status code
             })
-    }])
 
-    .controller('GroupsCtrl',
-    ['$scope','$http', '$state', 'AuthService', '$ionicFilterBar', 'AppConfig',
-    function($scope, $http, $state, AuthService, $ionicFilterBar, AppConfig) {
-
-        var ctrl = this;
-
-        ctrl.username = AuthService.username();
-        ctrl.logout = function() {
-            AuthService.logout();
-            $state.go('login', {}, {reload: true});
+        $scope.instanceId = function(href) {
+            var n = href.lastIndexOf('/');
+            var result = href.substring(n + 1);
+            return result;
         }
 
-        ctrl.showFilterBar = function() {
-            ctrl.filterBarInstance =
-                $ionicFilterBar.show({
-                    items: ctrl.groups,
-                    update: function (filteredItems, filterText) {
-                        ctrl.groups = filteredItems;
-                    }
-                });
+        $scope.isUndefined = function (thing) {
+            return thing === null || (typeof thing === "undefined");
+        }
+        $scope.isDefined = function (thing) {
+            return !$scope.isUndefined(thing);
         }
 
-        $http.get(
-            AppConfig.baseUrl + "/restful/services/ContactGroupViewModelRepository/actions/listAll/invoke",
-            {
-                headers: {
-                    'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
-                }
-            }
-        )
-        .then(
-            function(resp) {
-                ctrl.groups = resp.data;
-            },
-            function(err) {
-                console.error('ERR', err); //  err.status will contain the status code
-            })
     }])
-
-    .controller('GroupDetailCtrl',
-        ['$scope', '$http','$stateParams', '$state', 'AuthService', 'AppConfig',
-            function($scope, $http, $stateParams, $state, AuthService, AppConfig) {
-
-                var ctrl = this;
-
-                ctrl.username = AuthService.username();
-                ctrl.logout = function() {
-                    AuthService.logout();
-                    $state.go('login', {}, {reload: true});
-                }
-
-                $http.get(
-                      AppConfig.baseUrl + "/restful/objects/domainapp.app.rest.v1.group.ContactGroupViewModel/" + $stateParams.instanceId,
-                    {
-                        headers: {
-                            'Accept': 'application/json;profile=urn:org.apache.isis/v1'
-                        }
-                    }
-                    )
-                    .then(
-                        function(resp) {
-                            ctrl.group = resp.data
-                        },
-                        function(err) {
-                            console.error('ERR', err); //  err.status will contain the status code
-                        })
-            }])
 
     ;
 
