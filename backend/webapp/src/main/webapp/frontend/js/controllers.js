@@ -51,28 +51,48 @@ angular.module('starter.controllers', [])
                     items: ctrl.contactables,
                     update: function (filteredItems, filterText) {
                         ctrl.contactables = filteredItems;
-                    },
+                    }
+                    /*,
+                    // an attempt to see if filtering only after 3 chars entered improves rendering speed; apparently not
                     filter: function(items, text) {
                         if(text && text.length >= 3) {
-                            return []
+                            return items.filter(function(item) {
+                                for(property in item) {
+                                    if (typeof item[property] === "string" && item[property].indexOf(text) > -1) {
+                                        return true
+                                    }
+                                }
+                                return false
+                            })
                         } else {
                             return items
                         }
-                    }
+                    }*/
                 });
+        }
+
+        var instanceId = function(href) {
+            var n = href.lastIndexOf('/');
+            var result = href.substring(n + 1);
+            return result;
         }
 
         HttpService.get(
             "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             function(respData) {
-                // TODO: remove $$href
-                // TODO: add country.$$instanceId from country.href
-                // TODO: remove country.rel, country.method, country.type
-                ctrl.contactables = respData
+                ctrl.contactables = respData.map(
+                    function(contactable){
+                        contactable.$$instanceId = instanceId(contactable.$$href)
+                        delete contactable.$$href
+                        delete contactable.$$title
+                        delete contactable.notes
+                        delete contactable.email
+                        return contactable
+                    }
+                )
             },
             function(err, respData, date, resp) {
                 ctrl.respData = respData || {}
-
                 if(date) {
                     ctrl.message = "Data from " + $filter('date')(date, 'd MMM, HH:mm')
                 } else {
@@ -95,17 +115,43 @@ angular.module('starter.controllers', [])
             $state.go('login', {}, {reload: true});
         }
 
+        var instanceId = function(href) {
+            var n = href.lastIndexOf('/');
+            var result = href.substring(n + 1);
+            return result;
+        }
+
         HttpService.get(
             "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
             function(respData) {
-                // TODO: remove $$href, $$instanceId
-                // TODO: remove contactNumber.$$instanceId , contactNumber.$$href, contactNumber.$$title
-                // TODO: remove contactRole.$$instanceId , contactRole.$$href, contactRole.$$title
-                // TODO: add contactRole.contact.$$instanceId from contactRole.contact.href
-                // TODO: remove contactRole.contact.href, contactRole.contact.rel
-                // TODO: remove contactRole.contact.method,contactRole.contact.type
-                // TODO: remove contactRole.contactGroup.href, contactRole.contactGroup.rel
-                // TODO: remove contactRole.contactGroup.method,contactRole.contactGroup.type
+                delete respData.$$href
+                delete respData.$$instanceId
+                delete respData.$$title
+                respData.contactNumbers = respData.contactNumbers.map(
+                    function(contactNumber){
+                        delete contactNumber.$$instanceId
+                        delete contactNumber.$$href
+                        delete contactNumber.$$title
+                        return contactNumber
+                    }
+                )
+                respData.contactRoles = respData.contactRoles.map(
+                    function(contactRole){
+                        delete contactRole.$$href
+                        delete contactRole.$$title
+                        contactRole.contact.$$instanceId = instanceId(contactRole.contact.href)
+                        delete contactRole.contact.href
+                        delete contactRole.contact.rel
+                        delete contactRole.contact.method
+                        delete contactRole.contact.type
+                        contactRole.contactGroup.$$instanceId = instanceId(contactRole.contactGroup.href)
+                        delete contactRole.contactGroup.href
+                        delete contactRole.contactGroup.rel
+                        delete contactRole.contactGroup.method
+                        delete contactRole.contactGroup.type
+                        return contactRole
+                    }
+                )
                 ctrl.contactable = respData
             },
             function(err, respData, date, resp) {

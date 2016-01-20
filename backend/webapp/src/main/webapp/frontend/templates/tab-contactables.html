@@ -17,23 +17,25 @@
 
     <ion-content scroll="true" overflow-scroll="true">
 
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-left" 
-      ng-repeat="contactable in ctrl.contactables" type="item-text-wrap" href="#/tab/contactables/{{contactable.$$instanceId}}" >
-          <div ng-if="contactable.type == 'Contact'">
-              <h3>{{contactable.name}}</h3>
-              <p>{{contactable.company}}</p>
-              <i class="icon ion-android-contact"></i>
-          </div>
-          <div ng-if="contactable.type == 'Contact Group'">
-              <h3>{{contactable.name}}</h3>
-              <p>{{contactable.country.title}}</p>
-              <i class="icon ion-android-contacts"></i>
-          </div>
-      </ion-item>
-    </ion-list>
+        <ion-list>
+            <ion-item ng-repeat="contactable in ctrl.contactables"
+                    class="item-avatar item-icon-left item-remove-animate"
+                    type="item-text-wrap"
+                    href="#/tab/contactables/{{contactable.$$instanceId}}" >
+                <div ng-if="contactable.type == 'Contact'">
+                    <h3>{{contactable.name}}</h3>
+                    <p>{{contactable.company}}</p>
+                    <i class="icon ion-android-contact"></i>
+                </div>
+                <div ng-if="contactable.type == 'Contact Group'">
+                    <h3>{{contactable.name}}</h3>
+                    <p>{{contactable.country}}</p>
+                    <i class="icon ion-android-contacts"></i>
+                </div>
+            </ion-item>
+        </ion-list>
 
-  </ion-content>
+    </ion-content>
 
   <div class="bar bar-footer bar-assertive" ng-if="ctrl.message">
     <h2 class="title">{{ ctrl.message }}</h2>

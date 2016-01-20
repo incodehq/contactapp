@@ -32,11 +32,22 @@
             </div>
 
             <ion-list>
-                <ion-item class="item-avatar item-icon-left"
-                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contactGroup.href)}}" >
+                <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
+                        class="item-avatar item-icon-left"
+                        type="item-text-wrap"
+                        href="#/tab/contactables/{{contactRole.contactGroup.$$instanceId}}" >
                     <div>
                         <h3>{{contactRole.contactGroup.title}}</h3>
-                        <p ng-show="isDefined(contactRole.roleName)">{{contactRole.roleName}}</p>
+                        <p>
+                            <!--
+                            not available to us; the eager loading of RO is inconsistent for scalar references vs collections.
+                            instead, using title
+
+                            <h3>{{contactRole.contactGroup.name}}</h3>
+                            <span>{{contactRole.contactGroup.country}}</span>
+                            -->
+                            <span ng-show="isDefined(contactRole.roleName)">({{contactRole.roleName}})</span>
+                        </p>
                     </div>
                     <i class="icon ion-android-contacts"></i>
                 </ion-item>
@@ -75,11 +86,19 @@
 
             <ion-list>
                 <ion-item class="item-remove-animate item-avatar item-icon-left"
-                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{instanceId(contactRole.contact.href)}}" >
+                          ng-repeat="contactRole in ctrl.contactable.contactRoles" type="item-text-wrap" href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
                     <div>
                         <h3>{{contactRole.contact.title}}</h3>
-                        <p><span ng-show="isDefined(contactRole.company)">{{contactRole.company}}</span>
-                        <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span></p>
+                        <p>
+                            <!--
+                            not available to us; the eager loading of RO is inconsistent for scalar references vs collections.
+                            instead, using title
+                            <h3>{{contactRole.contact.name}}</h3>
+                            <span ng-show="isDefined(contactRole.company)">{{contactRole.company}}</span>
+                            -->
+                            <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span>
+                        </p>
+                        <i class="icon ion-android-contact"></i>
                     </div>
                     <i class="icon ion-android-contact"></i>
                 </ion-item>
