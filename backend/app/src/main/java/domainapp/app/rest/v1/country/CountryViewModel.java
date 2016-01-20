@@ -2,18 +2,17 @@ package domainapp.app.rest.v1.country;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.common.base.Function;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.services.bookmark.Bookmark;
+import org.apache.isis.applib.services.bookmark.BookmarkService;
 
+import domainapp.app.rest.ViewModelWithUnderlying;
 import domainapp.dom.country.Country;
 
-@XmlRootElement(name = "country")
-public class CountryViewModel {
+public class CountryViewModel extends ViewModelWithUnderlying<Country> {
 
     public static Function<Country, CountryViewModel> create(final DomainObjectContainer container) {
         return new Function<Country, CountryViewModel>() {
@@ -23,9 +22,6 @@ public class CountryViewModel {
         };
     }
 
-    @XmlElement(required = true)
-    private Country underlying;
-
     public CountryViewModel() {
     }
 
@@ -33,20 +29,9 @@ public class CountryViewModel {
         this.underlying = underlying;
     }
 
-    @XmlTransient
     public String getName() {
         return underlying.getName();
     }
 
-    public String title() {
-        return underlying != null? container.titleOf(underlying): "(no underlying)";
-    }
-    @Override
-    public String toString() {
-        return underlying != null? underlying.toString(): "(no underlying)";
-    }
-
-    @Inject
-    DomainObjectContainer container;
 
 }

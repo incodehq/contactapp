@@ -4,9 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.common.base.Function;
@@ -18,6 +15,7 @@ import com.google.common.collect.Lists;
 
 import org.apache.isis.applib.DomainObjectContainer;
 
+import domainapp.app.rest.ViewModelWithUnderlying;
 import domainapp.app.rest.v1.country.CountryViewModel;
 import domainapp.app.rest.v1.number.ContactNumberViewModel;
 import domainapp.app.rest.v1.role.ContactRoleViewModel;
@@ -26,14 +24,12 @@ import domainapp.dom.contacts.Contact;
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.role.ContactRole;
 
-@XmlRootElement(name = "contactable")
-public class ContactableViewModel {
+public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEntity> {
 
     enum Type {
         CONTACT,
         CONTACT_GROUP
     }
-
 
     public static class Functions {
         private Functions(){}
@@ -55,55 +51,43 @@ public class ContactableViewModel {
     }
 
     private Contact contact() {
-        return type == Type.CONTACT? (Contact) contactable : null;
+        return getType() == Type.CONTACT? (Contact) underlying : null;
     }
 
     private ContactGroup contactGroup() {
-        return type == Type.CONTACT_GROUP? (ContactGroup) contactable : null;
+        return getType() == Type.CONTACT_GROUP? (ContactGroup) underlying : null;
     }
 
     public ContactableViewModel() {
     }
 
     public ContactableViewModel(Contact contact) {
-        this.contactable = contact;
-        this.type = Type.CONTACT;
+        this.underlying = contact;
     }
 
     public ContactableViewModel(ContactGroup contactGroup) {
-        this.contactable = contactGroup;
-        this.type = Type.CONTACT_GROUP;
+        this.underlying = contactGroup;
     }
-
-    @XmlElement(required = true)
-    private Type type;
 
     public Type getType() {
-        return type;
+        return this.underlying instanceof Contact? Type.CONTACT: Type.CONTACT_GROUP;
     }
 
-    @XmlElement(required = true)
-    private ContactableEntity contactable;
-
-    @XmlTransient
     public String getName() {
-        return contactable.getName();
+        return underlying.getName();
     }
 
-    @XmlTransient
     public String getEmail() {
-        return contactable.getEmail();
+        return underlying.getEmail();
     }
 
-    @XmlTransient
     public String getNotes() {
-        return contactable.getNotes();
+        return underlying.getNotes();
     }
 
-    @XmlTransient
     public List<ContactNumberViewModel> getContactNumbers() {
         return Lists.newArrayList(
-                Iterables.transform(contactable.getContactNumbers(), ContactNumberViewModel.create(container))
+                Iterables.transform(underlying.getContactNumbers(), ContactNumberViewModel.create(container))
         );
     }
 
@@ -128,7 +112,7 @@ public class ContactableViewModel {
     @XmlTransient
     public List<ContactRoleViewModel> getContactRoles() {
         final Collection<ContactRole> contactRoles =
-                type == Type.CONTACT_GROUP
+                getType() == Type.CONTACT_GROUP
                     ? contactGroup().getContactRoles()
                     : contact().getContactRoles();
         return Lists.newArrayList(
@@ -140,9 +124,8 @@ public class ContactableViewModel {
     /**
      * Only populated for {@link #getType()} of {@link Type#CONTACT}.
      */
-    @XmlTransient
     public String getCompany() {
-        if (type == Type.CONTACT_GROUP) {
+        if (getType() == Type.CONTACT_GROUP) {
             return null;
         }
         return contact().getCompany();
@@ -151,23 +134,10 @@ public class ContactableViewModel {
     /**
      * Only populated for {@link #getType()} of {@link Type#CONTACT_GROUP}.
      */
-    @XmlTransient
     public CountryViewModel getCountry() {
-        if(type == Type.CONTACT) return null;
+        if(getType() == Type.CONTACT) return null;
         return CountryViewModel.create(container).apply(contactGroup().getCountry());
     }
-
-    public String title() {
-        return container.titleOf(contactable);
-    }
-
-    @Override
-    public String toString() {
-        return contactable != null? contactable.toString(): "(no underlying)";
-    }
-
-    @Inject
-    DomainObjectContainer container;
 
 
 
