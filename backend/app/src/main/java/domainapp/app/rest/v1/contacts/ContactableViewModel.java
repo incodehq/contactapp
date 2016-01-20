@@ -16,11 +16,11 @@ import com.google.common.collect.Lists;
 import org.apache.isis.applib.DomainObjectContainer;
 
 import domainapp.app.rest.ViewModelWithUnderlying;
-import domainapp.app.rest.v1.country.CountryViewModel;
 import domainapp.app.rest.v1.number.ContactNumberViewModel;
 import domainapp.app.rest.v1.role.ContactRoleViewModel;
 import domainapp.dom.contactable.ContactableEntity;
 import domainapp.dom.contacts.Contact;
+import domainapp.dom.country.Country;
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.role.ContactRole;
 
@@ -134,9 +134,10 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
     /**
      * Only populated for {@link #getType()} of {@link Type#CONTACT_GROUP}.
      */
-    public CountryViewModel getCountry() {
+    public String getCountry() {
         if(getType() == Type.CONTACT) return null;
-        return CountryViewModel.create(container).apply(contactGroup().getCountry());
+        final Country country = contactGroup().getCountry();
+        return country != null? container.titleOf(country): null;
     }
 
 

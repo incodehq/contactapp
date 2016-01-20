@@ -18,7 +18,7 @@
     <ion-content scroll="true" overflow-scroll="true">
 
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-left" 
+      <ion-item class="item-avatar item-icon-left"
       ng-repeat="contactable in ctrl.contactables" type="item-text-wrap" href="#/tab/contactables/{{contactable.$$instanceId}}" >
           <div ng-if="contactable.type == 'Contact'">
               <h3>{{contactable.name}}</h3>

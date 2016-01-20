@@ -9,8 +9,8 @@ angular.module('starter.controllers', [])
             Production: "http://contacts.ecpnv.com"
         }
         $scope.data = {}
-        //$scope.data.environment = "Development"
-        $scope.data.environment = "Production"
+        $scope.data.environment = "Development"
+        //$scope.data.environment = "Production"
 
         $scope.login =
             function(data) {
@@ -51,6 +51,13 @@ angular.module('starter.controllers', [])
                     items: ctrl.contactables,
                     update: function (filteredItems, filterText) {
                         ctrl.contactables = filteredItems;
+                    },
+                    filter: function(items, text) {
+                        if(text && text.length >= 3) {
+                            return []
+                        } else {
+                            return items
+                        }
                     }
                 });
         }
@@ -58,10 +65,14 @@ angular.module('starter.controllers', [])
         HttpService.get(
             "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             function(respData) {
+                // TODO: remove $$href
+                // TODO: add country.$$instanceId from country.href
+                // TODO: remove country.rel, country.method, country.type
                 ctrl.contactables = respData
             },
             function(err, respData, date, resp) {
-                ctrl.contactables = respData || []
+                ctrl.respData = respData || {}
+
                 if(date) {
                     ctrl.message = "Data from " + $filter('date')(date, 'd MMM, HH:mm')
                 } else {
@@ -87,6 +98,14 @@ angular.module('starter.controllers', [])
         HttpService.get(
             "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
             function(respData) {
+                // TODO: remove $$href, $$instanceId
+                // TODO: remove contactNumber.$$instanceId , contactNumber.$$href, contactNumber.$$title
+                // TODO: remove contactRole.$$instanceId , contactRole.$$href, contactRole.$$title
+                // TODO: add contactRole.contact.$$instanceId from contactRole.contact.href
+                // TODO: remove contactRole.contact.href, contactRole.contact.rel
+                // TODO: remove contactRole.contact.method,contactRole.contact.type
+                // TODO: remove contactRole.contactGroup.href, contactRole.contactGroup.rel
+                // TODO: remove contactRole.contactGroup.method,contactRole.contactGroup.type
                 ctrl.contactable = respData
             },
             function(err, respData, date, resp) {

@@ -54,7 +54,7 @@ public class ContactRoleViewModel extends ViewModelWithUnderlying<ContactRole> {
     /**
      * The {@link #getContact()}'s {@link Contact#getCompany() company}.
      */
-    public String getCompanyName() {
+    public String getCompany() {
         return underlying.getContact().getCompany();
     }
 
