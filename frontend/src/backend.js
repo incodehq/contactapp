@@ -1,8 +1,8 @@
 angular.module('starter')
 
     .service('BackendService',
-            ['HttpService', 'AppConfig',
-            function(HttpService, AppConfig) {
+            ['HttpService', 'AppConfig', '$filter',
+            function(HttpService, AppConfig, $filter) {
 
         var listAllKey = 'listAll' // for localStorage
 
@@ -16,7 +16,7 @@ angular.module('starter')
             return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm') :"No data available"
         }
 
-        this.loadContactables = function(onOK, onError) {
+        this.loadContactables = function(onComplete) {
             HttpService.get(
                 listAllKey,
                 "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
@@ -34,15 +34,15 @@ angular.module('starter')
                     trimmedData.sort(function(a,b) {
                         return a.name.localeCompare(b.name)
                     })
-                    onOK(trimmedData)
+                    onComplete(trimmedData)
                 },
                 function(err, respData, date, resp) {
-                    onError(respData || {}, message(date))
+                    onComplete(respData || {}, message(date))
                 }
             )
         }
 
-        this.loadContactable = function(instanceId, onOK, onError) {
+        this.loadContactable = function(instanceId, onComplete) {
             HttpService.get(
                 instanceId,
                 "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId,
@@ -75,10 +75,10 @@ angular.module('starter')
                             return contactRole
                         }
                     )
-                    onOK(respData)
+                    onComplete(respData)
                 },
                 function(err, respData, date, resp) {
-                    onError(respData || {}, message(date))
+                    onComplete(respData || {}, message(date))
                 }
             )
         }

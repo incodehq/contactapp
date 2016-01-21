@@ -94,12 +94,9 @@ angular.module('starter.controllers', [])
         }
 
         BackendService.loadContactables(
-            function(contactables){
+            function(contactables, messageIfAny) {
                 ctrl.contactables = contactables
-            },
-            function(contactables, message) {
-                ctrl.contactables = contactables
-                ctrl.message = message
+                ctrl.message = messageIfAny
             }
         )
 
@@ -135,12 +132,9 @@ angular.module('starter.controllers', [])
 
         BackendService.loadContactable(
             $stateParams.instanceId,
-            function(contactable) {
+            function(contactable, messageIfAny) {
                 ctrl.contactable = contactable
-            },
-            function(contactable, message) {
-                ctrl.contactable = contactable
-                ctrl.message = message
+                ctrl.message = messageIfAny
             }
         )
 
@@ -164,8 +158,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('AboutCtrl',
-        ['$scope', 'HttpService', 'AppConfig',
-        function($scope, HttpService, AppConfig) {
+        ['$scope',
+        function($scope) {
 
         var ctrl = this;
 
@@ -182,18 +176,35 @@ angular.module('starter.controllers', [])
             onDevice: ionic.Platform.isWebView() // true if on a device
         }
 
+    }])
+
+    .controller('DownloadCtrl',
+        ['$scope', 'BackendService',
+        function($scope, BackendService) {
+
+        var ctrl = this;
+
         ctrl.downloadContacts = function() {
-            var contactables = HttpService.lookup(
-                AppConfig.listAllKey
+            BackendService.loadContactables(
+                function(contactables, messageIfAny){
+                    if(messageIfAny) {
+                        // already cached
+                        return
+                    }
+                    for (var i = 0; i < contactables.length; i++) {
+                        var j = i+1
+                        var contactable = contactables[i]
+                        var instanceId = contactable.$$instanceId
+                        BackendService.loadContactable(
+                            instanceId,
+                            function(contactData){
+                                ctrl.message = "Downloaded " + j + " of " + contactables.length + ": " + contactData.name
+                            }
+                        )
+                    }
+                }
             )
-            if(!contactables) {
-                return
-            }
-            for(contactable in contactables) {
-
-            }
         }
-
 
     }])
 

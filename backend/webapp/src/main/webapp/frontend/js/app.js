@@ -80,7 +80,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                     controller: 'ContactableDetailCtrl as ctrl'
                 }
             }
-        });
+        })
+        .state('tab.download', {
+            cache: false,
+            url: '/download',
+            views: {
+                'tab-download': {
+                templateUrl: 'templates/download.html',
+                controller: 'DownloadCtrl as ctrl'
+                }
+            }
+        })
+
+        ;
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise(function ($injector, $location) {
