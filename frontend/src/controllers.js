@@ -79,6 +79,7 @@ angular.module('starter.controllers', [])
         }
 
         HttpService.get(
+            "listAll",
             "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             function(respData) {
                 var trimmedData = respData.map(
@@ -97,7 +98,7 @@ angular.module('starter.controllers', [])
                 ctrl.contactables = trimmedData
             },
             function(err, respData, date, resp) {
-                ctrl.respData = respData || {}
+                ctrl.contactables = respData || {}
                 if(date) {
                     ctrl.message = "Data from " + $filter('date')(date, 'd MMM, HH:mm')
                 } else {
@@ -106,8 +107,14 @@ angular.module('starter.controllers', [])
             }
         )
 
-        $scope.firstLetter = function(name) {
+        this.firstLetter = function(name) {
             return name && name.charAt(0);
+        }
+
+        this.cachedStateCssClass = function(instanceId) {
+            return HttpService.cached(instanceId)
+                ? "cached"
+                : "not-cached"
         }
     }])
 
@@ -130,6 +137,7 @@ angular.module('starter.controllers', [])
         }
 
         HttpService.get(
+            $stateParams.instanceId,
             "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + $stateParams.instanceId,
             function(respData) {
                 delete respData.$$href

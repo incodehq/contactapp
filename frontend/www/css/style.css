@@ -1,1 +1,9 @@
-/* Empty. Add your own CSS if you like */
+.not-cached {
+    color: darkgray;
+}
+.cached {
+    /*font-style: italic;*/
+}
+.bar.bar-footer p.title {
+    font-size: 14px;
+}

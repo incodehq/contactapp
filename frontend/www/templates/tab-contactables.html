@@ -19,14 +19,14 @@
 
         <ion-list>
             <div ng-repeat="contactable in ctrl.contactables">
-                <div class="item item-divider" ng-if="firstLetter(contactable.name) !== firstLetter(ctrl.contactables[$index-1].name)">
-                    {{firstLetter(contactable.name)}}
+                <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
+                    {{ctrl.firstLetter(contactable.name)}}
                 </div>
                 <ion-item
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                    <h3>{{contactable.name}}</h3>
+                    <h3 class="{{ctrl.cachedStateCssClass(contactable.$$instanceId)}}">{{contactable.name}}</h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{contactable.company}}</p>
                         <i class="icon ion-android-contact"></i>
@@ -41,8 +41,8 @@
 
     </ion-content>
 
-  <div class="bar bar-footer bar-assertive" ng-if="ctrl.message">
-    <h2 class="title">{{ ctrl.message }}</h2>
-  </div>
+    <ion-footer-bar class="bar-clear bar-assertive" ng-show="ctrl.message">
+        <p class="title">{{ ctrl.message }}</p>
+    </ion-footer-bar>
 
 </ion-view>

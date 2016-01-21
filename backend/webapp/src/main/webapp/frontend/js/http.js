@@ -4,9 +4,9 @@ angular.module('starter')
             ['$http', '$ionicLoading', 'AppConfig',
             function($http, $ionicLoading, AppConfig) {
 
-        var getWithHeaders = function(relativeUrl, headers, onOK, onError) {
+        var getWithHeaders = function(cacheKey, relativeUrl, headers, onOK, onError) {
             var url = AppConfig.baseUrl + relativeUrl
-            var localStorageKey = AppConfig.appPrefix + "." + url
+            var localStorageKey = AppConfig.appPrefix + "." + cacheKey
             $ionicLoading.show({
                  delay: 200
              })
@@ -38,11 +38,17 @@ angular.module('starter')
                 })
             }
 
-        this.get = function(relativeUrl, onOK, onError) {
+        this.get = function(cacheKey, relativeUrl, onOK, onError) {
             var header = {
                 'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
             }
-            getWithHeaders(relativeUrl, header, onOK, onError)
+            getWithHeaders(cacheKey, relativeUrl, header, onOK, onError)
+        }
+
+        this.cached = function(cacheKey) {
+            var localStorageKey = AppConfig.appPrefix + "." + cacheKey
+            var stored = window.localStorage[localStorageKey]
+            return stored !== undefined
         }
 
     }])

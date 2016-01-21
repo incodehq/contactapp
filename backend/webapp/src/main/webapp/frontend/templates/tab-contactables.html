@@ -18,23 +18,25 @@
     <ion-content scroll="true" overflow-scroll="true">
 
         <ion-list>
-            <ion-item ng-repeat="contactable in ctrl.contactables"
-                    class="item-avatar item-icon-left item-remove-animate"
-                    type="item-text-wrap"
-                    href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                <div class="item item-divider" ng-if="firstLetter(contactable.name) != firstLetter(contactable[$index-1].name)">
-                    {{firstLetter(speaker.name)}}
+            <div ng-repeat="contactable in ctrl.contactables">
+                <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
+                    {{ctrl.firstLetter(contactable.name)}}
                 </div>
-                <h3>{{contactable.name}}</h3>
-                <div ng-if="contactable.type == 'Contact'">
-                    <p>{{contactable.company}}</p>
-                    <i class="icon ion-android-contact"></i>
-                </div>
-                <div ng-if="contactable.type == 'Contact Group'">
-                    <p>{{contactable.country}}</p>
-                    <i class="icon ion-android-contacts"></i>
-                </div>
-            </ion-item>
+                <ion-item
+                        class="item-avatar item-icon-left item-remove-animate"
+                        type="item-text-wrap"
+                        href="#/tab/contactables/{{contactable.$$instanceId}}" >
+                    <h3 class="{{ctrl.cachedStateCssClass(contactable.$$instanceId)}}">{{contactable.name}}</h3>
+                    <div ng-if="contactable.type == 'Contact'">
+                        <p>{{contactable.company}}</p>
+                        <i class="icon ion-android-contact"></i>
+                    </div>
+                    <div ng-if="contactable.type == 'Contact Group'">
+                        <p>{{contactable.country}}</p>
+                        <i class="icon ion-android-contacts"></i>
+                    </div>
+                </ion-item>
+            </div>
         </ion-list>
 
     </ion-content>
