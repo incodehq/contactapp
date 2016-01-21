@@ -1,8 +1,9 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl',
-    ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
-    function($scope, $state, $ionicPopup, AuthService, AppConfig) {
+        ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
+        function($scope, $state, $ionicPopup, AuthService, AppConfig) {
+
         var environments = {
             Development: "http://localhost:8080",
             Test: "http://contacts-test.ecpnv.com",
@@ -34,8 +35,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactablesCtrl',
-    ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar', '$filter',
-    function($scope, HttpService, $state, AuthService, $ionicFilterBar, $filter) {
+        ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar', '$filter',
+        function($scope, HttpService, $state, AuthService, $ionicFilterBar, $filter) {
 
         var ctrl = this;
 
@@ -80,7 +81,7 @@ angular.module('starter.controllers', [])
         HttpService.get(
             "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             function(respData) {
-                ctrl.contactables = respData.map(
+                var trimmedData = respData.map(
                     function(contactable){
                         contactable.$$instanceId = instanceId(contactable.$$href)
                         delete contactable.$$href
@@ -90,6 +91,10 @@ angular.module('starter.controllers', [])
                         return contactable
                     }
                 )
+                trimmedData.sort(function(a,b) {
+                    return a.name.localeCompare(b.name)
+                })
+                ctrl.contactables = trimmedData
             },
             function(err, respData, date, resp) {
                 ctrl.respData = respData || {}
@@ -104,8 +109,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('ContactableDetailCtrl',
-    ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService', '$filter',
-    function($scope, HttpService, $stateParams, $state, AuthService, $filter) {
+        ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService', '$filter',
+        function($scope, HttpService, $stateParams, $state, AuthService, $filter) {
 
         var ctrl = this;
 

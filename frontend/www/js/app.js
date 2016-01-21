@@ -5,8 +5,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
         appPrefix: 'contactapp'  // for localStorage
     })
 
-    .run(function($ionicPlatform) {
+    .config(
+        ["$ionicConfigProvider",
+        function($ionicConfigProvider){
+
+        $ionicConfigProvider.tabs.position('bottom');
+    }])
+
+    .run(
+        ["$ionicPlatform", function($ionicPlatform) {
         $ionicPlatform.ready(function() {
+
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -19,10 +28,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 window.StatusBar.styleLightContent();
             }
         });
-    })
+    }])
 
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(
+        ["$stateProvider", "$urlRouterProvider",
+        function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -69,6 +80,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             var $state = $injector.get("$state");
             $state.go("login");
         });
-    })
+    }])
 
 ;
