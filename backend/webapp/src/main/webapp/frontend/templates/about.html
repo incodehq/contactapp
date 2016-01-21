@@ -7,39 +7,6 @@
 
     <ion-content class="padding">
 
-        <div class="list card">
-            <div class="item item-divider">
-                Platform
-            </div>
-            <div class="item">
-                Platform: {{ctrl.platform.platform}}
-                <br/>
-                Version: {{ctrl.platform.platformVersion}}
-                <br/>
-                <span ng-show="ctrl.platform.isAndroid">running on Android</span>
-                <span ng-show="ctrl.platform.isIOS">running on iOS</span>
-                <span ng-show="ctrl.platform.isIPad">running on iPad</span>
-                <span ng-show="ctrl.platform.isWindowsPhone">running on Windows Phone</span>
-                <span ng-show="ctrl.platform.isWebView">running on (Cordova) Web View</span>
-            </div>
-        </div>
-
-        <div class="list card">
-            <div class="item item-divider">
-                Device info
-            </div>
-            <div ng-show="isDefinedWithLength(ctrl.platform.deviceInformation)">
-                <div class="item">
-                    {{platform.deviceInformation}}
-                </div>
-            </div>
-            <div ng-show="!isDefinedWithLength(ctrl.platform.deviceInformation)">
-                <div class="item">
-                    (none available)
-                </div>
-            </div>
-        </div>
-
         <button class="button button-calm button-block"
                 ng-if="!hasUpdate"
                 ng-click="ctrl.downloadContacts()">
@@ -57,6 +24,33 @@
                 ng-click="doUpdate()" disabled>
             Download app update
         </button>
+
+        <div class="list card">
+            <div class="item item-divider">
+                Platform
+            </div>
+            <div class="item">
+                Platform: {{ctrl.platform.platform}}
+                <br/>
+                Version: {{ctrl.platform.platformVersion}}
+            </div>
+            <div class="item">
+                <span ng-show="ctrl.platform.isAndroid">running on Android</span>
+                <span ng-show="ctrl.platform.isIOS">running on iOS</span>
+                <span ng-show="ctrl.platform.isIPad">running on iPad</span>
+                <span ng-show="ctrl.platform.isWindowsPhone">running on Windows Phone</span>
+                <span ng-show="ctrl.platform.isWebView">running on (Cordova) Web View</span>
+            </div>
+            <div class="item">
+                Device info:
+                <span ng-show="isDefinedWithLength(ctrl.platform.deviceInformation)">
+                    {{platform.deviceInformation}}
+                </span>
+                <span ng-show="!isDefinedWithLength(ctrl.platform.deviceInformation)">
+                    (none available)
+                </span>
+            </div>
+        </div>
 
     </ion-content>
 

@@ -4,6 +4,8 @@ angular.module('starter')
             ['$http', '$ionicLoading', 'AppConfig',
             function($http, $ionicLoading, AppConfig) {
 
+        var service = this
+
         var getWithHeaders = function(cacheKey, relativeUrl, headers, onOK, onError) {
             var url = AppConfig.baseUrl + relativeUrl
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
@@ -45,15 +47,16 @@ angular.module('starter')
             getWithHeaders(cacheKey, relativeUrl, header, onOK, onError)
         }
 
-        this.isCached = function(cacheKey) {
-            return lookup(cached) !== undefined
-        }
-
         this.lookup = function(cacheKey) {
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
             var stored = window.localStorage[localStorageKey]
             return stored
         }
+
+        this.isCached = function(cacheKey) {
+            return service.lookup(cacheKey) !== undefined
+        }
+
 
     }])
 

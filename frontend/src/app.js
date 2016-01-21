@@ -2,8 +2,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
 
     .value('AppConfig', {
         baseUrl: "http://127.0.0.1:8080",
-        appPrefix: 'contactapp',  // for localStorage
-        listAllKey: 'listAll'     // for localStorage
+        appPrefix: 'contactapp'
     })
 
     .config(
