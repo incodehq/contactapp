@@ -106,6 +106,9 @@ angular.module('starter.controllers', [])
             }
         )
 
+        $scope.firstLetter = function(name) {
+            return name && name.charAt(0);
+        }
     }])
 
     .controller('ContactableDetailCtrl',
