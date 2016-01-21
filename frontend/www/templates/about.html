@@ -12,16 +12,13 @@
                 Platform
             </div>
             <div class="item">
-                Platform: {{ctrl.platform.platform}}
+                {{ctrl.platform.platform}} {{ctrl.platform.platformVersion}}
                 <br/>
-                Version: {{ctrl.platform.platformVersion}}
-            </div>
-            <div class="item">
-                <span ng-show="ctrl.platform.isAndroid">running on Android</span>
-                <span ng-show="ctrl.platform.isIOS">running on iOS</span>
-                <span ng-show="ctrl.platform.isIPad">running on iPad</span>
-                <span ng-show="ctrl.platform.isWindowsPhone">running on Windows Phone</span>
-                <span ng-show="ctrl.platform.isWebView">running on (Cordova) Web View</span>
+                <p ng-show="ctrl.platform.isAndroid">running on Android</p>
+                <p ng-show="ctrl.platform.isIOS">running on iOS</p>
+                <p ng-show="ctrl.platform.isIPad">running on iPad</p>
+                <p ng-show="ctrl.platform.isWindowsPhone">running on Windows Phone</p>
+                <p ng-show="ctrl.platform.isWebView">running on (Cordova) Web View</p>
             </div>
             <div class="item">
                 Device info:

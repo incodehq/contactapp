@@ -8,19 +8,11 @@
             <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">&nbsp;{{ctrl.username}}</nav-button>
         </ion-nav-buttons>
 
-        <ion-nav-buttons side="left">
-            <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
-            </button>
-        </ion-nav-buttons>
-
     </ion-nav-bar>
 
     <ion-content>
 
         <div class="card">
-            <div class="item item-text-wrap">
-                Use the button below to download all contacts for use when offline
-            </div>
             <div class="item">
                 <button class="button button-balanced button-block"
                         ng-click="ctrl.downloadContacts()" ng-disabled="isDefined(ctrl.message)">
@@ -30,13 +22,24 @@
                 </button>
             </div>
             <div class="item" ng-show="ctrl.message">
-                <div class="row">
+                <div class="row row-center">
                     <div class="col col-center">
                         <p>{{ctrl.message}}</p>
                     </div>
                 </div>
             </div>
 
+        </div>
+
+        <div class="card">
+            <div class="item">
+                <button class="button button-assertive button-block"
+                        ng-click="ctrl.clearCache()">
+                    <i class="ion-android-delete">
+                        Remove downloaded contacts
+                    </i>
+                </button>
+            </div>
         </div>
 
 

@@ -1,8 +1,8 @@
 angular.module('starter')
 
     .service('HttpService',
-            ['$http', '$ionicLoading', 'AppConfig',
-            function($http, $ionicLoading, AppConfig) {
+            ['$http', '$ionicLoading', 'AppConfig', 'OfflineService',
+            function($http, $ionicLoading, AppConfig, OfflineService) {
 
         var service = this
 
@@ -35,19 +35,18 @@ angular.module('starter')
                     if(onOK) {
                         onOK(resp.data)
                     }
-                    window.localStorage[localStorageKey] = JSON.stringify( { resp: resp, date: new Date() })
+                    OfflineService.put(cacheKey, resp)
                 },
                 function(err) {
                     if(useIonicLoading(options)) {
                         $ionicLoading.hide()
                     }
                     if(onError) {
-                        var stored = window.localStorage[localStorageKey]
+                        var stored = OfflineService.get(cacheKey)
                         if(stored) {
-                            var stored = JSON.parse(stored)
-                            onError(err, stored.resp.data, stored.date, stored.resp)
+                            onError(err, stored.resp.data, stored.date)
                         } else {
-                            onError(err, null, null, null)
+                            onError(err, null, null)
                         }
                     }
                 })
@@ -61,13 +60,11 @@ angular.module('starter')
         }
 
         this.lookup = function(cacheKey) {
-            var localStorageKey = AppConfig.appPrefix + "." + cacheKey
-            var stored = window.localStorage[localStorageKey]
-            return stored
+            return OfflineService.lookup(cacheKey)
         }
 
         this.isCached = function(cacheKey) {
-            return service.lookup(cacheKey) !== undefined
+            return OfflineService.isCached(cacheKey)
         }
 
 

@@ -1,8 +1,9 @@
 angular.module('starter')
 
-    .service('BackendService',
-            ['HttpService', 'AppConfig', '$filter',
-            function(HttpService, AppConfig, $filter) {
+    .service(
+        'BackendService',
+        ['HttpService', 'AppConfig', '$filter',
+        function(HttpService, AppConfig, $filter) {
 
         var listAllKey = 'listAll' // for localStorage
 

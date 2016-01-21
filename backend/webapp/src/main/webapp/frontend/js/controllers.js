@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl',
-        ['$rootScope', '$scope', '$state','$ionicPopup','AuthService', 'AppConfig',
+        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig',
         function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig) {
 
         $scope.data = {}
@@ -9,6 +9,10 @@ angular.module('starter.controllers', [])
             {
                 name: "Development",
                 url: "http://localhost:8080"
+            },
+            {
+                name: "Test",
+                url: "http://10.0.0.5:8080"
             },
             {
                 name: "Production",
@@ -42,7 +46,6 @@ angular.module('starter.controllers', [])
         $scope.about = function() {
             $state.go('about', {}, {reload:true})
         }
-
 
 
         // global utility variables and functions (TODO: create a service instead?)
@@ -179,10 +182,16 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('DownloadCtrl',
-        ['$scope', 'BackendService',
-        function($scope, BackendService) {
+        ['$scope', 'BackendService', 'AuthService', '$state',
+        function($scope, BackendService, AuthService, $state) {
 
         var ctrl = this;
+
+        ctrl.username = AuthService.username();
+        ctrl.logout = function() {
+            AuthService.logout();
+            $state.go('login', {}, {reload: true});
+        }
 
         ctrl.downloadContacts = function() {
             BackendService.loadContactables(
@@ -202,11 +211,21 @@ angular.module('starter.controllers', [])
                                 ctrl.downloadCount = j
                                 ctrl.message = contactData.name
                             },
-                            {suppressIonicLoading: true}
+                            {
+                                suppressIonicLoading: true
+                            }
                         )
                     }
                 }
             )
+        }
+
+        ctrl.numberOfDownloadedContacts = function() {
+            return 0
+        }
+
+        ctrl.clearCache = function() {
+            window.localStorage.clear();
         }
 
     }])
