@@ -45,10 +45,14 @@ angular.module('starter')
             getWithHeaders(cacheKey, relativeUrl, header, onOK, onError)
         }
 
-        this.cached = function(cacheKey) {
+        this.isCached = function(cacheKey) {
+            return lookup(cached) !== undefined
+        }
+
+        this.lookup = function(cacheKey) {
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
             var stored = window.localStorage[localStorageKey]
-            return stored !== undefined
+            return stored
         }
 
     }])

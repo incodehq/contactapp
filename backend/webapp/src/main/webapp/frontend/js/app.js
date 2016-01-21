@@ -2,7 +2,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
 
     .value('AppConfig', {
         baseUrl: "http://127.0.0.1:8080",
-        appPrefix: 'contactapp'  // for localStorage
+        appPrefix: 'contactapp',  // for localStorage
+        listAllKey: 'listAll'     // for localStorage
     })
 
     .config(
@@ -50,7 +51,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
         .state('about', {
             cache: false,
             url: '/about',
-            templateUrl: 'templates/about.html'
+            templateUrl: 'templates/about.html',
+            controller: 'AboutCtrl as ctrl'
         })
 
         .state('tab', {

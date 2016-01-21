@@ -28,24 +28,47 @@
 
             <div class="list card" ng-if="ctrl.contactable.email || ctrl.contactable.contactNumbers.length > 0">
 
-                <div class="item item-button-right">
+<!--
+                <ion-item class="item item-icon-right">
                     {{ctrl.contactable.email}}
-                    <button ng-click="ctrl.sendEmail()"
+                    <div>
+                        <i class="icon ion-email"></i>
+                        <ion-option-button ng-click="ctrl.sendEmail">
+                            <i class="icon ion-email"></i>
+                        </ion-option-button>
+                    </div>
+                </ion-item>
+-->
+
+                <div class="item row">
+                    <div class="col col-66">
+                        <span>{{ctrl.contactable.email}}</span>
+                    </div>
+                    <div class="col col-33">
+                        <button ng-click="ctrl.sendEmail()"
+                                class="button"
+                                ng-if="platform.onDevice">
+                            <span class="icon ion-email">&nbsp;Email</span>
+                        </button>
+                        <a ng-href="mailto:{{ctrl.contactable.email}}"
                             class="button"
-                            ng-if="platform.onDevice"
-                    >
-                        <span class="icon ion-email">&nbsp;Email</span>
-                    </button>
+                            ng-if="!platform.onDevice">
+                            <span class="icon ion-email">&nbsp;Email</span>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="item item-button-right"
+                <div class="item row"
                      ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
-                    <a ng-href="tel:{{contactNumber.number}}" class="button"
-                            ng-if="platform.onDevice"
-                    >
-                        <span class="icon ion-android-call">&nbsp;{{contactNumber.type}}</span>
-                    </a>
-                    {{contactNumber.number}}
+                    <div class="col col-66">
+                        <span>{{contactNumber.number}}</span>
+                    </div>
+                    <div class="col col-33">
+                        <a ng-href="tel:{{contactNumber.number}}"
+                           class="button">
+                            <span class="icon ion-android-call">&nbsp;{{contactNumber.type}}</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>

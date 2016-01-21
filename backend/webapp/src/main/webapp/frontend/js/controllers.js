@@ -19,33 +19,6 @@ angular.module('starter.controllers', [])
         $scope.data.environment = "Development"
         //$scope.data.environment = "Production"
 
-        $rootScope.platform = {
-            deviceInformation: ionic.Platform.device(),
-            isWebView: ionic.Platform.isWebView(), // ie running in Cordova
-            isIPad: ionic.Platform.isIPad(),
-            isIOS: ionic.Platform.isIOS(),
-            isAndroid: ionic.Platform.isAndroid(),
-            isWindowsPhone: ionic.Platform.isWindowsPhone(),
-            platform: ionic.Platform.platform(),
-            platformVersion: ionic.Platform.version(),
-
-            onDevice: ionic.Platform.isWebView() // true if on a device
-        }
-
-        $rootScope.isUndefined = function (thing) {
-            return thing === null || (typeof thing === "undefined");
-        }
-        $rootScope.isDefined = function (thing) {
-            return !$rootScope.isUndefined(thing);
-        }
-        $rootScope.isDefinedWithLength = function (thing) {
-            return $rootScope.isDefined(thing) && thing.length > 0
-        }
-
-        $scope.about = function() {
-            $state.go('about', {}, {reload:true})
-        }
-
         $scope.login =
             function(data) {
                 var username=$scope.data.username
@@ -66,6 +39,27 @@ angular.module('starter.controllers', [])
                     });
         }
 
+        $scope.about = function() {
+            $state.go('about', {}, {reload:true})
+        }
+
+
+
+        // global utility variables and functions (TODO: create a service instead?)
+        $rootScope.platform = {
+            onDevice: ionic.Platform.isWebView() // true if on a mobile device (as opposed to via web browser)
+        }
+
+        $rootScope.isUndefined = function (thing) {
+            return thing === null || (typeof thing === "undefined");
+        }
+        $rootScope.isDefined = function (thing) {
+            return !$rootScope.isUndefined(thing);
+        }
+        $rootScope.isDefinedWithLength = function (thing) {
+            return $rootScope.isDefined(thing) && thing.length > 0
+        }
+
         // for debugging
         $rootScope.huzzah = function() {
             $ionicPopup.alert({
@@ -74,11 +68,12 @@ angular.module('starter.controllers', [])
                 });
         }
 
+
     }])
 
     .controller('ContactablesCtrl',
-        ['$scope', 'HttpService', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
-        function($scope, HttpService, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
+        ['$scope', 'HttpService', 'AppConfig', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
+        function($scope, HttpService, AppConfig, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
 
         var ctrl = this;
 
@@ -95,22 +90,6 @@ angular.module('starter.controllers', [])
                     update: function (filteredItems, filterText) {
                         ctrl.contactables = filteredItems;
                     }
-                    /*,
-                    // an attempt to see if filtering only after 3 chars entered improves rendering speed; apparently not
-                    filter: function(items, text) {
-                        if(text && text.length >= 3) {
-                            return items.filter(function(item) {
-                                for(property in item) {
-                                    if (typeof item[property] === "string" && item[property].indexOf(text) > -1) {
-                                        return true
-                                    }
-                                }
-                                return false
-                            })
-                        } else {
-                            return items
-                        }
-                    }*/
                 });
         }
 
@@ -121,7 +100,7 @@ angular.module('starter.controllers', [])
         }
 
         HttpService.get(
-            "listAll",
+            AppConfig.listAllKey,
             "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
             function(respData) {
                 var trimmedData = respData.map(
@@ -154,10 +133,11 @@ angular.module('starter.controllers', [])
         }
 
         this.cachedStateCssClass = function(instanceId) {
-            return HttpService.cached(instanceId)
+            return HttpService.isCached(instanceId)
                 ? "cached"
                 : "not-cached"
         }
+
 
     }])
 
@@ -241,5 +221,39 @@ angular.module('starter.controllers', [])
 
     }])
 
-    ;
+    .controller('AboutCtrl',
+        ['$scope', 'HttpService', 'AppConfig',
+        function($scope, HttpService, AppConfig) {
+
+        var ctrl = this;
+
+        ctrl.platform = {
+            deviceInformation: ionic.Platform.device(),
+            isWebView: ionic.Platform.isWebView(), // ie running in Cordova
+            isIPad: ionic.Platform.isIPad(),
+            isIOS: ionic.Platform.isIOS(),
+            isAndroid: ionic.Platform.isAndroid(),
+            isWindowsPhone: ionic.Platform.isWindowsPhone(),
+            platform: ionic.Platform.platform(),
+            platformVersion: ionic.Platform.version(),
+
+            onDevice: ionic.Platform.isWebView() // true if on a device
+        }
+
+        ctrl.downloadContacts = function() {
+            var contactables = HttpService.lookup(
+                AppConfig.listAllKey
+            )
+            if(!contactables) {
+                return
+            }
+            for(contactable in contactables) {
+
+            }
+        }
+
+
+    }])
+
+;
 

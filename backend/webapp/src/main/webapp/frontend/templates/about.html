@@ -12,17 +12,15 @@
                 Platform
             </div>
             <div class="item">
-                Platform: {{platform.platform}}
+                Platform: {{ctrl.platform.platform}}
                 <br/>
-                Version: {{platform.platformVersion}}
+                Version: {{ctrl.platform.platformVersion}}
                 <br/>
-                <span ng-show="platform.isAndroid">running on Android</span>
-                <span ng-show="platform.isIOS">running on iOS</span>
-                <span ng-show="platform.isIPad">running on iPad</span>
-                <span ng-show="platform.isWindowsPhone">running on Windows Phone</span>
-                <span ng-show="platform.isWebView">running on (Cordova) Web View</span>
-                </br>
-                <span>platform.onDevice? {{platform.onDevice}}</span>
+                <span ng-show="ctrl.platform.isAndroid">running on Android</span>
+                <span ng-show="ctrl.platform.isIOS">running on iOS</span>
+                <span ng-show="ctrl.platform.isIPad">running on iPad</span>
+                <span ng-show="ctrl.platform.isWindowsPhone">running on Windows Phone</span>
+                <span ng-show="ctrl.platform.isWebView">running on (Cordova) Web View</span>
             </div>
         </div>
 
@@ -30,28 +28,34 @@
             <div class="item item-divider">
                 Device info
             </div>
-            <div ng-show="isDefinedWithLength(platform.deviceInformation)">
+            <div ng-show="isDefinedWithLength(ctrl.platform.deviceInformation)">
                 <div class="item">
                     {{platform.deviceInformation}}
                 </div>
             </div>
-            <div ng-show="!isDefinedWithLength(platform.deviceInformation)">
+            <div ng-show="!isDefinedWithLength(ctrl.platform.deviceInformation)">
                 <div class="item">
                     (none available)
                 </div>
             </div>
         </div>
 
+        <button class="button button-calm button-block"
+                ng-if="!hasUpdate"
+                ng-click="ctrl.downloadContacts()">
+            Download contacts
+        </button>
+
         <button class="button button-balanced button-block"
                 ng-if="!hasUpdate"
-                ng-click="checkForUpdates()">
-            Check for updates
+                ng-click="checkForUpdates()" disabled>
+            Check for app updates
         </button>
 
         <button class="button button-energized button-block"
                 ng-if="hasUpdate"
-                ng-click="doUpdate()">
-            Download update
+                ng-click="doUpdate()" disabled>
+            Download app update
         </button>
 
     </ion-content>

@@ -18,7 +18,7 @@
     <ion-content scroll="true" overflow-scroll="true">
 
         <ion-list>
-            <div ng-repeat="contactable in ctrl.contactables">
+            <div collection-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
                     {{ctrl.firstLetter(contactable.name)}}
                 </div>
