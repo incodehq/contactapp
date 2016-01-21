@@ -13,13 +13,25 @@
     <ion-content>
 
         <div class="card">
+            <div class="item item-text-wrap">
+                Download contacts so that they are accessible even while offline.
+            </div>
             <div class="item">
-                <button class="button button-balanced button-block"
-                        ng-click="ctrl.downloadContacts()" ng-disabled="isDefined(ctrl.message)">
-                    <i class="ion-android-download">
-                        Download contacts
-                    </i>
-                </button>
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-balanced button-block"
+                                ng-click="ctrl.downloadContacts()" ng-disabled="isDefined(ctrl.message)">
+                            <i class="ion-android-download">&nbsp;Download</i>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="button button-assertive button-block"
+                                ng-click="ctrl.removeDownloadedContacts()"
+                                ng-disabled="ctrl.numberOfDownloadedContacts() === 0">
+                            <i class="ion-android-delete">&nbsp;Remove {{ctrl.numberOfDownloadedContacts()}}</i>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="item" ng-show="ctrl.message">
                 <div class="row row-center">
@@ -29,17 +41,6 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="card">
-            <div class="item">
-                <button class="button button-assertive button-block"
-                        ng-click="ctrl.clearCache()">
-                    <i class="ion-android-delete">
-                        Remove downloaded contacts
-                    </i>
-                </button>
-            </div>
         </div>
 
 

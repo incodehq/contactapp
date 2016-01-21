@@ -107,8 +107,9 @@ angular.module('starter.controllers', [])
             return name && name.charAt(0);
         }
 
-        ctrl.cachedStateCssClass = function(instanceId) {
-            return HttpService.isCached(instanceId)
+        ctrl.cachedStateCssClass = function(contactable) {
+            return contactable && contactable.$$instanceId &&
+                   HttpService.isCached(contactable.$$instanceId)
                 ? "cached"
                 : "not-cached"
         }
@@ -182,8 +183,8 @@ angular.module('starter.controllers', [])
     }])
 
     .controller('DownloadCtrl',
-        ['$scope', 'BackendService', 'AuthService', '$state',
-        function($scope, BackendService, AuthService, $state) {
+        ['$scope', 'BackendService', 'OfflineService', 'AuthService', '$state', '$timeout',
+        function($scope, BackendService, OfflineService, AuthService, $state, $timeout) {
 
         var ctrl = this;
 
@@ -208,8 +209,10 @@ angular.module('starter.controllers', [])
                         BackendService.loadContactable(
                             instanceId,
                             function(contactData){
-                                ctrl.downloadCount = j
-                                ctrl.message = contactData.name
+                                $timeout(function() {
+                                    ctrl.downloadCount = j
+                                    ctrl.message = contactData.name
+                                })
                             },
                             {
                                 suppressIonicLoading: true
@@ -220,12 +223,15 @@ angular.module('starter.controllers', [])
             )
         }
 
+
         ctrl.numberOfDownloadedContacts = function() {
-            return 0
+            var count = OfflineService.count() - 1 // one for "listAll"
+            return count > 0 ? count : 0
         }
 
-        ctrl.clearCache = function() {
-            window.localStorage.clear();
+        ctrl.removeDownloadedContacts = function() {
+            OfflineService.clearCache()
+            ctrl.message = null
         }
 
     }])

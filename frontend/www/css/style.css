@@ -2,7 +2,7 @@
     color: darkgray;
 }
 .cached {
-    /*font-style: italic;*/
+    font-weight: bold;
 }
 .bar.bar-footer p.title {
     font-size: 14px;
