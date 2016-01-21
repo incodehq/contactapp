@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="list card">
+            <div class="list card" ng-if="ctrl.contactable.email || ctrl.contactable.contactNumbers.length > 0">
 
                 <a href="#" class="item item-icon-left" ng-if="ctrl.contactable.email">
                     <i class="icon ion-email"></i>

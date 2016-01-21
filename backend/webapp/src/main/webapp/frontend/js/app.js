@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             url: '/contactables',
             views: {
                 'tab-contactables': {
-                templateUrl: 'templates/tab-contactables.html',
+                templateUrl: 'templates/contactable-list.html',
                 controller: 'ContactablesCtrl as ctrl'
                 }
             }
