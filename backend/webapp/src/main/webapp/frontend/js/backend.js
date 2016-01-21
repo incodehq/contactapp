@@ -16,7 +16,7 @@ angular.module('starter')
             return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm') :"No data available"
         }
 
-        this.loadContactables = function(onComplete) {
+        this.loadContactables = function(onComplete, options) {
             HttpService.get(
                 listAllKey,
                 "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
@@ -38,11 +38,12 @@ angular.module('starter')
                 },
                 function(err, respData, date, resp) {
                     onComplete(respData || {}, message(date))
-                }
+                },
+                options
             )
         }
 
-        this.loadContactable = function(instanceId, onComplete) {
+        this.loadContactable = function(instanceId, onComplete, options) {
             HttpService.get(
                 instanceId,
                 "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId,
@@ -79,7 +80,8 @@ angular.module('starter')
                 },
                 function(err, respData, date, resp) {
                     onComplete(respData || {}, message(date))
-                }
+                },
+                options
             )
         }
 

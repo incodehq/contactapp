@@ -17,17 +17,29 @@
 
     <ion-content>
 
-        <button class="button button-balanced button-block"
-                ng-click="ctrl.downloadContacts()">
-            <i class="ion-android-download">
-                Download contacts
-            </i>
-        </button>
+        <div class="card">
+            <div class="item item-text-wrap">
+                Use the button below to download all contacts for use when offline
+            </div>
+            <div class="item">
+                <button class="button button-balanced button-block"
+                        ng-click="ctrl.downloadContacts()" ng-disabled="isDefined(ctrl.message)">
+                    <i class="ion-android-download">
+                        Download contacts
+                    </i>
+                </button>
+            </div>
+            <div class="item" ng-show="ctrl.message">
+                <div class="row">
+                    <div class="col col-center">
+                        <p>{{ctrl.message}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
     </ion-content>
-
-    <ion-footer-bar class="bar-clear bar-assertive" ng-show="ctrl.message">
-        <p class="title">{{ ctrl.message }}</p>
-    </ion-footer-bar>
 
 </ion-view>

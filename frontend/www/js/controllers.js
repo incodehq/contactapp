@@ -191,6 +191,7 @@ angular.module('starter.controllers', [])
                         // already cached
                         return
                     }
+                    ctrl.numberOfContacts = contactables.length
                     for (var i = 0; i < contactables.length; i++) {
                         var j = i+1
                         var contactable = contactables[i]
@@ -198,8 +199,10 @@ angular.module('starter.controllers', [])
                         BackendService.loadContactable(
                             instanceId,
                             function(contactData){
-                                ctrl.message = "Downloaded " + j + " of " + contactables.length + ": " + contactData.name
-                            }
+                                ctrl.downloadCount = j
+                                ctrl.message = contactData.name
+                            },
+                            {suppressIonicLoading: true}
                         )
                     }
                 }

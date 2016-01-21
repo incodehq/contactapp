@@ -6,12 +6,21 @@ angular.module('starter')
 
         var service = this
 
-        var getWithHeaders = function(cacheKey, relativeUrl, headers, onOK, onError) {
+        var isUndefined = function (thing) {
+            return thing === null || (typeof thing === "undefined");
+        }
+        var useIonicLoading = function(options) {
+            return isUndefined(options) || !options.suppressIonicLoading
+        }
+
+        var getWithHeaders = function(cacheKey, relativeUrl, headers, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
-            $ionicLoading.show({
-                 delay: 200
-             })
+            if(useIonicLoading(options)) {
+                $ionicLoading.show({
+                     delay: 200
+                 })
+            }
             $http.get(
                 url,
                 {
@@ -20,14 +29,18 @@ angular.module('starter')
             )
             .then(
                 function(resp) {
-                    $ionicLoading.hide()
+                    if(useIonicLoading(options)) {
+                        $ionicLoading.hide()
+                    }
                     if(onOK) {
                         onOK(resp.data)
                     }
                     window.localStorage[localStorageKey] = JSON.stringify( { resp: resp, date: new Date() })
                 },
                 function(err) {
-                    $ionicLoading.hide()
+                    if(useIonicLoading(options)) {
+                        $ionicLoading.hide()
+                    }
                     if(onError) {
                         var stored = window.localStorage[localStorageKey]
                         if(stored) {
@@ -40,11 +53,11 @@ angular.module('starter')
                 })
             }
 
-        this.get = function(cacheKey, relativeUrl, onOK, onError) {
+        this.get = function(cacheKey, relativeUrl, onOK, onError, options) {
             var header = {
                 'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
             }
-            getWithHeaders(cacheKey, relativeUrl, header, onOK, onError)
+            getWithHeaders(cacheKey, relativeUrl, header, onOK, onError, options)
         }
 
         this.lookup = function(cacheKey) {
