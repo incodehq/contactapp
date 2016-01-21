@@ -30,18 +30,10 @@
     <div class="bar bar-footer bar-dark">
         <div class="button-bar">
             <select ng-model="data.environment" class="button">
-                <option>Production</option>
-                <option>Test</option>
-                <option>Development</option>
+                <option ng-repeat="env in data.environments">{{env.name}}</option>
             </select>
-            <button class="button button-primary"  ng-if="data.environment == 'Production' && !hasUpdate"
-                    ng-click="checkForUpdates()">
-                Check for updates
-            </button>
-            <button class="button button-pulse"  ng-if="data.environment == 'Production' && hasUpdate" ng-click="doUpdate()">
-                Download update
-            </button>
+            <button class="button button-primary" ng-click="about()">About</button>
         </div>
-
     </div>
+
 </ion-view>

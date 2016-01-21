@@ -26,22 +26,28 @@
                 </div>
             </div>
 
-            <div class="list card">
+            <div class="list card" ng-if="ctrl.contactable.email || ctrl.contactable.contactNumbers.length > 0">
 
-                <a href="#" class="item item-icon-left" ng-if="ctrl.contactable.email">
-                    <i class="icon ion-email"></i>
+                <div class="item item-button-right">
                     {{ctrl.contactable.email}}
-                </a>
+                    <button ng-click="ctrl.sendEmail()"
+                            class="button"
+                            ng-if="platform.onDevice"
+                    >
+                        <span class="icon ion-email">&nbsp;Email</span>
+                    </button>
+                </div>
 
-                <a href="#" class="item item-icon-left"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
-                    <i class="icon ion-android-call"></i>
-                    <p>
-                        {{contactNumber.type}}
-                    </p>
-                    <h2>
-                        {{contactNumber.number}}
-                    </h2>
-                </a>
+                <div class="item item-button-right"
+                     ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <a ng-href="tel:{{contactNumber.number}}" class="button"
+                            ng-if="platform.onDevice"
+                    >
+                        <span class="icon ion-android-call">&nbsp;{{contactNumber.type}}</span>
+                    </a>
+                    {{contactNumber.number}}
+                </div>
+
             </div>
 
             <div class="list card" ng-if="ctrl.contactable.type === 'Contact'">

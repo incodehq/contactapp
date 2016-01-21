@@ -47,6 +47,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             controller: 'LoginCtrl'
         })
 
+        .state('about', {
+            cache: false,
+            url: '/about',
+            templateUrl: 'templates/about.html'
+        })
+
         .state('tab', {
             cache: false,
             url: '/tab',

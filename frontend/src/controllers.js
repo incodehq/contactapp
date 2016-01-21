@@ -1,24 +1,57 @@
 angular.module('starter.controllers', [])
 
     .controller('LoginCtrl',
-        ['$scope','$state','$ionicPopup','AuthService', 'AppConfig',
-        function($scope, $state, $ionicPopup, AuthService, AppConfig) {
+        ['$rootScope', '$scope', '$state','$ionicPopup','AuthService', 'AppConfig',
+        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig) {
 
-        var environments = {
-            Development: "http://localhost:8080",
-            Test: "http://contacts-test.ecpnv.com",
-            Production: "http://contacts.ecpnv.com"
-        }
         $scope.data = {}
+        $scope.data.environments = [
+            {
+                name: "Development",
+                url: "http://localhost:8080"
+            },
+            {
+                name: "Production",
+                url: "http://contacts.ecpnv.com"
+            }
+        ]
+
         $scope.data.environment = "Development"
         //$scope.data.environment = "Production"
+
+        $rootScope.platform = {
+            deviceInformation: ionic.Platform.device(),
+            isWebView: ionic.Platform.isWebView(), // ie running in Cordova
+            isIPad: ionic.Platform.isIPad(),
+            isIOS: ionic.Platform.isIOS(),
+            isAndroid: ionic.Platform.isAndroid(),
+            isWindowsPhone: ionic.Platform.isWindowsPhone(),
+            platform: ionic.Platform.platform(),
+            platformVersion: ionic.Platform.version(),
+
+            onDevice: ionic.Platform.isWebView() // true if on a device
+        }
+
+        $rootScope.isUndefined = function (thing) {
+            return thing === null || (typeof thing === "undefined");
+        }
+        $rootScope.isDefined = function (thing) {
+            return !$rootScope.isUndefined(thing);
+        }
+        $rootScope.isDefinedWithLength = function (thing) {
+            return $rootScope.isDefined(thing) && thing.length > 0
+        }
+
+        $scope.about = function() {
+            $state.go('about', {}, {reload:true})
+        }
 
         $scope.login =
             function(data) {
                 var username=$scope.data.username
                 var password=$scope.data.password
 
-                AppConfig.baseUrl = environments[$scope.data.environment]
+                AppConfig.baseUrl = $scope.data.environments.find(function(element) { return element.name === $scope.data.environment}).url
 
                 AuthService.login(username, password).then(
                     function(authenticated) {
@@ -31,12 +64,21 @@ angular.module('starter.controllers', [])
                         $scope.data.password = null
                         $scope.error = "Incorrect username or password"
                     });
-        };
+        }
+
+        // for debugging
+        $rootScope.huzzah = function() {
+            $ionicPopup.alert({
+                  title: 'Huzzah',
+                  template: 'it worked!'
+                });
+        }
+
     }])
 
     .controller('ContactablesCtrl',
-        ['$scope', 'HttpService', '$state', 'AuthService', '$ionicFilterBar', '$filter',
-        function($scope, HttpService, $state, AuthService, $ionicFilterBar, $filter) {
+        ['$scope', 'HttpService', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
+        function($scope, HttpService, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
 
         var ctrl = this;
 
@@ -116,11 +158,12 @@ angular.module('starter.controllers', [])
                 ? "cached"
                 : "not-cached"
         }
+
     }])
 
     .controller('ContactableDetailCtrl',
-        ['$scope', 'HttpService', '$stateParams', '$state', 'AuthService', '$filter',
-        function($scope, HttpService, $stateParams, $state, AuthService, $filter) {
+        ['$scope', 'HttpService', '$stateParams', '$state', '$ionicPopup', 'AuthService', '$filter',
+        function($scope, HttpService, $stateParams, $state, $ionicPopup, AuthService, $filter) {
 
         var ctrl = this;
 
@@ -179,17 +222,21 @@ angular.module('starter.controllers', [])
                 }
             })
 
-        $scope.instanceId = function(href) {
-            var n = href.lastIndexOf('/');
-            var result = href.substring(n + 1);
-            return result;
-        }
-
-        $scope.isUndefined = function (thing) {
-            return thing === null || (typeof thing === "undefined");
-        }
-        $scope.isDefined = function (thing) {
-            return !$scope.isUndefined(thing);
+        ctrl.sendEmail = function() {
+            if(window.plugins && window.plugins.emailComposer) {
+                window.plugins.emailComposer.showEmailComposerWithCallback(
+                    function(result) {
+                        console.log("Response -> " + result);
+                    },
+                "",                     // Subject
+                "",                     // Body
+                [contactable.email],    // To
+                null,                   // CC
+                null,                   // BCC
+                false,                  // isHTML
+                null,                   // Attachments
+                null);                  // Attachment Data
+            }
         }
 
     }])
