@@ -10,92 +10,92 @@
 
     <ion-content class="padding" scroll="true" overflow-scroll="true">
 
-        <div class="bar bar-header bar-balanced" ng-show="ctrl.message">
-            <div class="title">{{ctrl.message}}</div>
-        </div>
+        <div  ng-show="ctrl.contactable.name">
 
-        <div class="card">
-            <div class="row">
-                <div class="col">
-                    <h2>{{ctrl.contactable.name}}</h2>
-                    <div ng-if="ctrl.contactable.type === 'Contact'">
-                        <p>&nbsp;{{ctrl.contactable.company}}</p>
-                    </div>
-                    <div ng-if="ctrl.contactable.type === 'Contact Group'">
-                        <p>&nbsp;{{ctrl.contactable.country}}</p>
+            <div class="card">
+                <div class="row">
+                    <div class="col">
+                        <h2>{{ctrl.contactable.name}}</h2>
+                        <div ng-if="ctrl.contactable.type === 'Contact'">
+                            <p>&nbsp;{{ctrl.contactable.company}}</p>
+                        </div>
+                        <div ng-if="ctrl.contactable.type === 'Contact Group'">
+                            <p>&nbsp;{{ctrl.contactable.country}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="list card">
+            <div class="list card">
 
-            <a href="#" class="item item-icon-left" ng-if="ctrl.contactable.email">
-                <i class="icon ion-email"></i>
-                {{ctrl.contactable.email}}
-            </a>
+                <a href="#" class="item item-icon-left" ng-if="ctrl.contactable.email">
+                    <i class="icon ion-email"></i>
+                    {{ctrl.contactable.email}}
+                </a>
 
-            <a href="#" class="item item-icon-left"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
-                <i class="icon ion-android-call"></i>
-                <p>
-                    {{contactNumber.type}}
-                </p>
-                <h2>
-                    {{contactNumber.number}}
-                </h2>
-            </a>
-        </div>
-
-        <div class="list card" ng-if="ctrl.contactable.type === 'Contact'">
-            <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
-                      class="item-avatar item-icon-left"
-                      type="item-text-wrap"
-                      href="#/tab/contactables/{{contactRole.contactGroup.$$instanceId}}" >
-                <h3>{{contactRole.contactGroupName}}</h3>
-                <p>
-                    <span ng-show="isDefined(contactRole.contactGroupCountryName)">{{contactRole.contactGroupCountryName}}</span>
-                    <span ng-show="isDefined(contactRole.roleName)">({{contactRole.roleName}})</span>
-                </p>
-                <i class="icon ion-android-contacts"></i>
-            </ion-item>
-        </div>
-
-        <div class="list card" ng-if="ctrl.contactable.type === 'Contact Group'">
-            <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
-                      class="item-avatar item-icon-left"
-                      type="item-text-wrap"
-                      href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
-                <h3>{{contactRole.contactName}}</h3>
-                <p>
-                    <span ng-show="isDefined(contactRole.contactCompany)">{{contactRole.contactCompany}}</span>
-                    <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span>
-                </p>
-                <i class="icon ion-android-contact"></i>
-            </ion-item>
-        </div>
-
-        <div class="card" ng-if="ctrl.contactable.type === 'Contact Group' && ctrl.contactable.address">
-            <div class="item item-divider">
-                Address
+                <a href="#" class="item item-icon-left"  ng-repeat="contactNumber in ctrl.contactable.contactNumbers">
+                    <i class="icon ion-android-call"></i>
+                    <p>
+                        {{contactNumber.type}}
+                    </p>
+                    <h2>
+                        {{contactNumber.number}}
+                    </h2>
+                </a>
             </div>
-            <div class="item item-text-wrap">
-                {{ctrl.contactable.address}}
-            </div>
-        </div>
 
-        <div class="card" ng-if="ctrl.contactable.notes">
-            <div class="item item-divider">
-                Notes
+            <div class="list card" ng-if="ctrl.contactable.type === 'Contact'">
+                <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
+                          class="item-avatar item-icon-left"
+                          type="item-text-wrap"
+                          href="#/tab/contactables/{{contactRole.contactGroup.$$instanceId}}" >
+                    <h3>{{contactRole.contactGroupName}}</h3>
+                    <p>
+                        <span ng-show="isDefined(contactRole.contactGroupCountryName)">{{contactRole.contactGroupCountryName}}</span>
+                        <span ng-show="isDefined(contactRole.roleName)">({{contactRole.roleName}})</span>
+                    </p>
+                    <i class="icon ion-android-contacts"></i>
+                </ion-item>
             </div>
-            <div class="item item-text-wrap">
-                {{ctrl.contactable.notes}}
+
+            <div class="list card" ng-if="ctrl.contactable.type === 'Contact Group'">
+                <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
+                          class="item-avatar item-icon-left"
+                          type="item-text-wrap"
+                          href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
+                    <h3>{{contactRole.contactName}}</h3>
+                    <p>
+                        <span ng-show="isDefined(contactRole.contactCompany)">{{contactRole.contactCompany}}</span>
+                        <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span>
+                    </p>
+                    <i class="icon ion-android-contact"></i>
+                </ion-item>
             </div>
+
+            <div class="card" ng-if="ctrl.contactable.type === 'Contact Group' && ctrl.contactable.address">
+                <div class="item item-divider">
+                    Address
+                </div>
+                <div class="item item-text-wrap">
+                    {{ctrl.contactable.address}}
+                </div>
+            </div>
+
+            <div class="card" ng-if="ctrl.contactable.notes">
+                <div class="item item-divider">
+                    Notes
+                </div>
+                <div class="item item-text-wrap">
+                    {{ctrl.contactable.notes}}
+                </div>
+            </div>
+
         </div>
 
     </ion-content>
 
-    <div class="bar bar-footer bar-assertive" ng-if="ctrl.message">
-        <h2 class="title">{{ ctrl.message }}</h2>
-    </div>
+    <ion-footer-bar class="bar-clear bar-assertive" ng-show="ctrl.message">
+        <p class="title">{{ ctrl.message }}</p>
+    </ion-footer-bar>
 
 </ion-view>
