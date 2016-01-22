@@ -10,7 +10,7 @@
 
     </ion-nav-bar>
 
-    <ion-content>
+    <ion-content scroll="true" overflow-scroll="true">
 
         <div class="card">
             <div class="item item-text-wrap">
@@ -40,19 +40,36 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
 
         <ul class="list card">
             <div class="item item-text-wrap">
-                Change how scrolling works; this impacts filtering and speed to render the home page.
+                How contacts should be shown in the list
             </div>
 
             <ion-list>
-                <ion-radio ng-repeat="item in ctrl.preferences.scrolling.options"
+                <ion-radio name="nameOrder"
+                           ng-repeat="item in ctrl.preferences.nameOrder.options"
                            ng-value="item.value"
-                           ng-model="ctrl.preferences.scrolling.selected"
+                           ng-model="ctrl.nameOrder"
+                           ng-change="updateNameOrder()" >
+                    {{ item.text }}
+                </ion-radio>
+            </ion-list>
+        </ul>
+
+
+        <ul class="list card">
+            <div class="item item-text-wrap">
+                How scrolling is implemented
+            </div>
+
+            <ion-list>
+                <ion-radio name="scrolling"
+                           ng-repeat="item in ctrl.preferences.scrolling.options"
+                           ng-value="item.value"
+                           ng-model="ctrl.scrolling"
                            ng-change="updateScrolling()" >
                     {{ item.text }}
                 </ion-radio>

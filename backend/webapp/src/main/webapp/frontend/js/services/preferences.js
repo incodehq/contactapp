@@ -59,14 +59,8 @@ angular.module(
         //
         // preferences.scrolling
         //
-        var defaultScrolling = "ng-repeat"
-        // var defaultScrolling = "collection-repeat"
 
         var scrollingKey = AppConfig + ".preferences.scrolling"
-        if(!window.localStorage[scrollingKey]) {
-            window.localStorage[scrollingKey] = defaultScrolling
-        }
-
         service.preferences.scrolling = {
             options: [
                 {
@@ -93,6 +87,56 @@ angular.module(
             window.localStorage[scrollingKey] = text
         }
 
+
+
+        //
+        // preferences.nameOrder
+        //
+        var nameOrderKey = AppConfig + ".preferences.nameOrder"
+
+        service.preferences.nameOrder = {
+            options: [
+                {
+                    text: "First Last",
+                    value: "first-last"
+                },
+                {
+                    text: "Last, First",
+                    value: "last-first"
+                }
+            ],
+            selected: window.localStorage[nameOrderKey]
+        }
+
+        service.valueForSelectedNameOrder = function() {
+            return service.preferences.environment.options.find(
+                    function(element) {
+                        return element.text === service.preferences.nameOrder.selected
+                    }).value
+        }
+
+        service.updateNameOrder = function(text) {
+            service.preferences.nameOrder.selected = text
+            window.localStorage[nameOrderKey] = text
+        }
+
+
+        // this is called during bootstrap
+        service.defaultPreferencesIfRequired = function() {
+
+            var defaultNameOrder = "first-last"
+            // var defaultNameOrder = "last-first"
+
+            var defaultScrolling = "ng-repeat"
+            // var defaultScrolling = "collection-repeat"
+
+            if(!window.localStorage[nameOrderKey]) {
+                window.localStorage[nameOrderKey] = defaultNameOrder
+            }
+            if(!window.localStorage[scrollingKey]) {
+                window.localStorage[scrollingKey] = defaultScrolling
+            }
+        }
 
 
     }])

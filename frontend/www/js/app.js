@@ -26,8 +26,8 @@ angular.module(
     }])
 
     .run(
-        ["$ionicPlatform", "$rootScope",
-         function($ionicPlatform, $rootScope) {
+        ["$ionicPlatform", "$rootScope", 'PreferencesService',
+         function($ionicPlatform, $rootScope, PreferencesService) {
         $ionicPlatform.ready(function() {
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -60,6 +60,8 @@ angular.module(
                       template: 'it worked!'
                     });
             }
+
+            PreferencesService.defaultPreferencesIfRequired()
 
 
         });

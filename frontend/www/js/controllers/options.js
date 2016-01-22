@@ -7,16 +7,23 @@ angular.module(
 
         var ctrl = this;
 
-        ctrl.preferences = PreferencesService.preferences;
-
-        $scope.updateScrolling = function() {
-            PreferencesService.updateScrolling(ctrl.preferences.scrolling.selected)
-        }
-
         ctrl.username = AuthService.username();
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
+        }
+
+        ctrl.preferences = PreferencesService.preferences;
+
+        ctrl.scrolling = PreferencesService.preferences.scrolling.selected
+        ctrl.nameOrder = PreferencesService.preferences.nameOrder.selected
+
+        $scope.updateScrolling = function() {
+            PreferencesService.updateScrolling(ctrl.scrolling)
+        }
+
+        $scope.updateNameOrder = function() {
+            PreferencesService.updateNameOrder(ctrl.nameOrder)
         }
 
         ctrl.downloadContacts = function() {
