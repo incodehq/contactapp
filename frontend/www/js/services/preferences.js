@@ -41,6 +41,13 @@ angular.module(
 
         service.preferences.environment = window.localStorage[environmentKey]
 
+        service.environmentUrlFor = function(environmentName) {
+            return service.preferences.environments.find(
+                    function(element) {
+                        return element.name === environmentName
+                    }).url
+        }
+
 
 
         //

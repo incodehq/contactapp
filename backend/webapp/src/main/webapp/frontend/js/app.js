@@ -14,8 +14,8 @@ angular.module(
     'jett.ionic.filter.bar'])
 
     .value('AppConfig', {
-        baseUrl: "http://127.0.0.1:8080",
-        appPrefix: 'contactapp'
+        appPrefix: 'contactapp',
+        baseUrl: "http://127.0.0.1:8080"   // TODO: move to preferences service ?
     })
 
     .config(
@@ -42,7 +42,7 @@ angular.module(
                 window.StatusBar.styleLightContent();
             }
 
-
+            // utility methods for any view
             $rootScope.isUndefined = function (thing) {
                 return thing === null || (typeof thing === "undefined");
             }
@@ -60,8 +60,6 @@ angular.module(
                       template: 'it worked!'
                     });
             }
-
-
 
 
         });

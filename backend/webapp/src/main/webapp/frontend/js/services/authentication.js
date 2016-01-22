@@ -132,27 +132,32 @@ angular.module(
 
 
     .controller('LoginCtrl',
-        ['$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
-        function($scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
+        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
+        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
         $scope.preferences = PreferencesService.preferences
+        $scope.credentials = {
+            username: null,
+            password: null
+        }
 
         $scope.login =
             function(data) {
-                var username=$scope.preferences.username
-                var password=$scope.preferences.password
+                var username=$scope.credentials.username
+                var password=$scope.credentials.password
+                var environment=$scope.preferences.environment
 
-                AppConfig.baseUrl = $scope.preferences.environments.find(function(element) { return element.name === $scope.preferences.environment}).url
+                AppConfig.baseUrl = PreferencesService.environmentUrlFor(environment)
 
                 AuthService.login(username, password).then(
                     function(authenticated) {
-                        $scope.preferences.username = null
-                        $scope.preferences.password = null
+                        $scope.credentials.username = null
+                        $scope.credentials.password = null
                         $scope.error = undefined
                         $state.go('tab.contactables', {}, {reload: true});
                     }, function(err) {
-                        $scope.preferences.username = null
-                        $scope.preferences.password = null
+                        $scope.credentials.username = null
+                        $scope.credentials.password = null
                         $scope.error = "Incorrect username or password"
                     });
         }
