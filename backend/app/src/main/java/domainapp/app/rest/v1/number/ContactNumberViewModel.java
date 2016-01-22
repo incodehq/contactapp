@@ -1,24 +1,16 @@
 package domainapp.app.rest.v1.number;
 
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.common.base.Function;
 
 import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Nature;
 
+import domainapp.app.rest.ViewModelWithUnderlying;
 import domainapp.dom.number.ContactNumber;
 
-@DomainObject(
-        nature = Nature.VIEW_MODEL,
-        editing = Editing.DISABLED
-)
-public class ContactNumberViewModel {
+public class ContactNumberViewModel extends ViewModelWithUnderlying<ContactNumber> {
 
     public static Function<ContactNumber, ContactNumberViewModel> create(final DomainObjectContainer container) {
         return new Function<ContactNumber, ContactNumberViewModel>() {
@@ -27,9 +19,6 @@ public class ContactNumberViewModel {
             }
         };
     }
-
-    @XmlElement(required = true)
-    ContactNumber underlying;
 
     public ContactNumberViewModel() {
     }
@@ -47,16 +36,5 @@ public class ContactNumberViewModel {
     public String getNumber() {
         return underlying.getNumber();
     }
-
-    public String title() {
-        return underlying != null? container.titleOf(underlying): "(no underlying)";
-    }
-    @Override
-    public String toString() {
-        return underlying != null? underlying.toString(): "(no underlying)";
-    }
-
-    @Inject
-    DomainObjectContainer container;
 
 }

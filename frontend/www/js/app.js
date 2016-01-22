@@ -1,11 +1,21 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
 
     .value('AppConfig', {
-        baseUrl: "http://127.0.0.1:8080"
+        baseUrl: "http://127.0.0.1:8080",
+        appPrefix: 'contactapp'
     })
 
-    .run(function($ionicPlatform) {
+    .config(
+        ["$ionicConfigProvider",
+        function($ionicConfigProvider){
+
+        $ionicConfigProvider.tabs.position('bottom');
+    }])
+
+    .run(
+        ["$ionicPlatform", function($ionicPlatform) {
         $ionicPlatform.ready(function() {
+
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -18,10 +28,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 window.StatusBar.styleLightContent();
             }
         });
-    })
+    }])
 
 
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(
+        ["$stateProvider", "$urlRouterProvider",
+        function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -35,7 +47,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             controller: 'LoginCtrl'
         })
 
-        // setup an abstract state for the tabs directive
+        .state('about', {
+            cache: false,
+            url: '/about',
+            templateUrl: 'templates/about.html',
+            controller: 'AboutCtrl as ctrl'
+        })
+
         .state('tab', {
             cache: false,
             url: '/tab',
@@ -43,53 +61,44 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
             templateUrl: 'templates/tabs.html'
         })
 
-        // Each tab has its own nav history stack:
-        .state('tab.contacts', {
+        .state('tab.contactables', {
             cache: false,
-            url: '/contacts',
+            url: '/contactables',
             views: {
-                'tab-contacts': {
-                templateUrl: 'templates/tab-contacts.html',
-                controller: 'ContactsCtrl as ctrl'
+                'tab-contactables': {
+                templateUrl: 'templates/contactable-list.html',
+                controller: 'ContactablesCtrl as ctrl'
                 }
             }
         })
-        .state('tab.contact-detail', {
+        .state('tab.contactable-detail', {
             cache: false,
-            url: '/contacts/:instanceId',
+            url: '/contactables/:instanceId',
             views: {
-                'tab-contacts': {
-                    templateUrl: 'templates/contact-detail.html',
-                    controller: 'ContactDetailCtrl as ctrl'
+                'tab-contactables': {
+                    templateUrl: 'templates/contactable-detail.html',
+                    controller: 'ContactableDetailCtrl as ctrl'
                 }
             }
         })
-        .state('tab.groups', {
+        .state('tab.options', {
             cache: false,
-            url: '/groups',
+            url: '/options',
             views: {
-                'tab-groups': {
-                    templateUrl: 'templates/tab-groups.html',
-                    controller: 'GroupsCtrl as ctrl'
+                'tab-options': {
+                templateUrl: 'templates/options.html',
+                controller: 'OptionsCtrl as ctrl'
                 }
             }
         })
-        .state('tab.group-detail', {
-            cache: false,
-            url: '/groups/:instanceId',
-            views: {
-                'tab-groups': {
-                    templateUrl: 'templates/group-detail.html',
-                    controller: 'GroupDetailCtrl as ctrl'
-                }
-            }
-        });
+
+        ;
 
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise(function ($injector, $location) {
             var $state = $injector.get("$state");
             $state.go("login");
         });
-    })
+    }])
 
 ;

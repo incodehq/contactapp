@@ -2,8 +2,11 @@ package domainapp.dom.contacts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.inject.Inject;
+
+import com.google.common.collect.Lists;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -61,7 +64,7 @@ public class ContactRepository {
     public java.util.List<Contact> findByContactGroup(
             ContactGroup contactGroup
     ) {
-        java.util.List<Contact> resContacts = new ArrayList<Contact>();
+        List<Contact> resContacts = Lists.newArrayList();
 
         for(ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
             resContacts.add(contactRole.getContact());
