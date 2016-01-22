@@ -3,10 +3,12 @@ angular.module(
 
 
     .controller('ContactablesCtrl',
-        ['$scope', 'BackendService', 'HttpService', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
-        function($scope, BackendService, HttpService, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
+        ['$rootScope', '$scope', 'BackendService', 'HttpService', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
+        function($rootScope, $scope, BackendService, HttpService, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
 
         var ctrl = this;
+
+        ctrl.preferences = $rootScope.preferences;
 
         ctrl.username = AuthService.username();
         ctrl.logout = function() {
@@ -36,10 +38,11 @@ angular.module(
         }
 
         ctrl.cachedStateCssClass = function(contactable) {
-            return contactable && contactable.$$instanceId &&
-                   HttpService.isCached(contactable.$$instanceId)
-                ? "cached"
-                : "not-cached"
+            return "cached"
+//            return contactable && contactable.$$instanceId &&
+//                   HttpService.isCached(contactable.$$instanceId)
+//                ? "cached"
+//                : "not-cached"
         }
 
     }])

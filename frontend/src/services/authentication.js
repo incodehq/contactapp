@@ -202,6 +202,17 @@ angular.module(
                 });
         }
 
+
+        $rootScope.preferences = {}
+        $rootScope.preferences.filteringAndScrolling = {
+            options: [
+                { text: "Native scrolling", value: "ng-repeat" }
+                ,{ text: "Ionic scrolling", value: "collection-repeat" }
+              ],
+              selected: 'collection-repeat'
+          }
+
+
     }])
 
 ;
