@@ -81,13 +81,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.i
                 }
             }
         })
-        .state('tab.download', {
+        .state('tab.options', {
             cache: false,
-            url: '/download',
+            url: '/options',
             views: {
-                'tab-download': {
-                templateUrl: 'templates/download.html',
-                controller: 'DownloadCtrl as ctrl'
+                'tab-options': {
+                templateUrl: 'templates/options.html',
+                controller: 'OptionsCtrl as ctrl'
                 }
             }
         })

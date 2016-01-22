@@ -182,7 +182,7 @@ angular.module('starter.controllers', [])
 
     }])
 
-    .controller('DownloadCtrl',
+    .controller('OptionsCtrl',
         ['$scope', 'BackendService', 'OfflineService', 'AuthService', '$state', '$timeout',
         function($scope, BackendService, OfflineService, AuthService, $state, $timeout) {
 
@@ -201,6 +201,7 @@ angular.module('starter.controllers', [])
                         // already cached
                         return
                     }
+                    ctrl.message = "Downloading..."
                     ctrl.numberOfContacts = contactables.length
                     for (var i = 0; i < contactables.length; i++) {
                         var j = i+1
@@ -211,7 +212,8 @@ angular.module('starter.controllers', [])
                             function(contactData){
                                 $timeout(function() {
                                     ctrl.downloadCount = j
-                                    ctrl.message = contactData.name
+                                    // Angular doesn't seem able to keep up...
+                                    // ctrl.message = contactData.name
                                 })
                             },
                             {

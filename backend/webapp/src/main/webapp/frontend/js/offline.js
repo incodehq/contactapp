@@ -9,6 +9,7 @@ angular.module('starter')
         var service = this;
 
         var localStorageKey = AppConfig.appPrefix + ".data"
+        var numItemsKey = AppConfig.appPrefix + ".numItems"
 
         var internalGet = function() {
             var storedStr = window.localStorage[localStorageKey]
@@ -22,6 +23,8 @@ angular.module('starter')
         }
 
         var internalPut = function(stored) {
+            var numItems = Object.keys(stored).length
+            window.localStorage[numItemsKey] = numItems
             window.localStorage[localStorageKey] = JSON.stringify(stored)
         }
 
@@ -49,8 +52,7 @@ angular.module('starter')
         }
 
         this.count = function() {
-            var stored = internalGet()
-            return Object.keys(stored).length
+            return window.localStorage[numItemsKey]
         }
 
         this.clearCache = function() {
