@@ -10,7 +10,7 @@ angular.module(
         ctrl.preferences = PreferencesService.preferences;
 
         $scope.updateScrolling = function() {
-            PreferencesService.updateScrolling(ctrl.preferences.filteringAndScrolling.selected)
+            PreferencesService.updateScrolling(ctrl.preferences.scrolling.selected)
         }
 
         ctrl.username = AuthService.username();

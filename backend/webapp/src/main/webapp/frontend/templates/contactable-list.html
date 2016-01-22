@@ -15,13 +15,15 @@
 
     </ion-nav-bar>
 
-    <ion-content scroll="true" overflow-scroll="true" ng-switch on="ctrl.preferences.filteringAndScrolling.selected">
+    <ion-content scroll="true" overflow-scroll="true" ng-switch on="ctrl.preferences.scrolling.selected">
 
         <ion-list  ng-switch-when="ng-repeat">
 
+<!--
             <div class="item item-divider">
                 ng-repeat
             </div>
+-->
 
             <div ng-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
@@ -46,9 +48,11 @@
 
         <ion-list ng-switch-when="collection-repeat">
 
+<!--
             <div class="item item-divider">
                 collection-repeat
             </div>
+-->
 
             <div collection-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">

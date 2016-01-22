@@ -57,17 +57,17 @@ angular.module(
 
 
         //
-        // preferences.filteringAndScrolling
+        // preferences.scrolling
         //
         var defaultScrolling = "ng-repeat"
         // var defaultScrolling = "collection-repeat"
 
-        var filteringAndScrollingKey = AppConfig + ".preferences.filteringAndScrolling"
-        if(!window.localStorage[filteringAndScrollingKey]) {
-            window.localStorage[filteringAndScrollingKey] = defaultScrolling
+        var scrollingKey = AppConfig + ".preferences.scrolling"
+        if(!window.localStorage[scrollingKey]) {
+            window.localStorage[scrollingKey] = defaultScrolling
         }
 
-        service.preferences.filteringAndScrolling = {
+        service.preferences.scrolling = {
             options: [
                 {
                     text: "Use Angular scrolling",
@@ -78,19 +78,19 @@ angular.module(
                     value: "collection-repeat"
                 }
             ],
-            selected: window.localStorage[filteringAndScrollingKey]
+            selected: window.localStorage[scrollingKey]
         }
 
         service.valueForSelectedScrolling = function() {
             return service.preferences.environment.options.find(
                     function(element) {
-                        return element.text === service.preferences.filteringAndScrolling.selected
+                        return element.text === service.preferences.scrolling.selected
                     }).value
         }
 
         service.updateScrolling = function(text) {
-            service.preferences.filteringAndScrolling.selected = text
-            window.localStorage[filteringAndScrollingKey] = text
+            service.preferences.scrolling.selected = text
+            window.localStorage[scrollingKey] = text
         }
 
 
