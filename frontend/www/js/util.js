@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('ecp-contactapp')
 
     .service('Base64', function () {
         /* jshint ignore:start */

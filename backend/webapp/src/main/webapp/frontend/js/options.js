@@ -1,4 +1,4 @@
-angular.module('starter.options', [])
+angular.module('ecp-contactapp.options', [])
 
     .controller('OptionsCtrl',
         ['$scope', 'BackendService', 'OfflineService', 'AuthService', '$state', '$timeout',

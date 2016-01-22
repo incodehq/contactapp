@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('ecp-contactapp')
 
     .service('HttpService',
             ['$http', '$ionicLoading', 'AppConfig', 'OfflineService',

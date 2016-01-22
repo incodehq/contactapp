@@ -1,4 +1,4 @@
-angular.module('starter')
+angular.module('ecp-contactapp')
 
     // stores all data under a single key, so can enumerate all.
     .service(

@@ -1,4 +1,6 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.about', 'starter.options', 'ngResource', 'jett.ionic.filter.bar'])
+angular.module(
+    'ecp-contactapp',
+    ['ionic', 'ecp-contactapp.contacts', 'ecp-contactapp.about', 'ecp-contactapp.options', 'ngResource', 'jett.ionic.filter.bar'])
 
     .value('AppConfig', {
         baseUrl: "http://127.0.0.1:8080",
