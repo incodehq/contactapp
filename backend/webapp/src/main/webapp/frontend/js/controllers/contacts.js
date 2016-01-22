@@ -3,8 +3,8 @@ angular.module(
 
 
     .controller('ContactablesCtrl',
-        ['$scope', 'BackendService', 'HttpService', '$state', 'AuthService', 'PreferencesService', '$ionicPopup', '$ionicFilterBar', '$filter',
-        function($scope, BackendService, HttpService, $state, AuthService, PreferencesService, $ionicPopup, $ionicFilterBar, $filter) {
+        ['BackendService', 'AuthService', 'PreferencesService', '$state', '$ionicFilterBar',
+        function(BackendService, AuthService, PreferencesService, $state, $ionicFilterBar) {
 
         var ctrl = this;
 
@@ -39,7 +39,7 @@ angular.module(
 
         ctrl.cachedStateCssClass = function(contactable) {
             return contactable && contactable.$$instanceId &&
-                   HttpService.isCached(contactable.$$instanceId)
+                   BackendService.isCached(contactable.$$instanceId)
                 ? "cached"
                 : "not-cached"
         }
@@ -47,10 +47,12 @@ angular.module(
     }])
 
     .controller('ContactableDetailCtrl',
-        ['$scope', 'BackendService', 'HttpService', '$stateParams', '$state', '$ionicPopup', 'AuthService', '$filter',
-        function($scope, BackendService, HttpService, $stateParams, $state, $ionicPopup, AuthService, $filter) {
+        ['BackendService', 'PreferencesService', 'AuthService', '$stateParams', '$state',
+        function(BackendService, PreferencesService, AuthService, $stateParams, $state) {
 
         var ctrl = this;
+
+        ctrl.preferences = PreferencesService.preferences;
 
         ctrl.username = AuthService.username();
         ctrl.logout = function() {
@@ -91,7 +93,7 @@ angular.module(
 
         ctrl.cachedStateCssClass = function(instanceId) {
             return instanceId &&
-                   HttpService.isCached(instanceId)
+                   BackendService.isCached(instanceId)
                 ? "cached"
                 : "not-cached"
         }

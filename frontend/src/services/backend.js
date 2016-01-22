@@ -87,6 +87,11 @@ angular.module(
             )
         }
 
+        this.isCached = function(cacheKey) {
+            return HttpService.isCached(cacheKey)
+        }
+
+
     }])
 
 ;

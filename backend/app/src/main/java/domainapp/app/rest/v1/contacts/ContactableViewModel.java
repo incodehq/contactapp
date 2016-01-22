@@ -77,6 +77,14 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
         return underlying.getName();
     }
 
+    public String getFirstName() {
+        return getType() == Type.CONTACT? firstNameFrom(getName()): null;
+    }
+
+    public String getLastName() {
+        return getType() == Type.CONTACT? lastNameFrom(getName()): getName();
+    }
+
     public String getEmail() {
         return underlying.getEmail();
     }
@@ -138,6 +146,16 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
         if(getType() == Type.CONTACT) return null;
         final Country country = contactGroup().getCountry();
         return country != null? container.titleOf(country): null;
+    }
+
+    static String firstNameFrom(final String name) {
+        final int i = name.lastIndexOf(" ");
+        return i != -1? name.substring(0, i): "";
+    }
+
+    static String lastNameFrom(final String name) {
+        final int i = name.lastIndexOf(" ");
+        return i != -1? name.substring(i+1): name;
     }
 
 

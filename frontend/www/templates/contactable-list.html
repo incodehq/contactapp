@@ -19,9 +19,11 @@
 
         <ion-list  ng-switch-when="ng-repeat">
 
+<!--
             <div class="item item-divider">
                 ng-repeat
             </div>
+-->
 
             <div ng-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
@@ -31,7 +33,10 @@
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                    <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">{{::contactable.name}}</h3>
+                    <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{::contactable.name}}</span>
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{::contactable.lastName}}<span ng-if="::contactable.firstName">, </span>{{::contactable.firstName}}</span>
+                    </h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{::contactable.company}}</p>
                         <i class="icon ion-android-contact"></i>
@@ -46,9 +51,11 @@
 
         <ion-list ng-switch-when="collection-repeat">
 
+<!--
             <div class="item item-divider">
                 collection-repeat
             </div>
+-->
 
             <div collection-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
@@ -58,7 +65,10 @@
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                    <h3 class="{{ctrl.cachedStateCssClass(contactable)}}">{{contactable.name}}</h3>
+                    <h3 class="{{ctrl.cachedStateCssClass(contactable)}}">
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{::contactable.name}}</span>
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{::contactable.lastName}}<span ng-if="::contactable.firstName}}">, </span>{{::contactable.firstName}}</span>
+                    </h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{contactable.company}}</p>
                         <i class="icon ion-android-contact"></i>
