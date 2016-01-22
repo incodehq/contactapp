@@ -81,10 +81,18 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
                 :null;
     }
 
+    /**
+     * workaround for ELI-34, however it isn't really possible to hack the data, because some contacts, eg
+     * "Italy Fire Brigade" don't follow these rules.  Disabling.
+     */
     public String getFirstName() {
         return getType() == Type.CONTACT? firstNameFrom(getName()): "";
     }
 
+    /**
+     * workaround for ELI-34, however it isn't really possible to hack the data, because some contacts, eg
+     * "Italy Fire Brigade" don't follow these rules.  Disabling.
+     */
     public String getLastName() {
         final String lastName = getType() == Type.CONTACT ? lastNameFrom(getName()) : getName();
         return lastName;
