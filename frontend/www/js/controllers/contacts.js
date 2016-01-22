@@ -3,12 +3,12 @@ angular.module(
 
 
     .controller('ContactablesCtrl',
-        ['$rootScope', '$scope', 'BackendService', 'HttpService', '$state', 'AuthService', '$ionicPopup', '$ionicFilterBar', '$filter',
-        function($rootScope, $scope, BackendService, HttpService, $state, AuthService, $ionicPopup, $ionicFilterBar, $filter) {
+        ['$scope', 'BackendService', 'HttpService', '$state', 'AuthService', 'PreferencesService', '$ionicPopup', '$ionicFilterBar', '$filter',
+        function($scope, BackendService, HttpService, $state, AuthService, PreferencesService, $ionicPopup, $ionicFilterBar, $filter) {
 
         var ctrl = this;
 
-        ctrl.preferences = $rootScope.preferences;
+        ctrl.preferences = PreferencesService.preferences;
 
         ctrl.username = AuthService.username();
         ctrl.logout = function() {

@@ -1,5 +1,5 @@
 angular.module(
-    'ecp-contactapp.services.authentication', [])
+    'ecp-contactapp.services.authentication', ['ecp-contactapp.services.preferences'])
 
     .factory('AuthInterceptor', 
     ['$rootScope', '$q', '$injector',
@@ -132,44 +132,27 @@ angular.module(
 
 
     .controller('LoginCtrl',
-        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig',
-        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig) {
+        ['$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
+        function($scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
-        $scope.data = {}
-        $scope.data.environments = [
-            {
-                name: "Development",
-                url: "http://localhost:8080"
-            },
-            {
-                name: "Test",
-                url: "http://10.0.0.5:8080"
-            },
-            {
-                name: "Production",
-                url: "http://contacts.ecpnv.com"
-            }
-        ]
-
-        $scope.data.environment = "Development"
-        //$scope.data.environment = "Production"
+        $scope.preferences = PreferencesService.preferences
 
         $scope.login =
             function(data) {
-                var username=$scope.data.username
-                var password=$scope.data.password
+                var username=$scope.preferences.username
+                var password=$scope.preferences.password
 
-                AppConfig.baseUrl = $scope.data.environments.find(function(element) { return element.name === $scope.data.environment}).url
+                AppConfig.baseUrl = $scope.preferences.environments.find(function(element) { return element.name === $scope.preferences.environment}).url
 
                 AuthService.login(username, password).then(
                     function(authenticated) {
-                        $scope.data.username = null
-                        $scope.data.password = null
+                        $scope.preferences.username = null
+                        $scope.preferences.password = null
                         $scope.error = undefined
                         $state.go('tab.contactables', {}, {reload: true});
                     }, function(err) {
-                        $scope.data.username = null
-                        $scope.data.password = null
+                        $scope.preferences.username = null
+                        $scope.preferences.password = null
                         $scope.error = "Incorrect username or password"
                     });
         }
@@ -177,50 +160,6 @@ angular.module(
         $scope.about = function() {
             $state.go('about', {}, {reload:true})
         }
-
-
-        // global utility variables and functions (TODO: create a service instead?)
-        $rootScope.platform = {
-            onDevice: ionic.Platform.isWebView() // true if on a mobile device (as opposed to via web browser)
-        }
-
-        $rootScope.isUndefined = function (thing) {
-            return thing === null || (typeof thing === "undefined");
-        }
-        $rootScope.isDefined = function (thing) {
-            return !$rootScope.isUndefined(thing);
-        }
-        $rootScope.isDefinedWithLength = function (thing) {
-            return $rootScope.isDefined(thing) && thing.length > 0
-        }
-
-        // for debugging
-        $rootScope.huzzah = function() {
-            $ionicPopup.alert({
-                  title: 'Huzzah',
-                  template: 'it worked!'
-                });
-        }
-
-
-        $rootScope.preferences = {}
-
-        var filteringAndScrollingKey = AppConfig + ".preferences.filteringAndScrolling"
-        if(!window.localStorage[filteringAndScrollingKey]) {
-            window.localStorage[filteringAndScrollingKey] = "ng-repeat"
-        }
-
-        $rootScope.preferences.filteringAndScrolling = {
-            options: [
-                { text: "Use Angular scrolling", value: "ng-repeat" }
-                ,{ text: "Use Ionic scrolling (faster rendering)", value: "collection-repeat" }
-              ],
-              selected: window.localStorage[filteringAndScrollingKey]
-          }
-        if(!$rootScope.preferences.filteringAndScrolling.selected){
-            $rootScope.preferences.filteringAndScrolling
-        }
-
 
     }])
 

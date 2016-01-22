@@ -29,8 +29,8 @@
 
     <div class="bar bar-footer bar-dark">
         <div class="button-bar">
-            <select ng-model="data.environment" class="button">
-                <option ng-repeat="env in data.environments">{{env.name}}</option>
+            <select ng-model="preferences.environment" class="button">
+                <option ng-repeat="env in preferences.environments">{{env.name}}</option>
             </select>
             <button class="button button-primary" ng-click="about()">About</button>
         </div>

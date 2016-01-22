@@ -2,10 +2,12 @@ angular.module(
     'ecp-contactapp.controllers.options', [])
 
     .controller('OptionsCtrl',
-        ['$scope', 'BackendService', 'OfflineService', 'AuthService', '$state', '$timeout',
-        function($scope, BackendService, OfflineService, AuthService, $state, $timeout) {
+        ['$scope', 'BackendService', 'OfflineService', 'AuthService', 'PreferencesService', '$state', '$timeout',
+        function($scope, BackendService, OfflineService, AuthService, PreferencesService, $state, $timeout) {
 
         var ctrl = this;
+
+        ctrl.preferences = PreferencesService.preferences;
 
         ctrl.username = AuthService.username();
         ctrl.logout = function() {

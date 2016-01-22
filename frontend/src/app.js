@@ -1,6 +1,7 @@
 angular.module(
     'ecp-contactapp',
     [
+    'ecp-contactapp.services.preferences',
     'ecp-contactapp.services.http',
     'ecp-contactapp.services.offline',
     'ecp-contactapp.services.backend',
@@ -25,7 +26,8 @@ angular.module(
     }])
 
     .run(
-        ["$ionicPlatform", function($ionicPlatform) {
+        ["$ionicPlatform", "$rootScope",
+         function($ionicPlatform, $rootScope) {
         $ionicPlatform.ready(function() {
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -39,6 +41,29 @@ angular.module(
                 // org.apache.cordova.statusbar required
                 window.StatusBar.styleLightContent();
             }
+
+
+            $rootScope.isUndefined = function (thing) {
+                return thing === null || (typeof thing === "undefined");
+            }
+            $rootScope.isDefined = function (thing) {
+                return !$rootScope.isUndefined(thing);
+            }
+            $rootScope.isDefinedWithLength = function (thing) {
+                return $rootScope.isDefined(thing) && thing.length > 0
+            }
+
+            // for debugging
+            $rootScope.huzzah = function() {
+                $ionicPopup.alert({
+                      title: 'Huzzah',
+                      template: 'it worked!'
+                    });
+            }
+
+
+
+
         });
     }])
 

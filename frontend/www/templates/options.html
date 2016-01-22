@@ -45,19 +45,17 @@
 
 
         <ul class="list card">
-
             <div class="item item-text-wrap">
                 Change how scrolling works; this impacts filtering and speed to render the home page.
             </div>
 
             <ion-list>
-                <ion-radio ng-repeat="item in preferences.filteringAndScrolling.options"
+                <ion-radio ng-repeat="item in ctrl.preferences.filteringAndScrolling.options"
                            ng-value="item.value"
-                           ng-model="preferences.filteringAndScrolling.selected">
+                           ng-model="ctrl.preferences.filteringAndScrolling.selected">
                     {{ item.text }}
                 </ion-radio>
             </ion-list>
-
         </ul>
 
 
