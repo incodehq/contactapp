@@ -3,8 +3,8 @@ angular.module(
 
     .service(
         'BackendService',
-        ['HttpService', 'AppConfig', '$filter',
-        function(HttpService, AppConfig, $filter) {
+        ['PreferencesService', 'HttpService', 'AppConfig', '$filter',
+        function(PreferencesService, HttpService, AppConfig, $filter) {
 
         var listAllKey = 'listAll' // for localStorage
 
@@ -34,7 +34,11 @@ angular.module(
                         }
                     )
                     trimmedData.sort(function(a,b) {
-                        return a.name.localeCompare(b.name)
+                        if(PreferencesService.preferences.nameOrder.selected === "first-last") {
+                            return a.name.localeCompare(b.name)
+                        } else {
+                            return a.lastName.localeCompare(b.lastName)
+                        }
                     })
                     onComplete(trimmedData)
                 },

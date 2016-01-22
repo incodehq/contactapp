@@ -74,15 +74,20 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
     }
 
     public String getName() {
-        return underlying.getName();
+        final String name = underlying.getName();
+        // remove white space and &nbsp;
+        return name != null
+                ?name.replace(String.valueOf((char) 160), " ").trim()
+                :null;
     }
 
     public String getFirstName() {
-        return getType() == Type.CONTACT? firstNameFrom(getName()): null;
+        return getType() == Type.CONTACT? firstNameFrom(getName()): "";
     }
 
     public String getLastName() {
-        return getType() == Type.CONTACT? lastNameFrom(getName()): getName();
+        final String lastName = getType() == Type.CONTACT ? lastNameFrom(getName()) : getName();
+        return lastName;
     }
 
     public String getEmail() {
