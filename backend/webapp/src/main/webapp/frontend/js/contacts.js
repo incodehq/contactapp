@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp.contacts', [])
+angular.module(
+    'ecp-contactapp.controllers.contacts', [])
 
 
     .controller('ContactablesCtrl',

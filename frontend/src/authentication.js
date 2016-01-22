@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp')
+angular.module(
+    'ecp-contactapp.services.authentication', [])
 
     .factory('AuthInterceptor', 
     ['$rootScope', '$q', '$injector',

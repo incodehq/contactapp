@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp.about', [])
+angular.module(
+    'ecp-contactapp.controllers.about', [])
 
     .controller('AboutCtrl',
         ['$scope',

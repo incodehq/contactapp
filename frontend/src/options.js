@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp.options', [])
+angular.module(
+    'ecp-contactapp.controllers.options', [])
 
     .controller('OptionsCtrl',
         ['$scope', 'BackendService', 'OfflineService', 'AuthService', '$state', '$timeout',

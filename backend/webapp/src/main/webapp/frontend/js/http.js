@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp')
+angular.module(
+    'ecp-contactapp.services.http' , [])
 
     .service('HttpService',
             ['$http', '$ionicLoading', 'AppConfig', 'OfflineService',

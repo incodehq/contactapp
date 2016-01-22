@@ -1,4 +1,5 @@
-angular.module('ecp-contactapp')
+angular.module(
+    'ecp-contactapp.services.offline', [])
 
     // stores all data under a single key, so can enumerate all.
     .service(
