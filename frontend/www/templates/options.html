@@ -52,7 +52,8 @@
             <ion-list>
                 <ion-radio ng-repeat="item in ctrl.preferences.filteringAndScrolling.options"
                            ng-value="item.value"
-                           ng-model="ctrl.preferences.filteringAndScrolling.selected">
+                           ng-model="ctrl.preferences.filteringAndScrolling.selected"
+                           ng-change="updateScrolling()" >
                     {{ item.text }}
                 </ion-radio>
             </ion-list>

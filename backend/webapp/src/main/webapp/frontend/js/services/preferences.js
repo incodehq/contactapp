@@ -41,22 +41,19 @@ angular.module(
         }
 
 
-        var environmentUrlFor = function(environmentName) {
+        service.urlForSelectedEnvironment = function() {
             return service.preferences.environment.options.find(
                     function(element) {
-                        return element.name === environmentName
+                        return element.name === service.preferences.environment.selected
                     }).url
-        }
-
-        service.urlForSelectedEnvironment = function() {
-            var environmentName = service.preferences.environment.selected
-            return environmentUrlFor(environmentName)
         }
 
         service.updateEnvironment = function(environmentName) {
             service.preferences.environment.selected = environmentName
             window.localStorage[environmentKey] = environmentName
         }
+
+
 
 
         //
@@ -72,11 +69,31 @@ angular.module(
 
         service.preferences.filteringAndScrolling = {
             options: [
-                { text: "Use Angular scrolling", value: "ng-repeat" }
-                ,{ text: "Use Ionic scrolling (faster rendering)", value: "collection-repeat" }
-              ],
-              selected: window.localStorage[filteringAndScrollingKey]
-          }
+                {
+                    text: "Use Angular scrolling",
+                    value: "ng-repeat"
+                },
+                {
+                    text: "Use Ionic scrolling (faster rendering)",
+                    value: "collection-repeat"
+                }
+            ],
+            selected: window.localStorage[filteringAndScrollingKey]
+        }
+
+        service.valueForSelectedScrolling = function() {
+            return service.preferences.environment.options.find(
+                    function(element) {
+                        return element.text === service.preferences.filteringAndScrolling.selected
+                    }).value
+        }
+
+        service.updateScrolling = function(text) {
+            service.preferences.filteringAndScrolling.selected = text
+            window.localStorage[filteringAndScrollingKey] = text
+        }
+
+
 
     }])
 
