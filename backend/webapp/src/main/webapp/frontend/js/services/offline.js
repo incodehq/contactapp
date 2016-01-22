@@ -10,7 +10,6 @@ angular.module(
         var service = this;
 
         var localStorageKey = AppConfig.appPrefix + ".data"
-        var numItemsKey = AppConfig.appPrefix + ".numItems"
 
         var internalGet = function() {
             var storedStr = window.localStorage[localStorageKey]
@@ -25,9 +24,13 @@ angular.module(
 
         var internalPut = function(stored) {
             var numItems = Object.keys(stored).length
-            window.localStorage[numItemsKey] = numItems
             window.localStorage[localStorageKey] = JSON.stringify(stored)
+            _stored = stored
         }
+
+        // in-memory copy
+        var _stored = internalGet();
+
 
         this.get = function(cacheKey) {
             var stored = internalGet()
@@ -44,16 +47,17 @@ angular.module(
         }
 
         this.lookup = function(cacheKey) {
-            return service.get(cacheKey)
+            return _stored[cacheKey]
         }
 
         this.isCached = function(cacheKey) {
             var lookedUp = service.lookup(cacheKey)
-            return lookedUp !== undefined
+            var cached = lookedUp !== undefined
+            return cached
         }
 
         this.count = function() {
-            return window.localStorage[numItemsKey]
+            return Object.keys(_stored).length
         }
 
         this.clearCache = function() {

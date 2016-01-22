@@ -66,7 +66,7 @@
                           class="item-avatar item-icon-left"
                           type="item-text-wrap"
                           href="#/tab/contactables/{{contactRole.contactGroup.$$instanceId}}" >
-                    <h3>{{contactRole.contactGroupName}}</h3>
+                    <h3 class="{{ctrl.cachedStateCssClass(contactRole.contactGroup.$$instanceId)}}">{{contactRole.contactGroupName}}</h3>
                     <p>
                         <span ng-show="isDefined(contactRole.contactGroupCountryName)">{{contactRole.contactGroupCountryName}}</span>
                         <span ng-show="isDefined(contactRole.roleName)">({{contactRole.roleName}})</span>
@@ -80,7 +80,7 @@
                           class="item-avatar item-icon-left"
                           type="item-text-wrap"
                           href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
-                    <h3>{{contactRole.contactName}}</h3>
+                    <h3 class="{{ctrl.cachedStateCssClass(contactRole.contact.$$instanceId)}}">{{contactRole.contactName}}</h3>
                     <p>
                         <span ng-show="isDefined(contactRole.contactCompany)">{{contactRole.contactCompany}}</span>
                         <span ng-show="isDefined(contactRole.roleName)"> ({{contactRole.roleName}})</span>

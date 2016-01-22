@@ -12,22 +12,6 @@
 
     <ion-content>
 
-        <ul class="list card">
-
-            <div class="item item-text-wrap">
-                Change how scrolling and filtering works.
-            </div>
-
-            <ion-list>
-                <ion-radio ng-repeat="item in preferences.filteringAndScrolling.options"
-                           ng-value="item.value"
-                           ng-model="preferences.filteringAndScrolling.selected">
-                    {{ item.text }}
-                </ion-radio>
-            </ion-list>
-
-        </ul>
-
         <div class="card">
             <div class="item item-text-wrap">
                 Download contacts so that they are accessible even while offline.
@@ -58,6 +42,23 @@
             </div>
 
         </div>
+
+
+        <ul class="list card">
+
+            <div class="item item-text-wrap">
+                Change how scrolling works; this impacts filtering and speed to render the home page.
+            </div>
+
+            <ion-list>
+                <ion-radio ng-repeat="item in preferences.filteringAndScrolling.options"
+                           ng-value="item.value"
+                           ng-model="preferences.filteringAndScrolling.selected">
+                    {{ item.text }}
+                </ion-radio>
+            </ion-list>
+
+        </ul>
 
 
     </ion-content>

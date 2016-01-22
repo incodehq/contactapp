@@ -38,11 +38,10 @@ angular.module(
         }
 
         ctrl.cachedStateCssClass = function(contactable) {
-            return "cached"
-//            return contactable && contactable.$$instanceId &&
-//                   HttpService.isCached(contactable.$$instanceId)
-//                ? "cached"
-//                : "not-cached"
+            return contactable && contactable.$$instanceId &&
+                   HttpService.isCached(contactable.$$instanceId)
+                ? "cached"
+                : "not-cached"
         }
 
     }])
@@ -89,6 +88,14 @@ angular.module(
                 null);                  // Attachment Data
             }
         }
+
+        ctrl.cachedStateCssClass = function(instanceId) {
+            return instanceId &&
+                   HttpService.isCached(instanceId)
+                ? "cached"
+                : "not-cached"
+        }
+
 
     }])
 

@@ -63,7 +63,7 @@
 
             <div class="list card" ng-if="ctrl.contactable.type === 'Contact'">
                 <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
-                          class="item-avatar item-icon-left"
+                          class="item-avatar item-icon-left {{ctrl.cachedStateCssClass(contactRole.contactGroup.$$instanceId)}}"
                           type="item-text-wrap"
                           href="#/tab/contactables/{{contactRole.contactGroup.$$instanceId}}" >
                     <h3>{{contactRole.contactGroupName}}</h3>
@@ -77,7 +77,7 @@
 
             <div class="list card" ng-if="ctrl.contactable.type === 'Contact Group'">
                 <ion-item ng-repeat="contactRole in ctrl.contactable.contactRoles"
-                          class="item-avatar item-icon-left"
+                          class="item-avatar item-icon-left {{ctrl.cachedStateCssClass(contactRole.contact.$$instanceId)}}"
                           type="item-text-wrap"
                           href="#/tab/contactables/{{contactRole.contact.$$instanceId}}" >
                     <h3>{{contactRole.contactName}}</h3>

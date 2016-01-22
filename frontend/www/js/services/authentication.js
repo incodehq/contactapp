@@ -204,13 +204,22 @@ angular.module(
 
 
         $rootScope.preferences = {}
+
+        var filteringAndScrollingKey = AppConfig + ".preferences.filteringAndScrolling"
+        if(!window.localStorage[filteringAndScrollingKey]) {
+            window.localStorage[filteringAndScrollingKey] = "ng-repeat"
+        }
+
         $rootScope.preferences.filteringAndScrolling = {
             options: [
-                { text: "Native scrolling", value: "ng-repeat" }
-                ,{ text: "Ionic scrolling", value: "collection-repeat" }
+                { text: "Use Angular scrolling", value: "ng-repeat" }
+                ,{ text: "Use Ionic scrolling (faster rendering)", value: "collection-repeat" }
               ],
-              selected: 'collection-repeat'
+              selected: window.localStorage[filteringAndScrollingKey]
           }
+        if(!$rootScope.preferences.filteringAndScrolling.selected){
+            $rootScope.preferences.filteringAndScrolling
+        }
 
 
     }])

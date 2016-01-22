@@ -17,10 +17,7 @@
 
     <ion-content scroll="true" overflow-scroll="true" ng-switch on="ctrl.preferences.filteringAndScrolling.selected">
 
-        <ion-list  ng-switch-on="ng-repeat">
-            <div class="item item-divider">
-                Using native scrolling...
-            </div>
+        <ion-list  ng-switch-when="ng-repeat">
 
             <div ng-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
@@ -43,27 +40,23 @@
             </div>
         </ion-list>
 
-        <ion-list  ng-switch-on="collection-repeat">
-
-            <div class="item item-divider">
-                Using ionic scrolling...
-            </div>
+        <ion-list ng-switch-when="collection-repeat">
 
             <div collection-repeat="contactable in ctrl.contactables">
                 <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
-                    {{::ctrl.firstLetter(contactable.name)}}
+                    {{ctrl.firstLetter(contactable.name)}}
                 </div>
                 <ion-item
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                    <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">{{::contactable.name}}</h3>
+                    <h3 class="{{ctrl.cachedStateCssClass(contactable)}}">{{contactable.name}}</h3>
                     <div ng-if="contactable.type == 'Contact'">
-                        <p>{{::contactable.company}}</p>
+                        <p>{{contactable.company}}</p>
                         <i class="icon ion-android-contact"></i>
                     </div>
                     <div ng-if="contactable.type == 'Contact Group'">
-                        <p>{{::contactable.country}}</p>
+                        <p>{{contactable.country}}</p>
                         <i class="icon ion-android-contacts"></i>
                     </div>
                 </ion-item>
