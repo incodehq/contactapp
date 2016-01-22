@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.about', 'starter.options', 'ngResource', 'jett.ionic.filter.bar'])
 
     .value('AppConfig', {
         baseUrl: "http://127.0.0.1:8080",

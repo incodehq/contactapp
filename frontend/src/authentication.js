@@ -129,4 +129,78 @@ angular.module('starter')
 
     }])
 
+
+    .controller('LoginCtrl',
+        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig',
+        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig) {
+
+        $scope.data = {}
+        $scope.data.environments = [
+            {
+                name: "Development",
+                url: "http://localhost:8080"
+            },
+            {
+                name: "Test",
+                url: "http://10.0.0.5:8080"
+            },
+            {
+                name: "Production",
+                url: "http://contacts.ecpnv.com"
+            }
+        ]
+
+        $scope.data.environment = "Development"
+        //$scope.data.environment = "Production"
+
+        $scope.login =
+            function(data) {
+                var username=$scope.data.username
+                var password=$scope.data.password
+
+                AppConfig.baseUrl = $scope.data.environments.find(function(element) { return element.name === $scope.data.environment}).url
+
+                AuthService.login(username, password).then(
+                    function(authenticated) {
+                        $scope.data.username = null
+                        $scope.data.password = null
+                        $scope.error = undefined
+                        $state.go('tab.contactables', {}, {reload: true});
+                    }, function(err) {
+                        $scope.data.username = null
+                        $scope.data.password = null
+                        $scope.error = "Incorrect username or password"
+                    });
+        }
+
+        $scope.about = function() {
+            $state.go('about', {}, {reload:true})
+        }
+
+
+        // global utility variables and functions (TODO: create a service instead?)
+        $rootScope.platform = {
+            onDevice: ionic.Platform.isWebView() // true if on a mobile device (as opposed to via web browser)
+        }
+
+        $rootScope.isUndefined = function (thing) {
+            return thing === null || (typeof thing === "undefined");
+        }
+        $rootScope.isDefined = function (thing) {
+            return !$rootScope.isUndefined(thing);
+        }
+        $rootScope.isDefinedWithLength = function (thing) {
+            return $rootScope.isDefined(thing) && thing.length > 0
+        }
+
+        // for debugging
+        $rootScope.huzzah = function() {
+            $ionicPopup.alert({
+                  title: 'Huzzah',
+                  template: 'it worked!'
+                });
+        }
+
+    }])
+
 ;
