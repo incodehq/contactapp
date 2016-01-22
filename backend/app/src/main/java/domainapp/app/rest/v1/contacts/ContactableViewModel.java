@@ -26,7 +26,7 @@ import domainapp.dom.role.ContactRole;
 
 public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEntity> {
 
-    enum Type {
+    public enum Type {
         CONTACT,
         CONTACT_GROUP
     }
