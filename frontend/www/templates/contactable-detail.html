@@ -28,19 +28,7 @@
 
             <div class="list card" ng-if="ctrl.contactable.email || ctrl.contactable.contactNumbers.length > 0">
 
-<!--
-                <ion-item class="item item-icon-right">
-                    {{ctrl.contactable.email}}
-                    <div>
-                        <i class="icon ion-email"></i>
-                        <ion-option-button ng-click="ctrl.sendEmail">
-                            <i class="icon ion-email"></i>
-                        </ion-option-button>
-                    </div>
-                </ion-item>
--->
-
-                <div class="item row">
+                <div class="item row" ng-if="ctrl.contactable.email">
                     <div class="col col-66">
                         <span>{{ctrl.contactable.email}}</span>
                     </div>
