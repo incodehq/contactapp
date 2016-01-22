@@ -14,49 +14,60 @@ angular.module(
         //
         // preferences.environment
         //
-        service.preferences.environments = [
-            {
-                name: "Development",
-                url: "http://localhost:8080"
-            },
-            {
-                name: "Test",
-                url: "http://10.0.0.5:8080"
-            },
-            {
-                name: "Production",
-                url: "http://contacts.ecpnv.com"
-            }
-        ]
-
         var defaultEnvironment = "Development"
         //var defaultEnvironment = "Production"
 
-        var environmentKey = AppConfig + ".environment"
-        var environment = window.localStorage[environmentKey]
-
-        if(!environment) {
+        var environmentKey = AppConfig + "preferences.environment"
+        if(!window.localStorage[environmentKey]) {
             window.localStorage[environmentKey] = defaultEnvironment
         }
 
-        service.preferences.environment = window.localStorage[environmentKey]
+        service.preferences.environment = {
+            options: [
+                {
+                    name: "Development",
+                    url: "http://localhost:8080"
+                },
+                {
+                    name: "Test",
+                    url: "http://10.0.0.5:8080"
+                },
+                {
+                    name: "Production",
+                    url: "http://contacts.ecpnv.com"
+                }
+            ],
+            selected: window.localStorage[environmentKey]
+        }
 
-        service.environmentUrlFor = function(environmentName) {
-            return service.preferences.environments.find(
+
+        var environmentUrlFor = function(environmentName) {
+            return service.preferences.environment.options.find(
                     function(element) {
                         return element.name === environmentName
                     }).url
         }
 
+        service.urlForSelectedEnvironment = function() {
+            var environmentName = service.preferences.environment.selected
+            return environmentUrlFor(environmentName)
+        }
+
+        service.updateEnvironment = function(environmentName) {
+            service.preferences.environment.selected = environmentName
+            window.localStorage[environmentKey] = environmentName
+        }
 
 
         //
         // preferences.filteringAndScrolling
         //
+        var defaultScrolling = "ng-repeat"
+        // var defaultScrolling = "collection-repeat"
 
         var filteringAndScrollingKey = AppConfig + ".preferences.filteringAndScrolling"
         if(!window.localStorage[filteringAndScrollingKey]) {
-            window.localStorage[filteringAndScrollingKey] = "ng-repeat"
+            window.localStorage[filteringAndScrollingKey] = defaultScrolling
         }
 
         service.preferences.filteringAndScrolling = {
@@ -66,10 +77,6 @@ angular.module(
               ],
               selected: window.localStorage[filteringAndScrollingKey]
           }
-        if(!service.preferences.filteringAndScrolling.selected){
-            services.preferences.filteringAndScrolling
-        }
-
 
     }])
 

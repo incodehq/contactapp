@@ -135,19 +135,26 @@ angular.module(
         ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
         function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
+        var ctrl = this;
+
         $scope.preferences = PreferencesService.preferences
         $scope.credentials = {
             username: null,
             password: null
         }
+        $scope.environment = PreferencesService.preferences.environment.selected
+
+        $scope.updateEnvironment = function() {
+            PreferencesService.updateEnvironment($scope.environment)
+        }
+
 
         $scope.login =
             function(data) {
                 var username=$scope.credentials.username
                 var password=$scope.credentials.password
-                var environment=$scope.preferences.environment
 
-                AppConfig.baseUrl = PreferencesService.environmentUrlFor(environment)
+                AppConfig.baseUrl = PreferencesService.urlForSelectedEnvironment()
 
                 AuthService.login(username, password).then(
                     function(authenticated) {
