@@ -27,7 +27,7 @@
 
             <div ng-repeat="contactable in ctrl.contactables">
                 <div ng-switch on="ctrl.preferences.nameOrder.selected">
-                    <div ng-switch-when="first-last"
+                    <div ng-switch-default
                          class="item item-divider"
                          ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
                         {{::ctrl.firstLetter(contactable.name)}}
@@ -43,8 +43,10 @@
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
                     <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{::contactable.name}}</span>
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{::contactable.lastName}}<span ng-if="::contactable.firstName">, </span>{{::contactable.firstName}}</span>
+                        <span ng-switch on="ctrl.preferences.nameOrder.selected">
+                            <span ng-switch-default>{{contactable.name}}</span>
+                            <span ng-switch-when="'last-first'">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
+                        </span>
                     </h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{::contactable.company}}</p>
@@ -68,7 +70,7 @@
 
             <div collection-repeat="contactable in ctrl.contactables">
                 <div ng-switch on="ctrl.preferences.nameOrder.selected">
-                    <div ng-switch-when="first-last"
+                    <div ng-switch-default
                          class="item item-divider"
                          ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
                         {{ctrl.firstLetter(contactable.name)}}
@@ -84,8 +86,10 @@
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
                     <h3 class="{{ctrl.cachedStateCssClass(contactable)}}">
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{contactable.name}}</span>
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
+                        <span ng-switch on="ctrl.preferences.nameOrder.selected">
+                            <span ng-switch-default>{{contactable.name}}</span>
+                            <span ng-switch-when="'last-first'">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
+                        </span>
                     </h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{contactable.company}}</p>
