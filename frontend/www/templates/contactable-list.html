@@ -67,16 +67,25 @@
 -->
 
             <div collection-repeat="contactable in ctrl.contactables">
-                <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
-                    {{ctrl.firstLetter(contactable.name)}}
+                <div ng-switch on="ctrl.preferences.nameOrder.selected">
+                    <div ng-switch-when="first-last"
+                         class="item item-divider"
+                         ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
+                        {{ctrl.firstLetter(contactable.name)}}
+                    </div>
+                    <div ng-switch-when="last-first"
+                         class="item item-divider"
+                         ng-if="ctrl.firstLetter(contactable.lastName) !== ctrl.firstLetter(ctrl.contactables[$index-1].lastName)">
+                        {{ctrl.firstLetter(contactable.lastName)}}
+                    </div>
                 </div>
                 <ion-item
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
                         href="#/tab/contactables/{{contactable.$$instanceId}}" >
                     <h3 class="{{ctrl.cachedStateCssClass(contactable)}}">
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{::contactable.name}}</span>
-                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{::contactable.lastName}}<span ng-if="::contactable.firstName}}">, </span>{{::contactable.firstName}}</span>
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'first-last' ">{{contactable.name}}</span>
+                        <span ng-if="ctrl.preferences.nameOrder.selected === 'last-first' ">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
                     </h3>
                     <div ng-if="contactable.type == 'Contact'">
                         <p>{{contactable.company}}</p>

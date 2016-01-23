@@ -14,10 +14,8 @@ angular.module(
         //
         // preferences.environment
         //
+        var environmentKey = AppConfig.appPrefix + ".preferences.environment"
         var defaultEnvironment = "Development"
-        //var defaultEnvironment = "Production"
-
-        var environmentKey = AppConfig + "preferences.environment"
         if(!window.localStorage[environmentKey]) {
             window.localStorage[environmentKey] = defaultEnvironment
         }
@@ -59,8 +57,13 @@ angular.module(
         //
         // preferences.scrolling
         //
+        var scrollingKey = AppConfig.appPrefix + ".preferences.scrolling"
+        var defaultScrolling = "ng-repeat"
+        // var defaultScrolling = "collection-repeat"
 
-        var scrollingKey = AppConfig + ".preferences.scrolling"
+        if(!window.localStorage[scrollingKey]) {
+            window.localStorage[scrollingKey] = defaultScrolling
+        }
         service.preferences.scrolling = {
             options: [
                 {
@@ -92,8 +95,9 @@ angular.module(
         //
         // preferences.nameOrder
         //
-        var nameOrderKey = AppConfig + ".preferences.nameOrder"
-
+        var nameOrderKey = AppConfig.appPrefix + ".preferences.nameOrder"
+        var defaultNameOrder = "first-last"
+        // var defaultNameOrder = "last-first"
         service.preferences.nameOrder = {
             options: [
                 {
@@ -108,6 +112,10 @@ angular.module(
             selected: window.localStorage[nameOrderKey]
         }
 
+        if(!window.localStorage[nameOrderKey]) {
+            window.localStorage[nameOrderKey] = defaultNameOrder
+        }
+
         service.valueForSelectedNameOrder = function() {
             return service.preferences.environment.options.find(
                     function(element) {
@@ -120,23 +128,6 @@ angular.module(
             window.localStorage[nameOrderKey] = text
         }
 
-
-        // this is called during bootstrap
-        service.defaultPreferencesIfRequired = function() {
-
-            var defaultNameOrder = "first-last"
-            // var defaultNameOrder = "last-first"
-
-            var defaultScrolling = "ng-repeat"
-            // var defaultScrolling = "collection-repeat"
-
-            if(!window.localStorage[nameOrderKey]) {
-                window.localStorage[nameOrderKey] = defaultNameOrder
-            }
-            if(!window.localStorage[scrollingKey]) {
-                window.localStorage[scrollingKey] = defaultScrolling
-            }
-        }
 
 
     }])

@@ -18,6 +18,17 @@ angular.module(
             return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm') :"No data available"
         }
 
+        var sort = function(respData) {
+            respData.sort(function(a,b) {
+                if(PreferencesService.preferences.nameOrder.selected === "first-last") {
+                    return a.name.localeCompare(b.name)
+                } else {
+                    return a.lastName.localeCompare(b.lastName)
+                }
+            })
+            return respData
+        }
+
         this.loadContactables = function(onComplete, options) {
             HttpService.get(
                 listAllKey,
@@ -33,17 +44,10 @@ angular.module(
                             return contactable
                         }
                     )
-                    trimmedData.sort(function(a,b) {
-                        if(PreferencesService.preferences.nameOrder.selected === "first-last") {
-                            return a.name.localeCompare(b.name)
-                        } else {
-                            return a.lastName.localeCompare(b.lastName)
-                        }
-                    })
-                    onComplete(trimmedData)
+                    onComplete(sort(trimmedData))
                 },
                 function(err, respData, date, resp) {
-                    onComplete(respData || {}, message(date))
+                    onComplete(sort(respData) || {}, message(date))
                 },
                 options
             )

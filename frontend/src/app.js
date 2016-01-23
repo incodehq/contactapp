@@ -61,9 +61,6 @@ angular.module(
                     });
             }
 
-            PreferencesService.defaultPreferencesIfRequired()
-
-
         });
     }])
 
