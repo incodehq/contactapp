@@ -11,7 +11,13 @@
   <access origin="*"/>
   <access origin="tel:*" launch-external="yes"/>
   <access origin="mailto:*" launch-external="yes"/>
-  <allow-navigation href="*" />
+
+  <!-- Test (see preferences.js) -->
+  <allow-navigation href="http://10.0.0.5:8080" />
+  <!-- Production (see preferences.js) -->
+  <allow-navigation href="http://contacts.ecpnv.com" />
+  <allow-navigation href="https://contacts.ecpnv.com" />
+
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
