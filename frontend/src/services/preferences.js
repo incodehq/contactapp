@@ -15,7 +15,10 @@ angular.module(
         // preferences.environment
         //
         var environmentKey = AppConfig.appPrefix + ".preferences.environment"
-        var defaultEnvironment = "Development"
+
+        var defaultEnvironment = "Production"
+        // var defaultEnvironment = "Development"
+
         if(!window.localStorage[environmentKey]) {
             window.localStorage[environmentKey] = defaultEnvironment
         }
@@ -58,6 +61,7 @@ angular.module(
         // preferences.scrolling
         //
         var scrollingKey = AppConfig.appPrefix + ".preferences.scrolling"
+
         var defaultScrolling = "ng-repeat"
         // var defaultScrolling = "collection-repeat"
 
@@ -96,8 +100,10 @@ angular.module(
         // preferences.nameOrder
         //
         var nameOrderKey = AppConfig.appPrefix + ".preferences.nameOrder"
+
         var defaultNameOrder = "first-last"
         // var defaultNameOrder = "last-first"
+
         service.preferences.nameOrder = {
             options: [
                 {
