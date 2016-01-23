@@ -67,11 +67,11 @@ angular.module(
         service.preferences.scrolling = {
             options: [
                 {
-                    text: "Use Angular scrolling",
+                    text: "With dividers, but slower to display",
                     value: "ng-repeat"
                 },
                 {
-                    text: "Use Ionic scrolling (faster rendering)",
+                    text: "No dividers, but faster to display",
                     value: "collection-repeat"
                 }
             ],

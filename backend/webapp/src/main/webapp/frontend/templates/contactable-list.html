@@ -17,70 +17,43 @@
 
     <ion-content scroll="true" overflow-scroll="true" ng-switch on="ctrl.preferences.scrolling.selected">
 
-        <ion-list  ng-switch-when="ng-repeat">
-
-<!--
-            <div class="item item-divider">
-                ng-repeat
-            </div>
--->
-
-            <div ng-repeat="contactable in ctrl.contactables">
-                <div ng-switch on="ctrl.preferences.nameOrder.selected">
-                    <div ng-switch-default
-                         class="item item-divider"
-                         ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
-                        {{::ctrl.firstLetter(contactable.name)}}
-                    </div>
-                    <div ng-switch-when="last-first"
-                         class="item item-divider"
-                         ng-if="ctrl.firstLetter(contactable.lastName) !== ctrl.firstLetter(ctrl.contactables[$index-1].lastName)">
-                        {{::ctrl.firstLetter(contactable.lastName)}}
-                    </div>
+        <ion-list  ng-switch-when="ng-repeat"
+                   ng-repeat="contactable in ctrl.contactables">
+            <div ng-switch on="ctrl.preferences.nameOrder.selected">
+                <div ng-switch-default
+                     class="item item-divider"
+                     ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
+                    {{::ctrl.firstLetter(contactable.name)}}
                 </div>
-                <ion-item
-                        class="item-avatar item-icon-left item-remove-animate"
-                        type="item-text-wrap"
-                        href="#/tab/contactables/{{contactable.$$instanceId}}" >
-                    <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">
-                        <span ng-switch on="ctrl.preferences.nameOrder.selected">
-                            <span ng-switch-default>{{contactable.name}}</span>
-                            <span ng-switch-when="'last-first'">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
-                        </span>
-                    </h3>
-                    <div ng-if="contactable.type == 'Contact'">
-                        <p>{{::contactable.company}}</p>
-                        <i class="icon ion-android-contact"></i>
-                    </div>
-                    <div ng-if="contactable.type == 'Contact Group'">
-                        <p>{{::contactable.country}}</p>
-                        <i class="icon ion-android-contacts"></i>
-                    </div>
-                </ion-item>
+                <div ng-switch-when="last-first"
+                     class="item item-divider"
+                     ng-if="ctrl.firstLetter(contactable.lastName) !== ctrl.firstLetter(ctrl.contactables[$index-1].lastName)">
+                    {{::ctrl.firstLetter(contactable.lastName)}}
+                </div>
             </div>
+            <ion-item
+                    class="item-avatar item-icon-left item-remove-animate"
+                    type="item-text-wrap"
+                    href="#/tab/contactables/{{contactable.$$instanceId}}" >
+                <h3 class="{{::ctrl.cachedStateCssClass(contactable)}}">
+                    <span ng-switch on="ctrl.preferences.nameOrder.selected">
+                        <span ng-switch-default>{{contactable.name}}</span>
+                        <span ng-switch-when="'last-first'">{{contactable.lastName}}<span ng-if="contactable.firstName}}">, </span>{{contactable.firstName}}</span>
+                    </span>
+                </h3>
+                <div ng-if="contactable.type == 'Contact'">
+                    <p>{{::contactable.company}}</p>
+                    <i class="icon ion-android-contact"></i>
+                </div>
+                <div ng-if="contactable.type == 'Contact Group'">
+                    <p>{{::contactable.country}}</p>
+                    <i class="icon ion-android-contacts"></i>
+                </div>
+            </ion-item>
         </ion-list>
 
         <ion-list ng-switch-when="collection-repeat">
-
-<!--
-            <div class="item item-divider">
-                collection-repeat
-            </div>
--->
-
             <div collection-repeat="contactable in ctrl.contactables">
-                <div ng-switch on="ctrl.preferences.nameOrder.selected">
-                    <div ng-switch-default
-                         class="item item-divider"
-                         ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
-                        {{ctrl.firstLetter(contactable.name)}}
-                    </div>
-                    <div ng-switch-when="last-first"
-                         class="item item-divider"
-                         ng-if="ctrl.firstLetter(contactable.lastName) !== ctrl.firstLetter(ctrl.contactables[$index-1].lastName)">
-                        {{ctrl.firstLetter(contactable.lastName)}}
-                    </div>
-                </div>
                 <ion-item
                         class="item-avatar item-icon-left item-remove-animate"
                         type="item-text-wrap"
