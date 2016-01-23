@@ -26,8 +26,17 @@
 -->
 
             <div ng-repeat="contactable in ctrl.contactables">
-                <div class="item item-divider" ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
-                    {{::ctrl.firstLetter(contactable.name)}}
+                <div ng-switch on="ctrl.preferences.nameOrder.selected">
+                    <div ng-switch-when="first-last"
+                         class="item item-divider"
+                         ng-if="ctrl.firstLetter(contactable.name) !== ctrl.firstLetter(ctrl.contactables[$index-1].name)">
+                        {{::ctrl.firstLetter(contactable.name)}}
+                    </div>
+                    <div ng-switch-when="last-first"
+                         class="item item-divider"
+                         ng-if="ctrl.firstLetter(contactable.lastName) !== ctrl.firstLetter(ctrl.contactables[$index-1].lastName)">
+                        {{::ctrl.firstLetter(contactable.lastName)}}
+                    </div>
                 </div>
                 <ion-item
                         class="item-avatar item-icon-left item-remove-animate"
