@@ -62,8 +62,8 @@ angular.module(
         //
         var scrollingKey = AppConfig.appPrefix + ".preferences.scrolling"
 
-        var defaultScrolling = "ng-repeat"
-        // var defaultScrolling = "collection-repeat"
+        var defaultScrolling = "collection-repeat"
+        // var defaultScrolling = "ng-repeat"
 
         if(!window.localStorage[scrollingKey]) {
             window.localStorage[scrollingKey] = defaultScrolling
