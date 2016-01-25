@@ -63,7 +63,20 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
             // then
             assertThat(contacts.size()).isEqualTo(14);
         }
+    }
 
+    public static class Find extends ContactRepositoryTest {
+
+        @Test
+        public void multipleFindersSingleQuery() throws Exception {
+            // given
+            String query = "(?i).*a.*";
+            // when
+            final List<Contact> contacts = contactRepository.find(query);
+
+            // then
+            assertThat(contacts.size()).isEqualTo(14); // 9 contact names, 4 contact groups, 1 both group and role name
+        }
     }
 
     public static class FindByName extends ContactRepositoryTest {
@@ -81,12 +94,28 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
         }
 
         @Test
+        public void partialName() throws Exception {
+            // given
+            final String contactName = contactRepository.listAll().get(0).getName();
+            final String firstName = contactName.split(" ")[0];
+            final String firstLetter = "b";
+
+            // when
+            final List<Contact> contact = contactRepository.findByName("(?i).*" + firstName + ".*");
+            final List<Contact> contacts = contactRepository.findByName("(?i).*" + firstLetter + ".*");
+
+            // then
+            assertThat(contact.size()).isEqualTo(1);
+            assertThat(contacts.size()).isEqualTo(6);
+        }
+
+        @Test
         public void sadCase() throws Exception {
             // given
             final String contactName = "Not a name";
 
             // when
-            final List<Contact> contacts = contactRepository.findByName(contactName);
+            final List<Contact> contacts = contactRepository.findByName("(?i).*" + contactName + ".*");
 
             // then
             assertThat(contacts.size()).isEqualTo(0);
@@ -134,13 +163,10 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
             List<ContactRole> list = contactRoleRepository.listAll();
             String regex = "No ContactRoleName in fixtures";
 
-            int i = 0;
-            while(i < list.size()) {
-                if(list.get(i).getRoleName() != null) {
-                    regex = list.get(i).getRoleName();
-                    break;
+            for(ContactRole contactRole : list) {
+                if (contactRole.getRoleName() != null) {
+                    regex = contactRole.getRoleName();
                 }
-                i++;
             }
 
             // when
@@ -157,39 +183,6 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
 
             // when
             final List<Contact> contacts = contactRepository.findByContactRoleName(roleName);
-
-            // then
-            assertThat(contacts.size()).isEqualTo(0);
-        }
-    }
-
-    public static class FindByNameUsingRexEx extends ContactRepositoryTest {
-
-        @Test
-        public void happyCase() throws Exception {
-            // given
-            String contactName = contactRepository.listAll().get(0).getName();
-            contactName = contactName.split(" ")[0];
-
-            // when
-            final String regex1 = contactName;
-            final String regex2 = contactName + "*";
-
-            final List<Contact> contacts1 = contactRepository.findByName(regex1);
-            final List<Contact> contacts2 = contactRepository.findByName(regex2);
-
-            // then
-            assertThat(contacts1.size()).isEqualTo(0);
-            assertThat(contacts2.size()).isGreaterThan(0);
-        }
-
-        @Test
-        public void sadCase() throws Exception {
-            // given
-            final String contactName = "*Not a name*";
-
-            // when
-            final List<Contact> contacts = contactRepository.findByName(contactName);
 
             // then
             assertThat(contacts.size()).isEqualTo(0);

@@ -1,63 +1,56 @@
 package domainapp.dom.contacts;
 
-import domainapp.dom.group.ContactGroup;
-import org.apache.isis.applib.annotation.*;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.RestrictTo;
+import org.apache.isis.applib.annotation.SemanticsOf;
 
-@DomainService(
-        nature = NatureOfService.VIEW_MENU_ONLY
-)
+import domainapp.dom.group.ContactGroup;
+
+
+@DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(
         named = "Contacts",
         menuOrder = "1"
 )
 public class ContactMenu {
 
-    @Action(
-            semantics = SemanticsOf.SAFE,
-            restrictTo = RestrictTo.PROTOTYPING
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
+    @Action(semantics = SemanticsOf.SAFE, restrictTo = RestrictTo.PROTOTYPING)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
     public java.util.List<Contact> listAll() {
         return contactRepository.listAll();
     }
 
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
     public java.util.List<Contact> find(
             final String query
     ) {
-        String regex = "(?i).*" + query + ".*";
-        return contactRepository.find(query);
+        String queryRegex = toCaseInsensitiveRegex(query);
+        return contactRepository.find(queryRegex);
     }
 
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "3")
     public java.util.List<Contact> findByName(
             final String name
     ) {
-        String regex = "(?i).*" + name + ".*";
-        return contactRepository.findByName(regex);
+        String nameRegex = toCaseInsensitiveRegex(name);
+        return contactRepository.findByName(nameRegex);
     }
 
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByGroup(
             final ContactGroup group
@@ -65,22 +58,17 @@ public class ContactMenu {
         return contactRepository.findByContactGroup(group);
     }
 
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "5")
     public java.util.List<Contact> findByRole(
             @Parameter(optionality = Optionality.OPTIONAL) String roleName
     ) {
-        String regex = "(?i).*" + roleName + ".*";
-        return contactRepository.findByContactRoleName(roleName);
+        String roleNameRegex = toCaseInsensitiveRegex(roleName);
+        return contactRepository.findByContactRoleName(roleNameRegex);
     }
 
-    @Action(
-    )
+    @Action()
     @MemberOrder(sequence = "6")
     public Contact create(
             final String name,
@@ -95,6 +83,20 @@ public class ContactMenu {
             @Parameter(optionality = Optionality.OPTIONAL)
             final String email) {
         return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
+    }
+
+    public static String toCaseInsensitiveRegex(final String pattern) {
+        if(pattern == null) {
+            return null;
+        }
+
+        if(pattern.contains("*") || pattern.contains("?")) {
+            String regex = pattern;
+            regex = pattern.replace("*", ".*").replace("?", ".");
+            return "(?i)" + regex;
+        } else {
+            return "(?i).*" + pattern + ".*";
+        }
     }
 
     @javax.inject.Inject

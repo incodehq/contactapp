@@ -54,10 +54,10 @@ public class ContactGroupRepositoryTest extends DomainAppIntegTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            final String searchStr = "*a*";
+            final String searchStr = "a";
 
             // when
-            final List<ContactGroup> contacts = contactGroupRepository.findByName(searchStr);
+            final List<ContactGroup> contacts = contactGroupRepository.findByName("(?i).*" + searchStr + ".*");
 
             // then
             assertThat(contacts.size()).isEqualTo(4);
