@@ -74,21 +74,16 @@ angular.module(
             }
         )
 
-        ctrl.sendEmail = function() {
-            if(window.plugins && window.plugins.emailComposer) {
-                window.plugins.emailComposer.showEmailComposerWithCallback(
-                    function(result) {
-                        console.log("Response -> " + result);
-                    },
-                "",                     // Subject
-                "",                     // Body
-                [contactable.email],    // To
-                null,                   // CC
-                null,                   // BCC
-                false,                  // isHTML
-                null,                   // Attachments
-                null);                  // Attachment Data
-            }
+        var windowOpenSystem = function(href) {
+            window.open(href, '_system');
+        }
+
+        ctrl.sendEmail = function(email) {
+            windowOpenSystem('mailto:' + email)
+        }
+
+        ctrl.dialNumber = function(number) {
+            windowOpenSystem('tel:' + number);
         }
 
         ctrl.cachedStateCssClass = function(instanceId) {

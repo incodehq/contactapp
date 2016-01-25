@@ -27,22 +27,15 @@
             </div>
 
             <div class="list card" ng-if="ctrl.contactable.email || ctrl.contactable.contactNumbers.length > 0">
-
                 <div class="item row" ng-if="ctrl.contactable.email">
                     <div class="col col-66">
                         <span>{{ctrl.contactable.email}}</span>
                     </div>
                     <div class="col col-33">
-                        <button ng-click="ctrl.sendEmail()"
-                                class="button"
-                                ng-if="platform.onDevice">
+                        <div ng-click="ctrl.sendEmail('{{ctrl.contactable.email}}')"
+                            class="button">
                             <span class="icon ion-email">&nbsp;Email</span>
-                        </button>
-                        <a ng-href="mailto:{{ctrl.contactable.email}}"
-                            class="button"
-                            ng-if="!platform.onDevice">
-                            <span class="icon ion-email">&nbsp;Email</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
 
@@ -52,10 +45,10 @@
                         <span>{{contactNumber.number}}</span>
                     </div>
                     <div class="col col-33">
-                        <a ng-href="tel:{{contactNumber.number}}"
+                        <div ng-click="ctrl.dialNumber('{{contactNumber.number}}')"
                            class="button">
                             <span class="icon ion-android-call">&nbsp;{{contactNumber.type}}</span>
-                        </a>
+                        </div>
                     </div>
                 </div>
 
