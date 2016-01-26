@@ -9,8 +9,9 @@ angular.module(
         var ctrl = this;
 
         ctrl.preferences = PreferencesService.preferences;
-
         ctrl.username = AuthService.username();
+        ctrl.contactables = []
+
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
@@ -33,9 +34,12 @@ angular.module(
             }
         )
 
+/*
+no longer used...
         ctrl.firstLetter = function(name) {
             return name && name.charAt(0);
         }
+*/
 
         ctrl.cachedStateCssClass = function(contactable) {
             return contactable && contactable.$$instanceId &&
@@ -53,8 +57,9 @@ angular.module(
         var ctrl = this;
 
         ctrl.preferences = PreferencesService.preferences;
-
         ctrl.username = AuthService.username();
+        ctrl.contactable = {}
+
         ctrl.logout = function() {
             AuthService.logout();
             $state.go('login', {}, {reload: true});
