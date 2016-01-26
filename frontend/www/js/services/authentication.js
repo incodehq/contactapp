@@ -66,23 +66,24 @@ angular.module(
             $http.defaults.headers.common['Authorization'] = 'Basic ' + basicAuth;
         }
         
-        function destroyUserCredentials() {
+        function resetBasicAuthHeader() {
             username = '';
             basicAuth = undefined;
             isAuthenticated = false;
 
             $http.defaults.headers.common.Authorization = 'Basic ';
-
-            // we no longer do this, to allow for off-line access
-            // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         }
         
-        var login = function(name, pw) {
+        function deleteCachedUserCredentials() {
+            window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        }
+
+        var login = function(name, pw, basicAuthPrevious) {
             return $q(function(resolve, reject) {
                 
                 // attempt to access a resource (we happen to use /restful/user) 
                 // using the provided name and password
-                var basicAuth = Base64.encode(name + ":" + pw);
+                var basicAuth = pw ? Base64.encode(name + ":" + pw): basicAuthPrevious
                 $http.get(AppConfig.baseUrl + "/restful/user",
                         {
                             headers: { 
@@ -99,10 +100,10 @@ angular.module(
                             storeUserCredentials(name, basicAuth);
                             resolve('Login success.');
                         },
-                        function(x) {
+                        function(err) {
                             var storedCredentials = readUserCredentials(name);
                             var enteredCredentials = name + "." + basicAuth;
-                            if(x.status === 0 && storedCredentials === enteredCredentials) {
+                            if(err.status === 0 && storedCredentials === enteredCredentials) {
                                 resolve('Offline access.');
                             } else {
                                 reject('Login Failed.');
@@ -112,11 +113,10 @@ angular.module(
         };
         
         var logout = function() {
-            destroyUserCredentials();
+            resetBasicAuthHeader();
+            deleteCachedUserCredentials();
         };
-        
-        loadUserCredentials();
-        
+
         return {
             login: login,
             logout: logout,
@@ -125,7 +125,9 @@ angular.module(
             },
             username: function() {
                 return username
-            }
+            },
+            readUserCredentials: readUserCredentials,
+            deleteCachedUserCredentials: deleteCachedUserCredentials
         };
 
     }])
@@ -147,7 +149,6 @@ angular.module(
         $scope.updateEnvironment = function() {
             PreferencesService.updateEnvironment($scope.environment)
         }
-
 
         $scope.login =
             function(data) {
@@ -172,6 +173,26 @@ angular.module(
         $scope.about = function() {
             $state.go('about', {}, {reload:true})
         }
+
+
+        // attempt to auto-login using previous credentials
+
+        var previousTokenIfAny = AuthService.readUserCredentials()
+        if(previousTokenIfAny) {
+            var username = previousTokenIfAny.split('.')[0];
+            var basicAuth = previousTokenIfAny.split('.')[1];
+
+            AppConfig.baseUrl = PreferencesService.urlForSelectedEnvironment()
+
+            AuthService.login(username, null, basicAuth).then(
+                function(authenticated) {
+                    $state.go('tab.contactables', {}, {reload: true});
+                }, function(err) {
+                    AuthService.deleteCachedUserCredentials()
+                });
+        }
+
+
 
     }])
 
