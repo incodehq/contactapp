@@ -42,16 +42,6 @@ public class ContactMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "3")
-    public java.util.List<Contact> findByName(
-            final String name
-    ) {
-        String nameRegex = toCaseInsensitiveRegex(name);
-        return contactRepository.findByName(nameRegex);
-    }
-
-    @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByGroup(
             final ContactGroup group
     ) {
@@ -60,7 +50,7 @@ public class ContactMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "5")
+    @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByRole(
             @Parameter(optionality = Optionality.OPTIONAL) String roleName
     ) {
