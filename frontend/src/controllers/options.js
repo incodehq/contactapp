@@ -27,12 +27,10 @@ angular.module(
         }
 
         ctrl.downloadContacts = function() {
+            OfflineService.clearCache()
+
             BackendService.loadContactables(
                 function(contactables, messageIfAny){
-                    if(messageIfAny) {
-                        // already cached
-                        return
-                    }
                     ctrl.message = "Downloading..."
                     ctrl.numberOfContacts = contactables.length
                     for (var i = 0; i < contactables.length; i++) {

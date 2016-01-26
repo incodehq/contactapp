@@ -2,30 +2,71 @@
 
     <ion-side-menu side="left">
 
-        <div class="card">
-            <div class="item item-text-wrap">
-                Download contacts so that they are accessible even while offline.
-            </div>
-            <div class="item">
-                <button class="button button-balanced button-block"
-                        ng-click="ctrl.downloadContacts()">
-                    <i class="ion-android-download">&nbsp;Download</i>
-                </button>
-            </div>
-            <div class="item" ng-show="ctrl.message">
-                <div class="row row-center">
-                    <div class="col col-center">
-                        <p>{{ctrl.message}}</p>
+        <ion-content scroll="false" overflow-scroll="false">
+        <!--<ion-content scroll="true" overflow-scroll="true">-->
+
+            <div class="card">
+                <div class="item item-text-wrap">
+                    Download all contacts so accessible even while offline
+                </div>
+                <div class="item">
+                    <button class="button button-balanced button-block"
+                            ng-click="ctrl.downloadContacts()"
+                            ng-disabled="ctrl.message">
+                        <i class="ion-android-download">&nbsp;Download</i>
+                    </button>
+                </div>
+                <div class="item" ng-show="ctrl.message">
+                    <div class="row row-center">
+                        <div class="col col-center">
+                            <p>{{ctrl.numberOfDownloadedContacts()}} downloaded...</p>
+                        </div>
                     </div>
                 </div>
+                <div class="item" ng-show="isNotProduction()">
+                    <button class="button button-assertive button-block"
+                            ng-click="ctrl.removeDownloadedContacts()">
+                        <i class="ion-android-download">&nbsp;Remove all</i>
+                    </button>
+                </div>
             </div>
-            <div class="item">
-                <button class="button button-assertive button-block"
-                        ng-click="ctrl.removeDownloadedContacts()">
-                    <i class="ion-android-delete">&nbsp;Remove {{ctrl.numberOfDownloadedContacts()}}</i>
-                </button>
-            </div>
-        </div>
+
+<!--
+            <ul class="list card">
+                <div class="item item-text-wrap">
+                    How contacts should be shown in the list
+                </div>
+
+                <ion-list>
+                    <ion-radio name="nameOrder"
+                               ng-repeat="item in ctrl.preferences.nameOrder.options"
+                               ng-value="item.value"
+                               ng-model="ctrl.nameOrder"
+                               ng-change="updateNameOrder()" >
+                        {{ item.text }}
+                    </ion-radio>
+                </ion-list>
+            </ul>
+
+-->
+<!--
+
+            <ul class="list card">
+                <ion-list>
+                    <ion-item class="item-text-wrap">
+                        How the home tab is shown
+                    </ion-item>
+                    <ion-radio name="scrolling"
+                               ng-repeat="item in ctrl.preferences.scrolling.options"
+                               ng-value="item.value"
+                               ng-model="ctrl.scrolling"
+                               ng-change="updateScrolling()" >
+                        {{ item.text }}
+                    </ion-radio>
+                </ion-list>
+            </ul>
+-->
+        </ion-content>
 
     </ion-side-menu>
 

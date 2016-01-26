@@ -11,26 +11,37 @@ angular.module(
 
         var localStorageKey = AppConfig.appPrefix + ".data"
 
+        var offlineEnabled = true
+        //var offlineEnabled = window.cordova && window.cordova.plugins.sqlDB
+
+        this.isOfflineEnabled = function() {
+            return offlineEnabled
+        }
+
         var internalGet = function() {
-            var storedStr = window.localStorage[localStorageKey]
-            if(!storedStr) {
-                stored = {}
-                window.localStorage[localStorageKey] = JSON.stringify(stored)
-                return stored
+            if(offlineEnabled) {
+                var storedStr = window.localStorage[localStorageKey]
+                if(!storedStr) {
+                    stored = {}
+                    window.localStorage[localStorageKey] = JSON.stringify(stored)
+                    return stored
+                } else {
+                    return JSON.parse(storedStr)
+                }
             } else {
-                return JSON.parse(storedStr)
+                return {}
             }
         }
 
         var internalPut = function(stored) {
-            var numItems = Object.keys(stored).length
-            window.localStorage[localStorageKey] = JSON.stringify(stored)
-            _stored = stored
+            if(offlineEnabled) {
+                window.localStorage[localStorageKey] = JSON.stringify(stored)
+                _stored = stored
+            }
         }
 
         // in-memory copy
         var _stored = internalGet();
-
 
         this.get = function(cacheKey) {
             var stored = internalGet()
@@ -63,7 +74,6 @@ angular.module(
         this.clearCache = function() {
             internalPut({})
         }
-
     }])
 
 

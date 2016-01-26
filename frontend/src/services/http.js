@@ -14,6 +14,10 @@ angular.module(
             return isUndefined(options) || !options.suppressIonicLoading
         }
 
+        this.isOfflineEnabled = function() {
+            return OfflineService.isOfflineEnabled()
+        }
+
         this.get = function(cacheKey, relativeUrl, onCached, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
             var headerMap = {
@@ -46,10 +50,14 @@ angular.module(
                     if(showSpinner) {
                         $ionicLoading.hide()
                     }
-                    OfflineService.put(cacheKey, resp)
-                    var justStored = OfflineService.get(cacheKey)
-                    if(justStored && onOK) {
-                        onOK(justStored.resp.data, justStored.date)
+                    if(OfflineService.isOfflineEnabled()) {
+                        OfflineService.put(cacheKey, resp)
+                        var justStored = OfflineService.get(cacheKey)
+                        if(justStored && onOK) {
+                            onOK(justStored.resp.data, justStored.date)
+                        }
+                    } else {
+                        onOK(resp.data, null) // suppress any message at end
                     }
                 },
                 function(err) {

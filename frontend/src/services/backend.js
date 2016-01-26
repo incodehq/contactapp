@@ -15,7 +15,11 @@ angular.module(
         }
 
         var dataProvenanceMessage = function(date) {
-            return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm:ss') :"No data available"
+            return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm:ss') : ""
+        }
+
+        this.isOfflineEnabled = function() {
+            return HttpService.isOfflineEnabled()
         }
 
         this.loadContactables = function(onComplete, options) {

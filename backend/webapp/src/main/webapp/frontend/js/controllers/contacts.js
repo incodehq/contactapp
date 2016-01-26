@@ -27,6 +27,10 @@ angular.module(
                 });
         }
 
+        ctrl.isShowLeftSideMenu = function() {
+            return BackendService.isOfflineEnabled()
+        }
+
         ctrl.showLeftSideMenu = function() {
             $ionicSideMenuDelegate.toggleLeft();
         }

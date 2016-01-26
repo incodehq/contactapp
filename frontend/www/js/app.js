@@ -53,6 +53,10 @@ angular.module(
                 return $rootScope.isDefined(thing) && thing.length > 0
             }
 
+            $rootScope.isNotProduction = function (thing) {
+                return PreferencesService.preferences.environment.selected !== "Production"
+            }
+
             // for debugging
             $rootScope.huzzah = function() {
                 $ionicPopup.alert({
@@ -115,17 +119,6 @@ angular.module(
                 }
             }
         })
-        .state('tab.options', {
-            cache: false,
-            url: '/options',
-            views: {
-                'tab-options': {
-                templateUrl: 'templates/options.html',
-                controller: 'OptionsCtrl as ctrl'
-                }
-            }
-        })
-
         ;
 
         // if none of the above states are matched, use this as the fallback
