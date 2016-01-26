@@ -49,10 +49,19 @@ angular.module(
                             delete contactable.$$title
                             delete contactable.notes
                             delete contactable.email
+                            if(contactable.type === "Contact" && !contactable.company) {
+                                contactable.company = "---"
+                            }
+                            if(contactable.type === "Contact Group" && !contactable.country) {
+                                contactable.country = "---"
+                            }
                             return contactable
                         }
                     )
-                    onComplete(sort(trimmedData), dataProvenanceMessage(date))
+                    return trimmedData
+                },
+                function(respData, date) {
+                    onComplete(sort(respData), dataProvenanceMessage(date))
                 },
                 function(err) {
                     onComplete([], dataProvenanceMessage(null))
@@ -68,7 +77,7 @@ angular.module(
                 function(cachedData, date) {
                     onComplete(cachedData, dataProvenanceMessage(date))
                 },
-                function(respData, date) {
+                function(respData) {
                     delete respData.$$href
                     delete respData.$$instanceId
                     delete respData.$$title
@@ -97,7 +106,11 @@ angular.module(
                             return contactRole
                         }
                     )
+                    return respData
+                },
+                function(respData, date) {
                     onComplete(respData, dataProvenanceMessage(date))
+                    return respData
                 },
                 function(err, respData, date, resp) {
                     onComplete({}, dataProvenanceMessage(null))

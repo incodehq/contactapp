@@ -18,7 +18,7 @@ angular.module(
             return OfflineService.isOfflineEnabled()
         }
 
-        this.get = function(cacheKey, relativeUrl, onCached, onOK, onError, options) {
+        this.get = function(cacheKey, relativeUrl, onCached, onData, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
             var headerMap = {
                 'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
@@ -50,11 +50,12 @@ angular.module(
                     if(showSpinner) {
                         $ionicLoading.hide()
                     }
+                    resp.data = onData(resp.data)
                     if(OfflineService.isOfflineEnabled()) {
                         OfflineService.put(cacheKey, resp)
-                        var justStored = OfflineService.get(cacheKey)
-                        if(justStored && onOK) {
-                            onOK(justStored.resp.data, justStored.date)
+                        var stored = OfflineService.get(cacheKey)
+                        if(stored) {
+                            onOK(stored.resp.data, stored.date)
                         }
                     } else {
                         onOK(resp.data, null) // suppress any message at end
