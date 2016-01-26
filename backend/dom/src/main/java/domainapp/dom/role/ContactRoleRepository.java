@@ -1,10 +1,11 @@
 package domainapp.dom.role;
 
-import domainapp.dom.contacts.Contact;
-import domainapp.dom.group.ContactGroup;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.group.ContactGroup;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,

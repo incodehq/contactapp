@@ -1,6 +1,8 @@
 package domainapp.dom.group;
 
-import org.apache.isis.applib.annotation.*;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
 
 import domainapp.dom.country.Country;
 
@@ -38,7 +40,6 @@ public class  ContactGroupRepository {
                         "findByName",
                         "regex", regex));
     }
-
 
     @Programmatic
     public ContactGroup create(final Country country, final String name) {
