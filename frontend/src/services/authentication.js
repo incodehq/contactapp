@@ -2,8 +2,8 @@ angular.module(
     'ecp-contactapp.services.authentication', ['ecp-contactapp.services.preferences'])
 
     .factory('AuthInterceptor', 
-    ['$rootScope', '$q', '$injector',
-    function ($rootScope, $q, $injector) {
+    ['$q', '$injector',
+    function ($q, $injector) {
         return {
             responseError: function (response) {
 
@@ -33,8 +33,8 @@ angular.module(
     })
 
     .service('AuthService', 
-            ['$q', 'HttpService', '$http', 'Base64', '$rootScope', 'AppConfig',
-        function($q, HttpService, $http, Base64, $rootScope, AppConfig ) {
+            ['$q', '$http', 'Base64', 'AppConfig',
+        function($q, $http, Base64, AppConfig ) {
             
         var LOCAL_TOKEN_KEY = AppConfig.appPrefix + ".authToken"
         var username = '';
@@ -132,8 +132,8 @@ angular.module(
 
 
     .controller('LoginCtrl',
-        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
-        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
+        ['$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
+        function($scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
         var ctrl = this;
 

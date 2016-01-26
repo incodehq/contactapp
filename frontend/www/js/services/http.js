@@ -14,7 +14,7 @@ angular.module(
             return isUndefined(options) || !options.suppressIonicLoading
         }
 
-        var getWithHeaders = function(cacheKey, relativeUrl, headers, onOK, onError, options) {
+        this.get = function(cacheKey, relativeUrl, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
             if(useIonicLoading(options)) {
@@ -22,10 +22,12 @@ angular.module(
                      delay: 200
                  })
             }
-            $http.get(
+            return $http.get(
                 url,
                 {
-                    headers: headers
+                    headers: {
+                        'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
+                    }
                 }
             )
             .then(
@@ -51,13 +53,6 @@ angular.module(
                         }
                     }
                 })
-            }
-
-        this.get = function(cacheKey, relativeUrl, onOK, onError, options) {
-            var header = {
-                'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
-            }
-            getWithHeaders(cacheKey, relativeUrl, header, onOK, onError, options)
         }
 
         this.lookup = function(cacheKey) {
