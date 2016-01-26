@@ -1,35 +1,9 @@
 package domainapp.dom.contacts;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.RenderType;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
-
 import domainapp.dom.contactable.ContactableEntity;
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.number.ContactNumberRepository;
@@ -37,6 +11,15 @@ import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
+
+import javax.inject.Inject;
+import javax.jdo.annotations.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
@@ -61,6 +44,18 @@ public class Contact extends ContactableEntity {
     @Property
     @Getter @Setter
     private String company;
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit Company")
+    @MemberOrder(name = "company", sequence = "1")
+    public ContactableEntity changeCompany(@ParameterLayout(named = "Company") String company) {
+        setCompany(company);
+        return this;
+    }
+
+    public String default0ChangeCompany() {
+        return getCompany();
+    }
 
     @Persistent(mappedBy = "contact", dependentElement = "false")
     @Collection()

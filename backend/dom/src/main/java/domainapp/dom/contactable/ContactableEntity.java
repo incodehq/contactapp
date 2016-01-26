@@ -1,50 +1,22 @@
 package domainapp.dom.contactable;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.DiscriminatorStrategy;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Inheritance;
-import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Version;
-import javax.jdo.annotations.VersionStrategy;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.MemberGroupLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.PropertyLayout;
-import org.apache.isis.applib.annotation.RenderType;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
-
 import domainapp.dom.number.ContactNumber;
 import domainapp.dom.number.ContactNumberRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
+
+import javax.inject.Inject;
+import javax.jdo.annotations.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -87,6 +59,18 @@ public class ContactableEntity implements Comparable<ContactableEntity> {
     @Property
     @Getter @Setter
     private String email;
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit Email")
+    @MemberOrder(name = "email", sequence = "1")
+    public ContactableEntity changeEmail(@ParameterLayout(named = "Email") String email) {
+        setEmail(email);
+        return this;
+    }
+
+    public String default0ChangeEmail() {
+        return getEmail();
+    }
 
     @Column(allowsNull = "true")
     @Property
