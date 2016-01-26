@@ -53,6 +53,18 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Getter @Setter
     private String number;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit Number")
+    @MemberOrder(name = "number", sequence = "1")
+    public ContactNumber changeNumber(@ParameterLayout(named = "Number") String number) {
+        setNumber(number);
+        return this;
+    }
+
+    public String default0ChangeNumber() {
+        return getNumber();
+    }
+
     //region > compareTo, toString
     @Override
     public int compareTo(final ContactNumber other) {

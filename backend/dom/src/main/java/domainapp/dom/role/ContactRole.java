@@ -1,29 +1,14 @@
 package domainapp.dom.role;
 
-import javax.jdo.annotations.Column;
-import javax.jdo.annotations.DatastoreIdentity;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Queries;
-import javax.jdo.annotations.Query;
-import javax.jdo.annotations.Unique;
-import javax.jdo.annotations.Version;
-import javax.jdo.annotations.VersionStrategy;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.MemberGroupLayout;
-import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
-
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.group.ContactGroup;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.annotation.*;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
+
+import javax.jdo.annotations.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -88,6 +73,18 @@ public class ContactRole implements Comparable<ContactRole> {
     @Property()
     @Getter @Setter
     private String roleName;
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit Role")
+    @MemberOrder(name = "roleName", sequence = "1")
+    public ContactRole changeRole(@ParameterLayout(named = "Role Name") String roleName) {
+        setRoleName(roleName);
+        return this;
+    }
+
+    public String default0ChangeRole() {
+        return getRoleName();
+    }
 
 
     //region > compareTo, toString
