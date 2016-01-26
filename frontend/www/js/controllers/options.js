@@ -26,6 +26,10 @@ angular.module(
             PreferencesService.updateNameOrder(ctrl.nameOrder)
         }
 
+        ctrl.isOfflineEnabled = function() {
+            return BackendService.isOfflineEnabled()
+        }
+
         ctrl.downloadContacts = function() {
             OfflineService.clearCache()
 

@@ -21,10 +21,6 @@ angular.module(
                 });
         }
 
-        ctrl.isShowSideMenu = function() {
-            return BackendService.isOfflineEnabled()
-        }
-
         ctrl.showSideMenu = function() {
             $ionicSideMenuDelegate.toggleRight();
         }
@@ -56,8 +52,8 @@ no longer used...
     }])
 
     .controller('ContactableDetailCtrl',
-        ['BackendService', 'PreferencesService', '$stateParams', '$state',
-        function(BackendService, PreferencesService, $stateParams, $state) {
+        ['BackendService', 'PreferencesService', '$stateParams', '$state', '$ionicSideMenuDelegate',
+        function(BackendService, PreferencesService, $stateParams, $state, $ionicSideMenuDelegate) {
 
         var ctrl = this;
 
@@ -68,6 +64,10 @@ no longer used...
             var n = href.lastIndexOf('/');
             var result = href.substring(n + 1);
             return result;
+        }
+
+        ctrl.showSideMenu = function() {
+            $ionicSideMenuDelegate.toggleRight();
         }
 
         BackendService.loadContactable(

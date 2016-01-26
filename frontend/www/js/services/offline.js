@@ -11,8 +11,21 @@ angular.module(
 
         var localStorageKey = AppConfig.appPrefix + ".data"
 
+        // https://incodehq.atlassian.net/browse/ELI-31
+        // the intention here is that we'll check if running in Cordova (only true for mobile apps),
+        // and if so then will enable caching.
+        //
+        // the work required is to change the calls to window.localStorage[...] to instead use the
+        // appropriate SQLite API calls.  Some setup will be needed in the bootstrapping run() method in app.js
+        //
+        // for more details, see, eg:
+        // https://blog.nraboy.com/2014/11/use-sqlite-instead-local-storage-ionic-framework/
+        //
+        // var offlineEnabled = window.cordova && window.cordova.plugins.sqlDB
+
+        // until we do that work, just hard-coded to true
         var offlineEnabled = true
-        //var offlineEnabled = window.cordova && window.cordova.plugins.sqlDB
+
 
         this.isOfflineEnabled = function() {
             return offlineEnabled
