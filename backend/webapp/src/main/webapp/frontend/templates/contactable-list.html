@@ -42,11 +42,9 @@
             </div>
         </ion-list>
 
-    </ion-content>
+        <p ng-show="ctrl.message">{{ ctrl.message }}</p>
 
-    <ion-footer-bar class="bar-clear bar-assertive" ng-show="ctrl.message">
-        <p class="title">{{ ctrl.message }}</p>
-    </ion-footer-bar>
+    </ion-content>
 
 
 </ion-view>

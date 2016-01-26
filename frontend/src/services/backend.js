@@ -14,26 +14,30 @@ angular.module(
             return result;
         }
 
-        var message = function(date) {
-            return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm') :"No data available"
-        }
-
-        var sort = function(respData) {
-            respData.sort(function(a,b) {
-                if(PreferencesService.preferences.nameOrder.selected === "first-last") {
-                    return a.name.localeCompare(b.name)
-                } else {
-                    return a.lastName.localeCompare(b.lastName)
-                }
-            })
-            return respData
+        var dataProvenanceMessage = function(date) {
+            return date ? "Data from " + $filter('date')(date, 'd MMM, HH:mm:ss') :"No data available"
         }
 
         this.loadContactables = function(onComplete, options) {
+
+            var sort = function(respData) {
+                respData.sort(function(a,b) {
+                    if(PreferencesService.preferences.nameOrder.selected === "first-last") {
+                        return a.name.localeCompare(b.name)
+                    } else {
+                        return a.lastName.localeCompare(b.lastName)
+                    }
+                })
+                return respData
+            }
+
             HttpService.get(
                 listAllKey,
                 "/restful/services/ContactableViewModelRepository/actions/listAll/invoke",
-                function(respData) {
+                function(cachedData, date) {
+                    onComplete(sort(cachedData), dataProvenanceMessage(date))
+                },
+                function(respData, date) {
                     var trimmedData = respData.map(
                         function(contactable){
                             contactable.$$instanceId = instanceIdOf(contactable.$$href)
@@ -44,10 +48,10 @@ angular.module(
                             return contactable
                         }
                     )
-                    onComplete(sort(trimmedData))
+                    onComplete(sort(trimmedData), dataProvenanceMessage(date))
                 },
-                function(err, respData, date, resp) {
-                    onComplete(sort(respData) || {}, message(date))
+                function(err) {
+                    onComplete([], dataProvenanceMessage(null))
                 },
                 options
             )
@@ -57,7 +61,10 @@ angular.module(
             HttpService.get(
                 instanceId,
                 "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId,
-                function(respData) {
+                function(cachedData, date) {
+                    onComplete(cachedData, dataProvenanceMessage(date))
+                },
+                function(respData, date) {
                     delete respData.$$href
                     delete respData.$$instanceId
                     delete respData.$$title
@@ -86,10 +93,10 @@ angular.module(
                             return contactRole
                         }
                     )
-                    onComplete(respData)
+                    onComplete(respData, dataProvenanceMessage(date))
                 },
                 function(err, respData, date, resp) {
-                    onComplete(respData || {}, message(date))
+                    onComplete({}, dataProvenanceMessage(null))
                 },
                 options
             )

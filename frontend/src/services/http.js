@@ -14,45 +14,54 @@ angular.module(
             return isUndefined(options) || !options.suppressIonicLoading
         }
 
-        this.get = function(cacheKey, relativeUrl, onOK, onError, options) {
+        this.get = function(cacheKey, relativeUrl, onCached, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
+            var headerMap = {
+                'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
+            }
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
-            if(useIonicLoading(options)) {
+            var cached = OfflineService.get(cacheKey)
+            if(cached) {
+                // return the data we already have stored offline
+                if(onCached) {
+                    onCached(cached.resp.data, cached.date)
+                }
+            }
+            // asynchronously populate the offline cache if we can
+            var showSpinner = !cached && useIonicLoading(options)
+            if(showSpinner) {
                 $ionicLoading.show({
                      delay: 200
                  })
             }
-            return $http.get(
+            $http.get(
                 url,
                 {
-                    headers: {
-                        'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
-                    }
+                    headers: headerMap
                 }
             )
             .then(
                 function(resp) {
-                    if(useIonicLoading(options)) {
+                    // update the offline cache, and call the onOK callback once more
+                    if(showSpinner) {
                         $ionicLoading.hide()
-                    }
-                    if(onOK) {
-                        onOK(resp.data)
                     }
                     OfflineService.put(cacheKey, resp)
+                    var justStored = OfflineService.get(cacheKey)
+                    if(justStored && onOK) {
+                        onOK(justStored.resp.data, justStored.date)
+                    }
                 },
                 function(err) {
-                    if(useIonicLoading(options)) {
+                    if(showSpinner) {
                         $ionicLoading.hide()
                     }
-                    if(onError) {
-                        var stored = OfflineService.get(cacheKey)
-                        if(stored) {
-                            onError(err, stored.resp.data, stored.date)
-                        } else {
-                            onError(err, null, null)
-                        }
+                    if(onError && !cached) {
+                        // unable to obtain any data, and wasn't previously cached
+                        onError(err)
                     }
-                })
+                }
+            )
         }
 
         this.lookup = function(cacheKey) {
