@@ -2,18 +2,18 @@
 
     <ion-nav-bar class="bar-stable">
 
-        <ion-nav-buttons side="left">
-            <button class="button button-icon icon ion-navicon-round"
-                    ng-click="ctrl.showLeftSideMenu()"
-                    ng-show="ctrl.isShowLeftSideMenu()"
-            >
-            </button>
-        </ion-nav-buttons>
-
         <ion-nav-buttons side="right">
             <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
             </button>
         </ion-nav-buttons>
+
+        <ion-nav-buttons side="secondary">
+            <button class="button button-icon icon ion-android-more-vertical"
+                    ng-click="ctrl.showSideMenu()"
+                    ng-show="ctrl.isShowSideMenu()">
+            </button>
+        </ion-nav-buttons>
+
 
     </ion-nav-bar>
 

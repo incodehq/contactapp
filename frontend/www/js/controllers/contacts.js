@@ -21,12 +21,12 @@ angular.module(
                 });
         }
 
-        ctrl.isShowLeftSideMenu = function() {
+        ctrl.isShowSideMenu = function() {
             return BackendService.isOfflineEnabled()
         }
 
-        ctrl.showLeftSideMenu = function() {
-            $ionicSideMenuDelegate.toggleLeft();
+        ctrl.showSideMenu = function() {
+            $ionicSideMenuDelegate.toggleRight();
         }
 
         BackendService.loadContactables(
