@@ -1,4 +1,46 @@
+<ion-side-menus>
 
+    <ion-side-menu side="left">
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                Download contacts so that they are accessible even while offline.
+            </div>
+            <div class="item">
+                <button class="button button-balanced button-block"
+                        ng-click="ctrl.downloadContacts()">
+                    <i class="ion-android-download">&nbsp;Download</i>
+                </button>
+            </div>
+            <div class="item" ng-show="ctrl.message">
+                <div class="row row-center">
+                    <div class="col col-center">
+                        <p>{{ctrl.message}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <button class="button button-assertive button-block"
+                        ng-click="ctrl.removeDownloadedContacts()">
+                    <i class="ion-android-delete">&nbsp;Remove {{ctrl.numberOfDownloadedContacts()}}</i>
+                </button>
+            </div>
+        </div>
+
+    </ion-side-menu>
+
+    <ion-side-menu-content>
+        <ion-nav-view name="tab-contactables"></ion-nav-view>
+    </ion-side-menu-content>
+
+</ion-side-menus>
+
+
+
+
+
+
+<!--
 <ion-tabs class="tabs-icon-bottom tabs-stable">
 
     <ion-tab title="Home"
@@ -18,3 +60,4 @@
 </ion-tabs>
 
 
+-->

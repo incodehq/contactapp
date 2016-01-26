@@ -3,8 +3,8 @@ angular.module(
 
 
     .controller('ContactablesCtrl',
-        ['BackendService', 'AuthService', 'PreferencesService', '$state', '$ionicFilterBar',
-        function(BackendService, AuthService, PreferencesService, $state, $ionicFilterBar) {
+        ['BackendService', 'AuthService', 'PreferencesService', '$state', '$ionicFilterBar', '$ionicSideMenuDelegate',
+        function(BackendService, AuthService, PreferencesService, $state, $ionicFilterBar, $ionicSideMenuDelegate) {
 
         var ctrl = this;
 
@@ -27,6 +27,10 @@ angular.module(
                 });
         }
 
+        ctrl.showLeftSideMenu = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+        }
+
         BackendService.loadContactables(
             function(contactables, messageIfAny) {
                 ctrl.contactables = contactables
@@ -47,6 +51,9 @@ no longer used...
                 ? "cached"
                 : "not-cached"
         }
+
+
+
 
     }])
 

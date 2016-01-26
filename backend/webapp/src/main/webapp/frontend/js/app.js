@@ -91,8 +91,8 @@ angular.module(
         .state('tab', {
             cache: false,
             url: '/tab',
-            abstract: true,
-            templateUrl: 'templates/tabs.html'
+            templateUrl: 'templates/tabs.html',
+            controller: 'OptionsCtrl as ctrl'
         })
 
         .state('tab.contactables', {

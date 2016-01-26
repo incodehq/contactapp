@@ -1,16 +1,19 @@
 <ion-view view-title="Contacts">
 
     <ion-nav-bar class="bar-stable">
-        <ion-nav-back-button>
-        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon icon ion-navicon-round" ng-click="ctrl.showLeftSideMenu()">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
+            </button>
+        </ion-nav-buttons>
 
         <ion-nav-buttons side="secondary">
             <nav-button class="button icon-left ion-log-out button-stable" ng-click="ctrl.logout()">&nbsp;{{ctrl.username}}</nav-button>
-        </ion-nav-buttons>
-
-        <ion-nav-buttons side="left">
-            <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
-            </button>
         </ion-nav-buttons>
 
     </ion-nav-bar>
@@ -42,9 +45,7 @@
             </div>
         </ion-list>
 
-        <p ng-show="ctrl.message">{{ ctrl.message }}</p>
+        <p ng-show="ctrl.message">&nbsp;{{ ctrl.message }}</p>
 
     </ion-content>
-
-
 </ion-view>
