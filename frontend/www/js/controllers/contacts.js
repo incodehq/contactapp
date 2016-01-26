@@ -3,19 +3,13 @@ angular.module(
 
 
     .controller('ContactablesCtrl',
-        ['BackendService', 'AuthService', 'PreferencesService', '$state', '$ionicFilterBar', '$ionicSideMenuDelegate',
-        function(BackendService, AuthService, PreferencesService, $state, $ionicFilterBar, $ionicSideMenuDelegate) {
+        ['BackendService', 'PreferencesService', '$state', '$ionicFilterBar', '$ionicSideMenuDelegate',
+        function(BackendService, PreferencesService, $state, $ionicFilterBar, $ionicSideMenuDelegate) {
 
         var ctrl = this;
 
         ctrl.preferences = PreferencesService.preferences;
-        ctrl.username = AuthService.username();
         ctrl.contactables = []
-
-        ctrl.logout = function() {
-            AuthService.logout();
-            $state.go('login', {}, {reload: true});
-        }
 
         ctrl.showFilterBar = function() {
             ctrl.filterBarInstance =
@@ -62,19 +56,13 @@ no longer used...
     }])
 
     .controller('ContactableDetailCtrl',
-        ['BackendService', 'PreferencesService', 'AuthService', '$stateParams', '$state',
-        function(BackendService, PreferencesService, AuthService, $stateParams, $state) {
+        ['BackendService', 'PreferencesService', '$stateParams', '$state',
+        function(BackendService, PreferencesService, $stateParams, $state) {
 
         var ctrl = this;
 
         ctrl.preferences = PreferencesService.preferences;
-        ctrl.username = AuthService.username();
         ctrl.contactable = {}
-
-        ctrl.logout = function() {
-            AuthService.logout();
-            $state.go('login', {}, {reload: true});
-        }
 
         var instanceId = function(href) {
             var n = href.lastIndexOf('/');

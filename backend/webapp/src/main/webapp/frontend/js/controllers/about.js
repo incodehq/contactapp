@@ -2,10 +2,17 @@ angular.module(
     'ecp-contactapp.controllers.about', [])
 
     .controller('AboutCtrl',
-        ['$scope',
-        function($scope) {
+        ['$scope', 'AuthService',
+        function($scope, AuthService) {
 
         var ctrl = this;
+
+        ctrl.username = AuthService.username();
+        ctrl.logout = function() {
+            AuthService.logout();
+            $state.go('login', {}, {reload: true});
+        }
+
 
         ctrl.platform = {
             deviceInformation: ionic.Platform.device(),

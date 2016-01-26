@@ -31,24 +31,36 @@
                 </div>
             </div>
 
-<!--
-            <ul class="list card">
+            <div class="card">
                 <div class="item item-text-wrap">
-                    How contacts should be shown in the list
+                    You are logged in as {{ctrl.username}}
                 </div>
+                <div class="item">
+                    <button class="button button-energized button-block"
+                            ng-click="ctrl.logout()">
+                        <i class="ion-log-out">&nbsp;Force logout</i>
+                    </button>
+                </div>
+            </div>
 
-                <ion-list>
-                    <ion-radio name="nameOrder"
-                               ng-repeat="item in ctrl.preferences.nameOrder.options"
-                               ng-value="item.value"
-                               ng-model="ctrl.nameOrder"
-                               ng-change="updateNameOrder()" >
-                        {{ item.text }}
-                    </ion-radio>
-                </ion-list>
-            </ul>
+            <!--
+                        <ul class="list card">
+                            <div class="item item-text-wrap">
+                                How contacts should be shown in the list
+                            </div>
 
--->
+                            <ion-list>
+                                <ion-radio name="nameOrder"
+                                           ng-repeat="item in ctrl.preferences.nameOrder.options"
+                                           ng-value="item.value"
+                                           ng-model="ctrl.nameOrder"
+                                           ng-change="updateNameOrder()" >
+                                    {{ item.text }}
+                                </ion-radio>
+                            </ion-list>
+                        </ul>
+
+            -->
 <!--
 
             <ul class="list card">
