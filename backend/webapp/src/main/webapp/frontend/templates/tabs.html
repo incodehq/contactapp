@@ -2,18 +2,14 @@
 
     <ion-side-menu side="right">
 
-        <ion-content scroll="false" overflow-scroll="false">
-        <!--<ion-content scroll="true" overflow-scroll="true">-->
+        <ion-content scroll="true" overflow-scroll="true">
 
-            <div class="card" ng-show="ctrl.isOfflineEnabled()">
-                <div class="item item-text-wrap">
-                    Download all contacts so accessible even while offline
-                </div>
-                <div class="item">
+            <div class="card"  ng-show="ctrl.isOfflineEnabled()">
+                <div class="item item-text-wrap" ng-show="ctrl.isOfflineEnabled()">
                     <button class="button button-balanced button-block"
                             ng-click="ctrl.downloadContacts()"
                             ng-disabled="ctrl.message">
-                        <i class="ion-android-download">&nbsp;Download</i>
+                        <i class="ion-android-download">&nbsp;Download all contacts</i>
                     </button>
                 </div>
                 <div class="item" ng-show="ctrl.message">
@@ -31,6 +27,58 @@
                 </div>
             </div>
 
+            <div class="card" ng-show="false">
+                <div class="item" ng-if="!hasUpdate">
+                    <button class="button button-calm button-block"
+                            ng-click="checkForUpdates()" disabled>
+                        Check for app updates
+                    </button>
+                </div>
+                <div class="item" ng-if="hasUpdate">
+                    <button class="button button-energized button-block"
+                            ng-click="doUpdate()" disabled>
+                        Download app update
+                    </button>
+                </div>
+            </div>
+
+            <div class="list card">
+                <div class="item item-divider">
+                    About
+                </div>
+                <div class="item item-text-wrap">
+                    <p>- v0.2.20160127 (auto login)</p>
+                    <p>Previous:</p>
+                    <p>- v0.1.20160126 (sidemenus)</p>
+                    <p>- v0.1.20160125 (more responsive, options tab)</p>
+                    <p>- v0.1.xxx (initial version)</p>
+                </div>
+            </div>
+
+            <div class="list card" ng-show="false">
+                <div class="item item-divider">
+                    Platform
+                </div>
+                <div class="item">
+                    {{ionicPlatform.platform}} {{ionicPlatform.platformVersion}}
+                    <br/>
+                    <p ng-show="ionicPlatform.isAndroid">running on Android</p>
+                    <p ng-show="ionicPlatform.isIOS">running on iOS</p>
+                    <p ng-show="ionicPlatform.isIPad">running on iPad</p>
+                    <p ng-show="ionicPlatform.isWindowsPhone">running on Windows Phone</p>
+                    <p ng-show="ionicPlatform.isWebView">running on (Cordova) Web View</p>
+                </div>
+                <div class="item">
+                    Device info:
+                <span ng-show="isDefinedWithLength(ionicPlatform.deviceInformation)">
+                    {{ionicPlatform.deviceInformation}}
+                </span>
+                <span ng-show="!isDefinedWithLength(ionicPlatform.deviceInformation)">
+                    (none available)
+                </span>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="item item-text-wrap">
                     You are logged in as {{ctrl.username}}
@@ -42,6 +90,7 @@
                     </button>
                 </div>
             </div>
+
 
             <!--
                         <ul class="list card">

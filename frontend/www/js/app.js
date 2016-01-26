@@ -57,6 +57,20 @@ angular.module(
                 return PreferencesService.preferences.environment.selected !== "Production"
             }
 
+            $rootScope.ionicPlatform = {
+                deviceInformation: ionic.Platform.device(),
+                isWebView: ionic.Platform.isWebView(), // ie running in Cordova
+                isIPad: ionic.Platform.isIPad(),
+                isIOS: ionic.Platform.isIOS(),
+                isAndroid: ionic.Platform.isAndroid(),
+                isWindowsPhone: ionic.Platform.isWindowsPhone(),
+                platform: ionic.Platform.platform(),
+                platformVersion: ionic.Platform.version(),
+
+                onDevice: ionic.Platform.isWebView() // true if on a device
+            }
+
+
             // for debugging
             $rootScope.huzzah = function() {
                 $ionicPopup.alert({

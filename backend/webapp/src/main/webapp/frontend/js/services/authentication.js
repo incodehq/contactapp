@@ -134,8 +134,8 @@ angular.module(
 
 
     .controller('LoginCtrl',
-        ['$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
-        function($scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
+        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
+        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
         var ctrl = this;
 
@@ -174,6 +174,9 @@ angular.module(
             $state.go('about', {}, {reload:true})
         }
 
+        $scope.showEnvironment = function() {
+            return ! $rootScope.ionicPlatform.onDevice
+        }
 
         // attempt to auto-login using previous credentials
 
