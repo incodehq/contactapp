@@ -26,6 +26,14 @@ angular.module(
 
             var sort = function(respData) {
                 respData.sort(function(a,b) {
+                    // contact groups before contacts
+                    if(a.type === "Contact Group" && b.type === "Contact") {
+                        return -1
+                    }
+                    if(a.type === "Contact" && b.type === "Contact Group") {
+                        return 1
+                    }
+                    // then by name
                     if(PreferencesService.preferences.nameOrder.selected === "first-last") {
                         return a.name.localeCompare(b.name)
                     } else {
