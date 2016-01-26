@@ -18,12 +18,21 @@
  */
 package domainapp.dom.number;
 
-import org.apache.isis.applib.annotation.*;
-
-import javax.inject.Inject;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.RestrictTo;
+import org.apache.isis.applib.annotation.SemanticsOf;
+
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
+@DomainServiceLayout(
+        named = "Prototyping"
+)
 public class ContactNumberMenu {
 
     @Action(semantics = SemanticsOf.SAFE, restrictTo = RestrictTo.PROTOTYPING )
