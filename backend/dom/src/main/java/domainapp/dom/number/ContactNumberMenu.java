@@ -31,7 +31,8 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(
-        named = "Prototyping"
+        named = "Prototyping",
+        menuBar = DomainServiceLayout.MenuBar.SECONDARY
 )
 public class ContactNumberMenu {
 
