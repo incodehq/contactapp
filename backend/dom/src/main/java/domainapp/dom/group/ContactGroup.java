@@ -53,17 +53,30 @@ public class ContactGroup extends ContactableEntity {
     private String address;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit Address")
-    @MemberOrder(name = "address", sequence = "1")
-    public ContactableEntity changeAddress(@ParameterLayout(named = "Address") String address) {
+    @ActionLayout(named = "Edit")
+    public ContactableEntity change(@ParameterLayout(named = "Name") String name,
+                                    @ParameterLayout(named = "Email") String email,
+                                    @ParameterLayout(named = "Address") String address,
+                                    @ParameterLayout(named = "Notes", multiLine = 6) String notes) {
+        setName(name);
+        setEmail(email);
         setAddress(address);
+        setNotes(notes);
         return this;
     }
 
-    public String default0ChangeAddress() {
+    public String default0Change() {
+        return getName();
+    }
+    public String default1Change() {
+        return getEmail();
+    }
+    public String default2Change() {
         return getAddress();
     }
-
+    public String default3Change() {
+        return getNotes();
+    }
 
     @NotPersistent
     public List<ContactRole> getContactRoles() {
