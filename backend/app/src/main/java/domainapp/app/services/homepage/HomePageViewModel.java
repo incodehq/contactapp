@@ -18,13 +18,13 @@
  */
 package domainapp.app.services.homepage;
 
-import domainapp.dom.group.ContactGroup;
-import domainapp.dom.group.ContactGroupRepository;
+import java.util.List;
+
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.ViewModel;
 
-import java.util.Collections;
-import java.util.List;
+import domainapp.dom.group.ContactGroup;
+import domainapp.dom.group.ContactGroupRepository;
 
 @ViewModel
 public class HomePageViewModel {
@@ -39,9 +39,7 @@ public class HomePageViewModel {
     @CollectionLayout(paged=1000)
     @org.apache.isis.applib.annotation.HomePage
     public List<ContactGroup> getObjects() {
-        List<ContactGroup> contactGroups = contactGroupRepository.listAll();
-        Collections.sort(contactGroups);
-        return contactGroups;
+        return contactGroupRepository.listAll();
     }
     //endregion
 
