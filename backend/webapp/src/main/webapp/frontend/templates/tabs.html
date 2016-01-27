@@ -7,7 +7,9 @@
             <div class="card"  ng-show="ctrl.isOfflineEnabled()">
                 <div class="item item-text-wrap" ng-show="ctrl.isOfflineEnabled()">
                     <button class="button button-balanced button-block"
-                            ng-click="ctrl.downloadContacts()">
+                            ng-click="ctrl.downloadContacts()"
+                            ng-disabled="ctrl.message"
+                    >
                         <i class="ion-android-download">&nbsp;Download all contacts</i>
                     </button>
                 </div>
@@ -18,10 +20,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="item" ng-show="isNotProduction()">
+                <div class="item" ng-show="true || isNotProduction()">
                     <button class="button button-assertive button-block"
                             ng-click="ctrl.removeDownloadedContacts()">
-                        <i class="ion-android-download">&nbsp;Remove all</i>
+                        <i class="ion-trash-b">&nbsp;Remove all</i>
                     </button>
                 </div>
             </div>

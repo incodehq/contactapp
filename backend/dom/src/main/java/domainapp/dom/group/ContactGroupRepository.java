@@ -1,5 +1,8 @@
 package domainapp.dom.group;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -14,7 +17,9 @@ public class  ContactGroupRepository {
 
     @Programmatic
     public java.util.List<ContactGroup> listAll() {
-        return container.allInstances(ContactGroup.class);
+        final List<ContactGroup> contactGroups = container.allInstances(ContactGroup.class);
+        Collections.sort(contactGroups);
+        return contactGroups;
     }
 
     @Programmatic

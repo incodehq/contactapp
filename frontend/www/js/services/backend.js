@@ -33,6 +33,18 @@ angular.module(
                     if(a.type === "Contact" && b.type === "Contact Group") {
                         return 1
                     }
+
+                    // then by display order
+                    if(a.displayOrder && !b.displayOrder) {
+                        return -1
+                    }
+                    if(!a.displayOrder && b.displayOrder) {
+                        return 1
+                    }
+                    if(a.displayOrder && b.displayOrder) {
+                        return a.displayOrder - b.displayOrder
+                    }
+
                     // then by name
                     if(PreferencesService.preferences.nameOrder.selected === "first-last") {
                         return a.name.localeCompare(b.name)
@@ -110,7 +122,7 @@ angular.module(
               return respData
         }
 
-        this.loadContactables = function(instanceIds, onEachComplete) {
+        this.loadContactables = function(instanceIds, onEachComplete, onAllComplete) {
             var urls = instanceIds.map(function(instanceId) {
                 return "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId
             })
@@ -122,7 +134,8 @@ angular.module(
                     var trimmedData = trimContactable(respData)
                     onEachComplete(++num, trimmedData)
                     return trimmedData
-                }
+                },
+                onAllComplete
             )
         }
 

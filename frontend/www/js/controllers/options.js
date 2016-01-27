@@ -48,6 +48,11 @@ angular.module(
                             $timeout(function() {
                                 ctrl.message = contactData.name + " (" + num + " of " + contactables.length + ")"
                             })
+                        },
+                        function() {
+                            $timeout(function() {
+                                ctrl.message = null
+                            })
                         }
                     )
                 }

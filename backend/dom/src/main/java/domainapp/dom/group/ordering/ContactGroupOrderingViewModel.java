@@ -1,50 +1,65 @@
 package domainapp.dom.group.ordering;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
 
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.ViewModel;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.bookmark.Bookmark;
+import org.apache.isis.applib.services.bookmark.BookmarkService;
 
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import lombok.Getter;
 import lombok.Setter;
 
-@javax.xml.bind.annotation.XmlRootElement(name = "contactGroupOrderingViewModel")
-@javax.xml.bind.annotation.XmlType(
-        propOrder = {                                               // <2>
-                "contactGroup"
-        }
-)
-@javax.xml.bind.annotation.XmlAccessorType(XmlAccessType.FIELD)
+//@javax.xml.bind.annotation.XmlRootElement(name = "contactGroupOrderingViewModel")
+//@javax.xml.bind.annotation.XmlType(
+//        propOrder = {
+//                "contactGroup"
+//        }
+//)
+//@javax.xml.bind.annotation.XmlAccessorType(XmlAccessType.FIELD)
 @DomainObjectLayout(
-        titleUiEvent = org.apache.isis.applib.services.eventbus.TitleUiEvent.Default.class
+        cssClassFa = "sort-alpha-asc"
 )
-public class ContactGroupOrderingViewModel implements org.apache.isis.applib.services.dto.Dto {
+public class ContactGroupOrderingViewModel implements ViewModel {
 
-    private static final Ordering<ContactGroup> displayNumberThenNatural =
-            Ordering.natural()
-                    .nullsLast()
-                    .onResultOf(ContactGroup.Functions.displayNumberOf())
-                    .compound(Ordering.natural());
+    @Inject
+    BookmarkService bookmarkService;
+    @Inject
+    DomainObjectContainer container;
+
+    @Override
+    public String viewModelMemento() {
+        final ContactGroup contactGroup = getContactGroup();
+        final Bookmark bookmark = bookmarkService.bookmarkFor(contactGroup);
+        return bookmark.getIdentifier();
+    }
+
+    @Override
+    public void viewModelInit(final String memento) {
+        final Bookmark bookmark = bookmarkService.bookmarkFor(ContactGroup.class, memento);
+        this.contactGroup = (ContactGroup) bookmarkService.lookup(bookmark);
+    }
+
 
     public ContactGroupOrderingViewModel() {
     }
@@ -53,17 +68,35 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
         setContactGroup(contactGroup);
     }
 
-    @Title
-    @XmlElement
+    //@XmlElement
+    @Property
+    @PropertyLayout(
+            hidden = Where.PARENTED_TABLES
+    )
     @Getter @Setter
     private ContactGroup contactGroup;
 
 
-    @XmlTransient
+    // @XmlTransient
     private Integer displayOrder;
 
+    @Property
+    @PropertyLayout()
+    @MemberOrder(sequence = "1")
     public Integer getDisplayOrder() {
         return contactGroup.getDisplayOrder();
+    }
+
+
+
+    @Title
+    @Property
+    @PropertyLayout(
+            hidden = Where.OBJECT_FORMS
+    )
+    @MemberOrder(sequence = "2")
+    public String getName() {
+        return container.titleOf(contactGroup);
     }
 
 
@@ -74,10 +107,10 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
     )
     @MemberOrder(name = "displayOrder", sequence = "1")
     public ContactGroupOrderingViewModel moveUp() {
-        reorder(orderedContactGroups());
-        spreadOut(orderedContactGroups(), 10);
+        reorder(repository.listAll());
+        spreadOut(repository.listAll(), 10);
         updateCurrent(-15, Integer.MAX_VALUE);
-        reorder(orderedContactGroups());
+        reorder(repository.listAll());
         return this;
     }
 
@@ -88,10 +121,10 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
     )
     @MemberOrder(name = "displayOrder", sequence = "2")
     public ContactGroupOrderingViewModel moveDown() {
-        reorder(orderedContactGroups());
-        spreadOut(orderedContactGroups(), 10);
+        reorder(repository.listAll());
+        spreadOut(repository.listAll(), 10);
         updateCurrent(+15, Integer.MIN_VALUE);
-        reorder(orderedContactGroups());
+        reorder(repository.listAll());
         return this;
     }
 
@@ -102,7 +135,7 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
     @MemberOrder(name = "displayOrder", sequence = "3")
     public ContactGroupOrderingViewModel clear() {
         contactGroup.setDisplayOrder(null);
-        reorder(orderedContactGroups());
+        reorder(repository.listAll());
         return this;
     }
 
@@ -112,6 +145,8 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
             final Integer displayOrder = contactGroup.getDisplayOrder();
             if(displayOrder != null) {
                 contactGroup.setDisplayOrder(displayOrder * factor);
+            } else {
+                return;
             }
         }
     }
@@ -128,6 +163,8 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
         for (ContactGroup contactGroup : contactGroupsAfter) {
             if(contactGroup.getDisplayOrder() != null) {
                 contactGroup.setDisplayOrder(++num);
+            } else {
+                return;
             }
         }
     }
@@ -139,19 +176,12 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
             defaultView = "table",
             paged = 100
     )
-    @XmlTransient // so that JAXB ignores when recreating
     public List<ContactGroupOrderingViewModel> getContactGroups() {
-        final List<ContactGroup> contactGroups = orderedContactGroups();
+        final List<ContactGroup> contactGroups = repository.listAll();
         return Lists.newArrayList(
                     FluentIterable.from(contactGroups)
                                   .transform(toViewModel())
                  );
-    }
-
-    private List<ContactGroup> orderedContactGroups() {
-        final List<ContactGroup> contactGroups = repository.listAll();
-        Collections.sort(contactGroups, displayNumberThenNatural);
-        return contactGroups;
     }
 
     private Function<ContactGroup, ContactGroupOrderingViewModel> toViewModel() {
@@ -160,13 +190,13 @@ public class ContactGroupOrderingViewModel implements org.apache.isis.applib.ser
                 final ContactGroupOrderingViewModel vm = ContactGroupOrderingViewModel.this;
                 return contactGroup == vm.contactGroup
                         ? vm // can't have two view models both representing the same contact group at same time
-                        : new ContactGroupOrderingViewModel(contactGroup);
+                        : container.injectServicesInto(new ContactGroupOrderingViewModel(contactGroup));
             }
         };
     }
 
 
-    @XmlTransient
+    // @XmlTransient
     @Inject
     ContactGroupRepository repository;
 

@@ -14,6 +14,7 @@ import javax.jdo.annotations.Unique;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Ordering;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -21,6 +22,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
@@ -48,16 +50,15 @@ import lombok.Setter;
 })
 @Unique(name = "ContactGroup_displayNumber_UNQ", members = {"displayOrder"})
 @DomainObject(
-        editing = Editing.DISABLED,
-        bounded = true
+        editing = Editing.DISABLED
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
-public class ContactGroup extends ContactableEntity {
+public class ContactGroup extends ContactableEntity implements Comparable<ContactGroup> {
 
     private Iterable<ContactRole> contactRoles;
 
     public String title() {
-        return getCountry().getName() + (getName() != null ? " (" + getName() + ")" : "");
+        return getName() + " (" +  getCountry().getName() + ")";
     }
 
 
@@ -68,6 +69,7 @@ public class ContactGroup extends ContactableEntity {
     private Integer displayOrder;
 
     @MemberOrder(sequence = "2")
+    @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
@@ -92,26 +94,39 @@ public class ContactGroup extends ContactableEntity {
     }
 
 
+    @Programmatic
     @NotPersistent
     public List<ContactRole> getContactRoles() {
         return contactRoleRepository.findByGroup(this);
     }
 
+    private static final Ordering<ContactGroup> byDisplayNumberThenName =
+            Ordering
+                    .natural()
+                    .nullsLast()
+                    .onResultOf(displayNumberOf())
+                    .compound(Ordering
+                            .natural()
+                            .onResultOf(nameOf())
+                    );
+
+    private static Function<ContactGroup, Integer> displayNumberOf() {
+        return new Function<ContactGroup, Integer>() {
+            @Nullable @Override
+            public Integer apply(@Nullable final ContactGroup contactGroup) {
+                return contactGroup.getDisplayOrder();
+            }
+        };
+    }
+
+    @Override
+    public int compareTo(final ContactGroup other) {
+        return byDisplayNumberThenName.compare(this, other);
+    }
+
     @Inject
     ContactRoleRepository contactRoleRepository;
 
-    public static class Functions {
-        private Functions(){}
 
-        public static Function<ContactGroup, Integer> displayNumberOf() {
-            return new Function<ContactGroup, Integer>() {
-                @Nullable @Override
-                public Integer apply(@Nullable final ContactGroup contactGroup) {
-                    return contactGroup.getDisplayOrder();
-                }
-            };
-        }
-
-    }
 
 }

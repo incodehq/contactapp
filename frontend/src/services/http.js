@@ -72,7 +72,7 @@ angular.module(
             )
         }
 
-        this.getMany = function(cacheKeys, relativeUrls, onData) {
+        this.getMany = function(cacheKeys, relativeUrls, onData, onAllComplete) {
 
             var httpPromises = []
             for (var i = 0; i < cacheKeys.length; i++) {
@@ -94,14 +94,26 @@ angular.module(
                 httpPromises.push(httpPromise)
             }
 
-            $q.all(httpPromises)
+            $q.all(httpPromises.map(function(promise) {
+                    return promise.then(
+                        function(value) {
+                            return value;
+                        },
+                        function(reason) {
+                            return null;
+                        }
+                    );
+                })
+            )
             .then(
                 function(responses) {
                     if(OfflineService.isOfflineEnabled()) {
                         OfflineService.putMany(cacheKeys, responses)
                     }
+                    onAllComplete()
                 }
             )
+
         }
 
         this.lookup = function(cacheKey) {
