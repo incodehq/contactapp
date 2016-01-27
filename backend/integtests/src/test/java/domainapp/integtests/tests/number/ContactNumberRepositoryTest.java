@@ -16,22 +16,20 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.integtests.tests.contact;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
+package domainapp.integtests.tests.number;
 
 import domainapp.dom.number.ContactNumber;
 import domainapp.dom.number.ContactNumberRepository;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.inject.Inject;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactNumberRepositoryTest extends DomainAppIntegTest {
