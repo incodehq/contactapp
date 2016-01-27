@@ -20,8 +20,10 @@ package domainapp.app.services.homepage;
 
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.ViewModel;
 
+import java.util.Collections;
 import java.util.List;
 
 @ViewModel
@@ -29,14 +31,17 @@ public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return getObjects().size() + " objects";
+        return "Groups";
     }
     //endregion
 
     //region > object (collection)
+    @CollectionLayout(paged=1000)
     @org.apache.isis.applib.annotation.HomePage
     public List<ContactGroup> getObjects() {
-        return contactGroupRepository.listAll();
+        List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+        Collections.sort(contactGroups);
+        return contactGroups;
     }
     //endregion
 
