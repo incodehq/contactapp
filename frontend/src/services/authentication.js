@@ -134,47 +134,43 @@ angular.module(
 
 
     .controller('LoginCtrl',
-        ['$rootScope', '$scope', '$state','$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
-        function($rootScope, $scope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
+        ['$rootScope', '$state', '$ionicPopup', 'AuthService', 'AppConfig', 'PreferencesService',
+        function($rootScope, $state, $ionicPopup, AuthService, AppConfig, PreferencesService) {
 
         var ctrl = this;
 
-        $scope.preferences = PreferencesService.preferences
-        $scope.credentials = {
+        ctrl.preferences = PreferencesService.preferences
+        ctrl.credentials = {
             username: null,
             password: null
         }
-        $scope.environment = PreferencesService.preferences.environment.selected
+        ctrl.environment = PreferencesService.preferences.environment.selected
 
-        $scope.updateEnvironment = function() {
-            PreferencesService.updateEnvironment($scope.environment)
+        ctrl.updateEnvironment = function() {
+            PreferencesService.updateEnvironment(ctrl.environment)
         }
 
-        $scope.login =
+        ctrl.login =
             function(data) {
-                var username=$scope.credentials.username
-                var password=$scope.credentials.password
+                var username=ctrl.credentials.username
+                var password=ctrl.credentials.password
 
                 AppConfig.baseUrl = PreferencesService.urlForSelectedEnvironment()
 
                 AuthService.login(username, password).then(
                     function(authenticated) {
-                        $scope.credentials.username = null
-                        $scope.credentials.password = null
-                        $scope.error = undefined
+                        ctrl.credentials.username = null
+                        ctrl.credentials.password = null
+                        ctrl.error = undefined
                         $state.go('tab.contactables', {}, {reload: true});
                     }, function(err) {
-                        $scope.credentials.username = null
-                        $scope.credentials.password = null
-                        $scope.error = "Incorrect username or password"
+                        ctrl.credentials.username = null
+                        ctrl.credentials.password = null
+                        ctrl.error = "Incorrect username or password"
                     });
         }
 
-        $scope.about = function() {
-            $state.go('about', {}, {reload:true})
-        }
-
-        $scope.showEnvironment = function() {
+        ctrl.showEnvironment = function() {
             return ! $rootScope.ionicPlatform.onDevice
         }
 

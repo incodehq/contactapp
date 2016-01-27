@@ -96,7 +96,7 @@ angular.module(
         .state('login', {
             url: '/login',
             templateUrl: 'templates/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl as ctrl'
         })
 
         .state('about', {

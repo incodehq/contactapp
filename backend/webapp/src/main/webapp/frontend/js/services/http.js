@@ -2,8 +2,8 @@ angular.module(
     'ecp-contactapp.services.http' , [])
 
     .service('HttpService',
-            ['$http', '$ionicLoading', 'AppConfig', 'OfflineService',
-            function($http, $ionicLoading, AppConfig, OfflineService) {
+            ['$q', '$http', '$ionicLoading', 'AppConfig', 'OfflineService',
+            function($q, $http, $ionicLoading, AppConfig, OfflineService) {
 
         var service = this
 
@@ -18,11 +18,12 @@ angular.module(
             return OfflineService.isOfflineEnabled()
         }
 
+        var headerMap = {
+            'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
+        }
+
         this.get = function(cacheKey, relativeUrl, onCached, onData, onOK, onError, options) {
             var url = AppConfig.baseUrl + relativeUrl
-            var headerMap = {
-                'Accept': 'application/json;profile=urn:org.apache.isis/v1;suppress=true'
-            }
             var localStorageKey = AppConfig.appPrefix + "." + cacheKey
             var cached = OfflineService.get(cacheKey)
             if(cached) {
@@ -39,14 +40,12 @@ angular.module(
                  })
             }
             $http.get(
-                url,
-                {
+                url, {
                     headers: headerMap
                 }
             )
             .then(
                 function(resp) {
-                    // update the offline cache, and call the onOK callback once more
                     if(showSpinner) {
                         $ionicLoading.hide()
                     }
@@ -68,6 +67,38 @@ angular.module(
                     if(onError && !cached) {
                         // unable to obtain any data, and wasn't previously cached
                         onError(err)
+                    }
+                }
+            )
+        }
+
+        this.getMany = function(cacheKeys, relativeUrls, onData) {
+
+            var httpPromises = []
+            for (var i = 0; i < cacheKeys.length; i++) {
+                var cacheKey = cacheKeys[i]
+                var localStorageKey = AppConfig.appPrefix + "." + cacheKey
+                var url = AppConfig.baseUrl + relativeUrls[i]
+
+                var httpPromise = $http.get(
+                    url, {
+                        headers: headerMap
+                    }
+                )
+                .then(
+                    function(resp) {
+                        resp.data = onData(resp.data)
+                        return resp
+                    }
+                )
+                httpPromises.push(httpPromise)
+            }
+
+            $q.all(httpPromises)
+            .then(
+                function(responses) {
+                    if(OfflineService.isOfflineEnabled()) {
+                        OfflineService.putMany(cacheKeys, responses)
                     }
                 }
             )

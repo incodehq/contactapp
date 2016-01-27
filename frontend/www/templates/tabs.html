@@ -7,15 +7,14 @@
             <div class="card"  ng-show="ctrl.isOfflineEnabled()">
                 <div class="item item-text-wrap" ng-show="ctrl.isOfflineEnabled()">
                     <button class="button button-balanced button-block"
-                            ng-click="ctrl.downloadContacts()"
-                            ng-disabled="ctrl.message">
+                            ng-click="ctrl.downloadContacts()">
                         <i class="ion-android-download">&nbsp;Download all contacts</i>
                     </button>
                 </div>
                 <div class="item" ng-show="ctrl.message">
                     <div class="row row-center">
                         <div class="col col-center">
-                            <p>{{ctrl.numberOfDownloadedContacts()}} downloaded...</p>
+                            <p>{{ctrl.message}}</p>
                         </div>
                     </div>
                 </div>
@@ -47,8 +46,9 @@
                     About
                 </div>
                 <div class="item item-text-wrap">
-                    <p>- v0.2.20160127 (auto login)</p>
+                    <p>- v0.2.20160128 (bulk download)</p>
                     <p>Previous:</p>
+                    <p>- v0.2.20160127 (auto login)</p>
                     <p>- v0.1.20160126 (sidemenus)</p>
                     <p>- v0.1.20160125 (more responsive, options tab)</p>
                     <p>- v0.1.xxx (initial version)</p>

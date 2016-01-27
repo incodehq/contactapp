@@ -25,7 +25,7 @@ angular.module(
             $ionicSideMenuDelegate.toggleRight();
         }
 
-        BackendService.loadContactables(
+        BackendService.loadContactableList(
             function(contactables, messageIfAny) {
                 ctrl.contactables = contactables
                 ctrl.message = messageIfAny

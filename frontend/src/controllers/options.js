@@ -33,28 +33,23 @@ angular.module(
         ctrl.downloadContacts = function() {
             OfflineService.clearCache()
 
-            BackendService.loadContactables(
+            BackendService.loadContactableList(
                 function(contactables, messageIfAny){
                     ctrl.message = "Downloading..."
                     ctrl.numberOfContacts = contactables.length
-                    for (var i = 0; i < contactables.length; i++) {
-                        var j = i+1
-                        var contactable = contactables[i]
-                        var instanceId = contactable.$$instanceId
-                        BackendService.loadContactable(
-                            instanceId,
-                            function(contactData){
-                                $timeout(function() {
-                                    ctrl.downloadCount = j
-                                    // Angular doesn't seem able to keep up...
-                                    // ctrl.message = contactData.name
-                                })
-                            },
-                            {
-                                suppressIonicLoading: true
-                            }
-                        )
-                    }
+
+                    var instanceIds = contactables.map(function(contactable) {
+                        return contactable.$$instanceId
+                    })
+
+                    BackendService.loadContactables(
+                        instanceIds,
+                        function(num, contactData){
+                            $timeout(function() {
+                                ctrl.message = contactData.name + " (" + num + " of " + contactables.length + ")"
+                            })
+                        }
+                    )
                 }
             )
         }

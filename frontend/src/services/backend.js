@@ -22,7 +22,7 @@ angular.module(
             return HttpService.isOfflineEnabled()
         }
 
-        this.loadContactables = function(onComplete, options) {
+        this.loadContactableList = function(onComplete, options) {
 
             var sort = function(respData) {
                 respData.sort(function(a,b) {
@@ -78,6 +78,54 @@ angular.module(
             )
         }
 
+        var trimContactable = function(respData) {
+              delete respData.$$href
+              delete respData.$$instanceId
+              delete respData.$$title
+              respData.contactNumbers = respData.contactNumbers.map(
+                  function(contactNumber){
+                      delete contactNumber.$$instanceId
+                      delete contactNumber.$$href
+                      delete contactNumber.$$title
+                      return contactNumber
+                  }
+              )
+              respData.contactRoles = respData.contactRoles.map(
+                  function(contactRole) {
+                      delete contactRole.$$href
+                      delete contactRole.$$title
+                      contactRole.contact.$$instanceId = instanceIdOf(contactRole.contact.href)
+                      delete contactRole.contact.href
+                      delete contactRole.contact.rel
+                      delete contactRole.contact.method
+                      delete contactRole.contact.type
+                      contactRole.contactGroup.$$instanceId = instanceIdOf(contactRole.contactGroup.href)
+                      delete contactRole.contactGroup.href
+                      delete contactRole.contactGroup.rel
+                      delete contactRole.contactGroup.method
+                      delete contactRole.contactGroup.type
+                      return contactRole
+                  }
+              )
+              return respData
+        }
+
+        this.loadContactables = function(instanceIds, onEachComplete) {
+            var urls = instanceIds.map(function(instanceId) {
+                return "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId
+            })
+            var num = 0;
+            HttpService.getMany(
+                instanceIds,
+                urls,
+                function(respData) {
+                    var trimmedData = trimContactable(respData)
+                    onEachComplete(++num, trimmedData)
+                    return trimmedData
+                }
+            )
+        }
+
         this.loadContactable = function(instanceId, onComplete, options) {
             HttpService.get(
                 instanceId,
@@ -85,37 +133,7 @@ angular.module(
                 function(cachedData, date) {
                     onComplete(cachedData, dataProvenanceMessage(date))
                 },
-                function(respData) {
-                    delete respData.$$href
-                    delete respData.$$instanceId
-                    delete respData.$$title
-                    respData.contactNumbers = respData.contactNumbers.map(
-                        function(contactNumber){
-                            delete contactNumber.$$instanceId
-                            delete contactNumber.$$href
-                            delete contactNumber.$$title
-                            return contactNumber
-                        }
-                    )
-                    respData.contactRoles = respData.contactRoles.map(
-                        function(contactRole){
-                            delete contactRole.$$href
-                            delete contactRole.$$title
-                            contactRole.contact.$$instanceId = instanceIdOf(contactRole.contact.href)
-                            delete contactRole.contact.href
-                            delete contactRole.contact.rel
-                            delete contactRole.contact.method
-                            delete contactRole.contact.type
-                            contactRole.contactGroup.$$instanceId = instanceIdOf(contactRole.contactGroup.href)
-                            delete contactRole.contactGroup.href
-                            delete contactRole.contactGroup.rel
-                            delete contactRole.contactGroup.method
-                            delete contactRole.contactGroup.type
-                            return contactRole
-                        }
-                    )
-                    return respData
-                },
+                trimContactable,
                 function(respData, date) {
                     onComplete(respData, dataProvenanceMessage(date))
                     return respData

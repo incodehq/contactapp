@@ -70,6 +70,23 @@ angular.module(
             internalPut(stored)
         }
 
+        this.putMany = function(cacheKeys, responses) {
+            var stored = internalGet()
+            var currentDate = new Date()
+            for (var i = 0; i < cacheKeys.length; i++) {
+                var cacheKey = cacheKeys[i]
+                var resp = responses[i]
+                if(resp) {
+                    stored[cacheKey] = {
+                        resp: resp,
+                        date: currentDate
+                    }
+                }
+            }
+            internalPut(stored)
+        }
+
+
         this.lookup = function(cacheKey) {
             return _stored[cacheKey]
         }
