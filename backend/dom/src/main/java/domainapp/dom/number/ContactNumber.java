@@ -54,14 +54,19 @@ public class ContactNumber implements Comparable<ContactNumber> {
     private String number;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit Number")
+    @ActionLayout(named = "Edit")
     @MemberOrder(name = "number", sequence = "1")
-    public ContactNumber changeNumber(@ParameterLayout(named = "Number") String number) {
+    public ContactNumber change(@ParameterLayout(named = "Type") String type,
+                                @ParameterLayout(named = "Number") String number) {
+        setType(type);
         setNumber(number);
         return this;
     }
 
-    public String default0ChangeNumber() {
+    public String default0Change() {
+        return getType();
+    }
+    public String default1Change() {
         return getNumber();
     }
 
