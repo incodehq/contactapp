@@ -18,17 +18,13 @@
  */
 package domainapp.integtests.tests.number;
 
-import domainapp.dom.number.ContactNumber;
 import domainapp.dom.number.ContactNumberRepository;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.junit.Before;
-import org.junit.Test;
 
 import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactNumberIntegTest extends DomainAppIntegTest {
 
@@ -45,23 +41,5 @@ public class ContactNumberIntegTest extends DomainAppIntegTest {
         // given
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
-    }
-
-    public static class Change extends ContactNumberIntegTest {
-
-        @Test
-        public void happyCase() throws Exception {
-            // given
-            ContactNumber contactNumber = contactNumberRepository.listAll().get(0);
-            String type = "New type";
-            String number = "New number";
-
-            // when
-            contactNumber.change(type, number);
-            // then
-            assertThat(contactNumber.getType()).isEqualTo(type);
-            assertThat(contactNumber.getNumber()).isEqualTo(number);
-        }
-
     }
 }
