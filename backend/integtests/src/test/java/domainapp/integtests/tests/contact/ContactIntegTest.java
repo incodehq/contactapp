@@ -65,25 +65,5 @@ public class ContactIntegTest extends DomainAppIntegTest {
         }
 
     }
-    public static class Change extends ContactIntegTest {
 
-        @Test
-        public void happyCase() throws Exception {
-            // given
-            Contact contact = contactRepository.listAll().get(0);
-            String name = "New name";
-            String email = "New email";
-            String company = "New company";
-            String notes = "New notes";
-
-            // when
-            contact.change(name, email, company, notes);
-            // then
-            assertThat(contact.getName()).isEqualTo(name);
-            assertThat(contact.getEmail()).isEqualTo(email);
-            assertThat(contact.getCompany()).isEqualTo(company);
-            assertThat(contact.getNotes()).isEqualTo(notes);
-        }
-
-    }
 }
