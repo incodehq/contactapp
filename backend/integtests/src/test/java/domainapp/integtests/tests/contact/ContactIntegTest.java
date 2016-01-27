@@ -18,22 +18,25 @@
  */
 package domainapp.integtests.tests.contact;
 
-import javax.inject.Inject;
-
+import domainapp.dom.contacts.Contact;
+import domainapp.dom.contacts.ContactRepository;
+import domainapp.fixture.scenarios.demo.DemoFixture;
+import domainapp.integtests.tests.DomainAppIntegTest;
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import javax.inject.Inject;
 
-import domainapp.dom.contacts.Contact;
-import domainapp.fixture.scenarios.demo.DemoFixture;
-import domainapp.integtests.tests.DomainAppIntegTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactIntegTest extends DomainAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
+
+    @Inject
+    ContactRepository contactRepository;
 
     DemoFixture fs;
     Contact contactPojo;
@@ -62,4 +65,5 @@ public class ContactIntegTest extends DomainAppIntegTest {
         }
 
     }
+
 }

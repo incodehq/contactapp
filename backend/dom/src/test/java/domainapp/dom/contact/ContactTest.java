@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package domainapp.dom.quick;
+package domainapp.dom.contact;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,5 +46,24 @@ public class ContactTest {
             assertThat(contact.getName()).isEqualTo(name);
         }
     }
+    public static class Change extends ContactTest {
 
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            String name = "New name";
+            String email = "New email";
+            String company = "New company";
+            String notes = "New notes";
+
+            // when
+            contact.change(name, email, company, notes);
+            // then
+            assertThat(contact.getName()).isEqualTo(name);
+            assertThat(contact.getEmail()).isEqualTo(email);
+            assertThat(contact.getCompany()).isEqualTo(company);
+            assertThat(contact.getNotes()).isEqualTo(notes);
+        }
+
+    }
 }

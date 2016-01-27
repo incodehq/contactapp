@@ -66,15 +66,29 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     private String company;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit Company")
-    @MemberOrder(name = "company", sequence = "1")
-    public ContactableEntity changeCompany(@ParameterLayout(named = "Company") String company) {
+    @ActionLayout(named = "Edit")
+    public ContactableEntity change(@ParameterLayout(named = "Name") String name,
+                                    @ParameterLayout(named = "Email") String email,
+                                    @ParameterLayout(named = "Company") String company,
+                                    @ParameterLayout(named = "Notes", multiLine = 6) String notes) {
+        setName(name);
+        setEmail(email);
         setCompany(company);
+        setNotes(notes);
         return this;
     }
 
-    public String default0ChangeCompany() {
+    public String default0Change() {
+        return getName();
+    }
+    public String default1Change() {
+        return getEmail();
+    }
+    public String default2Change() {
         return getCompany();
+    }
+    public String default3Change() {
+        return getNotes();
     }
 
     @Persistent(mappedBy = "contact", dependentElement = "false")
