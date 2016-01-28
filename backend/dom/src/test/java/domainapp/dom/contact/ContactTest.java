@@ -52,12 +52,12 @@ public class ContactTest {
         public void happyCase() throws Exception {
             // given
             String name = "New name";
-            String email = "New email";
             String company = "New company";
+            String email = "New email";
             String notes = "New notes";
 
             // when
-            contact.change(name, email, company, notes);
+            contact.change(name, company, email, notes);
             // then
             assertThat(contact.getName()).isEqualTo(name);
             assertThat(contact.getEmail()).isEqualTo(email);
