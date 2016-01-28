@@ -64,6 +64,44 @@ public class ContactGroupRepositoryTest extends DomainAppIntegTest {
         }
 
     }
+    public static class ListAll extends ContactGroupRepositoryTest {
+
+        @Test
+        public void happyCase() throws Exception {
+
+            // when
+            final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+
+            // then
+            assertThat(contactGroups.size()).isEqualTo(4);
+            assertThat(contactGroups.get(0).getName()).isEqualTo("Amiens Property");
+            assertThat(contactGroups.get(1).getName()).isEqualTo("Management Board");
+            assertThat(contactGroups.get(2).getName()).isEqualTo("Paris Office");
+            assertThat(contactGroups.get(3).getName()).isEqualTo("Regulatory");
+
+        }
+
+        @Test
+        public void reorder() throws Exception {
+
+            // given
+            final List<ContactGroup> contactGroupsInitial = contactGroupRepository.listAll();
+            contactGroupsInitial.get(2).setDisplayOrder(1); // move 'Paris Office' first
+            contactGroupsInitial.get(1).setDisplayOrder(2); // move 'Management Board' second
+
+            // when
+            final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+
+            // then
+            assertThat(contactGroups.size()).isEqualTo(4);
+            assertThat(contactGroups.get(0).getName()).isEqualTo("Paris Office");
+            assertThat(contactGroups.get(1).getName()).isEqualTo("Management Board");
+            assertThat(contactGroups.get(2).getName()).isEqualTo("Amiens Property");
+            assertThat(contactGroups.get(3).getName()).isEqualTo("Regulatory");
+
+        }
+
+    }
 }
 
 
