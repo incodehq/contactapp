@@ -34,11 +34,11 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import domainapp.dom.number.ContactNumber;
@@ -90,11 +90,11 @@ public class ContactableEntity  {
 
     @Column(allowsNull = "true")
     @Property
-    @PropertyLayout(multiLine = 6)
+    @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
     @Getter @Setter
     private String notes;
 
-    @Persistent(mappedBy = "contactableEntity", dependentElement = "true")
+    @Persistent(mappedBy = "owner", dependentElement = "true")
     @Collection()
     @CollectionLayout(render = RenderType.EAGERLY)
     @Getter @Setter

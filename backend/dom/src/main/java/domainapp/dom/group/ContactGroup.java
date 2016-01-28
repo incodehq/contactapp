@@ -20,11 +20,16 @@ import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import domainapp.dom.contactable.ContactableEntity;
@@ -52,6 +57,10 @@ import lombok.Setter;
 @DomainObject(
         editing = Editing.DISABLED
 )
+@MemberGroupLayout(
+        columnSpans = {6,0,0,6},
+        left = {"General", "Other"}
+)
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactGroup extends ContactableEntity implements Comparable<ContactGroup> {
 
@@ -62,16 +71,18 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     }
 
 
-    @MemberOrder(sequence = "1.1")
+    @MemberOrder(name = "Other", sequence = "1")
     @Column(allowsNull = "true")
     @Property()
+    @PropertyLayout(hidden = Where.ALL_TABLES)
     @Getter @Setter
     private Integer displayOrder;
 
-    @MemberOrder(sequence = "2")
+    @MemberOrder(name = "Other", sequence = "2")
     @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
     @Column(allowsNull = "false")
     @Property()
+    @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     @Getter @Setter
     private Country country;
 
@@ -82,14 +93,20 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit")
-    public ContactableEntity change(@ParameterLayout(named = "Name") String name,
-                                    @ParameterLayout(named = "Email") String email,
-                                    @ParameterLayout(named = "Address") String address,
-                                    @ParameterLayout(named = "Notes", multiLine = 6) String notes) {
+    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Notes", sequence = "1")
+    public ContactableEntity change(
+            final String name,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            final String address,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            final String email,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            @ParameterLayout(multiLine = 6)
+            final String notes) {
         setName(name);
-        setEmail(email);
         setAddress(address);
+        setEmail(email);
         setNotes(notes);
         return this;
     }
@@ -98,10 +115,10 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return getName();
     }
     public String default1Change() {
-        return getEmail();
+        return getAddress();
     }
     public String default2Change() {
-        return getAddress();
+        return getEmail();
     }
     public String default3Change() {
         return getNotes();

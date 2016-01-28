@@ -1,9 +1,10 @@
 package domainapp.dom.number;
 
-import domainapp.dom.contactable.ContactableEntity;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+
+import domainapp.dom.contactable.ContactableEntity;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -17,21 +18,21 @@ public class ContactNumberRepository {
     }
 
     @Programmatic
-    public ContactNumber findByContactAndType(
-            final ContactableEntity contactableEntity,
+    public ContactNumber findByOwnerAndType(
+            final ContactableEntity owner,
             final String type) {
         return container.uniqueMatch(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactNumber.class,
                         "findByContactAndType",
-                        "contactableEntity", contactableEntity,
+                        "owner", owner,
                         "type", type));
     }
 
     @Programmatic
-    public ContactNumber create(final ContactableEntity contactableEntity, final String type, final String number) {
+    public ContactNumber create(final ContactableEntity owner, final String type, final String number) {
         final ContactNumber contactNumber = container.newTransientInstance(ContactNumber.class);
-        contactNumber.setContactableEntity(contactableEntity);
+        contactNumber.setOwner(owner);
         contactNumber.setType(type);
         contactNumber.setNumber(number);
         container.persistIfNotAlready(contactNumber);
@@ -40,12 +41,12 @@ public class ContactNumberRepository {
 
     @Programmatic
     public ContactNumber findOrCreate(
-            final ContactableEntity contactableEntity,
+            final ContactableEntity owner,
             final String type,
             final String number) {
-        ContactNumber contactNumber = findByContactAndType(contactableEntity, type);
+        ContactNumber contactNumber = findByOwnerAndType(owner, type);
         if (contactNumber == null) {
-            contactNumber = create(contactableEntity, type, number);
+            contactNumber = create(owner, type, number);
         }
         return contactNumber;
     }

@@ -16,6 +16,7 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -37,6 +38,10 @@ import lombok.Setter;
 //        }
 //)
 //@javax.xml.bind.annotation.XmlAccessorType(XmlAccessType.FIELD)
+@MemberGroupLayout(
+        columnSpans = {6,0,0,6},
+        left = {"Group", "Ordering"}
+)
 @DomainObjectLayout(
         cssClassFa = "sort-alpha-asc"
 )
@@ -74,6 +79,7 @@ public class ContactGroupOrderingViewModel implements ViewModel {
             hidden = Where.PARENTED_TABLES
     )
     @Getter @Setter
+    @MemberOrder(name="Group", sequence = "1")
     private ContactGroup contactGroup;
 
 
@@ -82,7 +88,7 @@ public class ContactGroupOrderingViewModel implements ViewModel {
 
     @Property
     @PropertyLayout()
-    @MemberOrder(sequence = "1")
+    @MemberOrder(name = "Ordering", sequence = "2")
     public Integer getDisplayOrder() {
         return contactGroup.getDisplayOrder();
     }
@@ -94,10 +100,11 @@ public class ContactGroupOrderingViewModel implements ViewModel {
     @PropertyLayout(
             hidden = Where.OBJECT_FORMS
     )
-    @MemberOrder(sequence = "2")
+    @MemberOrder(name="Ordering", sequence = "3")
     public String getName() {
         return container.titleOf(contactGroup);
     }
+
 
 
 

@@ -1,13 +1,34 @@
 package domainapp.dom.number;
 
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.DatastoreIdentity;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Queries;
+import javax.jdo.annotations.Query;
+import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.Version;
+import javax.jdo.annotations.VersionStrategy;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
+
 import domainapp.dom.contactable.ContactableEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.isis.applib.annotation.*;
-import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
-
-import javax.jdo.annotations.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
@@ -23,10 +44,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
                 name = "findByContactAndType", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.number.ContactNumber "
-                        + "WHERE contactableEntity == :contactableEntity "
+                        + "WHERE owner == :owner "
                         + "   && type == :type ")
 })
-@Unique(name = "ContactNumber_label_UNQ", members = { "contactableEntity", "type" })
+@Unique(name = "ContactNumber_label_UNQ", members = { "owner", "type" })
 @DomainObject(
         editing = Editing.DISABLED
 )
@@ -40,7 +61,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     @Property()
     @Getter @Setter
-    private ContactableEntity contactableEntity;
+    private ContactableEntity owner;
 
     @Column(allowsNull = "false")
     @Property()
@@ -54,10 +75,11 @@ public class ContactNumber implements Comparable<ContactNumber> {
     private String number;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit")
+    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
-    public ContactNumber change(@ParameterLayout(named = "Type") String type,
-                                @ParameterLayout(named = "Number") String number) {
+    public ContactNumber change(
+            final String type,
+            final String number) {
         setType(type);
         setNumber(number);
         return this;
@@ -73,12 +95,12 @@ public class ContactNumber implements Comparable<ContactNumber> {
     //region > compareTo, toString
     @Override
     public int compareTo(final ContactNumber other) {
-        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "contactableEntity", "type");
+        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "owner", "type");
     }
 
     @Override
     public String toString() {
-        return org.apache.isis.applib.util.ObjectContracts.toString(this, "contactableEntity", "type");
+        return org.apache.isis.applib.util.ObjectContracts.toString(this, "owner", "type");
     }
     //endregion
 

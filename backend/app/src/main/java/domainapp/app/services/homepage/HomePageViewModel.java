@@ -31,14 +31,14 @@ public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return "Groups";
+        return "Contact Groups";
     }
     //endregion
 
     //region > object (collection)
     @CollectionLayout(paged=1000)
     @org.apache.isis.applib.annotation.HomePage
-    public List<ContactGroup> getObjects() {
+    public List<ContactGroup> getGroups() {
         return contactGroupRepository.listAll();
     }
     //endregion

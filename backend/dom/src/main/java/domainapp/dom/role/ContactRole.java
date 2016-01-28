@@ -103,7 +103,7 @@ public class ContactRole implements Comparable<ContactRole> {
     private String roleName;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit Role")
+    @ActionLayout(named = "Edit")
     @MemberOrder(name = "roleName", sequence = "1")
     public ContactRole changeRole(@ParameterLayout(named = "Role Name") String roleName) {
         setRoleName(roleName);

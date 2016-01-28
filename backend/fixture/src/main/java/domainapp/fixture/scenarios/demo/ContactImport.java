@@ -64,7 +64,7 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
 
         Contact contact = contactRepository.findOrCreate(name, company, email, note, office, mobile, home);
 
-        contact.addContactRole(contactGroup, role);
+        contact.addContactRole(contactGroup, role, null);
 
         executionContext.addResult(excelFixture, contact);
 

@@ -31,9 +31,9 @@
         {
             "span": 12,
             "collections": {
-                "objects": {
+                "groups": {
                     "collectionLayout": {
-                        "render": "EAGERLY"
+                        "defaultView": "table"
                     }
                 }
             }

@@ -34,7 +34,6 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
@@ -68,7 +67,7 @@ import lombok.Setter;
         bookmarking = BookmarkPolicy.AS_ROOT
 )
 @MemberGroupLayout(
-        columnSpans={4,0,0,12}
+        columnSpans={4,0,0,8}
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Country implements Comparable<Country> {
@@ -82,9 +81,21 @@ public class Country implements Comparable<Country> {
     @Getter @Setter
     private String name;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Name", sequence = "1")
+    public void edit(String name) {
+        setName(name);
+    }
+
+    public String default0Edit() {
+        return getName();
+    }
+
+
     @Persistent(mappedBy = "country", dependentElement = "true")
     @Collection()
-    @CollectionLayout(render = RenderType.EAGERLY)
+    @CollectionLayout(defaultView = "table", paged = 100)
     @Getter @Setter
     private SortedSet<ContactGroup> contactGroups = new TreeSet<ContactGroup>();
 
