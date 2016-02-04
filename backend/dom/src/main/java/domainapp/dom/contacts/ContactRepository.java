@@ -1,21 +1,18 @@
 package domainapp.dom.contacts;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
-
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -35,6 +32,7 @@ public class ContactRepository {
         java.util.SortedSet<Contact> results = Sets.newTreeSet();
 
         results.addAll(findByName(regex));
+        results.addAll(findByCompany(regex));
         results.addAll(findByContactRoleName(regex));
         for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
             results.addAll(findByContactGroup(contactGroup));
@@ -54,6 +52,17 @@ public class ContactRepository {
                 new org.apache.isis.applib.query.QueryDefault<>(
                         Contact.class,
                         "findByName",
+                        "regex", regex));
+    }
+
+    @Programmatic
+    public java.util.List<Contact> findByCompany(
+            final String regex
+    ) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        Contact.class,
+                        "findByCompany",
                         "regex", regex));
     }
 
