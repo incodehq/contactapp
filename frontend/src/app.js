@@ -23,6 +23,7 @@ angular.module(
         function($ionicConfigProvider){
 
         $ionicConfigProvider.tabs.position('bottom');
+        $ionicConfigProvider.views.swipeBackEnabled(false);
     }])
 
     .run(
