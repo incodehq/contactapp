@@ -41,10 +41,10 @@
                         <span>{{ctrl.contactable.email}}</span>
                     </div>
                     <div class="col col-33">
-                        <div ng-click="ctrl.sendEmail('{{ctrl.contactable.email}}')"
+                        <a href="mailto:{{ctrl.contactable.email}}"
                             class="button">
                             <span class="icon ion-email">&nbsp;Email</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
@@ -54,10 +54,10 @@
                         <span>{{contactNumber.number}}</span>
                     </div>
                     <div class="col col-33">
-                        <div ng-click="ctrl.dialNumber('{{contactNumber.number}}')"
+                        <a href="tel:{{contactNumber.number}}"
                            class="button">
                             <span class="icon ion-android-call">&nbsp;{{contactNumber.type}}</span>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
