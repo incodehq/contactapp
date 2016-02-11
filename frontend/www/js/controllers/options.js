@@ -15,12 +15,6 @@ angular.module(
 
         ctrl.preferences = PreferencesService.preferences;
 
-        ctrl.scrolling = PreferencesService.preferences.scrolling.selected
-
-        $scope.updateScrolling = function() {
-            PreferencesService.updateScrolling(ctrl.scrolling)
-        }
-
         ctrl.isOfflineEnabled = function() {
             return BackendService.isOfflineEnabled()
         }

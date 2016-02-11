@@ -57,45 +57,6 @@ angular.module(
 
 
 
-        //
-        // preferences.scrolling
-        //
-        var scrollingKey = AppConfig.appPrefix + ".preferences.scrolling"
-
-        var defaultScrolling = "collection-repeat"
-        // var defaultScrolling = "ng-repeat"
-
-        if(!window.localStorage[scrollingKey]) {
-            window.localStorage[scrollingKey] = defaultScrolling
-        }
-        service.preferences.scrolling = {
-            options: [
-                {
-                    text: "With dividers, but slower to display",
-                    value: "ng-repeat"
-                },
-                {
-                    text: "No dividers, but faster to display",
-                    value: "collection-repeat"
-                }
-            ],
-            selected: window.localStorage[scrollingKey]
-        }
-
-        service.valueForSelectedScrolling = function() {
-            return service.preferences.environment.options.find(
-                    function(element) {
-                        return element.text === service.preferences.scrolling.selected
-                    }).value
-        }
-
-        service.updateScrolling = function(text) {
-            service.preferences.scrolling.selected = text
-            window.localStorage[scrollingKey] = text
-        }
-
-
-
     }])
 
 
