@@ -16,14 +16,9 @@ angular.module(
         ctrl.preferences = PreferencesService.preferences;
 
         ctrl.scrolling = PreferencesService.preferences.scrolling.selected
-        ctrl.nameOrder = PreferencesService.preferences.nameOrder.selected
 
         $scope.updateScrolling = function() {
             PreferencesService.updateScrolling(ctrl.scrolling)
-        }
-
-        $scope.updateNameOrder = function() {
-            PreferencesService.updateNameOrder(ctrl.nameOrder)
         }
 
         ctrl.isOfflineEnabled = function() {

@@ -46,11 +46,7 @@ angular.module(
                     }
 
                     // then by name
-                    if(PreferencesService.preferences.nameOrder.selected === "first-last") {
-                        return a.name.localeCompare(b.name)
-                    } else {
-                        return a.lastName.localeCompare(b.lastName)
-                    }
+                    return a.name.localeCompare(b.name)
                 })
                 return respData
             }

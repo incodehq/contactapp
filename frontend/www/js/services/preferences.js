@@ -96,46 +96,6 @@ angular.module(
 
 
 
-        //
-        // preferences.nameOrder
-        //
-        var nameOrderKey = AppConfig.appPrefix + ".preferences.nameOrder"
-
-        var defaultNameOrder = "first-last"
-        // var defaultNameOrder = "last-first"
-
-        service.preferences.nameOrder = {
-            options: [
-                {
-                    text: "First Last",
-                    value: "first-last"
-                },
-                {
-                    text: "Last, First",
-                    value: "last-first"
-                }
-            ],
-            selected: window.localStorage[nameOrderKey]
-        }
-
-        if(!window.localStorage[nameOrderKey]) {
-            window.localStorage[nameOrderKey] = defaultNameOrder
-        }
-
-        service.valueForSelectedNameOrder = function() {
-            return service.preferences.environment.options.find(
-                    function(element) {
-                        return element.text === service.preferences.nameOrder.selected
-                    }).value
-        }
-
-        service.updateNameOrder = function(text) {
-            service.preferences.nameOrder.selected = text
-            window.localStorage[nameOrderKey] = text
-        }
-
-
-
     }])
 
 
