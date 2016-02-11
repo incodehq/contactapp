@@ -1,6 +1,6 @@
 {
   "name": "ECP ContactApp",
-  "app_id": "f3a40152",
+  "app_id": "",
   "gulpStartupTasks": [
     "sass",
     "compile",
