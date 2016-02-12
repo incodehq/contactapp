@@ -56,7 +56,7 @@ import lombok.Setter;
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.country.Country "
-                        + "WHERE name.indexOf(:name) >= 0 ")
+                        + "WHERE name == :name ")
 })
 @Unique(name = "Country_name_UNQ", members = { "name" })
 @DomainObject(
