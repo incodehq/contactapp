@@ -88,7 +88,7 @@ ionic serve
 ----
 git clone
 cd frontend
-npm install gulp gulp-util bower gulp-contact gulp-sass gulk-minify-css gulp-rename shelljs gulp-tsc
+npm install gulp gulp-util bower gulp-concat gulp-sass gulp-minify-css gulp-rename shelljs gulp-tsc
 ionic serve
 ----
 
@@ -196,6 +196,39 @@ ionic serve --lab
 
 == Ionic testing
 
+=== iOS
+
+[source, bash]
+----
+git clone
+cd frontend
+npm install -g cordova ionic gulp
+npm install gulp gulp-util bower gulp-concat gulp-sass gulp-minify-css gulp-rename shelljs gulp-tsc
+----
+You can test if everything went right by running:
+
+[source, bash]
+----
+ionic serve --lab
+----
+If there are no errors, continue:
+
+[source, bash]
+----
+sudo ionic platform add ios
+sudo chown -R `whoami` platforms
+----
+
+Next, open up Xcode and open the Project:
+contactapp-path/frontend/platforms/ios/ecp-contactapp.xcodeproj
+
+Inside Xcode, select the correct build destination (Emulator or a connected debugging device) and run: 
+
+* Product -> Clean (Cmd + Shift + K)
+* Product -> Build (Cmd + B)
+* Product -> Run (Cmd + R)
+
+=== Android
 
 per http://ionicframework.com/docs/guide/installation.html
 
