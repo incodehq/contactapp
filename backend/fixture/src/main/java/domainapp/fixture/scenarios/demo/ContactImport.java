@@ -1,5 +1,9 @@
 package domainapp.fixture.scenarios.demo;
 
+import java.util.Collections;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.contacts.ContactRepository;
 import domainapp.dom.country.Country;
@@ -8,9 +12,6 @@ import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-import java.util.Collections;
 
 public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtureRowHandler {
 
@@ -37,7 +38,7 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
     @Getter @Setter
     private String note;
     @Getter @Setter
-    private String disorder;
+    private Integer disorder;
 
     @Override
     public java.util.List<Object> handleRow(
@@ -69,7 +70,7 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
 
         if(address != null) contactGroup.setAddress(address);
         if(disorder != null) {
-            int displayOrder = Integer.parseInt(disorder);
+            int displayOrder = disorder;
             contactGroup.setDisplayOrder(displayOrder);
         }
         Contact contact = null;

@@ -18,6 +18,16 @@
  */
 package domainapp.integtests.tests.contact;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.contacts.ContactRepository;
 import domainapp.dom.group.ContactGroup;
@@ -26,14 +36,6 @@ import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
 import domainapp.fixture.scenarios.demo.DemoFixture;
 import domainapp.integtests.tests.DomainAppIntegTest;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.inject.Inject;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactRepositoryTest extends DomainAppIntegTest {
@@ -59,7 +61,7 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
             final List<Contact> contacts = contactRepository.listAll();
 
             // then
-            assertThat(contacts.size()).isEqualTo(14);
+            assertThat(contacts.size()).isEqualTo(13);
         }
     }
 
@@ -73,7 +75,7 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
             final List<Contact> contacts = contactRepository.find(query);
 
             // then
-            assertThat(contacts.size()).isEqualTo(14); // 9 contact names, 4 contact groups, 1 both group and role name
+            assertThat(contacts.size()).isEqualTo(13);
         }
     }
 
@@ -104,7 +106,7 @@ public class ContactRepositoryTest extends DomainAppIntegTest {
 
             // then
             assertThat(contact.size()).isEqualTo(1);
-            assertThat(contacts.size()).isEqualTo(6);
+            assertThat(contacts.size()).isEqualTo(5);
         }
 
         @Test
