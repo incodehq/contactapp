@@ -120,7 +120,7 @@ angular.module(
 
         this.loadContactables = function(instanceIds, onEachComplete, onAllComplete) {
             var urls = instanceIds.map(function(instanceId) {
-                return "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId
+                return "/restful/objects/org.incode.eurocommercial.contactapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId
             })
             var num = 0;
             HttpService.getMany(
@@ -138,7 +138,7 @@ angular.module(
         this.loadContactable = function(instanceId, onComplete, options) {
             HttpService.get(
                 instanceId,
-                "/restful/objects/domainapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId,
+                "/restful/objects/org.incode.eurocommercial.contactapp.app.rest.v1.contacts.ContactableViewModel/" + instanceId,
                 function(cachedData, date) {
                     onComplete(cachedData, dataProvenanceMessage(date))
                 },

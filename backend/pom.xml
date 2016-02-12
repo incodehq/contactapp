@@ -65,7 +65,6 @@
         <lombok.version>1.16.6</lombok.version>
 
         <assertj-core.version>3.3.0</assertj-core.version>
-        <orika-core.version>1.4.5</orika-core.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -267,7 +266,6 @@
 
     <modules>
         <module>app</module>
-        <module>canonical</module>
         <module>dom</module>
         <module>fixture</module>
         <module>integtests</module>
@@ -305,11 +303,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>contactapp-canonical</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>contactapp-dom</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -327,13 +320,6 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>contactapp-webapp</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-
-            <!-- used by DomainAppContentMappingService impl -->
-            <dependency>
-                <groupId>ma.glasnost.orika</groupId>
-                <artifactId>orika-core</artifactId>
-                <version>${orika-core.version}</version>
             </dependency>
 
         </dependencies>

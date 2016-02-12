@@ -30,7 +30,7 @@
                 }
             }
         },
-        "/objects/domainapp.app.services.homepage.HomePageViewModel/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel/{objectId}" : {
             "get" : {
                 "tags" : [ "homepage" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -43,18 +43,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.app.services.homepage.HomePageViewModel , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.app.services.homepage.HomePageViewModelRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModelRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.app.services.homepage.HomePageViewModel/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "homepage" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.app.services.homepage.HomePageViewModel#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -82,7 +82,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.app.services.homepage.HomePageViewModel#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -93,10 +93,10 @@
                 }
             }
         },
-        "/objects/domainapp.app.services.homepage.HomePageViewModel/{objectId}/collections/objects" : {
+        "/objects/org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel/{objectId}/collections/objects" : {
             "get" : {
                 "tags" : [ "homepage" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.app.services.homepage.HomePageViewModel#objects",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel#objects",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -106,19 +106,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.app.services.homepage.HomePageViewModel#objects , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel#objects , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}" : {
             "get" : {
                 "tags" : [ "contactable" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -131,18 +131,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}/actions/addContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}/actions/addContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "contactable" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contactable.ContactableEntity#addContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#addContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -178,18 +178,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity#addContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#addContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}/actions/changeNotes/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}/actions/changeNotes/invoke" : {
             "put" : {
                 "tags" : [ "contactable" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contactable.ContactableEntity#changeNotes",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#changeNotes",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -217,18 +217,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity#changeNotes",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#changeNotes",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "contactable" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contactable.ContactableEntity#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -256,7 +256,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -267,10 +267,10 @@
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}/actions/removeContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}/actions/removeContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "contactable" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contactable.ContactableEntity#removeContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#removeContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -298,18 +298,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity#removeContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#removeContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contactable.ContactableEntity/{objectId}/collections/contactNumbers" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity/{objectId}/collections/contactNumbers" : {
             "get" : {
                 "tags" : [ "contactable" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.contactable.ContactableEntity#contactNumbers",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#contactNumbers",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -319,19 +319,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contactable.ContactableEntity#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.number.ContactNumber",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}" : {
             "get" : {
                 "tags" : [ "contacts" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -344,18 +344,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/addContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/addContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#addContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#addContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -391,18 +391,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#addContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#addContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/addContactRole/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/addContactRole/invoke" : {
             "put" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#addContactRole",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#addContactRole",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -438,18 +438,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#addContactRole",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#addContactRole",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/changeNotes/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/changeNotes/invoke" : {
             "put" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#changeNotes",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#changeNotes",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -477,18 +477,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#changeNotes",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#changeNotes",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -516,7 +516,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -527,10 +527,10 @@
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/removeContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/removeContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#removeContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#removeContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -558,18 +558,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#removeContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#removeContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/actions/removeContactRole/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/actions/removeContactRole/invoke" : {
             "put" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.contacts.Contact#removeContactRole",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#removeContactRole",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -597,18 +597,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#removeContactRole",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#removeContactRole",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/collections/contactNumbers" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/collections/contactNumbers" : {
             "get" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.contacts.Contact#contactNumbers",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#contactNumbers",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -618,22 +618,22 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.number.ContactNumber",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.contacts.Contact/{objectId}/collections/contactRoles" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.contacts.Contact/{objectId}/collections/contactRoles" : {
             "get" : {
                 "tags" : [ "contacts" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.contacts.Contact#contactRoles",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.contacts.Contact#contactRoles",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -643,19 +643,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.contacts.Contact#contactRoles , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact#contactRoles , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.role.ContactRole",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.role.ContactRole",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.role.ContactRoleRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.country.Country/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.country.Country/{objectId}" : {
             "get" : {
                 "tags" : [ "country" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -668,18 +668,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.country.Country , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.country.Country , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.country.CountryRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.country.CountryRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.country.Country/{objectId}/actions/addContactGroup/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.country.Country/{objectId}/actions/addContactGroup/invoke" : {
             "put" : {
                 "tags" : [ "country" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.country.Country#addContactGroup",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.country.Country#addContactGroup",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -707,18 +707,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.country.Country#addContactGroup",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.country.Country#addContactGroup",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.country.CountryRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.country.CountryRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.country.Country/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.country.Country/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "country" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.country.Country#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.country.Country#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -746,7 +746,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.country.Country#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.country.Country#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -757,10 +757,10 @@
                 }
             }
         },
-        "/objects/domainapp.dom.country.Country/{objectId}/actions/removeContactGroup/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.country.Country/{objectId}/actions/removeContactGroup/invoke" : {
             "put" : {
                 "tags" : [ "country" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.country.Country#removeContactGroup",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.country.Country#removeContactGroup",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -788,18 +788,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.country.Country#removeContactGroup",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.country.Country#removeContactGroup",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.country.CountryRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.country.CountryRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.country.Country/{objectId}/collections/contactGroups" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.country.Country/{objectId}/collections/contactGroups" : {
             "get" : {
                 "tags" : [ "country" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.country.Country#contactGroups",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.country.Country#contactGroups",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -809,19 +809,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.country.Country#contactGroups , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.country.Country#contactGroups , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.group.ContactGroup",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.group.ContactGroup",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.group.ContactGroupRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}" : {
             "get" : {
                 "tags" : [ "group" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -834,18 +834,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.group.ContactGroupRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/actions/addContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/actions/addContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.group.ContactGroup#addContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#addContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -881,18 +881,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#addContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#addContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/actions/changeNotes/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/actions/changeNotes/invoke" : {
             "put" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.group.ContactGroup#changeNotes",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#changeNotes",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -920,18 +920,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#changeNotes",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#changeNotes",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.group.ContactGroup#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -959,7 +959,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -970,10 +970,10 @@
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/actions/removeContactNumber/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/actions/removeContactNumber/invoke" : {
             "put" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.group.ContactGroup#removeContactNumber",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#removeContactNumber",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -1001,18 +1001,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#removeContactNumber",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#removeContactNumber",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contactable.ContactableEntityRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/collections/contactNumbers" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/collections/contactNumbers" : {
             "get" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.group.ContactGroup#contactNumbers",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#contactNumbers",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1022,22 +1022,22 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#contactNumbers , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.number.ContactNumber",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.group.ContactGroup/{objectId}/collections/contacts" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.group.ContactGroup/{objectId}/collections/contacts" : {
             "get" : {
                 "tags" : [ "group" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.group.ContactGroup#contacts",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.group.ContactGroup#contacts",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1047,19 +1047,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.group.ContactGroup#contacts , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup#contacts , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.number.ContactNumber/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.number.ContactNumber/{objectId}" : {
             "get" : {
                 "tags" : [ "number" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -1072,18 +1072,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.number.ContactNumber , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.number.ContactNumber , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.number.ContactNumber/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.number.ContactNumber/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "number" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.number.ContactNumber#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.number.ContactNumber#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1111,7 +1111,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.number.ContactNumber#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.number.ContactNumber#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -1122,7 +1122,7 @@
                 }
             }
         },
-        "/objects/domainapp.dom.role.ContactRole/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.role.ContactRole/{objectId}" : {
             "get" : {
                 "tags" : [ "role" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -1135,18 +1135,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.role.ContactRole , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.role.ContactRole , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.role.ContactRoleRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.dom.role.ContactRole/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.role.ContactRole/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "role" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.dom.role.ContactRole#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.dom.role.ContactRole#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1174,7 +1174,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.role.ContactRole#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.role.ContactRole#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -1185,10 +1185,10 @@
                 }
             }
         },
-        "/objects/domainapp.dom.role.ContactRole/{objectId}/collections/contactsWithTheSameRole" : {
+        "/objects/org.incode.eurocommercial.contactapp.dom.role.ContactRole/{objectId}/collections/contactsWithTheSameRole" : {
             "get" : {
                 "tags" : [ "role" ],
-                "description" : "RO Spec v1.0, section 17.1: resource of domainapp.dom.role.ContactRole#contactsWithTheSameRole",
+                "description" : "RO Spec v1.0, section 17.1: resource of org.incode.eurocommercial.contactapp.dom.role.ContactRole#contactsWithTheSameRole",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/object-collection" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1198,19 +1198,19 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.dom.role.ContactRole#contactsWithTheSameRole , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.dom.role.ContactRole#contactsWithTheSameRole , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.fixture.scenarios.demo.ContactRowHandler/{objectId}" : {
+        "/objects/org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler/{objectId}" : {
             "get" : {
                 "tags" : [ "demo" ],
                 "description" : "RO Spec v1.0, section 14.1",
@@ -1223,18 +1223,18 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.fixture.scenarios.demo.ContactRowHandler , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.fixture.scenarios.demo.ContactRowHandlerRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandlerRepr"
                         }
                     }
                 }
             }
         },
-        "/objects/domainapp.fixture.scenarios.demo.ContactRowHandler/{objectId}/actions/recentActivity/invoke" : {
+        "/objects/org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler/{objectId}/actions/recentActivity/invoke" : {
             "get" : {
                 "tags" : [ "demo" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.fixture.scenarios.demo.ContactRowHandler#recentActivity",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler#recentActivity",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
                     "name" : "objectId",
@@ -1262,7 +1262,7 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.fixture.scenarios.demo.ContactRowHandler#recentActivity",
+                        "description" : "org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler#recentActivity",
                         "schema" : {
                             "type" : "array",
                             "items" : {
@@ -5340,7 +5340,7 @@
                     "200" : {
                         "description" : "ContactMenu#create , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                         }
                     }
                 }
@@ -5369,9 +5369,9 @@
                         "description" : "ContactMenu#find , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
@@ -5401,9 +5401,9 @@
                         "description" : "ContactMenu#findByGroup , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
@@ -5433,9 +5433,9 @@
                         "description" : "ContactMenu#findByName , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
@@ -5465,16 +5465,16 @@
                         "description" : "ContactMenu#findByRole , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
-                            "description" : "List of domainapp.dom.contacts.Contact",
+                            "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                             "items" : {
-                                "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                                "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                             }
                         }
                     }
                 }
             }
         },
-        "/services/DomainAppSettingsService" : {
+        "/services/ContactAppSettingsService" : {
             "get" : {
                 "tags" : [ "> services" ],
                 "description" : "RO Spec v1.0, section 15.1",
@@ -5484,21 +5484,21 @@
                     "200" : {
                         "description" : "OK",
                         "schema" : {
-                            "$ref" : "#/definitions/DomainAppSettingsServiceRepr"
+                            "$ref" : "#/definitions/ContactAppSettingsServiceRepr"
                         }
                     }
                 }
             }
         },
-        "/services/DomainAppSettingsService/actions/listAllSettings/invoke" : {
+        "/services/ContactAppSettingsService/actions/listAllSettings/invoke" : {
             "get" : {
                 "tags" : [ "> services" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of DomainAppSettingsService#listAllSettings",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of ContactAppSettingsService#listAllSettings",
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ ],
                 "responses" : {
                     "200" : {
-                        "description" : "DomainAppSettingsService#listAllSettings , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "ContactAppSettingsService#listAllSettings , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
                             "type" : "array",
                             "description" : "List of isissettings.ApplicationSetting",
@@ -5510,7 +5510,7 @@
                 }
             }
         },
-        "/services/domainapp.app.services.tenancy.TenancySwitcher" : {
+        "/services/org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher" : {
             "get" : {
                 "tags" : [ "tenancy" ],
                 "description" : "RO Spec v1.0, section 15.1",
@@ -5520,16 +5520,16 @@
                     "200" : {
                         "description" : "OK",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.app.services.tenancy.TenancySwitcherRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcherRepr"
                         }
                     }
                 }
             }
         },
-        "/services/domainapp.app.services.tenancy.TenancySwitcher/actions/switchTenancy/invoke" : {
+        "/services/org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher/actions/switchTenancy/invoke" : {
             "put" : {
                 "tags" : [ "tenancy" ],
-                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of domainapp.app.services.tenancy.TenancySwitcher#switchTenancy",
+                "description" : "RO Spec v1.0, section 19.1: (invoke) resource of org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher#switchTenancy",
                 "consumes" : [ "application/json" ],
                 "produces" : [ "application/json;profile=urn:org.apache.isis/v1", "application/json;profile=urn:org.apache.isis/v1;suppress=true", "application/json;profile=urn:org.restfulobjects:repr-types/action-result" ],
                 "parameters" : [ {
@@ -5552,9 +5552,9 @@
                 } ],
                 "responses" : {
                     "200" : {
-                        "description" : "domainapp.app.services.tenancy.TenancySwitcher#switchTenancy , if Accept: application/json;profile=urn:org.apache.isis/v1",
+                        "description" : "org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher#switchTenancy , if Accept: application/json;profile=urn:org.apache.isis/v1",
                         "schema" : {
-                            "$ref" : "#/definitions/domainapp.app.services.homepage.HomePageViewModelRepr"
+                            "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModelRepr"
                         }
                     }
                 }
@@ -6400,7 +6400,7 @@
             "description" : "RO Spec v1.0, section 15.1.2: representation of org.isisaddons.module.security.app.user.MeService"
         },
         "org.isisaddons.module.security.dom.permission.ApplicationPermissionRuleRepr" : { },
-        "DomainAppSettingsServiceRepr" : {
+        "ContactAppSettingsServiceRepr" : {
             "type" : "object",
             "required" : [ "extensions", "links" ],
             "properties" : {
@@ -6418,13 +6418,13 @@
                 },
                 "serviceId" : {
                     "type" : "string",
-                    "default" : "DomainAppSettingsService"
+                    "default" : "ContactAppSettingsService"
                 },
                 "members" : {
                     "type" : "object"
                 }
             },
-            "description" : "RO Spec v1.0, section 15.1.2: representation of DomainAppSettingsService"
+            "description" : "RO Spec v1.0, section 15.1.2: representation of ContactAppSettingsService"
         },
         "isissettings.ApplicationSettingRepr" : {
             "type" : "object",
@@ -6462,7 +6462,7 @@
             },
             "description" : "isissettings.ApplicationSetting (org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo)"
         },
-        "domainapp.dom.country.CountryRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.country.CountryRepr" : {
             "type" : "object",
             "properties" : {
                 "name" : {
@@ -6470,15 +6470,15 @@
                 },
                 "contactGroups" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.group.ContactGroup",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.group.ContactGroup",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.group.ContactGroupRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepr"
                     }
                 }
             },
-            "description" : "domainapp.dom.country.Country (domainapp.dom.country.Country)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.country.Country (org.incode.eurocommercial.contactapp.dom.country.Country)"
         },
-        "domainapp.dom.group.ContactGroupRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepr" : {
             "type" : "object",
             "properties" : {
                 "country" : {
@@ -6495,20 +6495,20 @@
                 },
                 "contactNumbers" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.number.ContactNumber",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                     }
                 },
                 "contacts" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.contacts.Contact",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                     }
                 }
             },
-            "description" : "domainapp.dom.group.ContactGroup (domainapp.dom.group.ContactGroup)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.group.ContactGroup (org.incode.eurocommercial.contactapp.dom.group.ContactGroup)"
         },
         "org.isisaddons.module.security.dom.feature.ApplicationFeatureTypeRepr" : { },
         "isissecurity.ApplicationPermissionRepr" : {
@@ -6606,18 +6606,18 @@
             },
             "description" : "isissecurity.ApplicationTenancy (org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)"
         },
-        "domainapp.app.services.homepage.HomePageViewModelRepr" : {
+        "org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModelRepr" : {
             "type" : "object",
             "properties" : {
                 "objects" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.contacts.Contact",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                     }
                 }
             },
-            "description" : "domainapp.app.services.homepage.HomePageViewModel (domainapp.app.services.homepage.HomePageViewModel)"
+            "description" : "org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel (org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel)"
         },
         "org.isisaddons.module.security.app.user.UserPermissionViewModelRepr" : {
             "type" : "object",
@@ -6774,7 +6774,7 @@
             },
             "description" : "RO Spec v1.0, section 6.2"
         },
-        "domainapp.dom.role.ContactRoleRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepr" : {
             "type" : "object",
             "properties" : {
                 "contact" : {
@@ -6788,13 +6788,13 @@
                 },
                 "contactsWithTheSameRole" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.contacts.Contact",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.contacts.Contact",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.contacts.ContactRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr"
                     }
                 }
             },
-            "description" : "domainapp.dom.role.ContactRole (domainapp.dom.role.ContactRole)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.role.ContactRole (org.incode.eurocommercial.contactapp.dom.role.ContactRole)"
         },
         "org.isisaddons.module.security.dom.feature.ApplicationFeatureIdRepr" : {
             "type" : "object",
@@ -6937,7 +6937,7 @@
                 }
             }
         },
-        "domainapp.fixture.scenarios.demo.ContactRowHandlerRepr" : {
+        "org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandlerRepr" : {
             "type" : "object",
             "properties" : {
                 "company" : {
@@ -6971,7 +6971,7 @@
                     "type" : "string"
                 }
             },
-            "description" : "domainapp.fixture.scenarios.demo.ContactRowHandler (domainapp.fixture.scenarios.demo.ContactRowHandler)"
+            "description" : "org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler (org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactRowHandler)"
         },
         "org.isisaddons.module.security.app.feature.ApplicationPackageRepr" : {
             "type" : "object",
@@ -7212,7 +7212,7 @@
             },
             "description" : "org.isisaddons.module.security.app.feature.ApplicationClassAction (org.isisaddons.module.security.app.feature.ApplicationClassAction)"
         },
-        "domainapp.dom.number.ContactNumberRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr" : {
             "type" : "object",
             "properties" : {
                 "contactableEntity" : {
@@ -7225,10 +7225,10 @@
                     "type" : "string"
                 }
             },
-            "description" : "domainapp.dom.number.ContactNumber (domainapp.dom.number.ContactNumber)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.number.ContactNumber (org.incode.eurocommercial.contactapp.dom.number.ContactNumber)"
         },
         "org.isisaddons.module.settings.dom.UserSettingRepr" : { },
-        "domainapp.dom.contactable.ContactableEntityRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntityRepr" : {
             "type" : "object",
             "properties" : {
                 "email" : {
@@ -7242,16 +7242,16 @@
                 },
                 "contactNumbers" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.number.ContactNumber",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                     }
                 }
             },
-            "description" : "domainapp.dom.contactable.ContactableEntity (domainapp.dom.contactable.ContactableEntity)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity (org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity)"
         },
         "org.isisaddons.module.security.dom.user.AccountTypeRepr" : { },
-        "domainapp.dom.contacts.ContactRepr" : {
+        "org.incode.eurocommercial.contactapp.dom.contacts.ContactRepr" : {
             "type" : "object",
             "properties" : {
                 "company" : {
@@ -7268,22 +7268,22 @@
                 },
                 "contactNumbers" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.number.ContactNumber",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.number.ContactNumber",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.number.ContactNumberRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepr"
                     }
                 },
                 "contactRoles" : {
                     "type" : "array",
-                    "description" : "List of domainapp.dom.role.ContactRole",
+                    "description" : "List of org.incode.eurocommercial.contactapp.dom.role.ContactRole",
                     "items" : {
-                        "$ref" : "#/definitions/domainapp.dom.role.ContactRoleRepr"
+                        "$ref" : "#/definitions/org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepr"
                     }
                 }
             },
-            "description" : "domainapp.dom.contacts.Contact (domainapp.dom.contacts.Contact)"
+            "description" : "org.incode.eurocommercial.contactapp.dom.contacts.Contact (org.incode.eurocommercial.contactapp.dom.contacts.Contact)"
         },
-        "domainapp.app.services.tenancy.TenancySwitcherRepr" : {
+        "org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcherRepr" : {
             "type" : "object",
             "required" : [ "extensions", "links" ],
             "properties" : {
@@ -7301,13 +7301,13 @@
                 },
                 "serviceId" : {
                     "type" : "string",
-                    "default" : "domainapp.app.services.tenancy.TenancySwitcher"
+                    "default" : "org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher"
                 },
                 "members" : {
                     "type" : "object"
                 }
             },
-            "description" : "RO Spec v1.0, section 15.1.2: representation of domainapp.app.services.tenancy.TenancySwitcher"
+            "description" : "RO Spec v1.0, section 15.1.2: representation of org.incode.eurocommercial.contactapp.app.services.tenancy.TenancySwitcher"
         },
         "RestfulObjectsSupportingServicesRepr" : {
             "type" : "object",

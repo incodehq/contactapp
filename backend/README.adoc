@@ -20,14 +20,14 @@ image::http://yuml.me/95c33b14[link="http://yuml.me/95c33b14"]
 
 * seed service `org.isisaddons.module.security.seed.SeedSecurityModuleService` for security
 ** sets up `isis-module-security-admin/pass` user and roles
-* seed service `domainapp.app.seed.DomainAppRolesAndPermissionsSeedService` for app
-** sets up `domainapp-admin/pass` and roles)
+* seed service `org.incode.eurocommercial.contactapp.app.seed.ContactAppRolesAndPermissionsSeedService` for app
+** sets up `contactapp-admin/pass` and roles)
 
 
 == App Manifests
 
-* `domainapp.app.DomainAppAppManifest`
-* `domainapp.app.DomainAppAppManifestWithFixtures`
-* `domainapp.app.DomainAppAppManifestWithFixturesBypassSecurity`
+* `org.incode.eurocommercial.contactapp.app.ContactAppAppManifest`
+* `org.incode.eurocommercial.contactapp.app.ContactAppAppManifestWithFixtures`
+* `org.incode.eurocommercial.contactapp.app.ContactAppAppManifestWithFixturesBypassSecurity`
 
 

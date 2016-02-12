@@ -341,10 +341,6 @@ msgid "Contributed"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObjects#create()
-msgid "Create"
-msgstr ""
-
 
 #: org.isisaddons.module.security.app.feature.ApplicationClassAction
 #: org.isisaddons.module.security.app.feature.ApplicationClassCollection
@@ -453,8 +449,6 @@ msgid "Domain Objects"
 msgstr ""
 
 
-#: domainapp.app.services.homepage.HomePageViewModel#downloadLayout()
-#: domainapp.dom.simple.SimpleObject#downloadLayout()
 #: org.apache.isis.applib.fixturescripts.FixtureResult#downloadLayout()
 #: org.apache.isis.core.metamodel.spec.FreeStandingList#downloadLayout()
 #: org.isisaddons.module.audit.dom.AuditEntry#downloadLayout()
@@ -545,11 +539,6 @@ msgid "Event Type"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject#updateName()
-msgid "Exclamation mark is not allowed"
-msgstr ""
-
-
 #: org.isisaddons.module.command.dom.CommandJdo#executeIn
 msgid "Execute In"
 msgstr ""
@@ -600,11 +589,6 @@ msgstr ""
 
 #: org.isisaddons.module.audit.dom.AuditingServiceMenu#findAuditEntries()
 msgid "Find Audit Entries"
-msgstr ""
-
-
-#: domainapp.dom.simple.SimpleObjects#findByName()
-msgid "Find By Name"
 msgstr ""
 
 
@@ -709,7 +693,6 @@ msgid "From"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo
 msgid "General"
@@ -724,11 +707,6 @@ msgstr ""
 
 #: org.isisaddons.module.security.dom.user.ApplicationUser#hasPassword
 msgid "Has Password"
-msgstr ""
-
-
-#: domainapp.app.services.homepage.HomePageService#homePage()
-msgid "Home Page"
 msgstr ""
 
 
@@ -810,11 +788,6 @@ msgstr ""
 #: org.isisaddons.module.security.dom.user.ApplicationUser#knownAs
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateName(java.lang.String,java.lang.String,java.lang.String)
 msgid "Known As"
-msgstr ""
-
-
-#: domainapp.dom.simple.SimpleObjects#listAll()
-msgid "List All"
 msgstr ""
 
 
@@ -936,9 +909,6 @@ msgid "Mode"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject#name
-#: domainapp.dom.simple.SimpleObjects#create(java.lang.String)
-#: domainapp.dom.simple.SimpleObjects#findByName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#name
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoleMenu#findRoleByName(java.lang.String)
@@ -1030,11 +1000,6 @@ msgid "New Tenancy"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject#updateName(java.lang.String)
-msgid "New name"
-msgstr ""
-
-
 #: org.isisaddons.module.security.dom.user.ApplicationUser#resetPassword(org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password)
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updatePassword(org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password)
 msgid "New password"
@@ -1079,16 +1044,6 @@ msgstr ""
 
 #: org.apache.isis.applib.services.publish.EventType#OBJECT_UPDATED
 msgid "Object Updated"
-msgstr ""
-
-
-#: domainapp.dom.simple.SimpleObject#title()
-msgid "Object: {name}"
-msgstr ""
-
-
-#: domainapp.app.services.homepage.HomePageViewModel#objects
-msgid "Objects"
 msgstr ""
 
 
@@ -1519,11 +1474,6 @@ msgid "Sibling Commands"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObjects#title()
-msgid "Simple Objects"
-msgstr ""
-
-
 #: org.isisaddons.module.command.dom.CommandJdo#startedAt
 msgid "Started At"
 msgstr ""
@@ -1700,7 +1650,6 @@ msgid "Update Fax Number"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject#updateName()
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateName()
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#updateName()
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateName()
@@ -1875,11 +1824,6 @@ msgid "Verb"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject#versionSequence
-msgid "Version Sequence"
-msgstr ""
-
-
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#veto()
 #: org.isisaddons.module.security.dom.permission.ApplicationPermissionRule#VETO
 msgid "Veto"
@@ -1935,7 +1879,6 @@ msgid "knownAs"
 msgstr ""
 
 
-#: domainapp.dom.simple.SimpleObject
 #: org.isisaddons.module.security.dom.role.ApplicationRole
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy
 msgid "name"
