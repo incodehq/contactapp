@@ -1,5 +1,8 @@
 package domainapp.dom.contacts;
 
+import java.util.List;
+import java.util.SortedSet;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
@@ -9,11 +12,11 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 import domainapp.dom.group.ContactGroup;
-
+import domainapp.dom.group.ContactGroupRepository;
+import domainapp.dom.role.ContactRoleRepository;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(
@@ -22,7 +25,7 @@ import domainapp.dom.group.ContactGroup;
 )
 public class ContactMenu {
 
-    @Action(semantics = SemanticsOf.SAFE, restrictTo = RestrictTo.PROTOTYPING)
+    @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "1")
     public java.util.List<Contact> listAll() {
@@ -47,6 +50,10 @@ public class ContactMenu {
     ) {
         return contactRepository.findByContactGroup(group);
     }
+    public List<ContactGroup> choices0FindByGroup() {
+        return contactGroupRepository.listAll();
+    }
+
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
@@ -56,6 +63,9 @@ public class ContactMenu {
     ) {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);
         return contactRepository.findByContactRoleName(roleNameRegex);
+    }
+    public SortedSet<String> choices0FindByRole() {
+        return contactRoleRepository.roleNames();
     }
 
     @Action()
@@ -81,8 +91,7 @@ public class ContactMenu {
         }
 
         if(pattern.contains("*") || pattern.contains("?")) {
-            String regex = pattern;
-            regex = pattern.replace("*", ".*").replace("?", ".");
+            final String regex = pattern.replace("*", ".*").replace("?", ".");
             return "(?i)" + regex;
         } else {
             return "(?i).*" + pattern + ".*";
@@ -91,4 +100,8 @@ public class ContactMenu {
 
     @javax.inject.Inject
     ContactRepository contactRepository;
+    @javax.inject.Inject
+    ContactGroupRepository contactGroupRepository;
+    @javax.inject.Inject
+    ContactRoleRepository contactRoleRepository;
 }

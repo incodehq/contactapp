@@ -24,7 +24,6 @@ import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAn
 
 import domainapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import domainapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import domainapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
 import domainapp.dom.seed.roles.DomainAppFixtureServiceRoleAndPermissions;
 import domainapp.dom.seed.roles.DomainAppRegularRoleAndPermissions;
 import domainapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
@@ -52,7 +51,6 @@ public class DomainAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               SessionLoggerModuleRoleAndPermissions.ROLE_NAME,
                               SettingsModuleRoleAndPermissions.ROLE_NAME,
                               PublishingModuleRoleAndPermissions.ROLE_NAME,
-                              DevUtilsModuleRoleAndPermissions.ROLE_NAME,
                               DomainAppRegularRoleAndPermissions.ROLE_NAME,
                               DomainAppFixtureServiceRoleAndPermissions.ROLE_NAME,
                               TranslationServicePoMenuRoleAndPermissions.ROLE_NAME

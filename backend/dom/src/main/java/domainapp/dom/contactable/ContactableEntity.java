@@ -77,7 +77,7 @@ public class ContactableEntity  {
         return getName();
     }
 
-    @MemberOrder(sequence = "1")
+    @MemberOrder(sequence = "1.2")
     @Column(allowsNull = "false")
     @Property
     @Getter @Setter

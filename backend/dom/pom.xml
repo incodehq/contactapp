@@ -229,15 +229,6 @@
             <!-- no API exposed to dom classes -->
         </profile>
         <profile>
-            <id>isisaddons-module-devutils</id>
-            <activation>
-                <property>
-                    <name>!skip.isisaddons-module-devutils</name>
-                </property>
-            </activation>
-            <!-- no API exposed to dom classes -->
-        </profile>
-        <profile>
             <id>isisaddons-module-docx</id>
             <activation>
                 <property>

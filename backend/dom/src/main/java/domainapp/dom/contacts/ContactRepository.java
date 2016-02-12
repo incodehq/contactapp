@@ -1,18 +1,24 @@
 package domainapp.dom.contacts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.SortedSet;
+
+import javax.inject.Inject;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.query.QueryDefault;
+
 import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import domainapp.dom.role.ContactRole;
 import domainapp.dom.role.ContactRoleRepository;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Programmatic;
-
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -22,73 +28,69 @@ public class ContactRepository {
 
     @Programmatic
     public java.util.List<Contact> listAll() {
-        return container.allInstances(Contact.class);
+        return asSortedList(container.allInstances(Contact.class));
     }
 
     @Programmatic
     public java.util.List<Contact> find(
             final String regex
     ) {
-        java.util.SortedSet<Contact> results = Sets.newTreeSet();
-
-        results.addAll(findByName(regex));
-        results.addAll(findByCompany(regex));
-        results.addAll(findByContactRoleName(regex));
+        java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
+        contacts.addAll(findByName(regex));
+        contacts.addAll(findByCompany(regex));
+        contacts.addAll(findByContactRoleName(regex));
         for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
-            results.addAll(findByContactGroup(contactGroup));
+            contacts.addAll(findByContactGroup(contactGroup));
         }
-
-        java.util.List<Contact> resultsList = Lists.newArrayList();
-        resultsList.addAll(results);
-
-        return resultsList;
+        return asSortedList(contacts);
     }
 
     @Programmatic
     public java.util.List<Contact> findByName(
             final String regex
     ) {
-        return container.allMatches(
-                new org.apache.isis.applib.query.QueryDefault<>(
+        final List<Contact> contacts = container.allMatches(
+                new QueryDefault<>(
                         Contact.class,
                         "findByName",
                         "regex", regex));
+        return asSortedList(contacts);
     }
 
     @Programmatic
     public java.util.List<Contact> findByCompany(
             final String regex
     ) {
-        return container.allMatches(
-                new org.apache.isis.applib.query.QueryDefault<>(
+        final List<Contact> contacts = container.allMatches(
+                new QueryDefault<>(
                         Contact.class,
                         "findByCompany",
                         "regex", regex));
+        return asSortedList(contacts);
     }
 
     @Programmatic
     public java.util.List<Contact> findByContactGroup(
             ContactGroup contactGroup
     ) {
-        List<Contact> resContacts = Lists.newArrayList();
-
+        java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
         for(ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
-            resContacts.add(contactRole.getContact());
+            contacts.add(contactRole.getContact());
         }
-        return resContacts;
+        return asSortedList(contacts);
     }
 
     @Programmatic
     public java.util.List<Contact> findByContactRoleName(
             String regex
     ) {
-        java.util.List<Contact> resContacts = new ArrayList<Contact>();
+        java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
 
         for(ContactRole contactRole : contactRoleRepository.findByName(regex)) {
-            resContacts.add(contactRole.getContact());
+            contacts.add(contactRole.getContact());
         }
 
-        return resContacts;
+        return asSortedList(contacts);
     }
 
     @Programmatic
@@ -138,6 +140,19 @@ public class ContactRepository {
         }
         return contact;
     }
+
+    private static List<Contact> asSortedList(final List<Contact> contacts) {
+        Collections.sort(contacts);
+        return contacts;
+    }
+
+    private static  List<Contact> asSortedList(final SortedSet<Contact> contactsSet) {
+        final List<Contact> contacts = Lists.newArrayList();
+        // no need to sort, just copy over
+        contacts.addAll(contactsSet);
+        return contacts;
+    }
+
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;

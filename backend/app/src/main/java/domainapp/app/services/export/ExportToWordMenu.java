@@ -47,7 +47,7 @@ import org.isisaddons.module.docx.dom.MergeException;
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.contacts.ContactRepository;
 
-//@DomainService
+//@DomainService ... REMOVED FOR NOW.
 @DomainServiceLayout(
         named="Contacts",
         menuOrder = "30"

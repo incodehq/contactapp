@@ -78,7 +78,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private Integer displayOrder;
 
-    @MemberOrder(name = "Other", sequence = "2")
+    @MemberOrder(sequence = "1.5") // after #name, before #address
     @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
     @Column(allowsNull = "false")
     @Property()

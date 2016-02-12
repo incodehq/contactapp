@@ -34,38 +34,37 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.12.0-SNAPSHOT</isis.version>
+        <isis.version>1.11.1</isis.version>
 
-        <isis-metamodel-paraname8.version>1.10.0</isis-metamodel-paraname8.version>
+        <isis-metamodel-paraname8.version>1.11.0</isis-metamodel-paraname8.version>
 
-        <isis-module-audit.version>1.10.0</isis-module-audit.version>
-        <isis-module-command.version>1.10.0</isis-module-command.version>
-        <isis-module-devutils.version>1.10.0</isis-module-devutils.version>
-        <isis-module-docx.version>1.10.0</isis-module-docx.version>
+        <isis-module-audit.version>1.11.0</isis-module-audit.version>
+        <isis-module-command.version>1.11.0</isis-module-command.version>
+        <isis-module-docx.version>1.11.0</isis-module-docx.version>
         <isis-module-excel.version>1.12.0-SNAPSHOT</isis-module-excel.version>
-        <isis-module-fakedata.version>1.10.0</isis-module-fakedata.version>
-        <isis-module-poly.version>1.10.0</isis-module-poly.version>
-        <isis-module-publishing.version>1.10.0</isis-module-publishing.version>
-        <isis-module-security.version>1.10.0</isis-module-security.version>
-        <isis-module-sessionlogger.version>1.10.0</isis-module-sessionlogger.version>
-        <isis-module-settings.version>1.10.0</isis-module-settings.version>
-        <isis-module-servletapi.version>1.10.0</isis-module-servletapi.version>
-        <isis-module-stringinterpolator.version>1.10.0</isis-module-stringinterpolator.version>
-        <isis-module-togglz.version>1.10.0</isis-module-togglz.version>
+        <isis-module-fakedata.version>1.11.0</isis-module-fakedata.version>
+        <isis-module-poly.version>1.11.0</isis-module-poly.version>
+        <isis-module-publishing.version>1.11.0</isis-module-publishing.version>
+        <isis-module-security.version>1.11.0</isis-module-security.version>
+        <isis-module-sessionlogger.version>1.11.0</isis-module-sessionlogger.version>
+        <isis-module-settings.version>1.11.0</isis-module-settings.version>
+        <isis-module-servletapi.version>1.11.0</isis-module-servletapi.version>
+        <isis-module-stringinterpolator.version>1.11.0</isis-module-stringinterpolator.version>
+        <isis-module-togglz.version>1.11.0</isis-module-togglz.version>
 
-        <isis-wicket-excel.version>1.10.0</isis-wicket-excel.version>
-        <isis-wicket-fullcalendar2.version>1.10.0</isis-wicket-fullcalendar2.version>
-        <isis-wicket-gmap3.version>1.10.0</isis-wicket-gmap3.version>
+        <isis-wicket-excel.version>1.11.0</isis-wicket-excel.version>
+        <isis-wicket-fullcalendar2.version>1.11.0</isis-wicket-fullcalendar2.version>
+        <isis-wicket-gmap3.version>1.11.0</isis-wicket-gmap3.version>
 
-        <incode-module-note.version>1.10.0</incode-module-note.version>
-        <incode-module-commchannel.version>1.10.0</incode-module-commchannel.version>
+        <incode-module-note.version>1.11.1</incode-module-note.version>
+        <incode-module-commchannel.version>1.11.1</incode-module-commchannel.version>
 
         <jbcrypt.version>0.3m</jbcrypt.version>
         <togglz.version>2.1.0.Final</togglz.version>
 
         <lombok.version>1.16.6</lombok.version>
 
-        <assertj-core.version>2.0.0</assertj-core.version>
+        <assertj-core.version>3.3.0</assertj-core.version>
         <orika-core.version>1.4.5</orika-core.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -372,23 +371,6 @@
                         <groupId>org.isisaddons.module.command</groupId>
                         <artifactId>isis-module-command-dom</artifactId>
                         <version>${isis-module-command.version}</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-        </profile>
-        <profile>
-            <id>isisaddons-module-devutils</id>
-            <activation>
-                <property>
-                    <name>!skip.isisaddons-module-devutils</name>
-                </property>
-            </activation>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.isisaddons.module.devutils</groupId>
-                        <artifactId>isis-module-devutils-dom</artifactId>
-                        <version>${isis-module-devutils.version}</version>
                     </dependency>
                 </dependencies>
             </dependencyManagement>

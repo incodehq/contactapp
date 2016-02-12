@@ -28,15 +28,16 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class DomainAppUserSettingContributions {
 
-    //region > settings
     @Action(
-            semantics = SemanticsOf.SAFE
+            semantics = SemanticsOf.SAFE,
+            hidden = Where.EVERYWHERE   // CURRENTLY NO APP SETTINGS, SO JUST HIDE FOR NOW...
     )
     @ActionLayout(
             named = "User Settings",
@@ -49,13 +50,9 @@ public class DomainAppUserSettingContributions {
     public List<UserSettingJdo> userSettingsFor(final ApplicationUser applicationUser) {
         return settingsService.listAllSettings(applicationUser.getUsername());
     }
-    //endregion
 
 
-    //region > injected services
     @javax.inject.Inject
     private DomainAppSettingsService settingsService;
-
-    //endregion
 
 }

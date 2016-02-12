@@ -28,7 +28,6 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import domainapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import domainapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import domainapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
 import domainapp.dom.seed.roles.DomainAppFixtureServiceRoleAndPermissions;
 import domainapp.dom.seed.roles.DomainAppRegularRoleAndPermissions;
 import domainapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
@@ -75,7 +74,6 @@ public class DomainAppRolesAndPermissionsSeedService {
             executionContext.executeChild(this, new TogglzModuleAdminRole());
             executionContext.executeChild(this, new AuditModuleRoleAndPermissions());
             executionContext.executeChild(this, new CommandModuleRoleAndPermissions());
-            executionContext.executeChild(this, new DevUtilsModuleRoleAndPermissions());
             executionContext.executeChild(this, new PublishingModuleRoleAndPermissions());
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
             executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
@@ -84,6 +82,7 @@ public class DomainAppRolesAndPermissionsSeedService {
 
             executionContext.executeChild(this, new DomainAppAdminUserTenancy());
             executionContext.executeChild(this, new DomainAppAdminUser());
+
             executionContext.executeChild(this, new SvenRegularUser());
         }
 

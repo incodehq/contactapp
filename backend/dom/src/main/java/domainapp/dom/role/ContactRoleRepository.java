@@ -1,5 +1,12 @@
 package domainapp.dom.role;
 
+import java.util.SortedSet;
+
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -16,6 +23,16 @@ public class ContactRoleRepository {
     @Programmatic
     public java.util.List<ContactRole> listAll() {
         return container.allInstances(ContactRole.class);
+    }
+
+    @Programmatic
+    public SortedSet<String> roleNames() {
+        final ImmutableList<String> roleNames =
+                FluentIterable
+                        .from(listAll())
+                        .transform(ContactRole::getRoleName)
+                        .filter(Predicates.notNull()).toList();
+        return Sets.newTreeSet(roleNames);
     }
 
     @Programmatic
@@ -89,4 +106,5 @@ public class ContactRoleRepository {
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
 }

@@ -28,6 +28,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 
 import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
@@ -45,8 +46,10 @@ import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 )
 public class DomainAppSettingsService {
 
-    //region > listAllSettings (for application)
-    @Action(semantics = SemanticsOf.SAFE)
+    @Action(
+            semantics = SemanticsOf.SAFE,
+            hidden = Where.EVERYWHERE   // CURRENTLY NO APP SETTINGS, SO JUST HIDE FOR NOW...
+    )
     @ActionLayout(
             named = "Application Settings",
             cssClassFa = "fa-cog"
@@ -57,18 +60,16 @@ public class DomainAppSettingsService {
         final List applicationSettings = applicationSettingsService.listAll();
         return applicationSettings;
     }
-    //endregion
 
-    //region > listAllSettings (for user); programmatic
+
     @Programmatic
     public List<UserSettingJdo> listAllSettings(final String user) {
         // downcast using raw list
         final List userSettings = userSettingsService.listAllFor(user);
         return userSettings;
     }
-    //endregion
 
-    //region > behaviour
+
     @Programmatic
     public <T extends Enum<T>> T get(final Class<T> enumCls) {
         final ApplicationSettingJdo setting = findSetting(enumCls);
@@ -98,17 +99,13 @@ public class DomainAppSettingsService {
     protected <T extends Enum<T>> ApplicationSettingJdo findSetting(final Class<T> enumCls) {
         return (ApplicationSettingJdo) applicationSettingsService.find(enumCls.getCanonicalName());
     }
-    //endregion
 
 
 
-    //region > injected services
     @javax.inject.Inject
     private ApplicationSettingsServiceRW applicationSettingsService;
 
     @javax.inject.Inject
     private UserSettingsServiceRW userSettingsService;
-
-    //endregion
 
 }

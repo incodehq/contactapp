@@ -18,19 +18,19 @@ import org.apache.isis.core.runtime.system.context.IsisContext;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
+import domainapp.dom.contacts.ContactRepository;
 import domainapp.fixture.scenarios.demo.ContactImport;
 
 @DomainService(
         //nature = NatureOfService.VIEW_MENU_ONLY
 )
 @DomainServiceLayout(
-        menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        named = "Administration"
+        menuBar = DomainServiceLayout.MenuBar.TERTIARY
 )
 public class DomainappImportService {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(cssClass = "btn-warning")
+    @ActionLayout(cssClassFa = "fa-upload")
     public List<FixtureResult> importSpreadsheet(final Blob file) {
 
         FixtureScript script = new ExcelFixture(
@@ -39,6 +39,13 @@ public class DomainappImportService {
         );
         return fixtureScripts.runFixtureScript(script, "");
     }
+
+    public String disableImportSpreadsheet() {
+        return !contactRepository.listAll().isEmpty() ? "Contacts have already been imported": null;
+    }
+
+    @Inject
+    private ContactRepository contactRepository;
 
     @Inject
     private FixtureScripts fixtureScripts;
