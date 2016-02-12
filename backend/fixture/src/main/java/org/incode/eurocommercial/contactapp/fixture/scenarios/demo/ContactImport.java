@@ -2,6 +2,8 @@ package org.incode.eurocommercial.contactapp.fixture.scenarios.demo;
 
 import java.util.Collections;
 
+import com.google.common.base.Strings;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
@@ -46,18 +48,17 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
             final org.isisaddons.module.excel.dom.ExcelFixture excelFixture,
             final Object previousRow) {
 
-        if(country  != null && country .equals("")) country  = null;
-        if(address  != null && address .equals("")) address  = null;
-        if(group    != null && group   .equals("")) group    = null;
-        if(company  != null && company .equals("")) company  = null;
-        if(name     != null && name    .equals("")) name     = null;
-        if(office   != null && office  .equals("")) office   = null;
-        if(mobile   != null && mobile  .equals("")) mobile   = null;
-        if(home     != null && home    .equals("")) home     = null;
-        if(email    != null && email   .equals("")) email    = null;
-        if(role     != null && role    .equals("")) role     = null;
-        if(note     != null && note    .equals("")) note     = null;
-        if(disorder != null && disorder.equals("")) disorder = null;
+        country = Strings.emptyToNull(country);
+        address = Strings.emptyToNull(address);
+        group = Strings.emptyToNull(group);
+        company = Strings.emptyToNull(company);
+        name = Strings.emptyToNull(name);
+        office = Strings.emptyToNull(office);
+        mobile = Strings.emptyToNull(mobile);
+        home = Strings.emptyToNull(home);
+        email = Strings.emptyToNull(email);
+        role = Strings.emptyToNull(role);
+        note = Strings.emptyToNull(note);
 
         final ContactImport previousContactRow = (ContactImport) previousRow;
         if(previousContactRow != null) {
