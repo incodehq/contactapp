@@ -11,6 +11,11 @@
   <access origin="*"/>
   <access origin="tel:*" launch-external="yes"/>
   <access origin="mailto:*" launch-external="yes"/>
+  
+  <allow-intent href="tel:*" />
+  <allow-navigation href="tel:*" />
+  <allow-intent href="mailto:*" />
+  <allow-navigation href="mailto:*" />
 
   <!-- Test (see preferences.js) -->
   <allow-navigation href="http://10.0.0.5:8080" />
