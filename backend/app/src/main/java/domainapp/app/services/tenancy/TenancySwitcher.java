@@ -25,6 +25,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
@@ -46,7 +47,8 @@ public class TenancySwitcher extends AbstractService {
 
     //region > switchTenancy (action)
     @Action(
-            semantics = SemanticsOf.IDEMPOTENT
+            semantics = SemanticsOf.IDEMPOTENT,
+            hidden = Where.EVERYWHERE  // HIDDEN FOR NOW BECAUSE NO REQUIREMENT
     )
     @ActionLayout(
             cssClassFa = "fa-exchange"
