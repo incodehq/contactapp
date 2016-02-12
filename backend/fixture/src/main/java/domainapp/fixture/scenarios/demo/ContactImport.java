@@ -1,9 +1,5 @@
 package domainapp.fixture.scenarios.demo;
 
-import java.util.Collections;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
 import domainapp.dom.contacts.Contact;
 import domainapp.dom.contacts.ContactRepository;
 import domainapp.dom.country.Country;
@@ -12,6 +8,9 @@ import domainapp.dom.group.ContactGroup;
 import domainapp.dom.group.ContactGroupRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import java.util.Collections;
 
 public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtureRowHandler {
 
@@ -37,6 +36,8 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
     private String role;
     @Getter @Setter
     private String note;
+    @Getter @Setter
+    private String disorder;
 
     @Override
     public java.util.List<Object> handleRow(
@@ -44,28 +45,44 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
             final org.isisaddons.module.excel.dom.ExcelFixture excelFixture,
             final Object previousRow) {
 
+        if(country != null && country.equals("")) country = null;
+        if(address != null && address.equals("")) address = null;
+        if(group != null && group.equals("")) group = null;
+        if(company != null && company.equals("")) company = null;
+        if(name != null && name.equals("")) name = null;
+        if(office != null && office.equals("")) office = null;
+        if(mobile != null && mobile.equals("")) mobile = null;
+        if(home != null && home.equals("")) home = null;
+        if(email != null && email.equals("")) email = null;
+        if(role != null && role.equals("")) role = null;
+        if(note != null && note.equals("")) note = null;
+        if(disorder != null && disorder.equals("")) disorder = null;
+
         final ContactImport previousContactRow = (ContactImport) previousRow;
         if(previousContactRow != null) {
             if(country == null) country = previousContactRow.getCountry();
             if(group == null) group = previousContactRow.getGroup();
         }
-        if(company != null && company.equals("(none)")) company = null;
 
         Country country = countryRepository.findOrCreate(this.country);
         ContactGroup contactGroup = contactGroupRepository.findOrCreate(country, group);
 
-        if(address != null) {
-            contactGroup.setAddress(address);
+        if(address != null) contactGroup.setAddress(address);
+        if(disorder != null) {
+            int displayOrder = Integer.parseInt(disorder);
+            contactGroup.setDisplayOrder(displayOrder);
         }
-
+        Contact contact = null;
         if(name == null) {
-            name = this.country + "/" + this.role;
+            if(office != null) contactGroup.addContactNumber("Office", office);
+            if(mobile != null) contactGroup.addContactNumber("Mobile", mobile);
+            if(home != null) contactGroup.addContactNumber("Home", home);
+            if(email != null) contactGroup.setEmail(email);
         }
-
-        Contact contact = contactRepository.findOrCreate(name, company, email, note, office, mobile, home);
-
-        contact.addContactRole(contactGroup, role, null);
-
+        else {
+            contact = contactRepository.findOrCreate(name, company, email, note, office, mobile, home);
+            contact.addContactRole(contactGroup, role, null);
+        }
         executionContext.addResult(excelFixture, contact);
 
         return Collections.singletonList(contact);
