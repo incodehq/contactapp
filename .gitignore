@@ -1,4 +1,4 @@
 *.iml
-*.xlsx
+sql.log
 datanucleus.log
 logs/
