@@ -34,6 +34,10 @@
                 "groups": {
                     "collectionLayout": {
                         "defaultView": "table"
+                    },
+                    "actions": {
+                        "createContactGroup": {},
+                        "deleteContactGroup": {}
                     }
                 }
             }

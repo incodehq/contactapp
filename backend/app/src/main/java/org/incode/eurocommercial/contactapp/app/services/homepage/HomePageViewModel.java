@@ -20,33 +20,70 @@ package org.incode.eurocommercial.contactapp.app.services.homepage;
 
 import java.util.List;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.ViewModel;
 
+import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 
 @ViewModel
 public class HomePageViewModel {
 
-    //region > title
     public String title() {
         return "Contact Groups";
     }
-    //endregion
 
-    //region > object (collection)
+
     @CollectionLayout(paged=1000)
     @org.apache.isis.applib.annotation.HomePage
     public List<ContactGroup> getGroups() {
         return contactGroupRepository.listAll();
     }
-    //endregion
 
-    //region > injected services
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Create")
+    @MemberOrder(name = "groups", sequence = "1")
+    public HomePageViewModel createContactGroup(final Country country, String name) {
+        contactGroupRepository.findOrCreate(country, name);
+        return this;
+    }
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Delete")
+    @MemberOrder(name = "groups", sequence = "2")
+    public HomePageViewModel deleteContactGroup(final ContactGroup contactGroup) {
+        contactGroupRepository.delete(contactGroup);
+        return this;
+    }
+
+    public List<ContactGroup> choices0DeleteContactGroup() {
+        final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+        final List<Contact> contacts = contactRepository.listAll();
+        final ImmutableList<ContactGroup> usedContactGroups = FluentIterable.from(contacts)
+                .transformAndConcat(contact -> contact.getContactRoles())
+                .transform(contactRole -> contactRole.getContactGroup())
+                .toList();
+        contactGroups.removeAll(usedContactGroups);
+        return contactGroups;
+    }
+    public String disableDeleteContactGroup() {
+        return choices0DeleteContactGroup().isEmpty()? "No contact groups without contacts": null;
+    }
 
     @javax.inject.Inject
     ContactGroupRepository contactGroupRepository;
+    @javax.inject.Inject
+    ContactRepository contactRepository;
 
-    //endregion
+
 }

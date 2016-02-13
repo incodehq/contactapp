@@ -67,6 +67,12 @@ public class ContactGroupRepository {
         return contactGroup;
     }
 
+    @Programmatic
+    public void delete(final ContactGroup contactGroup) {
+        container.removeIfNotAlready(contactGroup);
+    }
+
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
 }
