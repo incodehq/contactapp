@@ -25,7 +25,9 @@ import com.google.common.collect.ImmutableList;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.ViewModel;
@@ -44,7 +46,8 @@ public class HomePageViewModel {
     }
 
 
-    @CollectionLayout(paged=1000)
+    @Collection(editing = Editing.DISABLED)
+    @CollectionLayout(paged=200)
     @org.apache.isis.applib.annotation.HomePage
     public List<ContactGroup> getGroups() {
         return contactGroupRepository.listAll();

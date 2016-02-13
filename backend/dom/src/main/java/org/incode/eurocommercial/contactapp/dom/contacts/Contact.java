@@ -62,7 +62,7 @@ import lombok.Setter;
         editing = Editing.DISABLED
 )
 @DomainObjectLayout(
-        paged = 500
+        paged = 1000
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Contact extends ContactableEntity implements Comparable<Contact> {

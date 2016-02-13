@@ -18,8 +18,13 @@
  */
 package org.incode.eurocommercial.contactapp.integtests.bootstrap;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.isis.core.integtestsupport.IsisSystemForTest;
 import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegTests;
+
+import org.isisaddons.module.fakedata.dom.FakeDataService;
 
 import org.incode.eurocommercial.contactapp.app.ContactAppAppManifest;
 
@@ -30,7 +35,12 @@ public class ContactAppSystemInitializer {
         if(isft == null) {
             isft = new IsisSystemForTest.Builder()
                     .withLoggingAt(org.apache.log4j.Level.INFO)
-                    .with(new ContactAppAppManifest())
+                    .with(new ContactAppAppManifest() {
+                              @Override public List<Class<?>> getAdditionalServices() {
+                                  return Arrays.asList(FakeDataService.class);
+                              }
+                          }
+                    )
                     .with(new IsisConfigurationForJdoIntegTests())
                     .build()
                     .setUpSystem();
