@@ -76,21 +76,17 @@ public class Country implements Comparable<Country> {
         return getName();
     }
 
+    /**
+     * eg matches <code>Country-Italy.png</code> etc.
+     */
+    public String iconName() {
+        return title();
+    }
+
     @Column(allowsNull = "false")
     @Property()
     @Getter @Setter
     private String name;
-
-    @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Name", sequence = "1")
-    public void edit(String name) {
-        setName(name);
-    }
-
-    public String default0Edit() {
-        return getName();
-    }
 
 
     @Persistent(mappedBy = "country", dependentElement = "true")
