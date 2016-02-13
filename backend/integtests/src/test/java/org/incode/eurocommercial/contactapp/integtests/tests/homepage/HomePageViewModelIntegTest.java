@@ -19,7 +19,6 @@
 package org.incode.eurocommercial.contactapp.integtests.tests.homepage;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import javax.inject.Inject;
 
@@ -107,8 +106,10 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             // then
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();
             assertThat(groupsAfter.size()).isEqualTo(sizeBefore+1);
-            assertThat(groupsAfter)
-                    .filteredOn(contactGroupOf2(someCountry, groupName))
+            assertThat(
+                    FluentIterable.from(groupsAfter)
+                                  .filter(contactGroupOf(someCountry, groupName))
+                                  .toList())
                     .hasSize(1);
         }
 
@@ -150,9 +151,12 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();
             assertThat(groupsAfter).hasSize(sizeBefore-1);
 
-            assertThat(groupsAfter)
-                    .filteredOn(contactGroupOf2(someCountry, groupName))
-                    .hasSize(0);
+            assertThat(
+                    FluentIterable
+                        .from(groupsAfter)
+                        .filter(contactGroupOf(someCountry, groupName))
+                            .toList())
+                    .isEmpty();
         }
 
         @Test
@@ -182,11 +186,6 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
     }
 
-    private static Predicate<ContactGroup> contactGroupOf2(
-            final Country someCountry,
-            final String groupName) {
-        return contactGroup -> matches(someCountry, groupName, contactGroup);
-    }
 
     private static com.google.common.base.Predicate<ContactGroup> contactGroupOf(
             final Country someCountry,

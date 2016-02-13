@@ -18,15 +18,24 @@
  */
 package org.incode.eurocommercial.contactapp.integtests.tests.contact;
 
+import java.util.List;
+import java.util.Objects;
+
+import javax.inject.Inject;
+
+import com.google.common.collect.FluentIterable;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
+import org.isisaddons.module.fakedata.dom.FakeDataService;
+
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,6 +46,9 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     @Inject
     ContactRepository contactRepository;
+
+    @Inject
+    FakeDataService fakeDataService;
 
     DemoFixture fs;
     Contact contactPojo;
@@ -62,6 +74,38 @@ public class ContactIntegTest extends ContactAppIntegTest {
             final String name = contactWrapped.getName();
             // then
             assertThat(name).isNotNull();
+        }
+
+    }
+
+    public static class Delete extends ContactIntegTest {
+
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            final List<Contact> contacts = contactRepository.listAll();
+
+            final int sizeBefore = contacts.size();
+            assertThat(sizeBefore).isGreaterThan(0);
+
+            final Contact someContact = fakeDataService.collections().anyOf(contacts);
+            final String someContactName = someContact.getName();
+
+            // when
+            someContact.delete();
+
+            // then
+            final List<Contact> contactsAfter = contactRepository.listAll();
+
+            final int sizeAfter = contactsAfter.size();
+            assertThat(sizeAfter).isEqualTo(sizeBefore-1);
+
+            assertThat(FluentIterable.from(contactsAfter).filter(
+                    contact -> {
+                        return Objects.equals(contact.getName(), someContactName);
+                    }
+            )).isEmpty();
+
         }
 
     }

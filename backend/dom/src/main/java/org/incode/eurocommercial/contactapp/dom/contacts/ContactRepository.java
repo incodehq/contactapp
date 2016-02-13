@@ -140,6 +140,15 @@ public class ContactRepository {
         return contact;
     }
 
+    @Programmatic
+    public void delete(final Contact contact) {
+        final SortedSet<ContactRole> contactRoles = contact.getContactRoles();
+        for (ContactRole contactRole : contactRoles) {
+            container.removeIfNotAlready(contactRole);
+        }
+        container.removeIfNotAlready(contact);
+    }
+
     private static List<Contact> asSortedList(final List<Contact> contacts) {
         Collections.sort(contacts);
         return contacts;
@@ -161,4 +170,5 @@ public class ContactRepository {
 
     @Inject
     private ContactGroupRepository contactGroupRepository;
+
 }

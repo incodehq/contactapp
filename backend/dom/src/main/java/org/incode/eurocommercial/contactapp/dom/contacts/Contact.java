@@ -82,7 +82,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
             position = ActionLayout.Position.PANEL
     )
     @MemberOrder(name = "Notes", sequence = "1")
-    public ContactableEntity change(
+    public Contact change(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)
             final String company,
@@ -97,6 +97,16 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         setNotes(notes);
         return this;
     }
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
+    @ActionLayout(
+            position = ActionLayout.Position.PANEL
+    )
+    @MemberOrder(name = "Notes", sequence = "2")
+    public void delete() {
+        contactRepository.delete(this);
+    }
+
 
     public String default0Change() {
         return getName();
@@ -195,7 +205,8 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     ContactGroupRepository contactGroupRepository;
     @Inject
     ContactNumberRepository contactNumberRepository;
-
+    @Inject
+    ContactRepository contactRepository;
 
 
 }
