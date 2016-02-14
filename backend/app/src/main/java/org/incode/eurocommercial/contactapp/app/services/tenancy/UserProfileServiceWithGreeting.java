@@ -26,18 +26,12 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.userprof.UserProfileService;
 
 import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.UsersTenancy;
-
-/**
- * Demonstrates how to provide a custom implementation of the {@link org.apache.isis.applib.services.userprof.UserProfileService}.
- */
 @DomainService(
         nature = NatureOfService.DOMAIN
 )
-public class UserProfileServiceShowingTenancy implements UserProfileService {
+public class UserProfileServiceWithGreeting implements UserProfileService {
 
     @Override
     @Programmatic
@@ -46,13 +40,9 @@ public class UserProfileServiceShowingTenancy implements UserProfileService {
 
         final StringBuilder buf = new StringBuilder();
         final String username = applicationUser.getName();
-        final ApplicationTenancy tenancy = applicationUser.getTenancy();
 
         buf.append("Hi ");
         buf.append(username);
-        if (!tenancy.getPath().equals(UsersTenancy.TENANCY_PATH + username)) {
-            buf.append(" @").append(tenancy.getName());
-        }
 
         return buf.toString();
     }

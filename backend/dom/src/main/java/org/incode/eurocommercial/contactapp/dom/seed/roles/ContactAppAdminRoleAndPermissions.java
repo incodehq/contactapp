@@ -14,18 +14,20 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles.UNUSED;
+package org.incode.eurocommercial.contactapp.dom.seed.roles;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class AuditModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 
-    public static final String ROLE_NAME = "contactapp-auditing-admin";
+public class ContactAppAdminRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public AuditModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to audit module");
+    public static final String ROLE_NAME = "contactapp-admin-role";
+
+    public ContactAppAdminRoleAndPermissions() {
+        super(ROLE_NAME, "Read/write access to contactapp domain objects and home page");
     }
 
     @Override
@@ -33,7 +35,9 @@ public class AuditModuleRoleAndPermissions extends AbstractRoleAndPermissionsFix
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.isisaddons.module.audit");
+                "org.incode.eurocommercial.contactapp.app",
+                ContactAppDomainModule.class.getPackage().getName()
+                );
     }
 
 }

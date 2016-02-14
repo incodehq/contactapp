@@ -26,13 +26,11 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppFixtureServiceRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppRegularRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.ContactAppAdminUserTenancy;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.UsersTenancy;
-import org.incode.eurocommercial.contactapp.dom.seed.users.ContactAppAdminUser;
-import org.incode.eurocommercial.contactapp.dom.seed.users.SvenRegularUser;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.dom.seed.users.AdminUser;
+import org.incode.eurocommercial.contactapp.dom.seed.users.ReaderUser;
+import org.incode.eurocommercial.contactapp.dom.seed.users.LockIsisModuleSecurityAdminUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -60,17 +58,19 @@ public class ContactAppRolesAndPermissionsSeedService {
         @Override
         protected void execute(final ExecutionContext executionContext) {
 
-            executionContext.executeChild(this, new UsersTenancy());
 
-            executionContext.executeChild(this, new ContactAppRegularRoleAndPermissions());
-            executionContext.executeChild(this, new ContactAppFixtureServiceRoleAndPermissions());
-            executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
+            executionContext.executeChild(this, new ContactAppAdminRoleAndPermissions());
+            executionContext.executeChild(this, new ContactAppReadOnlyRoleAndPermissions());
 
-            executionContext.executeChild(this, new ContactAppAdminUserTenancy());
-            executionContext.executeChild(this, new ContactAppAdminUser());
+            executionContext.executeChild(this, new AdminUser());
+            executionContext.executeChild(this, new ReaderUser());
+            executionContext.executeChild(this, new LockIsisModuleSecurityAdminUser());
 
-            executionContext.executeChild(this, new SvenRegularUser());
+            // configured but not required by any user:
+            // executionContext.executeChild(this, new ContactAppFixtureServiceRoleAndPermissions());
+            // executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
 
+            // not configured:
             //            executionContext.executeChild(this, new TogglzModuleAdminRole());
             //            executionContext.executeChild(this, new AuditModuleRoleAndPermissions());
             //            executionContext.executeChild(this, new CommandModuleRoleAndPermissions());

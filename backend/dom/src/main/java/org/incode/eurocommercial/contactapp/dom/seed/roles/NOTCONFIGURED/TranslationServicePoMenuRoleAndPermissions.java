@@ -14,18 +14,20 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles.UNUSED;
+package org.incode.eurocommercial.contactapp.dom.seed.roles.NOTCONFIGURED;
+
+import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "contactapp-sessionlogger-admin";
+    public static final String ROLE_NAME = "translation-service-admin";
 
-    public SessionLoggerModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to sessionlogger module");
+    public TranslationServicePoMenuRoleAndPermissions() {
+        super(ROLE_NAME, "Admin access to translation service");
     }
 
     @Override
@@ -33,7 +35,7 @@ public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermis
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.isisaddons.module.sessionlogger");
+                TranslationServicePoMenu.class.getPackage().getName());
     }
 
 }

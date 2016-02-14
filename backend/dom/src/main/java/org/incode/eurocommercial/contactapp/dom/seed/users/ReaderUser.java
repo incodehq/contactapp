@@ -20,23 +20,23 @@ import java.util.Arrays;
 
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppRegularRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.ContactAppAdminUserTenancy;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.UsersTenancy;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
 
-public class SvenRegularUser extends AbstractUserAndRolesFixtureScript {
+public class ReaderUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "sven";
-    public static final String TENANCY_PATH = UsersTenancy.TENANCY_PATH + USER_NAME;
-
+    public static final String USER_NAME = "reader";
     private static final String PASSWORD = "pass";
 
-    public SvenRegularUser() {
+    public ReaderUser() {
         super(USER_NAME, PASSWORD, null,
-                ContactAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
-                Arrays.asList(ContactAppRegularRoleAndPermissions.ROLE_NAME));
+                GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
+                Arrays.asList(
+                        ContactAppReadOnlyRoleAndPermissions.ROLE_NAME
+                    ));
     }
+
 
     @Override
     protected void execute(ExecutionContext executionContext) {

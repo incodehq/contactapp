@@ -14,20 +14,26 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.tenancies;
+package org.incode.eurocommercial.contactapp.dom.seed.users;
 
-import org.isisaddons.module.security.seed.scripts.AbstractTenancyFixtureScript;
+import javax.inject.Inject;
 
-import org.incode.eurocommercial.contactapp.dom.seed.users.ContactAppAdminUser;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-public class ContactAppAdminUserTenancy extends AbstractTenancyFixtureScript {
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminUser;
 
-    public static final String TENANCY_NAME = ContactAppAdminUser.USER_NAME;
-    public static final String TENANCY_PATH = ContactAppAdminUser.TENANCY_PATH;
+public class LockIsisModuleSecurityAdminUser extends FixtureScript {
+
+    @Inject
+    ApplicationUserRepository applicationUserRepository;
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        create(TENANCY_NAME, TENANCY_PATH, UsersTenancy.TENANCY_PATH, executionContext);
+        final ApplicationUser user = applicationUserRepository
+                .findByUsername(IsisModuleSecurityAdminUser.USER_NAME);
+        user.lock();
     }
 
 }

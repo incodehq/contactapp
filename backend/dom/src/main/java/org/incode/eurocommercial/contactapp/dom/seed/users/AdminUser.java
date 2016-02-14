@@ -20,36 +20,35 @@ import java.util.Arrays;
 
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppFixtureServiceRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppRegularRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.ContactAppAdminUserTenancy;
-import org.incode.eurocommercial.contactapp.dom.seed.tenancies.UsersTenancy;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
 
-public class ContactAppAdminUser extends AbstractUserAndRolesFixtureScript {
+public class AdminUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "contactapp-admin";
-    public static final String TENANCY_PATH = UsersTenancy.TENANCY_PATH + USER_NAME;
-
+    public static final String USER_NAME = "admin";
     private static final String PASSWORD = "pass";
 
-    public ContactAppAdminUser() {
+    public AdminUser() {
         super(USER_NAME, PASSWORD, null,
-                ContactAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
+                GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
                         IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME
-                        ,SettingsModuleRoleAndPermissions.ROLE_NAME
-                        ,ContactAppRegularRoleAndPermissions.ROLE_NAME
-                        ,ContactAppFixtureServiceRoleAndPermissions.ROLE_NAME
+                        , ContactAppAdminRoleAndPermissions.ROLE_NAME
+
+                        // configured by not required by any user:
+                        //,SettingsModuleRoleAndPermissions.ROLE_NAME
+                        //,ContactAppFixtureServiceRoleAndPermissions.ROLE_NAME
+
+                        // not configured:
                         //,TogglzModuleAdminRole.ROLE_NAME
                         //,AuditModuleRoleAndPermissions.ROLE_NAME
                         //,CommandModuleRoleAndPermissions.ROLE_NAME
                         //,SessionLoggerModuleRoleAndPermissions.ROLE_NAME
                         //,PublishingModuleRoleAndPermissions.ROLE_NAME
                         //,TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
-                        ));
+                ));
     }
 
 

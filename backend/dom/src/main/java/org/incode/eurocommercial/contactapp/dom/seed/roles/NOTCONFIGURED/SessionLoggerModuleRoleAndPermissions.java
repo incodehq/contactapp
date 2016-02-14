@@ -14,18 +14,18 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles.UNUSED;
+package org.incode.eurocommercial.contactapp.dom.seed.roles.NOTCONFIGURED;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class CommandModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "contactapp-command-admin";
+    public static final String ROLE_NAME = "contactapp-sessionlogger-admin";
 
-    public CommandModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to command module");
+    public SessionLoggerModuleRoleAndPermissions() {
+        super(ROLE_NAME, "Admin access to sessionlogger module");
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CommandModuleRoleAndPermissions extends AbstractRoleAndPermissionsF
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.isisaddons.module.command");
+                "org.isisaddons.module.sessionlogger");
     }
 
 }

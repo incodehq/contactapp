@@ -17,23 +17,12 @@
  *  under the License.
  */
 
-.navbar-brand img {
-    margin-top: -7px;
-    margin-left: 5px;
-}
-
-.x-key label.scalarName {
-    color: red;
-}
-
-tr.todo {
-}
-
-tr.done {
-    text-decoration: line-through;
-    color: #d3d3d3;
-}
-
 .collectionContentsAsAjaxTablePanel span {
     color: black;
+}
+
+
+
+.popover-content > .btn-group > .btn-danger {
+    margin-bottom: 10px;
 }
