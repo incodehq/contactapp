@@ -21,11 +21,17 @@
     xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-    <display-name>QuickStart app</display-name>
+    <display-name>Contact App</display-name>
 
-    <welcome-file-list>
-        <welcome-file>about/index.html</welcome-file>
-    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>RedirectToMobileLoginPage</servlet-name>
+        <servlet-class>org.incode.eurocommercial.contactapp.webapp.servlets.RedirectToMobileLoginPage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RedirectToMobileLoginPage</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 
     <!-- shiro security configuration -->
@@ -131,7 +137,7 @@
     </filter>
     <filter-mapping>
         <filter-name>IsisLogOnExceptionFilter</filter-name>
-        <url-pattern>/wicket/*</url-pattern>
+        <url-pattern>/backend/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>IsisLogOnExceptionFilter</filter-name>

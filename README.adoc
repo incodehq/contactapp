@@ -146,7 +146,7 @@ cd frontend
 bower install ionic-filter-bar
 ----
 
-installs the component over in `backend/webapp/src/main/webapp/frontend/lib`.
+installs the component over in `backend/webapp/src/main/webapp/mobile/lib`.
 
 update `config.xml` with:
 
@@ -176,13 +176,13 @@ update `ionic.app`:
 
 [source]
 ----
-@import "../backend/webapp/src/main/webapp/frontend/lib/ionic-filter-bar/scss/ionic.filter.bar";
+@import "../backend/webapp/src/main/webapp/mobile/lib/ionic-filter-bar/scss/ionic.filter.bar";
 ----
 
 
 == CORS testing
 
-Moved `../backend/webapp/src/main/webapp/frontend` back to `www`.
+Moved `../backend/webapp/src/main/webapp/mobile` back to `www`.
 
 Now run via `ionic serve`, which is localhost:8100 connecting to localhost:8080 (hardcoded)
 
