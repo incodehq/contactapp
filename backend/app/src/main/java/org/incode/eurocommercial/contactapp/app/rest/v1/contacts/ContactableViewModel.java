@@ -151,6 +151,14 @@ public class ContactableViewModel extends ViewModelWithUnderlying<ContactableEnt
         return country != null? container.titleOf(country): null;
     }
 
+    /**
+     * Only populated for {@link #getType()} of {@link Type#CONTACT_GROUP}.
+     */
+    public String getAddress() {
+        if(getType() == Type.CONTACT) return null;
+        return contactGroup().getAddress();
+    }
+
     static String firstNameFrom(final String name) {
         final int i = name.lastIndexOf(" ");
         return i != -1? name.substring(0, i): "";
