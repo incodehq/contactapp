@@ -20,7 +20,7 @@ public class ContactNumberRepository {
     @Programmatic
     public ContactNumber findByOwnerAndType(
             final ContactableEntity owner,
-            final String type) {
+            final ContactNumberType type) {
         return container.uniqueMatch(
                 new org.apache.isis.applib.query.QueryDefault<>(
                         ContactNumber.class,
@@ -30,7 +30,10 @@ public class ContactNumberRepository {
     }
 
     @Programmatic
-    public ContactNumber create(final ContactableEntity owner, final String type, final String number) {
+    public ContactNumber create(
+            final ContactableEntity owner,
+            final ContactNumberType type,
+            final String number) {
         final ContactNumber contactNumber = container.newTransientInstance(ContactNumber.class);
         contactNumber.setOwner(owner);
         contactNumber.setType(type);
@@ -42,7 +45,7 @@ public class ContactNumberRepository {
     @Programmatic
     public ContactNumber findOrCreate(
             final ContactableEntity owner,
-            final String type,
+            final ContactNumberType type,
             final String number) {
         ContactNumber contactNumber = findByOwnerAndType(owner, type);
         if (contactNumber == null) {

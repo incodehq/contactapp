@@ -25,6 +25,7 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
@@ -63,19 +64,17 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Country implements Comparable<Country> {
 
-    public String title() {
-        return getName();
-    }
 
     /**
      * eg matches <code>Country-Italy.png</code> etc.
      */
     public String iconName() {
-        return title();
+        return getName();
     }
 
-    @Column(allowsNull = "false")
-    @Property()
+    @Column(allowsNull = "false", length = 50)
+    @Property
+    @Title
     @Getter @Setter
     private String name;
 

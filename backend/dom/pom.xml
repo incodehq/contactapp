@@ -258,7 +258,13 @@
                     <name>!skip.isisaddons-module-fakedata</name>
                 </property>
             </activation>
-            <!-- for use by fixtures, not dom classes -->
+            <dependencies>
+                <dependency>
+                    <groupId>org.isisaddons.module.fakedata</groupId>
+                    <artifactId>isis-module-fakedata-dom</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>isisaddons-module-poly</id>

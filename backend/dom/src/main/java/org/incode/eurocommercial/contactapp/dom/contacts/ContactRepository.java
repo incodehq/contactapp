@@ -16,6 +16,7 @@ import org.apache.isis.applib.query.QueryDefault;
 
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 
@@ -108,13 +109,13 @@ public class ContactRepository {
         contact.setNotes(notes);
 
         if(officeNumber != null) {
-            contact.addContactNumber("Office", officeNumber);
+            contact.addContactNumber(ContactNumberType.OFFICE, officeNumber);
         }
         if(mobileNumber != null) {
-            contact.addContactNumber("Mobile", mobileNumber);
+            contact.addContactNumber(ContactNumberType.MOBILE, mobileNumber);
         }
         if(homeNumber != null) {
-            contact.addContactNumber("Home", homeNumber);
+            contact.addContactNumber(ContactNumberType.HOME, homeNumber);
         }
 
         container.persistIfNotAlready(contact);

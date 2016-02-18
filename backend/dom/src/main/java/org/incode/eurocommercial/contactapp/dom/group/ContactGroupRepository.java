@@ -3,10 +3,15 @@ package org.incode.eurocommercial.contactapp.dom.group;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 
 @DomainService(
@@ -74,5 +79,8 @@ public class ContactGroupRepository {
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
+    @javax.inject.Inject
+    ContactRepository contactRepository;
 
 }

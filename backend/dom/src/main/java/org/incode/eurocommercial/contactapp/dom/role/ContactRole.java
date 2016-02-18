@@ -20,7 +20,8 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -29,6 +30,7 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -97,7 +99,7 @@ public class ContactRole implements Comparable<ContactRole> {
     @Getter @Setter
     private ContactGroup contactGroup;
 
-    @Column(allowsNull = "true")
+    @Column(allowsNull = "true", length = 50)
     @Property()
     @Getter @Setter
     private String roleName;
@@ -105,7 +107,9 @@ public class ContactRole implements Comparable<ContactRole> {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Edit")
     @MemberOrder(name = "roleName", sequence = "1")
-    public ContactRole changeRole(@ParameterLayout(named = "Role Name") String roleName) {
+    public ContactRole changeRole(
+            @Parameter(optionality = Optionality.OPTIONAL)
+            final String roleName) {
         setRoleName(roleName);
         return this;
     }

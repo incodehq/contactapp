@@ -38,6 +38,7 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
@@ -71,17 +72,41 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return getName();
     }
 
-    @Column(allowsNull = "true")
+    @Column(allowsNull = "true", length = 50)
     @Property
     @Getter @Setter
     private String company;
+
+
+    @Action
+    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Notes", sequence = "1")
+    public Contact create(
+            final String name,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            final String company,
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            final String officeNumber,
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            final String mobileNumber,
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            final String homeNumber,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            final String email) {
+        return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
+    }
+
+    public String default1Create() {
+        return getCompany();
+    }
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(
             named = "Edit",
             position = ActionLayout.Position.PANEL
     )
-    @MemberOrder(name = "Notes", sequence = "1")
+    @MemberOrder(name = "Notes", sequence = "2")
     public Contact change(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)
@@ -102,7 +127,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     @ActionLayout(
             position = ActionLayout.Position.PANEL
     )
-    @MemberOrder(name = "Notes", sequence = "2")
+    @MemberOrder(name = "Notes", sequence = "3")
     public void delete() {
         contactRepository.delete(this);
     }
@@ -159,13 +184,6 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return null;
     }
 
-    public String validateAddContactRole(final ContactGroup contactGroup, final String existingRole, final String newRole) {
-        if((existingRole != null && newRole != null) || (existingRole == null && newRole == null)) {
-            return "Specify either an existing role or a new role";
-        }
-        return null;
-    }
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
@@ -187,7 +205,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return Lists.transform(Lists.newArrayList(getContactRoles()), ContactRole::getContactGroup);
     }
     public String disableRemoveContactRole() {
-        return getContactRoles().isEmpty()? "No contact numbers to remove": null;
+        return getContactRoles().isEmpty()? "No contacts to remove": null;
     }
 
     @Override

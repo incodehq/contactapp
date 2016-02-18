@@ -16,6 +16,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
@@ -68,17 +69,17 @@ public class ContactMenu {
         return contactRoleRepository.roleNames();
     }
 
-    @Action()
+    @Action
     @MemberOrder(sequence = "6")
     public Contact create(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
             final String officeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
             final String mobileNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
             final String homeNumber,
             @Parameter(optionality = Optionality.OPTIONAL)
             final String email) {
@@ -89,7 +90,6 @@ public class ContactMenu {
         if(pattern == null) {
             return null;
         }
-
         if(pattern.contains("*") || pattern.contains("?")) {
             final String regex = pattern.replace("*", ".*").replace("?", ".");
             return "(?i)" + regex;

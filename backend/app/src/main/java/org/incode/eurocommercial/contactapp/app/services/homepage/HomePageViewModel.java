@@ -56,7 +56,9 @@ public class HomePageViewModel {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Create")
     @MemberOrder(name = "groups", sequence = "1")
-    public HomePageViewModel createContactGroup(final Country country, String name) {
+    public HomePageViewModel createContactGroup(
+            final Country country,
+            final String name) {
         contactGroupRepository.findOrCreate(country, name);
         return this;
     }
@@ -79,6 +81,7 @@ public class HomePageViewModel {
         contactGroups.removeAll(usedContactGroups);
         return contactGroups;
     }
+
     public String disableDeleteContactGroup() {
         return choices0DeleteContactGroup().isEmpty()? "No contact groups without contacts": null;
     }

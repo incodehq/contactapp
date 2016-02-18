@@ -1,6 +1,7 @@
 package org.incode.eurocommercial.contactapp.dom.group;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -14,6 +15,10 @@ import javax.jdo.annotations.Unique;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
+import com.google.common.base.Optional;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
 import org.apache.isis.applib.annotation.Action;
@@ -22,6 +27,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
@@ -33,9 +39,13 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -86,15 +96,28 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private Country country;
 
-    @Column(allowsNull = "true")
+    @Column(allowsNull = "true", length = 255)
     @Property
     @Getter @Setter
     private String address;
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
+    @ActionLayout(named = "Create", position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "1")
+    public ContactGroup create(
+            final Country country,
+            final String name) {
+        return contactGroupRepository.findOrCreate(country, name);
+    }
+    public Country default0Create() {
+        return getCountry();
+    }
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Notes", sequence = "2")
     public ContactableEntity change(
             final String name,
             @Parameter(optionality = Optionality.OPTIONAL)
@@ -124,11 +147,90 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return getNotes();
     }
 
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
+    @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Notes", sequence = "3")
+    public void delete() {
+        contactGroupRepository.delete(this);
+    }
+
+    public String disableDelete() {
+        return getContactRoles().isEmpty()? null: "This group has contacts";
+    }
+
+
+
     @Programmatic
     @NotPersistent
     public List<ContactRole> getContactRoles() {
         return contactRoleRepository.findByGroup(this);
     }
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Add")
+    @MemberOrder(name = "contactRoles", sequence = "1")
+    public ContactGroup addContactRole(
+            @Parameter(optionality = Optionality.MANDATORY)
+            Contact contact,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            String existingRole,
+            @Parameter(optionality = Optionality.OPTIONAL)
+            String newRole) {
+        final String roleName = existingRole != null? existingRole: newRole;
+        contactRoleRepository.findOrCreate(contact, this, roleName);
+        return this;
+    }
+
+    public List<Contact> autoComplete0AddContactRole(
+            @MinLength(3)
+            final String query) {
+        String queryRegex = ContactMenu.toCaseInsensitiveRegex(query);
+        return contactRepository.find(queryRegex);
+    }
+    public SortedSet<String> choices1AddContactRole() {
+        return contactRoleRepository.roleNames();
+    }
+
+    public String validate2AddContactRole(final String newRole) {
+        if(newRole == null) {
+            return null;
+        }
+        if(choices1AddContactRole().contains(newRole)) {
+            return "This role already exists - select from the list";
+        }
+        return null;
+    }
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(named = "Remove")
+    @MemberOrder(name = "contactRoles", sequence = "2")
+    public ContactGroup removeContactRole(final Contact contact) {
+        final Optional<ContactRole> contactRoleIfAny = Iterables
+                .tryFind(getContactRoles(), cn -> Objects.equal(cn.getContact(), contact));
+
+        if(contactRoleIfAny.isPresent()) {
+            getContactRoles().remove(contactRoleIfAny.get());
+        }
+        return this;
+    }
+
+    public Contact default0RemoveContactRole() {
+        return getContactRoles().size() == 1? getContactRoles().iterator().next().getContact(): null;
+    }
+    public List<Contact> choices0RemoveContactRole() {
+        return Lists.transform(Lists.newArrayList(getContactRoles()), ContactRole::getContact);
+    }
+    public String disableRemoveContactRole() {
+        return getContactRoles().isEmpty()? "No contacts to remove": null;
+    }
+
+
+
+
+
 
     private static final Ordering<ContactGroup> byDisplayNumberThenName =
             Ordering
@@ -156,6 +258,10 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Inject
     ContactRoleRepository contactRoleRepository;
+    @Inject
+    ContactRepository contactRepository;
+    @javax.inject.Inject
+    ContactGroupRepository contactGroupRepository;
 
 
 

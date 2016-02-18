@@ -34,6 +34,7 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.RenderType;
@@ -42,7 +43,10 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -78,17 +82,17 @@ public class ContactableEntity  {
     }
 
     @MemberOrder(sequence = "1.2")
-    @Column(allowsNull = "false")
+    @Column(allowsNull = "false", length = 50)
     @Property
     @Getter @Setter
     private String name;
 
-    @Column(allowsNull = "true")
+    @Column(allowsNull = "true", length = 50)
     @Property
     @Getter @Setter
     private String email;
 
-    @Column(allowsNull = "true")
+    @Column(allowsNull = "true", length = 2048)
     @Property
     @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
     @Getter @Setter
@@ -103,7 +107,10 @@ public class ContactableEntity  {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
     @MemberOrder(name = "contactNumbers", sequence = "1")
-    public ContactableEntity addContactNumber(String type, String number) {
+    public ContactableEntity addContactNumber(
+            final ContactNumberType type,
+            @Parameter(mustSatisfy = ContactNumberRegex.class)
+            final String number) {
         contactNumberRepository.findOrCreate(this, type, number);
         return this;
     }
@@ -111,7 +118,7 @@ public class ContactableEntity  {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
     @MemberOrder(name = "contactNumbers", sequence = "2")
-    public ContactableEntity removeContactNumber(String type) {
+    public ContactableEntity removeContactNumber(ContactNumberType type) {
         final Optional<ContactNumber> contactNumberIfAny = Iterables
                 .tryFind(getContactNumbers(), cn -> Objects.equal(cn.getType(), type));
 
@@ -121,10 +128,10 @@ public class ContactableEntity  {
         return this;
     }
 
-    public String default0RemoveContactNumber() {
+    public ContactNumberType default0RemoveContactNumber() {
         return getContactNumbers().size() == 1? getContactNumbers().iterator().next().getType(): null;
     }
-    public List<String> choices0RemoveContactNumber() {
+    public List<ContactNumberType> choices0RemoveContactNumber() {
         return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getType);
     }
 

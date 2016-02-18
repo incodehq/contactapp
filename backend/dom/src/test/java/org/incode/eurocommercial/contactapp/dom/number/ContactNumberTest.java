@@ -19,11 +19,16 @@ package org.incode.eurocommercial.contactapp.dom.number;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.isisaddons.module.fakedata.dom.FakeDataService;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactNumberTest {
 
     ContactNumber contactNumber;
+    FakeDataService fakeDataService = new FakeDataService() {{
+        init();
+    }};
 
     @Before
     public void setUp() throws Exception {
@@ -35,14 +40,21 @@ public class ContactNumberTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            String type = "New type";
-            String number = "New number";
+            ContactNumberType type = fakeDataService.enums().anyOf(ContactNumberType.class);
+            String number = randomPhoneNumber();
+            String notes = fakeDataService.strings().upper(2048);
 
             // when
-            contactNumber.change(type, number);
+            contactNumber.change(type, number, notes);
+
             // then
             assertThat(contactNumber.getType()).isEqualTo(type);
             assertThat(contactNumber.getNumber()).isEqualTo(number);
+            assertThat(contactNumber.getNotes()).isEqualTo(notes);
+        }
+
+        private String randomPhoneNumber() {
+            return "+" + fakeDataService.strings().digits(2) + " " + fakeDataService.strings().digits(4) + " " + fakeDataService.strings().digits(6);
         }
 
     }

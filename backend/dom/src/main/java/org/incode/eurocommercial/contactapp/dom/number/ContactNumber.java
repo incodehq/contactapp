@@ -19,6 +19,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -58,38 +59,50 @@ import lombok.Setter;
 public class ContactNumber implements Comparable<ContactNumber> {
 
     @Column(allowsNull = "false")
+    @Property
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
-    @Property()
     @Getter @Setter
     private ContactableEntity owner;
 
     @Column(allowsNull = "false")
-    @Property()
-    @Getter @Setter
-    private String type;
-
-    @Column(allowsNull = "false")
     @Property
+    @Getter @Setter
+    private ContactNumberType type;
+
     @Title
+    @Column(allowsNull = "false", length = 30)
+    @Property
     @Getter @Setter
     private String number;
+
+    @Column(allowsNull = "true", length = 2048)
+    @Property
+    @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
+    @Getter @Setter
+    private String notes;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
     public ContactNumber change(
-            final String type,
-            final String number) {
+            final ContactNumberType type,
+            @Parameter(mustSatisfy = ContactNumberRegex.class)
+            final String number,
+            final String notes) {
         setType(type);
         setNumber(number);
+        setNotes(notes);
         return this;
     }
 
-    public String default0Change() {
+    public ContactNumberType default0Change() {
         return getType();
     }
     public String default1Change() {
         return getNumber();
+    }
+    public String default2Change() {
+        return getNotes();
     }
 
     //region > compareTo, toString

@@ -12,6 +12,8 @@ import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -76,9 +78,9 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
         }
         Contact contact = null;
         if(name == null) {
-            if(office != null) contactGroup.addContactNumber("Office", office);
-            if(mobile != null) contactGroup.addContactNumber("Mobile", mobile);
-            if(home   != null) contactGroup.addContactNumber("Home", home);
+            if(office != null) contactGroup.addContactNumber(ContactNumberType.OFFICE, office);
+            if(mobile != null) contactGroup.addContactNumber(ContactNumberType.MOBILE, mobile);
+            if(home   != null) contactGroup.addContactNumber(ContactNumberType.HOME, home);
             if(email  != null) contactGroup.setEmail(email);
         }
         else {
