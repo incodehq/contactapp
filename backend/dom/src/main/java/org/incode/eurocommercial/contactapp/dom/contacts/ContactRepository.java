@@ -109,13 +109,13 @@ public class ContactRepository {
         contact.setNotes(notes);
 
         if(officeNumber != null) {
-            contact.addContactNumber(officeNumber, ContactNumberType.OFFICE.title());
+            contact.addContactNumber(officeNumber, ContactNumberType.OFFICE.title(), null);
         }
         if(mobileNumber != null) {
-            contact.addContactNumber(mobileNumber, ContactNumberType.MOBILE.title());
+            contact.addContactNumber(mobileNumber, ContactNumberType.MOBILE.title(), null);
         }
         if(homeNumber != null) {
-            contact.addContactNumber(homeNumber, ContactNumberType.HOME.title());
+            contact.addContactNumber(homeNumber, ContactNumberType.HOME.title(), null);
         }
 
         container.persistIfNotAlready(contact);

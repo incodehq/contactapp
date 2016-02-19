@@ -1,5 +1,8 @@
 package org.incode.eurocommercial.contactapp.dom.number;
 
+import java.util.Set;
+
+import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -12,6 +15,8 @@ import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.google.common.base.Strings;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
@@ -19,6 +24,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -29,6 +35,7 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -97,14 +104,20 @@ public class ContactNumber implements Comparable<ContactNumber> {
     public ContactNumber edit(
             @Parameter(maxLength = MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
             final String number,
-            @Parameter(maxLength = MaxLength.TYPE)
-            final String type,
-            @Parameter(maxLength = MaxLength.NOTES)
-            final String notes) {
+            @Parameter(maxLength = MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String existingType,
+            @Parameter(maxLength = MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String newType,
+            @Parameter(maxLength = MaxLength.NOTES, optionality = Optionality.OPTIONAL)
+    final String notes) {
         setNumber(number);
-        setType(type);
+        setType(StringUtil.firstNonEmpty(newType, existingType));
         setNotes(notes);
         return this;
+    }
+
+    public Set<String> choices1Edit() {
+        return contactNumberRepository.existingTypes();
     }
 
     public String default0Edit() {
@@ -113,9 +126,20 @@ public class ContactNumber implements Comparable<ContactNumber> {
     public String default1Edit() {
         return getType();
     }
-    public String default2Edit() {
+    public String default3Edit() {
         return getNotes();
     }
+
+    public String validateEdit(
+            final String number,
+            final String existingType,
+            final String newType,
+            final String notes) {
+        return  Strings.isNullOrEmpty(existingType) &&
+                Strings.isNullOrEmpty(newType) ?
+                "Must specify type": null;
+    }
+
 
     //region > compareTo, toString
     @Override
@@ -128,5 +152,8 @@ public class ContactNumber implements Comparable<ContactNumber> {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "owner", "number", "type");
     }
     //endregion
+
+    @Inject
+    ContactNumberRepository contactNumberRepository;
 
 }

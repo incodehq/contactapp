@@ -1,6 +1,7 @@
 package org.incode.eurocommercial.contactapp.dom.contactable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -21,6 +22,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -34,6 +36,7 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -44,8 +47,10 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -117,19 +122,39 @@ public class ContactableEntity  {
     public ContactableEntity addContactNumber(
             @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
             final String number,
-            @Parameter(maxLength = ContactNumber.MaxLength.TYPE)
-            final String type
+            @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String existingType,
+            @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String newType
     ) {
-        contactNumberRepository.findOrCreate(this, number, type);
+        contactNumberRepository.findOrCreate(this, number, StringUtil.firstNonEmpty(newType, existingType));
         return this;
     }
+
+    public Set<String> choices1AddContactNumber() {
+        return contactNumberRepository.existingTypes();
+    }
+    public String default1AddContactNumber() {
+        return ContactNumberType.OFFICE.title();
+    }
+
+    public String validateAddContactNumber(
+            final String number,
+            final String existingType,
+            final String newType
+    ) {
+        return  Strings.isNullOrEmpty(existingType) &&
+                Strings.isNullOrEmpty(newType) ?
+                "Must specify type": null;
+    }
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
     @MemberOrder(name = "contactNumbers", sequence = "2")
-    public ContactableEntity removeContactNumber(final String type) {
+    public ContactableEntity removeContactNumber(final String number) {
         final Optional<ContactNumber> contactNumberIfAny = Iterables
-                .tryFind(getContactNumbers(), cn -> Objects.equal(cn.getType(), type));
+                .tryFind(getContactNumbers(), cn -> Objects.equal(cn.getNumber(), number));
 
         if(contactNumberIfAny.isPresent()) {
             getContactNumbers().remove(contactNumberIfAny.get());
@@ -137,17 +162,17 @@ public class ContactableEntity  {
         return this;
     }
 
-    public String default0RemoveContactNumber() {
-        return getContactNumbers().size() == 1? getContactNumbers().iterator().next().getType(): null;
-    }
-    public List<String> choices0RemoveContactNumber() {
-        return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getType);
-    }
-
     public String disableRemoveContactNumber() {
         return getContactNumbers().isEmpty()? "No contact numbers to remove": null;
     }
+    public List<String> choices0RemoveContactNumber() {
+        return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getNumber);
+    }
+    public String default0RemoveContactNumber() {
+        return choices0RemoveContactNumber().get(0);
+    }
 
+    
     @Override
     public String toString() {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "name");

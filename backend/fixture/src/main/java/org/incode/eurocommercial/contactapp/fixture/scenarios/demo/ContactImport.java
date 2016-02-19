@@ -78,9 +78,9 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
         }
         Contact contact = null;
         if(name == null) {
-            if(office != null) contactGroup.addContactNumber(office, ContactNumberType.OFFICE.title());
-            if(mobile != null) contactGroup.addContactNumber(mobile, ContactNumberType.MOBILE.title());
-            if(home   != null) contactGroup.addContactNumber(home, ContactNumberType.HOME.title());
+            if(office != null) contactGroup.addContactNumber(office, ContactNumberType.OFFICE.title(), null);
+            if(mobile != null) contactGroup.addContactNumber(mobile, ContactNumberType.MOBILE.title(), null);
+            if(home   != null) contactGroup.addContactNumber(home, ContactNumberType.HOME.title(), null);
             if(email  != null) contactGroup.setEmail(email);
         }
         else {

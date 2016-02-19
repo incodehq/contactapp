@@ -1,5 +1,10 @@
 package org.incode.eurocommercial.contactapp.dom.number;
 
+import java.util.Set;
+
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Sets;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -53,6 +58,20 @@ public class ContactNumberRepository {
         }
         return contactNumber;
     }
+
+    @Programmatic
+    public Set<String> existingTypes() {
+        final Set<String> types = Sets.newTreeSet();
+        types.addAll(ContactNumberType.titles());
+        types.addAll(
+                FluentIterable
+                        .from(listAll())
+                        .transform(ContactNumber::getType)
+                        .toSet());
+        return types;
+    }
+
+
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;

@@ -38,14 +38,30 @@ public class ContactNumberTest {
     public static class Change extends ContactNumberTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case_when_specify_as_existing_type() throws Exception {
             // given
-            String type = fakeDataService.enums().anyOf(ContactNumberType.class).title();
+            String existingType = fakeDataService.enums().anyOf(ContactNumberType.class).title();
             String number = randomPhoneNumber();
-            String notes = fakeDataService.strings().upper(2048);
+            String notes = fakeDataService.strings().upper(ContactNumber.MaxLength.NOTES);
 
             // when
-            contactNumber.edit(number, type, notes);
+            contactNumber.edit(number, existingType, null, notes);
+
+            // then
+            assertThat(contactNumber.getType()).isEqualTo(existingType);
+            assertThat(contactNumber.getNumber()).isEqualTo(number);
+            assertThat(contactNumber.getNotes()).isEqualTo(notes);
+        }
+
+        @Test
+        public void happy_case_when_specify_as_new_type() throws Exception {
+            // given
+            String type = fakeDataService.strings().upper(ContactNumber.MaxLength.TYPE);
+            String number = randomPhoneNumber();
+            String notes = fakeDataService.strings().upper(ContactNumber.MaxLength.NOTES);
+
+            // when
+            contactNumber.edit(number, null, type, notes);
 
             // then
             assertThat(contactNumber.getType()).isEqualTo(type);
