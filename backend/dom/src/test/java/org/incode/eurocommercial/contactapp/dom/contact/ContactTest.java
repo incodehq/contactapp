@@ -57,7 +57,7 @@ public class ContactTest {
             String notes = "New notes";
 
             // when
-            contact.change(name, company, email, notes);
+            contact.edit(name, company, email, notes);
             // then
             assertThat(contact.getName()).isEqualTo(name);
             assertThat(contact.getEmail()).isEqualTo(email);

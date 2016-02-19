@@ -20,7 +20,6 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -79,42 +78,44 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactRole implements Comparable<ContactRole> {
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int NAME = 50;
+    }
+
+
     public String title() {
         return getRoleName() != null? getRoleName() : getContactGroup().getName() + "/" + getContact().getName();
     }
 
     @Column(allowsNull = "false")
-    @Property()
-    @PropertyLayout(
-            hidden = Where.REFERENCES_PARENT
-    )
+    @Property
+    @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     @Getter @Setter
     private Contact contact;
 
     @Column(allowsNull = "false")
-    @Property()
-    @PropertyLayout(
-            hidden = Where.REFERENCES_PARENT
-    )
+    @Property
+    @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     @Getter @Setter
     private ContactGroup contactGroup;
 
-    @Column(allowsNull = "true", length = 50)
+    @Column(allowsNull = "true", length = MaxLength.NAME)
     @Property()
     @Getter @Setter
     private String roleName;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit")
+    @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "roleName", sequence = "1")
-    public ContactRole changeRole(
-            @Parameter(optionality = Optionality.OPTIONAL)
+    public ContactRole edit(
+            @Parameter(maxLength = MaxLength.NAME)
             final String roleName) {
         setRoleName(roleName);
         return this;
     }
 
-    public String default0ChangeRole() {
+    public String default0Edit() {
         return getRoleName();
     }
 

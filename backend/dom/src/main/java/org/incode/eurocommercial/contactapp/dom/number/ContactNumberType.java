@@ -1,6 +1,9 @@
 package org.incode.eurocommercial.contactapp.dom.number;
 
-public enum ContactNumberType  {
+/**
+ * Default set of {@link ContactNumber#getType() contact number type}s
+ */
+public enum ContactNumberType {
 
     OFFICE,
     MOBILE,

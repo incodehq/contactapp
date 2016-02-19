@@ -14,9 +14,12 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
+import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
+import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
@@ -60,7 +63,8 @@ public class ContactMenu {
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByRole(
-            @Parameter(optionality = Optionality.OPTIONAL) String roleName
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            final String roleName
     ) {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);
         return contactRepository.findByContactRoleName(roleNameRegex);
@@ -72,16 +76,17 @@ public class ContactMenu {
     @Action
     @MemberOrder(sequence = "6")
     public Contact create(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = Contact.MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String officeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String mobileNumber,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String homeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email) {
         return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
     }

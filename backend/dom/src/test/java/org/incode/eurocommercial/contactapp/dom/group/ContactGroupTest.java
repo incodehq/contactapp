@@ -41,7 +41,7 @@ public class ContactGroupTest {
             String notes = "New notes";
 
             // when
-            contactGroup.change(name, address, email, notes);
+            contactGroup.edit(name, address, email, notes);
             // then
             assertThat(contactGroup.getName()).isEqualTo(name);
             assertThat(contactGroup.getEmail()).isEqualTo(email);

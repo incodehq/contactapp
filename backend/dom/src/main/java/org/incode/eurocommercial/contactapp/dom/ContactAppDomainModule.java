@@ -20,5 +20,12 @@ package org.incode.eurocommercial.contactapp.dom;
 
 public final class ContactAppDomainModule {
 
+    public static class MaxLength {
+
+        private MaxLength(){}
+        public static final int NOTES = 2048;
+
+    }
+
 
 }

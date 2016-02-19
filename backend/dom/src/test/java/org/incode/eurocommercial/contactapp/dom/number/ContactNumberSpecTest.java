@@ -5,13 +5,13 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ContactNumberRegexTest {
+public class ContactNumberSpecTest {
 
-    private ContactNumberRegex spec;
+    private ContactNumberSpec spec;
 
     @Before
     public void setUp() throws Exception {
-        spec = new ContactNumberRegex();
+        spec = new ContactNumberSpec();
     }
 
     @Test
@@ -25,23 +25,23 @@ public class ContactNumberRegexTest {
     }
 
     @Test
-    public void happy_case_with_brackets() throws Exception {
-        assertThat(spec.satisfies("+44 (0)1234 5678")).isNull();
-    }
-
-    @Test
-    public void happy_case_with_brackets2() throws Exception {
-        assertThat(spec.satisfies("+44 (01)1234 5678")).isNull();
+    public void sad_case_with_brackets() throws Exception {
+        assertThat(spec.satisfies("+44 (0)1234 5678")).isEqualTo(ContactNumberSpec.ERROR_MESSAGE);
     }
 
     @Test
     public void sad_case_missing_first_plus() throws Exception {
-        assertThat(spec.satisfies("44 1234 5678")).isEqualTo(ContactNumberRegex.ERROR_MESSAGE);
+        assertThat(spec.satisfies("44 1234 5678")).isEqualTo(ContactNumberSpec.ERROR_MESSAGE);
     }
 
     @Test
     public void sad_case_no_space() throws Exception {
-        assertThat(spec.satisfies("+441234 5678")).isEqualTo(ContactNumberRegex.ERROR_MESSAGE);
+        assertThat(spec.satisfies("+441234 5678")).isEqualTo(ContactNumberSpec.ERROR_MESSAGE);
+    }
+
+    @Test
+    public void sad_case_ends_with_space() throws Exception {
+        assertThat(spec.satisfies("+44 1234 5678 ")).isEqualTo(ContactNumberSpec.ERROR_MESSAGE);
     }
 
     @Test

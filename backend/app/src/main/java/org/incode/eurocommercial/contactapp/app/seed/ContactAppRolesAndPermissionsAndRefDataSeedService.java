@@ -26,6 +26,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
+import org.incode.eurocommercial.contactapp.dom.seed.country.CountryRefData;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.users.AdminUser;
@@ -38,7 +39,7 @@ import org.incode.eurocommercial.contactapp.dom.seed.users.LockIsisModuleSecurit
 @DomainServiceLayout(
         menuOrder = "1100" // not visible, but determines the order initialized (must come after security module's seed service)
 )
-public class ContactAppRolesAndPermissionsSeedService {
+public class ContactAppRolesAndPermissionsAndRefDataSeedService {
 
     //region > init
     @Programmatic
@@ -77,6 +78,8 @@ public class ContactAppRolesAndPermissionsSeedService {
             //            executionContext.executeChild(this, new PublishingModuleRoleAndPermissions());
             //            executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
             //            executionContext.executeChild(this, new TranslationServicePoMenuRoleAndPermissions());
+
+            executionContext.executeChild(this, new CountryRefData());
 
         }
 

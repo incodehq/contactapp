@@ -42,10 +42,10 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
+import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -77,22 +77,29 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactableEntity  {
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int NAME = 50;
+        public static final int EMAIL = 50;
+        public static final int NOTES = ContactAppDomainModule.MaxLength.NOTES;
+    }
+
     public String title() {
         return getName();
     }
 
     @MemberOrder(sequence = "1.2")
-    @Column(allowsNull = "false", length = 50)
+    @Column(allowsNull = "false", length = MaxLength.NAME)
     @Property
     @Getter @Setter
     private String name;
 
-    @Column(allowsNull = "true", length = 50)
+    @Column(allowsNull = "true", length = MaxLength.EMAIL)
     @Property
     @Getter @Setter
     private String email;
 
-    @Column(allowsNull = "true", length = 2048)
+    @Column(allowsNull = "true", length = MaxLength.NOTES)
     @Property
     @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
     @Getter @Setter
@@ -108,17 +115,19 @@ public class ContactableEntity  {
     @ActionLayout(named = "Add")
     @MemberOrder(name = "contactNumbers", sequence = "1")
     public ContactableEntity addContactNumber(
-            final ContactNumberType type,
-            @Parameter(mustSatisfy = ContactNumberRegex.class)
-            final String number) {
-        contactNumberRepository.findOrCreate(this, type, number);
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
+            final String number,
+            @Parameter(maxLength = ContactNumber.MaxLength.TYPE)
+            final String type
+    ) {
+        contactNumberRepository.findOrCreate(this, number, type);
         return this;
     }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
     @MemberOrder(name = "contactNumbers", sequence = "2")
-    public ContactableEntity removeContactNumber(ContactNumberType type) {
+    public ContactableEntity removeContactNumber(final String type) {
         final Optional<ContactNumber> contactNumberIfAny = Iterables
                 .tryFind(getContactNumbers(), cn -> Objects.equal(cn.getType(), type));
 
@@ -128,10 +137,10 @@ public class ContactableEntity  {
         return this;
     }
 
-    public ContactNumberType default0RemoveContactNumber() {
+    public String default0RemoveContactNumber() {
         return getContactNumbers().size() == 1? getContactNumbers().iterator().next().getType(): null;
     }
-    public List<ContactNumberType> choices0RemoveContactNumber() {
+    public List<String> choices0RemoveContactNumber() {
         return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getType);
     }
 

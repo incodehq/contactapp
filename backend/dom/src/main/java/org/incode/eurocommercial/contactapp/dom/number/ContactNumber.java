@@ -27,7 +27,9 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
+import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,13 +44,13 @@ import lombok.Setter;
         column = "version")
 @Queries({
         @Query(
-                name = "findByContactAndType", language = "JDOQL",
+                name = "findByOwnerAndNumber", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.contactapp.dom.number.ContactNumber "
                         + "WHERE owner == :owner "
-                        + "   && type == :type ")
+                        + "   && number == :number ")
 })
-@Unique(name = "ContactNumber_label_UNQ", members = { "owner", "type" })
+@Unique(name = "ContactNumber_owner_number_UNQ", members = { "owner", "number" })
 @DomainObject(
         editing = Editing.DISABLED
 )
@@ -58,62 +60,72 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactNumber implements Comparable<ContactNumber> {
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int TYPE = 20;
+        public static final int NUMBER = 30;
+        public static final int NOTES = ContactAppDomainModule.MaxLength.NOTES;
+    }
+
+
     @Column(allowsNull = "false")
     @Property
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
     @Getter @Setter
     private ContactableEntity owner;
 
-    @Column(allowsNull = "false")
+    @Column(allowsNull = "false", length = MaxLength.TYPE)
     @Property
     @Getter @Setter
-    private ContactNumberType type;
+    private String type;
 
     @Title
-    @Column(allowsNull = "false", length = 30)
+    @Column(allowsNull = "false", length = MaxLength.NUMBER)
     @Property
     @Getter @Setter
     private String number;
 
-    @Column(allowsNull = "true", length = 2048)
+    @Column(allowsNull = "true", length = MaxLength.NOTES)
     @Property
     @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
     @Getter @Setter
     private String notes;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
-    public ContactNumber change(
-            final ContactNumberType type,
-            @Parameter(mustSatisfy = ContactNumberRegex.class)
+    public ContactNumber edit(
+            @Parameter(maxLength = MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
             final String number,
+            @Parameter(maxLength = MaxLength.TYPE)
+            final String type,
+            @Parameter(maxLength = MaxLength.NOTES)
             final String notes) {
-        setType(type);
         setNumber(number);
+        setType(type);
         setNotes(notes);
         return this;
     }
 
-    public ContactNumberType default0Change() {
-        return getType();
-    }
-    public String default1Change() {
+    public String default0Edit() {
         return getNumber();
     }
-    public String default2Change() {
+    public String default1Edit() {
+        return getType();
+    }
+    public String default2Edit() {
         return getNotes();
     }
 
     //region > compareTo, toString
     @Override
     public int compareTo(final ContactNumber other) {
-        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "owner", "type");
+        return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "owner", "number");
     }
 
     @Override
     public String toString() {
-        return org.apache.isis.applib.util.ObjectContracts.toString(this, "owner", "type");
+        return org.apache.isis.applib.util.ObjectContracts.toString(this, "owner", "number", "type");
     }
     //endregion
 

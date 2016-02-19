@@ -29,7 +29,7 @@ public class ContactNumberViewModel extends ViewModelWithUnderlying<ContactNumbe
 
     @XmlTransient
     public String getType() {
-        return underlying.getType().title();
+        return underlying.getType();
     }
 
     @XmlTransient

@@ -40,12 +40,12 @@ public class ContactNumberTest {
         @Test
         public void happyCase() throws Exception {
             // given
-            ContactNumberType type = fakeDataService.enums().anyOf(ContactNumberType.class);
+            String type = fakeDataService.enums().anyOf(ContactNumberType.class).title();
             String number = randomPhoneNumber();
             String notes = fakeDataService.strings().upper(2048);
 
             // when
-            contactNumber.change(type, number, notes);
+            contactNumber.edit(number, type, notes);
 
             // then
             assertThat(contactNumber.getType()).isEqualTo(type);

@@ -65,6 +65,12 @@ import lombok.Setter;
 public class Country implements Comparable<Country> {
 
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int NAME = 50;
+    }
+
+
     /**
      * eg matches <code>Country-Italy.png</code> etc.
      */
@@ -72,7 +78,7 @@ public class Country implements Comparable<Country> {
         return getName();
     }
 
-    @Column(allowsNull = "false", length = 50)
+    @Column(allowsNull = "false", length = MaxLength.NAME)
     @Property
     @Title
     @Getter @Setter

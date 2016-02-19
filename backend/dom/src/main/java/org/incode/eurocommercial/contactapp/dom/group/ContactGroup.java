@@ -23,6 +23,8 @@ import com.google.common.collect.Ordering;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.Collection;
+import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
@@ -74,12 +76,15 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactGroup extends ContactableEntity implements Comparable<ContactGroup> {
 
-    private Iterable<ContactRole> contactRoles;
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int ADDRESS = 255;
+    }
+
 
     public String title() {
         return getName() + " (" +  getCountry().getName() + ")";
     }
-
 
     @MemberOrder(name = "Other", sequence = "1")
     @Column(allowsNull = "true")
@@ -96,7 +101,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private Country country;
 
-    @Column(allowsNull = "true", length = 255)
+    @Column(allowsNull = "true", length = MaxLength.ADDRESS)
     @Property
     @Getter @Setter
     private String address;
@@ -107,6 +112,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @MemberOrder(name = "Notes", sequence = "1")
     public ContactGroup create(
             final Country country,
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name) {
         return contactGroupRepository.findOrCreate(country, name);
     }
@@ -116,15 +122,16 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Edit", position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "2")
-    public ContactableEntity change(
+    public ContactableEntity edit(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = MaxLength.ADDRESS, optionality = Optionality.OPTIONAL)
             final String address,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.NOTES, optionality = Optionality.OPTIONAL)
             @ParameterLayout(multiLine = 6)
             final String notes) {
         setName(name);
@@ -134,16 +141,16 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return this;
     }
 
-    public String default0Change() {
+    public String default0Edit() {
         return getName();
     }
-    public String default1Change() {
+    public String default1Edit() {
         return getAddress();
     }
-    public String default2Change() {
+    public String default2Edit() {
         return getEmail();
     }
-    public String default3Change() {
+    public String default3Edit() {
         return getNotes();
     }
 
@@ -167,16 +174,22 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return contactRoleRepository.findByGroup(this);
     }
 
+    @Collection
+    @CollectionLayout(defaultView = "table")
+    public List<Contact> getContacts(){
+        return contactRepository.findByContactGroup(this);
+    }
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
-    @MemberOrder(name = "contactRoles", sequence = "1")
+    @MemberOrder(name = "contacts", sequence = "1")
     public ContactGroup addContactRole(
             @Parameter(optionality = Optionality.MANDATORY)
             Contact contact,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             String existingRole,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             String newRole) {
         final String roleName = existingRole != null? existingRole: newRole;
         contactRoleRepository.findOrCreate(contact, this, roleName);
@@ -206,7 +219,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
-    @MemberOrder(name = "contactRoles", sequence = "2")
+    @MemberOrder(name = "contacts", sequence = "2")
     public ContactGroup removeContactRole(final Contact contact) {
         final Optional<ContactRole> contactRoleIfAny = Iterables
                 .tryFind(getContactRoles(), cn -> Objects.equal(cn.getContact(), contact));
@@ -226,8 +239,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     public String disableRemoveContactRole() {
         return getContactRoles().isEmpty()? "No contacts to remove": null;
     }
-
-
 
 
 
@@ -262,7 +273,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     ContactRepository contactRepository;
     @javax.inject.Inject
     ContactGroupRepository contactGroupRepository;
-
 
 
 }

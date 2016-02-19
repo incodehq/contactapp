@@ -38,10 +38,12 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRegex;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,11 +70,18 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Contact extends ContactableEntity implements Comparable<Contact> {
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int COMPANY = 50;
+    }
+
+
     public String title() {
         return getName();
     }
 
-    @Column(allowsNull = "true", length = 50)
+
+    @Column(allowsNull = "true", length = MaxLength.COMPANY)
     @Property
     @Getter @Setter
     private String company;
@@ -82,16 +91,17 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "1")
     public Contact create(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String officeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String mobileNumber,
-            @Parameter(optionality = Optionality.OPTIONAL,mustSatisfy = ContactNumberRegex.class)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String homeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email) {
         return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
     }
@@ -102,18 +112,16 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(
-            named = "Edit",
-            position = ActionLayout.Position.PANEL
-    )
+    @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "2")
-    public Contact change(
+    public Contact edit(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.NOTES, optionality = Optionality.OPTIONAL)
             @ParameterLayout(multiLine = 6)
             final String notes) {
         setName(name);
@@ -122,6 +130,21 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         setNotes(notes);
         return this;
     }
+
+    public String default0Edit() {
+        return getName();
+    }
+    public String default1Edit() {
+        return getCompany();
+    }
+    public String default2Edit() {
+        return getEmail();
+    }
+    public String default3Edit() {
+        return getNotes();
+    }
+
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(
@@ -133,22 +156,9 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     }
 
 
-    public String default0Change() {
-        return getName();
-    }
-    public String default1Change() {
-        return getCompany();
-    }
-    public String default2Change() {
-        return getEmail();
-    }
-    public String default3Change() {
-        return getNotes();
-    }
-
     @Persistent(mappedBy = "contact", dependentElement = "false")
     @Collection()
-    @CollectionLayout(render = RenderType.EAGERLY)
+    @CollectionLayout(named = "Contact Groups", render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
 
@@ -157,11 +167,11 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     @MemberOrder(name = "contactRoles", sequence = "1")
     public Contact addContactRole(
             @Parameter(optionality = Optionality.MANDATORY)
-            ContactGroup contactGroup,
-            @Parameter(optionality = Optionality.OPTIONAL)
-            String existingRole,
-            @Parameter(optionality = Optionality.OPTIONAL)
-            String newRole) {
+            final ContactGroup contactGroup,
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            final String existingRole,
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            final String newRole) {
         final String roleName = existingRole != null? existingRole: newRole;
         contactRoleRepository.findOrCreate(this, contactGroup, roleName);
         return this;
