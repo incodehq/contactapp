@@ -15,8 +15,6 @@ import javax.jdo.annotations.Version;
 import javax.jdo.annotations.VersionStrategy;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.google.common.base.Strings;
-
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
@@ -33,7 +31,6 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
-import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
@@ -71,7 +68,6 @@ public class ContactNumber implements Comparable<ContactNumber> {
         private MaxLength(){}
         public static final int TYPE = 20;
         public static final int NUMBER = 30;
-        public static final int NOTES = ContactAppDomainModule.MaxLength.NOTES;
     }
 
 
@@ -92,27 +88,51 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Getter @Setter
     private String number;
 
-    @Column(allowsNull = "true", length = MaxLength.NOTES)
-    @Property
-    @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
-    @Getter @Setter
-    private String notes;
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
+    public ContactNumber create(
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
+            final String number,
+            @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String type,
+            @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
+            final String newType
+    ) {
+        contactNumberRepository.findOrCreate(getOwner(), number, StringUtil.firstNonEmpty(newType, type));
+        return this;
+    }
+
+    public Set<String> choices1Create() {
+        return contactNumberRepository.existingTypes();
+    }
+    public String default1Create() {
+        return ContactNumberType.OFFICE.title();
+    }
+
+    public String validateCreate(
+            final String number,
+            final String type,
+            final String newType) {
+        return StringUtil.eitherOr(type, newType, "type");
+    }
+
+
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "number", sequence = "2")
     public ContactNumber edit(
             @Parameter(maxLength = MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
             final String number,
             @Parameter(maxLength = MaxLength.TYPE, optionality = Optionality.OPTIONAL)
-            final String existingType,
+            final String type,
             @Parameter(maxLength = MaxLength.TYPE, optionality = Optionality.OPTIONAL)
-            final String newType,
-            @Parameter(maxLength = MaxLength.NOTES, optionality = Optionality.OPTIONAL)
-    final String notes) {
+            final String newType) {
         setNumber(number);
-        setType(StringUtil.firstNonEmpty(newType, existingType));
-        setNotes(notes);
+        setType(StringUtil.firstNonEmpty(newType, type));
         return this;
     }
 
@@ -126,19 +146,25 @@ public class ContactNumber implements Comparable<ContactNumber> {
     public String default1Edit() {
         return getType();
     }
-    public String default3Edit() {
-        return getNotes();
-    }
 
     public String validateEdit(
             final String number,
-            final String existingType,
-            final String newType,
-            final String notes) {
-        return  Strings.isNullOrEmpty(existingType) &&
-                Strings.isNullOrEmpty(newType) ?
-                "Must specify type": null;
+            final String type,
+            final String newType) {
+        return StringUtil.eitherOr(type, newType, "type");
     }
+
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "number", sequence = "3")
+    public ContactableEntity remove() {
+        final ContactableEntity owner = getOwner();
+        owner.getContactNumbers().remove(this);
+        return owner;
+    }
+
 
 
     //region > compareTo, toString

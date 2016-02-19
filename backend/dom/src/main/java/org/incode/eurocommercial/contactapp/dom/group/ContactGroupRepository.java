@@ -3,14 +3,10 @@ package org.incode.eurocommercial.contactapp.dom.group;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 
@@ -25,6 +21,15 @@ public class ContactGroupRepository {
         final List<ContactGroup> contactGroups = container.allInstances(ContactGroup.class);
         Collections.sort(contactGroups);
         return contactGroups;
+    }
+
+    @Programmatic
+    public List<ContactGroup> findByCountry(final Country country) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactGroup.class,
+                        "findByCountry",
+                        "country", country));
     }
 
     @Programmatic
@@ -76,6 +81,7 @@ public class ContactGroupRepository {
     public void delete(final ContactGroup contactGroup) {
         container.removeIfNotAlready(contactGroup);
     }
+
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;

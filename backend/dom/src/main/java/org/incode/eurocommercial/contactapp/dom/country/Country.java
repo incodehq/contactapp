@@ -1,15 +1,11 @@
 package org.incode.eurocommercial.contactapp.dom.country;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.DatastoreIdentity;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
@@ -18,8 +14,6 @@ import javax.jdo.annotations.VersionStrategy;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
@@ -28,7 +22,6 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 
 import lombok.Getter;
@@ -84,12 +77,6 @@ public class Country implements Comparable<Country> {
     @Getter @Setter
     private String name;
 
-
-    @Persistent(mappedBy = "country", dependentElement = "true")
-    @Collection()
-    @CollectionLayout(defaultView = "table", paged = 100)
-    @Getter @Setter
-    private SortedSet<ContactGroup> contactGroups = new TreeSet<ContactGroup>();
 
 
     //region > compareTo, toString

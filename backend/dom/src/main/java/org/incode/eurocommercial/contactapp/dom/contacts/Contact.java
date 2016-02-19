@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -39,10 +40,11 @@ import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -156,11 +158,13 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     }
 
 
-    @Persistent(mappedBy = "contact", dependentElement = "false")
+    @Persistent(mappedBy = "contact", dependentElement = "true")
     @Collection()
-    @CollectionLayout(named = "Contact Groups", render = RenderType.EAGERLY)
+    @CollectionLayout(named = "Role of Contact across Groups", render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
+
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
@@ -169,30 +173,33 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
             @Parameter(optionality = Optionality.MANDATORY)
             final ContactGroup contactGroup,
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
-            final String existingRole,
+            final String role,
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String newRole) {
-        final String roleName = existingRole != null? existingRole: newRole;
+        final String roleName = StringUtil.firstNonEmpty(newRole, role);
         contactRoleRepository.findOrCreate(this, contactGroup, roleName);
         return this;
     }
 
     public List<ContactGroup> choices0AddContactRole() {
-        return contactGroupRepository.listAll();
+        final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+        final List<ContactGroup> currentGroups =
+                FluentIterable
+                        .from(getContactRoles())
+                        .transform(ContactRole::getContactGroup)
+                        .toList();
+        contactGroups.removeAll(currentGroups);
+        return contactGroups;
     }
     public SortedSet<String> choices1AddContactRole() {
         return contactRoleRepository.roleNames();
     }
 
-    public String validate2AddContactRole(final String newRole) {
-        if(newRole == null) {
-            return null;
-        }
-        if(choices1AddContactRole().contains(newRole)) {
-            return "This role already exists - select from the list";
-        }
-        return null;
+    public String validateAddContactRole(final ContactGroup contactGroup, final String role, final String newRole) {
+        return StringUtil.eitherOr(role, newRole, "role");
     }
+
+
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)

@@ -37,9 +37,4 @@ public class ContactNumberViewModel extends ViewModelWithUnderlying<ContactNumbe
         return underlying.getNumber();
     }
 
-    @XmlTransient
-    public String getNotes() {
-        return underlying.getNotes();
-    }
-
 }

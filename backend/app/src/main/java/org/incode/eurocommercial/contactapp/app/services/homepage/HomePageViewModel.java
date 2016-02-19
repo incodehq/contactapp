@@ -81,6 +81,11 @@ public class HomePageViewModel {
         contactGroups.removeAll(usedContactGroups);
         return contactGroups;
     }
+    public ContactGroup default0DeleteContactGroup() {
+        final List<ContactGroup> choices = choices0DeleteContactGroup();
+        return choices.isEmpty()? null: choices.get(0);
+    }
+
 
     public String disableDeleteContactGroup() {
         return choices0DeleteContactGroup().isEmpty()? "No contact groups without contacts": null;

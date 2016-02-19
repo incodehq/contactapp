@@ -42,15 +42,13 @@ public class ContactNumberTest {
             // given
             String existingType = fakeDataService.enums().anyOf(ContactNumberType.class).title();
             String number = randomPhoneNumber();
-            String notes = fakeDataService.strings().upper(ContactNumber.MaxLength.NOTES);
 
             // when
-            contactNumber.edit(number, existingType, null, notes);
+            contactNumber.edit(number, existingType, null);
 
             // then
             assertThat(contactNumber.getType()).isEqualTo(existingType);
             assertThat(contactNumber.getNumber()).isEqualTo(number);
-            assertThat(contactNumber.getNotes()).isEqualTo(notes);
         }
 
         @Test
@@ -58,15 +56,13 @@ public class ContactNumberTest {
             // given
             String type = fakeDataService.strings().upper(ContactNumber.MaxLength.TYPE);
             String number = randomPhoneNumber();
-            String notes = fakeDataService.strings().upper(ContactNumber.MaxLength.NOTES);
 
             // when
-            contactNumber.edit(number, null, type, notes);
+            contactNumber.edit(number, null, type);
 
             // then
             assertThat(contactNumber.getType()).isEqualTo(type);
             assertThat(contactNumber.getNumber()).isEqualTo(number);
-            assertThat(contactNumber.getNotes()).isEqualTo(notes);
         }
 
         private String randomPhoneNumber() {

@@ -14,4 +14,14 @@ public class StringUtil {
         }
         return null;
     }
+
+    public static String eitherOr(final String role, final String newRole, final String thing) {
+        if((Strings.isNullOrEmpty(role) && Strings.isNullOrEmpty(newRole)) || (!Strings.isNullOrEmpty(role) && !Strings.isNullOrEmpty(newRole))) {
+            return "Must specify either an (existing) "
+                    + thing
+                    + " or a new "
+                    + thing;
+        }
+        return null;
+    }
 }

@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -116,6 +115,7 @@ public class ContactableEntity  {
     @Getter @Setter
     private SortedSet<ContactNumber> contactNumbers = new TreeSet<ContactNumber>();
 
+
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
     @MemberOrder(name = "contactNumbers", sequence = "1")
@@ -123,11 +123,11 @@ public class ContactableEntity  {
             @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)
             final String number,
             @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
-            final String existingType,
+            final String type,
             @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
             final String newType
     ) {
-        contactNumberRepository.findOrCreate(this, number, StringUtil.firstNonEmpty(newType, existingType));
+        contactNumberRepository.findOrCreate(this, number, StringUtil.firstNonEmpty(newType, type));
         return this;
     }
 
@@ -140,12 +140,9 @@ public class ContactableEntity  {
 
     public String validateAddContactNumber(
             final String number,
-            final String existingType,
-            final String newType
-    ) {
-        return  Strings.isNullOrEmpty(existingType) &&
-                Strings.isNullOrEmpty(newType) ?
-                "Must specify type": null;
+            final String type,
+            final String newType) {
+        return StringUtil.eitherOr(type, newType, "type");
     }
 
 
@@ -169,7 +166,8 @@ public class ContactableEntity  {
         return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getNumber);
     }
     public String default0RemoveContactNumber() {
-        return choices0RemoveContactNumber().get(0);
+        final List<String> choices = choices0RemoveContactNumber();
+        return choices.isEmpty()? null : choices.get(0);
     }
 
     

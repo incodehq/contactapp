@@ -26,6 +26,7 @@ public class CountryRefData extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
+        countryRepository.findOrCreate("Global");
         countryRepository.findOrCreate("France");
         countryRepository.findOrCreate("Italy");
         countryRepository.findOrCreate("Sweden");

@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -33,7 +34,6 @@ import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -47,6 +47,7 @@ import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +55,11 @@ import lombok.Setter;
 @PersistenceCapable
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 @Queries({
+        @Query(
+                name = "findByCountry", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.contactapp.dom.group.ContactGroup "
+                        + "WHERE country == :country "),
         @Query(
                 name = "findByCountryAndName", language = "JDOQL",
                 value = "SELECT "
@@ -168,30 +174,24 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
 
 
-    @Programmatic
     @NotPersistent
+    @Collection
+    @CollectionLayout(named = "Role of Contacts in Group", defaultView = "table")
     public List<ContactRole> getContactRoles() {
         return contactRoleRepository.findByGroup(this);
     }
 
-    @Collection
-    @CollectionLayout(defaultView = "table")
-    public List<Contact> getContacts(){
-        return contactRepository.findByContactGroup(this);
-    }
-
-
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
-    @MemberOrder(name = "contacts", sequence = "1")
+    @MemberOrder(name = "contactRoles", sequence = "1")
     public ContactGroup addContactRole(
             @Parameter(optionality = Optionality.MANDATORY)
             Contact contact,
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
-            String existingRole,
+            String role,
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             String newRole) {
-        final String roleName = existingRole != null? existingRole: newRole;
+        final String roleName = StringUtil.firstNonEmpty(newRole, role);
         contactRoleRepository.findOrCreate(contact, this, roleName);
         return this;
     }
@@ -200,26 +200,26 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
             @MinLength(3)
             final String query) {
         String queryRegex = ContactMenu.toCaseInsensitiveRegex(query);
-        return contactRepository.find(queryRegex);
+        final List<Contact> contacts = contactRepository.find(queryRegex);
+        final List<Contact> currentContacts =
+                FluentIterable
+                        .from(getContactRoles())
+                        .transform(ContactRole::getContact)
+                        .toList();
+        contacts.removeAll(currentContacts);
+        return contacts;
     }
     public SortedSet<String> choices1AddContactRole() {
         return contactRoleRepository.roleNames();
     }
 
-    public String validate2AddContactRole(final String newRole) {
-        if(newRole == null) {
-            return null;
-        }
-        if(choices1AddContactRole().contains(newRole)) {
-            return "This role already exists - select from the list";
-        }
-        return null;
+    public String validateAddContactRole(final Contact contact, final String role, final String newRole) {
+        return StringUtil.eitherOr(role, newRole, "role");
     }
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
-    @MemberOrder(name = "contacts", sequence = "2")
+    @MemberOrder(name = "contactRoles", sequence = "2")
     public ContactGroup removeContactRole(final Contact contact) {
         final Optional<ContactRole> contactRoleIfAny = Iterables
                 .tryFind(getContactRoles(), cn -> Objects.equal(cn.getContact(), contact));
