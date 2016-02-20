@@ -77,7 +77,7 @@ import lombok.Setter;
         strategy = IdGeneratorStrategy.NATIVE,
         column = "id")
 @Version(
-        strategy = VersionStrategy.VERSION_NUMBER,
+        strategy = VersionStrategy.DATE_TIME,
         column = "version")
 @javax.jdo.annotations.Discriminator(
         strategy = DiscriminatorStrategy.CLASS_NAME,
@@ -114,11 +114,13 @@ public class ContactableEntity  {
     @Getter @Setter
     private String name;
 
+    @MemberOrder(sequence = "2")
     @Column(allowsNull = "true", length = MaxLength.EMAIL)
     @Property
     @Getter @Setter
     private String email;
 
+    @MemberOrder(sequence = "3")
     @Column(allowsNull = "true", length = MaxLength.NOTES)
     @Property
     @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)
@@ -130,6 +132,7 @@ public class ContactableEntity  {
     @CollectionLayout(render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactNumber> contactNumbers = new TreeSet<ContactNumber>();
+
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)

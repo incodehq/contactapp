@@ -50,7 +50,7 @@ import lombok.Setter;
         strategy = IdGeneratorStrategy.IDENTITY,
         column = "id")
 @Version(
-        strategy = VersionStrategy.VERSION_NUMBER,
+        strategy = VersionStrategy.DATE_TIME,
         column = "version")
 @Queries({
         @Query(

@@ -68,7 +68,7 @@ import lombok.Setter;
         strategy = IdGeneratorStrategy.IDENTITY,
         column = "id")
 @Version(
-        strategy = VersionStrategy.VERSION_NUMBER,
+        strategy = VersionStrategy.DATE_TIME,
         column = "version")
 @Queries({
         @Query(
@@ -115,7 +115,7 @@ public class ContactRole implements Comparable<ContactRole> {
         final StringBuilder buf = new StringBuilder();
         buf.append(getContact().getName()).append(": ");
         if(getRoleName() != null) {
-            buf.append(getRoleName()).append(" role");
+            buf.append(getRoleName());
         }
         buf.append(" in ").append(getContactGroup().getName());
         return buf.toString();
@@ -237,7 +237,7 @@ public class ContactRole implements Comparable<ContactRole> {
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "roleName", sequence = "4")
-    public ContactableEntity remove() {
+    public ContactableEntity delete() {
         final Contact contact = getContact();
         contact.getContactRoles().remove(this);
         return contact;

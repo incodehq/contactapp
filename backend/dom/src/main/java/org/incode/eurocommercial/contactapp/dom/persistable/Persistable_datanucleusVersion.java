@@ -14,40 +14,37 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.group;
+package org.incode.eurocommercial.contactapp.dom.persistable;
 
-import java.util.List;
+import javax.jdo.JDOHelper;
 
-import javax.inject.Inject;
+import org.datanucleus.enhancement.Persistable;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.Contributed;
-import org.apache.isis.applib.annotation.Mixin;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-import org.incode.eurocommercial.contactapp.dom.country.Country;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+// @Mixin // see https://issues.apache.org/jira/browse/ISIS-1311
+public class Persistable_datanucleusVersion {
 
-@Mixin
-public class Country_contactGroups {
+    private final Persistable persistable;
 
-    private final Country country;
-
-    public Country_contactGroups(Country country) {
-        this.country = country;
+    public Persistable_datanucleusVersion(Persistable persistable) {
+        this.persistable = persistable;
     }
 
+    @MemberOrder(name = "Metadata", sequence = "2")
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(contributed = Contributed.AS_ASSOCIATION)
-    @CollectionLayout(named="Contact Groups", defaultView = "table")
-    public List<ContactGroup> $$() {
-        return contactGroupRepository.findByCountry(this.country);
+    @PropertyLayout(named = "Version")
+    public Object datanucleusVersion() {
+        return JDOHelper.getVersion(persistable);
     }
-
-    @Inject
-    ContactGroupRepository contactGroupRepository;
+    public boolean hideDatanucleusVersion() {
+        return datanucleusVersion() == null;
+    }
 
 }
