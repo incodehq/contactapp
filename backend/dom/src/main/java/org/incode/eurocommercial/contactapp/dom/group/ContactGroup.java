@@ -196,11 +196,8 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return this;
     }
 
-    public List<Contact> autoComplete0AddContactRole(
-            @MinLength(3)
-            final String query) {
-        String queryRegex = ContactMenu.toCaseInsensitiveRegex(query);
-        final List<Contact> contacts = contactRepository.find(queryRegex);
+    public List<Contact> choices0AddContactRole() {
+        final List<Contact> contacts = contactRepository.listAll();
         final List<Contact> currentContacts =
                 FluentIterable
                         .from(getContactRoles())

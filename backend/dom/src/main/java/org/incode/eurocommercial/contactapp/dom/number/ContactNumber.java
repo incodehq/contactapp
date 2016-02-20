@@ -27,7 +27,6 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
@@ -70,6 +69,11 @@ public class ContactNumber implements Comparable<ContactNumber> {
         public static final int NUMBER = 30;
     }
 
+    public String title() {
+        final StringBuilder buf = new StringBuilder();
+        buf.append(getNumber()).append(" (").append(getType()).append(")");
+        return buf.toString();
+    }
 
     @Column(allowsNull = "false")
     @Property
@@ -82,7 +86,6 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Getter @Setter
     private String type;
 
-    @Title
     @Column(allowsNull = "false", length = MaxLength.NUMBER)
     @Property
     @Getter @Setter
@@ -100,8 +103,9 @@ public class ContactNumber implements Comparable<ContactNumber> {
             @Parameter(maxLength = ContactNumber.MaxLength.TYPE, optionality = Optionality.OPTIONAL)
             final String newType
     ) {
-        contactNumberRepository.findOrCreate(getOwner(), number, StringUtil.firstNonEmpty(newType, type));
-        return this;
+        final ContactNumber newNumber = contactNumberRepository
+                .findOrCreate(getOwner(), number, StringUtil.firstNonEmpty(newType, type));
+        return newNumber;
     }
 
     public Set<String> choices1Create() {
@@ -159,7 +163,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "3")
-    public ContactableEntity remove() {
+    public ContactableEntity delete() {
         final ContactableEntity owner = getOwner();
         owner.getContactNumbers().remove(this);
         return owner;

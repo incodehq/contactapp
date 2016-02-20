@@ -160,7 +160,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
 
     @Persistent(mappedBy = "contact", dependentElement = "true")
     @Collection()
-    @CollectionLayout(named = "Role of Contact across Groups", render = RenderType.EAGERLY)
+    @CollectionLayout(named = "Role of Contact in Groups", render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
 

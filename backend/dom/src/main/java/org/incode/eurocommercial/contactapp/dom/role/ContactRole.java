@@ -95,9 +95,14 @@ public class ContactRole implements Comparable<ContactRole> {
         public static final int NAME = 50;
     }
 
-
     public String title() {
-        return getRoleName() != null? getRoleName() : getContactGroup().getName() + "/" + getContact().getName();
+        final StringBuilder buf = new StringBuilder();
+        buf.append(getContact().getName()).append(": ");
+        if(getRoleName() != null) {
+            buf.append(getRoleName()).append(" role");
+        }
+        buf.append(" in ").append(getContactGroup().getName());
+        return buf.toString();
     }
 
     @Column(allowsNull = "false")
@@ -130,8 +135,8 @@ public class ContactRole implements Comparable<ContactRole> {
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String newRole) {
         final String roleName = StringUtil.firstNonEmpty(newRole, role);
-        contactRoleRepository.findOrCreate(contact, contactGroup, roleName);
-        return this;
+        final ContactRole newlyCreatedRole = contactRoleRepository.findOrCreate(contact, contactGroup, roleName);
+        return newlyCreatedRole;
     }
 
     public List<ContactGroup> choices0AlsoInGroup() {
@@ -165,8 +170,8 @@ public class ContactRole implements Comparable<ContactRole> {
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String newRole) {
         final String roleName = StringUtil.firstNonEmpty(newRole, role);
-        contactRoleRepository.findOrCreate(contact, contactGroup, roleName);
-        return this;
+        final ContactRole newlyCreatedRole = contactRoleRepository.findOrCreate(contact, contactGroup, roleName);
+        return newlyCreatedRole;
     }
 
     public List<Contact> choices0AlsoWithContact() {
@@ -193,9 +198,9 @@ public class ContactRole implements Comparable<ContactRole> {
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "roleName", sequence = "3")
     public ContactRole edit(
-            @Parameter(maxLength = MaxLength.NAME)
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String role,
-            @Parameter(maxLength = MaxLength.NAME)
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String newRole) {
         setRoleName(StringUtil.firstNonEmpty(newRole, role));
         return this;
