@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 package org.incode.eurocommercial.contactapp.dom.group;
 
 import java.util.Collections;
@@ -7,6 +23,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 
 @DomainService(
@@ -20,6 +37,15 @@ public class ContactGroupRepository {
         final List<ContactGroup> contactGroups = container.allInstances(ContactGroup.class);
         Collections.sort(contactGroups);
         return contactGroups;
+    }
+
+    @Programmatic
+    public List<ContactGroup> findByCountry(final Country country) {
+        return container.allMatches(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactGroup.class,
+                        "findByCountry",
+                        "country", country));
     }
 
     @Programmatic
@@ -72,7 +98,11 @@ public class ContactGroupRepository {
         container.removeIfNotAlready(contactGroup);
     }
 
+
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
+
+    @javax.inject.Inject
+    ContactRepository contactRepository;
 
 }

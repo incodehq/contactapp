@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 Dan Haywood
+ *  Copyright 2015-2016 Eurocommercial Properties NV
  *
  *  Licensed under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
@@ -21,7 +21,6 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactContributions;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
@@ -56,8 +55,7 @@ public class ContactAppReadOnlyRoleAndPermissions extends AbstractRoleAndPermiss
                 ContactGroup.class,
                 Country.class,
                 ContactRole.class,
-                ContactNumber.class,
-                ContactContributions.class);
+                ContactNumber.class);
 
         // display order view model
         newClassPermissions(

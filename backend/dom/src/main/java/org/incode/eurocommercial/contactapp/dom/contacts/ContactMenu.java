@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 package org.incode.eurocommercial.contactapp.dom.contacts;
 
 import java.util.List;
@@ -14,8 +30,12 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
+import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
+import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
@@ -59,7 +79,8 @@ public class ContactMenu {
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByRole(
-            @Parameter(optionality = Optionality.OPTIONAL) String roleName
+            @Parameter(maxLength = ContactRole.MaxLength.NAME)
+            final String roleName
     ) {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);
         return contactRepository.findByContactRoleName(roleNameRegex);
@@ -68,19 +89,20 @@ public class ContactMenu {
         return contactRoleRepository.roleNames();
     }
 
-    @Action()
+    @Action
     @MemberOrder(sequence = "6")
     public Contact create(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = Contact.MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String officeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String mobileNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
             final String homeNumber,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email) {
         return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
     }
@@ -89,7 +111,6 @@ public class ContactMenu {
         if(pattern == null) {
             return null;
         }
-
         if(pattern.contains("*") || pattern.contains("?")) {
             final String regex = pattern.replace("*", ".*").replace("?", ".");
             return "(?i)" + regex;

@@ -1,9 +1,7 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
  *
@@ -18,6 +16,13 @@
  */
 package org.incode.eurocommercial.contactapp.integtests.tests;
 
+import java.util.List;
+
+import com.google.common.base.Throwables;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.BeforeClass;
 
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
@@ -34,6 +39,26 @@ public abstract class ContactAppIntegTest extends IntegrationTestAbstract {
 
         // instantiating will install onto ThreadLocal
         new ScenarioExecutionForIntegration();
+    }
+
+    public static Matcher<? extends Throwable> causalChainContains(final Class<?> cls) {
+        return new TypeSafeMatcher<Throwable>() {
+            @Override
+            protected boolean matchesSafely(Throwable item) {
+                final List<Throwable> causalChain = Throwables.getCausalChain(item);
+                for (Throwable throwable : causalChain) {
+                    if(cls.isAssignableFrom(throwable.getClass())){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("exception with causal chain containing " + cls.getSimpleName());
+            }
+        };
     }
 
 }

@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 package org.incode.eurocommercial.contactapp.dom.contacts;
 
 import java.util.List;
@@ -15,6 +31,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
@@ -38,9 +55,13 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,28 +88,58 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Contact extends ContactableEntity implements Comparable<Contact> {
 
+    public static class MaxLength {
+        private MaxLength(){}
+        public static final int COMPANY = 50;
+    }
+
+
     public String title() {
         return getName();
     }
 
-    @Column(allowsNull = "true")
+
+    @Column(allowsNull = "true", length = MaxLength.COMPANY)
     @Property
     @Getter @Setter
     private String company;
 
-    @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(
-            named = "Edit",
-            position = ActionLayout.Position.PANEL
-    )
+
+    @Action
+    @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "1")
-    public Contact change(
+    public Contact create(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
             final String company,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
+            final String officeNumber,
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
+            final String mobileNumber,
+            @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, optionality = Optionality.OPTIONAL, mustSatisfy = ContactNumberSpec.class)
+            final String homeNumber,
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
+            final String email) {
+        return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
+    }
+
+    public String default1Create() {
+        return getCompany();
+    }
+
+
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @MemberOrder(name = "Notes", sequence = "2")
+    public Contact edit(
+            @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
+            final String name,
+            @Parameter(maxLength = MaxLength.COMPANY, optionality = Optionality.OPTIONAL)
+            final String company,
+            @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email,
-            @Parameter(optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactableEntity.MaxLength.NOTES, optionality = Optionality.OPTIONAL)
             @ParameterLayout(multiLine = 6)
             final String notes) {
         setName(name);
@@ -98,73 +149,73 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return this;
     }
 
+    public String default0Edit() {
+        return getName();
+    }
+    public String default1Edit() {
+        return getCompany();
+    }
+    public String default2Edit() {
+        return getEmail();
+    }
+    public String default3Edit() {
+        return getNotes();
+    }
+
+
+
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(
             position = ActionLayout.Position.PANEL
     )
-    @MemberOrder(name = "Notes", sequence = "2")
+    @MemberOrder(name = "Notes", sequence = "3")
     public void delete() {
         contactRepository.delete(this);
     }
 
 
-    public String default0Change() {
-        return getName();
-    }
-    public String default1Change() {
-        return getCompany();
-    }
-    public String default2Change() {
-        return getEmail();
-    }
-    public String default3Change() {
-        return getNotes();
-    }
-
-    @Persistent(mappedBy = "contact", dependentElement = "false")
+    @Persistent(mappedBy = "contact", dependentElement = "true")
     @Collection()
-    @CollectionLayout(render = RenderType.EAGERLY)
+    @CollectionLayout(named = "Role of Contact in Groups", render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
+
+
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
     @MemberOrder(name = "contactRoles", sequence = "1")
     public Contact addContactRole(
             @Parameter(optionality = Optionality.MANDATORY)
-            ContactGroup contactGroup,
-            @Parameter(optionality = Optionality.OPTIONAL)
-            String existingRole,
-            @Parameter(optionality = Optionality.OPTIONAL)
-            String newRole) {
-        final String roleName = existingRole != null? existingRole: newRole;
+            final ContactGroup contactGroup,
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            final String role,
+            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            final String newRole) {
+        final String roleName = StringUtil.firstNonEmpty(newRole, role);
         contactRoleRepository.findOrCreate(this, contactGroup, roleName);
         return this;
     }
 
     public List<ContactGroup> choices0AddContactRole() {
-        return contactGroupRepository.listAll();
+        final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
+        final List<ContactGroup> currentGroups =
+                FluentIterable
+                        .from(getContactRoles())
+                        .transform(ContactRole::getContactGroup)
+                        .toList();
+        contactGroups.removeAll(currentGroups);
+        return contactGroups;
     }
     public SortedSet<String> choices1AddContactRole() {
         return contactRoleRepository.roleNames();
     }
 
-    public String validate2AddContactRole(final String newRole) {
-        if(newRole == null) {
-            return null;
-        }
-        if(choices1AddContactRole().contains(newRole)) {
-            return "This role already exists - select from the list";
-        }
-        return null;
+    public String validateAddContactRole(final ContactGroup contactGroup, final String role, final String newRole) {
+        return StringUtil.eitherOr(role, newRole, "role");
     }
 
-    public String validateAddContactRole(final ContactGroup contactGroup, final String existingRole, final String newRole) {
-        if((existingRole != null && newRole != null) || (existingRole == null && newRole == null)) {
-            return "Specify either an existing role or a new role";
-        }
-        return null;
-    }
+
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
@@ -187,7 +238,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return Lists.transform(Lists.newArrayList(getContactRoles()), ContactRole::getContactGroup);
     }
     public String disableRemoveContactRole() {
-        return getContactRoles().isEmpty()? "No contact numbers to remove": null;
+        return getContactRoles().isEmpty()? "No contacts to remove": null;
     }
 
     @Override

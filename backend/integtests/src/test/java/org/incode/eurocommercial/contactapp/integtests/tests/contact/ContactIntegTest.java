@@ -1,9 +1,7 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
  *
@@ -26,6 +24,7 @@ import javax.inject.Inject;
 import com.google.common.collect.FluentIterable;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -78,10 +77,66 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     }
 
+    public static class Create extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact_group() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_name_not_provided() throws Exception {
+
+        }
+
+    }
+
+    public static class Edit extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact_group() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_name_not_provided() throws Exception {
+
+        }
+
+    }
+
     public static class Delete extends ContactIntegTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             final List<Contact> contacts = contactRepository.listAll();
 
@@ -108,6 +163,127 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         }
 
+    }
+
+    public static class AddNumber extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void add_number_with_existing_type() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void add_number_with_new_type() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void add_number_when_already_have_number_of_any_type() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_type_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_both_existing_type_and_new_type_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_number_provided() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void invalid_number_format() throws Exception {
+
+        }
+
+    }
+
+    public static class RemoveNumber extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void remove_number() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void remove_number_when_none_exists() throws Exception {
+
+        }
+    }
+
+    public static class AddRole extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case_using_existing_role_name() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case_using_new_role_name() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case_using_new_role_name_which_also_in_list() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_group_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_role_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_both_existing_role_and_new_role_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void possible_groups_should_not_include_any_for_which_contact_already_has_a_role() throws Exception {
+
+        }
+    }
+
+    public static class RemoveRole extends ContactIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void remove_role() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void remove_role_when_none_exists() throws Exception {
+
+        }
     }
 
 }

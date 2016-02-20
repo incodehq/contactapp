@@ -1,9 +1,7 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
  *
@@ -56,7 +54,9 @@ public class HomePageViewModel {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Create")
     @MemberOrder(name = "groups", sequence = "1")
-    public HomePageViewModel createContactGroup(final Country country, String name) {
+    public HomePageViewModel createContactGroup(
+            final Country country,
+            final String name) {
         contactGroupRepository.findOrCreate(country, name);
         return this;
     }
@@ -79,6 +79,12 @@ public class HomePageViewModel {
         contactGroups.removeAll(usedContactGroups);
         return contactGroups;
     }
+    public ContactGroup default0DeleteContactGroup() {
+        final List<ContactGroup> choices = choices0DeleteContactGroup();
+        return choices.isEmpty()? null: choices.get(0);
+    }
+
+
     public String disableDeleteContactGroup() {
         return choices0DeleteContactGroup().isEmpty()? "No contact groups without contacts": null;
     }

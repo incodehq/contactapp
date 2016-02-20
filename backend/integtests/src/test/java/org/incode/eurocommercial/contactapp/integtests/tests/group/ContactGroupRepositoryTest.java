@@ -1,9 +1,7 @@
 /*
- *  Licensed to the Apache Software Foundation (ASF) under one
- *  or more contributor license agreements.  See the NOTICE file
- *  distributed with this work for additional information
- *  regarding copyright ownership.  The ASF licenses this file
- *  to you under the Apache License, Version 2.0 (the
+ *  Copyright 2015-2016 Eurocommercial Properties NV
+ *
+ *  Licensed under the Apache License, Version 2.0 (the
  *  "License"); you may not use this file except in compliance
  *  with the License.  You may obtain a copy of the License at
  *
@@ -52,7 +50,7 @@ public class ContactGroupRepositoryTest extends ContactAppIntegTest {
     public static class FindByName extends ContactGroupRepositoryTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             final String searchStr = "a";
 
