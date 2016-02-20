@@ -20,11 +20,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.google.common.base.Throwables;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -34,6 +29,7 @@ import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactMenuIntegTest extends ContactAppIntegTest {
@@ -43,11 +39,88 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
     @Inject
     ContactMenu contactMenu;
 
+    public static class Find extends ContactMenuIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void match_on_name() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void match_on_company() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void match_on_email() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_match_on_any() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_query_string_provided() throws Exception {
+
+        }
+    }
+
+    public static class FindByGroup extends ContactMenuIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void matches() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_match() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_group_specified() throws Exception {
+
+        }
+
+    }
+
+    public static class FindByRole extends ContactMenuIntegTest {
+
+        @Ignore("TODO")
+        @Test
+        public void matches() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_match() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_role_specified() throws Exception {
+
+        }
+
+    }
+
+
     public static class ListAll extends ContactMenuIntegTest {
 
-        @Ignore // TODO
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
 
             // given
             DemoFixture fs = new DemoFixture();
@@ -55,38 +128,50 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             nextTransaction();
 
             // when
-            final List<Contact> all = wrap(contactMenu).listAll();
+            final List<Contact> returned = wrap(contactMenu).listAll();
 
             // then
-            assertThat(all).hasSize(fs.getContacts().size());
+            final List<Contact> contacts = fs.getContacts();
+            assertThat(returned).hasSize(contacts.size());
 
-            Contact contact = wrap(all.get(0));
-            assertThat(contact.getName()).isEqualTo(fs.getContacts().get(0).getName());
+            assertThat(returned).containsAll(fs.getContacts());
+            assertThat(fs.getContacts()).containsAll(returned);
         }
 
     }
 
     public static class Create extends ContactMenuIntegTest {
 
-        private static Matcher<? extends Throwable> causalChainContains(final Class<?> cls) {
-            return new TypeSafeMatcher<Throwable>() {
-                @Override
-                protected boolean matchesSafely(Throwable item) {
-                    final List<Throwable> causalChain = Throwables.getCausalChain(item);
-                    for (Throwable throwable : causalChain) {
-                        if(cls.isAssignableFrom(throwable.getClass())){
-                            return true;
-                        }
-                    }
-                    return false;
-                }
+        @Ignore("TODO")
+        @Test
+        public void happy_case_with_minimal_info_provided() throws Exception {
 
-                @Override
-                public void describeTo(Description description) {
-                    description.appendText("exception with causal chain containing " + cls.getSimpleName());
-                }
-            };
         }
+
+        @Ignore("TODO")
+        @Test
+        public void happy_case_with_all_info_provided() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void name_already_in_use_by_contact_group() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void no_name_specified() throws Exception {
+
+        }
+
     }
 
 }

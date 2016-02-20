@@ -50,7 +50,7 @@ public class ContactGroupRepositoryTest extends ContactAppIntegTest {
     public static class FindByName extends ContactGroupRepositoryTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             final String searchStr = "a";
 

@@ -79,7 +79,7 @@ public class ContactMenu {
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByRole(
-            @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
+            @Parameter(maxLength = ContactRole.MaxLength.NAME)
             final String roleName
     ) {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);

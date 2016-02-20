@@ -16,6 +16,13 @@
  */
 package org.incode.eurocommercial.contactapp.integtests.tests;
 
+import java.util.List;
+
+import com.google.common.base.Throwables;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.BeforeClass;
 
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
@@ -32,6 +39,26 @@ public abstract class ContactAppIntegTest extends IntegrationTestAbstract {
 
         // instantiating will install onto ThreadLocal
         new ScenarioExecutionForIntegration();
+    }
+
+    public static Matcher<? extends Throwable> causalChainContains(final Class<?> cls) {
+        return new TypeSafeMatcher<Throwable>() {
+            @Override
+            protected boolean matchesSafely(Throwable item) {
+                final List<Throwable> causalChain = Throwables.getCausalChain(item);
+                for (Throwable throwable : causalChain) {
+                    if(cls.isAssignableFrom(throwable.getClass())){
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("exception with causal chain containing " + cls.getSimpleName());
+            }
+        };
     }
 
 }

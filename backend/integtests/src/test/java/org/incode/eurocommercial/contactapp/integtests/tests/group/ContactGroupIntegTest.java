@@ -14,14 +14,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.integtests.tests.contact;
-
-import java.util.List;
-import java.util.Objects;
+package org.incode.eurocommercial.contactapp.integtests.tests.group;
 
 import javax.inject.Inject;
-
-import com.google.common.collect.FluentIterable;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -31,14 +26,12 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class ContactIntegTest extends ContactAppIntegTest {
+public class ContactGroupIntegTest extends ContactAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
@@ -47,11 +40,12 @@ public class ContactIntegTest extends ContactAppIntegTest {
     ContactRepository contactRepository;
 
     @Inject
+    ContactGroupRepository contactGroupRepository;
+
+    @Inject
     FakeDataService fakeDataService;
 
     DemoFixture fs;
-    Contact contactPojo;
-    Contact contactWrapped;
 
     @Before
     public void setUp() throws Exception {
@@ -59,25 +53,11 @@ public class ContactIntegTest extends ContactAppIntegTest {
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
 
-        contactPojo = fs.getContacts().get(0);
-
-        assertThat(contactPojo).isNotNull();
-        contactWrapped = wrap(contactPojo);
     }
 
-    public static class Name extends ContactIntegTest {
 
-        @Test
-        public void accessible() throws Exception {
-            // when
-            final String name = contactWrapped.getName();
-            // then
-            assertThat(name).isNotNull();
-        }
 
-    }
-
-    public static class Create extends ContactIntegTest {
+    public static class Create extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -105,7 +85,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     }
 
-    public static class Edit extends ContactIntegTest {
+    public static class Edit extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -133,39 +113,22 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     }
 
-    public static class Delete extends ContactIntegTest {
+    public static class Delete extends ContactGroupIntegTest {
 
+        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
-            // given
-            final List<Contact> contacts = contactRepository.listAll();
 
-            final int sizeBefore = contacts.size();
-            assertThat(sizeBefore).isGreaterThan(0);
+        }
 
-            final Contact someContact = fakeDataService.collections().anyOf(contacts);
-            final String someContactName = someContact.getName();
-
-            // when
-            someContact.delete();
-
-            // then
-            final List<Contact> contactsAfter = contactRepository.listAll();
-
-            final int sizeAfter = contactsAfter.size();
-            assertThat(sizeAfter).isEqualTo(sizeBefore-1);
-
-            assertThat(FluentIterable.from(contactsAfter).filter(
-                    contact -> {
-                        return Objects.equals(contact.getName(), someContactName);
-                    }
-            )).isEmpty();
+        @Test
+        public void cannot_delete_when_has_contact_roles() throws Exception {
 
         }
 
     }
 
-    public static class AddNumber extends ContactIntegTest {
+    public static class AddNumber extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -211,7 +174,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     }
 
-    public static class RemoveNumber extends ContactIntegTest {
+    public static class RemoveNumber extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -226,7 +189,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         }
     }
 
-    public static class AddRole extends ContactIntegTest {
+    public static class AddRole extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -248,7 +211,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         @Ignore("TODO")
         @Test
-        public void when_no_group_specified() throws Exception {
+        public void when_no_contact_specified() throws Exception {
 
         }
 
@@ -266,12 +229,12 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         @Ignore("TODO")
         @Test
-        public void possible_groups_should_not_include_any_for_which_contact_already_has_a_role() throws Exception {
+        public void possible_contacts_should_not_include_any_for_which_contact_already_has_a_role() throws Exception {
 
         }
     }
 
-    public static class RemoveRole extends ContactIntegTest {
+    public static class RemoveRole extends ContactGroupIntegTest {
 
         @Ignore("TODO")
         @Test
@@ -285,5 +248,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         }
     }
+
+
 
 }

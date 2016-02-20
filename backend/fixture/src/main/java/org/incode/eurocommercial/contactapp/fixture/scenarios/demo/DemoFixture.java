@@ -20,6 +20,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 
@@ -63,7 +65,11 @@ public class DemoFixture extends FixtureScript {
         // make objects created by ExcelFixture available to our caller.
         final Map<Class, List<Object>> objectsByClass = fs.getObjectsByClass();
 
-        getContacts().addAll((List) objectsByClass.get(ContactImport.class));
+        getContacts().addAll(
+                FluentIterable
+                        .from((List) objectsByClass.get(ContactImport.class))
+                        .filter(Predicates.notNull())
+                        .toList());
 
     }
 

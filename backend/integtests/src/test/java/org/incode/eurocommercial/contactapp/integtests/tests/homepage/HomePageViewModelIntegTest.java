@@ -24,6 +24,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.FluentIterable;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -88,7 +89,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
     public static class CreateGroup extends HomePageViewModelIntegTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
 
             // given
             final List<ContactGroup> groups = homePageViewModel.getGroups();
@@ -103,12 +104,24 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             // then
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();
-            assertThat(groupsAfter.size()).isEqualTo(sizeBefore+1);
+            assertThat(groupsAfter.size()).isEqualTo(sizeBefore + 1);
             assertThat(
                     FluentIterable.from(groupsAfter)
-                                  .filter(contactGroupOf(someCountry, groupName))
-                                  .toList())
+                            .filter(contactGroupOf(someCountry, groupName))
+                            .toList())
                     .hasSize(1);
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_country_specified() throws Exception {
+
+        }
+
+        @Ignore("TODO")
+        @Test
+        public void when_no_name_provided() throws Exception {
+
         }
 
     }
@@ -116,7 +129,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
     public static class DeleteGroup extends HomePageViewModelIntegTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
 
             // given
             final List<Country> list = countryRepository.listAll();
@@ -181,6 +194,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             // when
             wrap(homePageViewModel).deleteContactGroup(someGroup);
         }
+
 
     }
 
