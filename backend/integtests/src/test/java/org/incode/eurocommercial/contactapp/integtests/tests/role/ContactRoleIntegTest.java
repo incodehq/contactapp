@@ -53,6 +53,7 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
         // given
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        nextTransaction();
     }
 
 

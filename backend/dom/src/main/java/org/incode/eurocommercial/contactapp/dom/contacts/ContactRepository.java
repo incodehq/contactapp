@@ -123,6 +123,7 @@ public class ContactRepository {
         contact.setCompany(company);
         contact.setEmail(email);
         contact.setNotes(notes);
+        container.persistIfNotAlready(contact);
 
         if(officeNumber != null) {
             contact.addContactNumber(officeNumber, ContactNumberType.OFFICE.title(), null);
@@ -134,7 +135,6 @@ public class ContactRepository {
             contact.addContactNumber(homeNumber, ContactNumberType.HOME.title(), null);
         }
 
-        container.persistIfNotAlready(contact);
         return contact;
     }
 

@@ -45,6 +45,7 @@ public class ContactGroupRepositoryTest extends ContactAppIntegTest {
         // given
         FixtureScript fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        nextTransaction();
     }
 
     public static class FindByName extends ContactGroupRepositoryTest {

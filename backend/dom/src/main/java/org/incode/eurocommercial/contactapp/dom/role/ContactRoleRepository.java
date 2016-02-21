@@ -103,6 +103,7 @@ public class ContactRoleRepository {
         contactRole.setContact(contact);
         contactRole.setContactGroup(contactGroup);
         contactRole.setRoleName(roleName);
+        contact.getContactRoles().add(contactRole); 
         container.persistIfNotAlready(contactRole);
         return contactRole;
     }

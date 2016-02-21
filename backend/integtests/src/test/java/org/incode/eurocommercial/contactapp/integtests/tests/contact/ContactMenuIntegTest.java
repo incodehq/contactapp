@@ -20,13 +20,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
@@ -34,8 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactMenuIntegTest extends ContactAppIntegTest {
 
-    @Inject
-    FixtureScripts fixtureScripts;
+
     @Inject
     ContactMenu contactMenu;
 
@@ -119,13 +118,18 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
     public static class ListAll extends ContactMenuIntegTest {
 
-        @Test
-        public void happy_case() throws Exception {
+        DemoFixture fs;
 
-            // given
-            DemoFixture fs = new DemoFixture();
+        @Before
+        public void setUp() throws Exception {
+
+            fs = new DemoFixture();
             fixtureScripts.runFixtureScript(fs, null);
             nextTransaction();
+        }
+
+        @Test
+        public void happy_case() throws Exception {
 
             // when
             final List<Contact> returned = wrap(contactMenu).listAll();
@@ -142,16 +146,52 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
     public static class Create extends ContactMenuIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case_with_minimal_info_provided() throws Exception {
 
+            // when
+            final String name = fakeDataService.name().fullName();
+            final Contact contact = wrap(contactMenu).create(name, null, null, null, null, null);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getName()).isEqualTo(name);
+            assertThat(contact.getCompany()).isNull();
+            assertThat(contact.getEmail()).isNull();
+            assertThat(contact.getNotes()).isNull();
+            assertThat(contact.getContactNumbers()).isEmpty();
+            assertThat(contact.getContactRoles()).isEmpty();
         }
 
-        @Ignore("TODO")
         @Test
         public void happy_case_with_all_info_provided() throws Exception {
 
+            // when
+            final String name = fakeDataService.name().fullName();
+            final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
+            final String officePhoneNumber = randomPhoneNumber();
+            final String mobilePhoneNumber = randomPhoneNumber();
+            final String homePhoneNumber = randomPhoneNumber();
+            final String email = fakeDataService.javaFaker().internet().emailAddress();
+
+            final Contact contact = wrap(contactMenu)
+                    .create(name, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getName()).isEqualTo(name);
+            assertThat(contact.getCompany()).isEqualTo(company);
+            assertThat(contact.getEmail()).isEqualTo(email);
+
+            assertThat(contact.getContactNumbers()).hasSize(3);
+
+            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE, officePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.MOBILE, mobilePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.HOME, homePhoneNumber);
+
+            assertThat(contact.getContactRoles()).isEmpty();
+
+            assertThat(contact.getNotes()).isNull();
         }
 
         @Ignore("TODO")
@@ -173,5 +213,6 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
         }
 
     }
+
 
 }

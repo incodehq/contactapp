@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import com.google.common.collect.FluentIterable;
 
+import org.assertj.core.groups.Tuple;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,7 +33,11 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
@@ -47,11 +52,13 @@ public class ContactIntegTest extends ContactAppIntegTest {
     ContactRepository contactRepository;
 
     @Inject
+    ContactMenu contactMenu;
+
+    @Inject
     FakeDataService fakeDataService;
 
     DemoFixture fs;
-    Contact contactPojo;
-    Contact contactWrapped;
+    Contact contact;
 
     @Before
     public void setUp() throws Exception {
@@ -59,10 +66,10 @@ public class ContactIntegTest extends ContactAppIntegTest {
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
 
-        contactPojo = fs.getContacts().get(0);
+        contact = fs.getContacts().get(0);
+        nextTransaction();
 
-        assertThat(contactPojo).isNotNull();
-        contactWrapped = wrap(contactPojo);
+        assertThat(contact).isNotNull();
     }
 
     public static class Name extends ContactIntegTest {
@@ -70,7 +77,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void accessible() throws Exception {
             // when
-            final String name = contactWrapped.getName();
+            final String name = wrap(contact).getName();
             // then
             assertThat(name).isNotNull();
         }
@@ -79,10 +86,37 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class Create extends ContactIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
 
+            // when
+            final String name = fakeDataService.name().fullName();
+            final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
+            final String officePhoneNumber = randomPhoneNumber();
+            final String mobilePhoneNumber = randomPhoneNumber();
+            final String homePhoneNumber = randomPhoneNumber();
+            final String email = fakeDataService.javaFaker().internet().emailAddress();
+
+            final Contact newContact = wrap(this.contact)
+                    .create(name, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
+            nextTransaction();
+
+            // then
+            assertThat(contact).isNotSameAs(newContact);
+
+            assertThat(newContact.getName()).isEqualTo(name);
+            assertThat(newContact.getCompany()).isEqualTo(company);
+            assertThat(newContact.getEmail()).isEqualTo(email);
+
+            assertThat(newContact.getContactNumbers()).hasSize(3);
+
+            assertContains(newContact.getContactNumbers(), ContactNumberType.OFFICE, officePhoneNumber);
+            assertContains(newContact.getContactNumbers(), ContactNumberType.MOBILE, mobilePhoneNumber);
+            assertContains(newContact.getContactNumbers(), ContactNumberType.HOME, homePhoneNumber);
+
+            assertThat(newContact.getContactRoles()).isEmpty();
+
+            assertThat(newContact.getNotes()).isNull();
         }
 
         @Ignore("TODO")
@@ -107,10 +141,25 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class Edit extends ContactIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
 
+            // when
+            final String name = fakeDataService.name().fullName();
+            final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
+            final String email = fakeDataService.javaFaker().internet().emailAddress();
+            final String notes = fakeDataService.lorem().sentence(3);
+
+            final Contact contact = wrap(this.contact).edit(name, company, email, notes);
+            nextTransaction();
+
+            // then
+            assertThat(contact).isSameAs(this.contact);
+
+            assertThat(contact.getName()).isEqualTo(name);
+            assertThat(contact.getCompany()).isEqualTo(company);
+            assertThat(contact.getEmail()).isEqualTo(email);
+            assertThat(contact.getNotes()).isEqualTo(notes);
         }
 
         @Ignore("TODO")
@@ -137,6 +186,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         @Test
         public void happy_case() throws Exception {
+
             // given
             final List<Contact> contacts = contactRepository.listAll();
 
@@ -145,9 +195,13 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             final Contact someContact = fakeDataService.collections().anyOf(contacts);
             final String someContactName = someContact.getName();
+            nextTransaction();
+
 
             // when
             someContact.delete();
+            nextTransaction();
+
 
             // then
             final List<Contact> contactsAfter = contactRepository.listAll();
@@ -167,9 +221,39 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class AddNumber extends ContactIntegTest {
 
-        @Ignore("TODO")
+
+        String officePhoneNumber;
+
+        @Before
+        public void setUp() {
+            // deliberately does not call super.setUp()
+
+            // given
+            final String name = fakeDataService.name().fullName();
+
+            this.officePhoneNumber = randomPhoneNumber();
+
+            this.contact = wrap(contactMenu).create(name, null, officePhoneNumber, null, null, null);
+            nextTransaction();
+
+        }
+
         @Test
         public void add_number_with_existing_type() throws Exception {
+
+            // given
+            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE, officePhoneNumber);
+            assertThat(contact.getContactNumbers()).hasSize(1);
+
+            // when
+            String newOfficePhoneNumber = randomPhoneNumber();
+            wrap(contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), null);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getContactNumbers()).hasSize(2);
+            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE, newOfficePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE, this.officePhoneNumber);
 
         }
 
@@ -213,10 +297,37 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class RemoveNumber extends ContactIntegTest {
 
-        @Ignore("TODO")
+        String officePhoneNumber;
+        String homePhoneNumber;
+
+        @Before
+        public void setUp() {
+            // deliberately does not call super.setUp()
+
+            // given
+            final String name = fakeDataService.name().fullName();
+
+            this.officePhoneNumber = randomPhoneNumber();
+            this.homePhoneNumber = randomPhoneNumber();
+
+            this.contact = wrap(contactMenu).create(name, null, officePhoneNumber, null, homePhoneNumber, null);
+            nextTransaction();
+        }
+
         @Test
         public void remove_number() throws Exception {
 
+            // given
+            assertThat(contact.getContactNumbers()).hasSize(2);
+            final String existingNumber = fakeDataService.collections().anyOf(contact.choices0RemoveContactNumber());
+            nextTransaction();
+
+            // when
+            wrap(contact).removeContactNumber(existingNumber);
+            nextTransaction();
+
+            // then
+            assertNotContains(contact.getContactNumbers(), existingNumber);
         }
 
         @Ignore("TODO")
@@ -228,10 +339,31 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class AddRole extends ContactIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case_using_existing_role_name() throws Exception {
 
+            // given
+            final int numRolesBefore = contact.getContactRoles().size();
+
+            // when
+            final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
+            final String existingRole = fakeDataService.collections().anyOf(this.contact.choices1AddContactRole());
+
+            final Contact contact = wrap(this.contact).addContactRole(contactGroup, existingRole, null);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getContactRoles()).hasSize(numRolesBefore+1);
+            assertThat(contact.getContactRoles())
+                    .extracting(
+                            ContactRole::getContactGroup,
+                            ContactRole::getRoleName,
+                            ContactRole::getContact)
+                    .contains(
+                        Tuple.tuple(
+                                contactGroup,
+                                existingRole,
+                                this.contact));
         }
 
         @Ignore("TODO")
@@ -273,9 +405,20 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
     public static class RemoveRole extends ContactIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void remove_role() throws Exception {
+
+            // given
+            final int contactRolesBefore = contact.getContactRoles().size();
+            assertThat(contactRolesBefore).isGreaterThan(0);
+
+            // when
+            final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0RemoveContactRole());
+            wrap(this.contact).removeContactRole(contactGroup);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getContactRoles()).hasSize(contactRolesBefore-1);
 
         }
 

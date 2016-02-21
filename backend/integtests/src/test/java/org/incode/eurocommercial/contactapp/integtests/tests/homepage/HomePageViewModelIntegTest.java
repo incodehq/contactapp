@@ -69,6 +69,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
         // given
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        nextTransaction();
 
         homePageViewModel = homePageService.homePage();
     }
@@ -101,6 +102,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             final String groupName = fakeDataService.strings().fixed(8);
 
             wrap(homePageViewModel).createContactGroup(someCountry, groupName);
+            nextTransaction();
 
             // then
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();
@@ -148,15 +150,18 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             final List<ContactRole> contactRoles = addedContactGroup.getContactRoles();
             assertThat(contactRoles).isEmpty();
+            nextTransaction();
 
             // when
             final List<ContactGroup> contactGroupChoices = homePageViewModel.choices0DeleteContactGroup();
+            nextTransaction();
 
             // then
             assertThat(contactGroupChoices).contains(addedContactGroup);
 
             // and when
             wrap(homePageViewModel).deleteContactGroup(addedContactGroup);
+            nextTransaction();
 
             // then
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();

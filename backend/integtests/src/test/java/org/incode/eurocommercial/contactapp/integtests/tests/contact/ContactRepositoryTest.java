@@ -92,7 +92,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         }
 
         @Test
-        public void partialName() throws Exception {
+        public void partial_name() throws Exception {
             // given
             final String contactName = contactRepository.listAll().get(0).getName();
             final String firstName = contactName.split(" ")[0];
@@ -108,7 +108,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         }
 
         @Test
-        public void sadCase() throws Exception {
+        public void no_matches() throws Exception {
             // given
             final String contactName = "Not a name";
 
@@ -123,7 +123,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
     public static class FindByCompany extends ContactRepositoryTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             final String contactCompany = contactRepository.listAll().get(0).getCompany();
 
@@ -135,7 +135,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         }
 
         @Test
-        public void partialName() throws Exception {
+        public void partial_name() throws Exception {
             // given
             final String contactCompany = contactRepository.listAll().get(0).getCompany();
             final String substring = contactCompany.substring(1, 3);
@@ -166,7 +166,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         ContactGroupRepository contactGroupRepository;
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             final ContactGroup contactGroup = contactGroupRepository.listAll().get(0);
 
@@ -178,7 +178,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         }
 
         @Test
-        public void sadCase() throws Exception {
+        public void no_matches() throws Exception {
             // given
             final ContactGroup contactGroup = new ContactGroup();
 
@@ -196,7 +196,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         ContactRoleRepository contactRoleRepository;
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given
             List<ContactRole> list = contactRoleRepository.listAll();
             String regex = "No ContactRoleName in fixtures";
@@ -215,7 +215,7 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
         }
 
         @Test
-        public void sadCase() throws Exception {
+        public void no_matches() throws Exception {
             // given
             final String roleName = "Not a role";
 

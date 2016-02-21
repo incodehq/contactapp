@@ -26,15 +26,24 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
+import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.dom.country.Country;
+import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
+import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactGroupIntegTest extends ContactAppIntegTest {
 
     @Inject
     FixtureScripts fixtureScripts;
+
+    @Inject
+    CountryRepository countryRepository;
 
     @Inject
     ContactRepository contactRepository;
@@ -47,21 +56,36 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
     DemoFixture fs;
 
+    ContactGroup contactGroup;
+
     @Before
     public void setUp() throws Exception {
         // given
         fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        nextTransaction();
 
+        contactGroup = contactGroupRepository.listAll().get(0);
     }
 
 
 
     public static class Create extends ContactGroupIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
+
+            // when
+            final Country country = fakeDataService.collections().anyOf(countryRepository.listAll());
+            final String name = fakeDataService.strings().upper(ContactableEntity.MaxLength.NAME);
+
+            final ContactGroup newContactGroup = wrap(this.contactGroup).create(country, name);
+            nextTransaction();
+
+            // then
+            assertThat(newContactGroup).isNotSameAs(contactGroup);
+            assertThat(newContactGroup.getCountry()).isEqualTo(country);
+            assertThat(newContactGroup.getName()).isEqualTo(name);
 
         }
 
@@ -87,9 +111,24 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
     public static class Edit extends ContactGroupIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
+
+            // when
+            final String name = fakeDataService.strings().upper(ContactableEntity.MaxLength.NAME);
+            final String address = fakeDataService.addresses().streetAddressWithSecondary();
+            final String email = fakeDataService.javaFaker().internet().emailAddress();
+            final String notes = fakeDataService.lorem().paragraph(3);
+
+            final ContactableEntity returned = wrap(this.contactGroup).edit(name, address, email, notes);
+            nextTransaction();
+
+            // then
+            assertThat(returned).isSameAs(contactGroup);
+            assertThat(contactGroup.getName()).isEqualTo(name);
+            assertThat(contactGroup.getAddress()).isEqualTo(address);
+            assertThat(contactGroup.getEmail()).isEqualTo(email);
+            assertThat(contactGroup.getNotes()).isEqualTo(notes);
 
         }
 
@@ -121,6 +160,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
         }
 
+        @Ignore("TODO")
         @Test
         public void cannot_delete_when_has_contact_roles() throws Exception {
 
@@ -248,7 +288,5 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
         }
     }
-
-
 
 }

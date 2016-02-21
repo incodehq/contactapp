@@ -18,17 +18,20 @@
  */
 package org.incode.eurocommercial.contactapp.integtests.tests.number;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.inject.Inject;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,7 +53,7 @@ public class ContactNumberRepositoryTest extends ContactAppIntegTest {
     public static class ListAll extends ContactNumberRepositoryTest {
 
         @Test
-        public void happyCase() throws Exception {
+        public void happy_case() throws Exception {
             // given, when
             final List<ContactNumber> contactNumbers = contactNumberRepository.listAll();
             // then

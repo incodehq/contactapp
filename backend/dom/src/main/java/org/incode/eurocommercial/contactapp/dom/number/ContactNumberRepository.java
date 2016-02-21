@@ -57,6 +57,8 @@ public class ContactNumberRepository {
         contactNumber.setOwner(owner);
         contactNumber.setType(type);
         contactNumber.setNumber(number);
+        // required if the owner is not yet persistent (we turn persistence-by-reachability off).
+        owner.getContactNumbers().add(contactNumber);
         container.persistIfNotAlready(contactNumber);
         return contactNumber;
     }

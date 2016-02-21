@@ -44,6 +44,7 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.util.ObjectContracts;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
@@ -188,6 +189,17 @@ public class ContactNumber implements Comparable<ContactNumber> {
 
 
     //region > compareTo, toString
+
+    @Override
+    public boolean equals(final Object obj) {
+        return ObjectContracts.equals(this, "owner", "number");
+    }
+
+    @Override
+    public int hashCode() {
+        return ObjectContracts.hashCode(this, "owner", "number");
+    }
+
     @Override
     public int compareTo(final ContactNumber other) {
         return org.apache.isis.applib.util.ObjectContracts.compare(this, other, "owner", "number");
