@@ -185,9 +185,9 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
             assertThat(contact.getContactNumbers()).hasSize(3);
 
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE, officePhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.MOBILE, mobilePhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.HOME, homePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), officePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.MOBILE.title(), mobilePhoneNumber);
+            assertContains(contact.getContactNumbers(), ContactNumberType.HOME.title(), homePhoneNumber);
 
             assertThat(contact.getContactRoles()).isEmpty();
 
