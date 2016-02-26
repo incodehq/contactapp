@@ -68,15 +68,15 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
 
         country = Strings.emptyToNull(country);
         address = Strings.emptyToNull(address);
-        group = Strings.emptyToNull(group);
+        group   = Strings.emptyToNull(group);
         company = Strings.emptyToNull(company);
-        name = Strings.emptyToNull(name);
-        office = Strings.emptyToNull(office);
-        mobile = Strings.emptyToNull(mobile);
-        home = Strings.emptyToNull(home);
-        email = Strings.emptyToNull(email);
-        role = Strings.emptyToNull(role);
-        note = Strings.emptyToNull(note);
+        name    = Strings.emptyToNull(name);
+        office  = Strings.emptyToNull(office);
+        mobile  = Strings.emptyToNull(mobile);
+        home    = Strings.emptyToNull(home);
+        email   = Strings.emptyToNull(email);
+        role    = Strings.emptyToNull(role);
+        note    = Strings.emptyToNull(note);
 
         final ContactImport previousContactRow = (ContactImport) previousRow;
         if(previousContactRow != null) {
@@ -96,12 +96,18 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
         if(name == null) {
             if(office != null) contactGroup.addContactNumber(office, ContactNumberType.OFFICE.title(), null);
             if(mobile != null) contactGroup.addContactNumber(mobile, ContactNumberType.MOBILE.title(), null);
-            if(home   != null) contactGroup.addContactNumber(home, ContactNumberType.HOME.title(), null);
+            if(home   != null) contactGroup.addContactNumber(  home, ContactNumberType.  HOME.title(), null);
             if(email  != null) contactGroup.setEmail(email);
         }
         else {
             contact = contactRepository.findOrCreate(name, company, email, note, office, mobile, home);
             contact.addContactRole(contactGroup, role, null);
+
+            if(company != null && company.equals("Eurocommercial")) {
+                Country globalCountry = countryRepository.findOrCreate("Global");
+                ContactGroup ecpCompanyGroup = contactGroupRepository.findOrCreate(globalCountry, "ECP Company");
+                contact.addContactRole(ecpCompanyGroup, "Eurocommercial", null);
+            }
         }
         executionContext.addResult(excelFixture, contact);
 
