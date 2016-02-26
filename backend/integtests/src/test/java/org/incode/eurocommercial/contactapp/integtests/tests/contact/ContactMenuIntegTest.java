@@ -17,16 +17,26 @@
 package org.incode.eurocommercial.contactapp.integtests.tests.contact;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.inject.Inject;
+import javax.jdo.JDOException;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
+import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
+import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
+import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
@@ -34,77 +44,169 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactMenuIntegTest extends ContactAppIntegTest {
 
+    @Inject
+    FixtureScripts fixtureScripts;
 
     @Inject
     ContactMenu contactMenu;
 
+    @Inject
+    ContactGroupRepository contactGroupRepository;
+
+    @Inject
+    CountryRepository countryRepository;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    DemoFixture fs;
+    Contact contact;
+
+    @Before
+    public void setUp() throws Exception {
+        // given
+        fs = new DemoFixture();
+        fixtureScripts.runFixtureScript(fs, null);
+
+        contact = fs.getContacts().get(0);
+        nextTransaction();
+
+        assertThat(contact).isNotNull();
+    }
+
     public static class Find extends ContactMenuIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void match_on_name() throws Exception {
+            // when
+            final List<Contact> result = contactMenu.find(this.contact.getName());
 
+            // then
+            assertThat(result).hasSize(1);
+            assertThat(result).contains(this.contact);
+            assertThat(result.get(0).getName()).isEqualTo(this.contact.getName());
         }
 
-        @Ignore("TODO")
         @Test
         public void match_on_company() throws Exception {
+            // when
+            final List<Contact> result = contactMenu.find(this.contact.getCompany());
 
+            // then
+            assertThat(result).isNotEmpty();
+            assertThat(result).contains(this.contact);
         }
 
-        @Ignore("TODO")
+        @Ignore("ELI-90")
         @Test
         public void match_on_email() throws Exception {
+            // when
+            final List<Contact> result = contactMenu.find(this.contact.getEmail());
 
+            // then
+            assertThat(result).hasSize(1);
+            assertThat(result).contains(this.contact);
+            assertThat(result.get(0).getName()).isEqualTo(this.contact.getName());
         }
 
-        @Ignore("TODO")
         @Test
         public void no_match_on_any() throws Exception {
+            // given
+            final String query = "This will yield zero results";
 
+            // when
+            final List<Contact> result = contactMenu.find(query);
+
+            // then
+            assertThat(result).isEmpty();
         }
 
-        @Ignore("TODO")
         @Test
         public void no_query_string_provided() throws Exception {
+            // given
+            final String query = null;
 
+            // then
+            thrown.expect(JDOException.class);
+            thrown.expectMessage("Incorrect arguments for String.matches(StringExpression)");
+
+            // when
+            final List<Contact> result = contactMenu.find(query);
         }
     }
 
     public static class FindByGroup extends ContactMenuIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void matches() throws Exception {
+            // given
+            final SortedSet<ContactRole> roles = this.contact.getContactRoles();
+            assertThat(roles).isNotEmpty();
 
+            // when
+            final List<Contact> result = contactMenu.findByGroup(roles.first().getContactGroup());
+
+            // then
+            assertThat(result).isNotEmpty();
         }
 
-        @Ignore("TODO")
         @Test
         public void no_match() throws Exception {
+            // given
+            final ContactGroup contactGroup = contactGroupRepository.create(countryRepository.listAll().get(0), "No match group");
 
+            // when
+            final List<Contact> result = contactMenu.findByGroup(contactGroup);
+
+            // then
+            assertThat(result).isEmpty();
         }
 
-        @Ignore("TODO")
+        @Ignore("See ELI-92")
         @Test
         public void no_group_specified() throws Exception {
+            // given
+            final ContactGroup contactGroup = null;
 
+            // then
+            thrown.expect(JDOException.class);
+
+            // when
+            final List<Contact> result = contactMenu.findByGroup(contactGroup);
         }
 
     }
 
     public static class FindByRole extends ContactMenuIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void matches() throws Exception {
+            // given
+            final SortedSet<ContactRole> contactRoles = this.contact.getContactRoles();
+            assertThat(contactRoles).isNotEmpty();
 
+            // need to add role name
+            final String roleName = "Role name";
+            contactRoles.first().setRoleName(roleName);
+
+            // when
+            final List<Contact> result = contactMenu.findByRole(roleName);
+
+            // then
+            assertThat(result).isNotEmpty();
+            assertThat(result).contains(this.contact);
         }
 
-        @Ignore("TODO")
         @Test
         public void no_match() throws Exception {
+            // given
+            final String roleName = "No match role name";
 
+            // when
+            final List<Contact> result = contactMenu.findByRole(roleName);
+
+            // then
+            assertThat(result).isEmpty();
         }
 
         @Ignore("TODO")
@@ -114,7 +216,6 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
         }
 
     }
-
 
     public static class ListAll extends ContactMenuIntegTest {
 
@@ -213,6 +314,5 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
         }
 
     }
-
 
 }
