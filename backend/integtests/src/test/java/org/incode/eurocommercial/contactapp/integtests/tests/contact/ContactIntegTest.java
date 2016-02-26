@@ -18,6 +18,7 @@ package org.incode.eurocommercial.contactapp.integtests.tests.contact;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.SortedSet;
 
 import javax.inject.Inject;
 
@@ -493,7 +494,6 @@ public class ContactIntegTest extends ContactAppIntegTest {
                                     this.contact));
         }
 
-        @Ignore("TODO")
         @Test
         public void happy_case_using_new_role_name_which_also_in_list() throws Exception {
             // given
@@ -504,13 +504,16 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertThat(contactRoles).isNotEmpty();
 
             ContactRole contactRole = contactRoles.get(0);
+            // this role has no name provided by default
+            contactRole.setRoleName("Role name");
+
             final String newRoleInList = contactRole.getRoleName();
             final ContactGroup contactGroup = contactRole.getContactGroup();
 
             final Contact contact = wrap(this.contact).addContactRole(contactGroup, null, newRoleInList);
 
             // then
-            assertThat(contact.getContactRoles()).hasSize(numRolesBefore + 1);
+            assertThat(contact.getContactRoles()).hasSize(numRolesBefore);
             assertThat(contact.getContactRoles())
                     .extracting(
                             ContactRole::getContactGroup,
@@ -523,28 +526,53 @@ public class ContactIntegTest extends ContactAppIntegTest {
                                     this.contact));
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_group_specified() throws Exception {
+            // when
+            final ContactGroup contactGroup = null;
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Contact Group' is mandatory");
+            final Contact contact = wrap(this.contact).addContactRole(contactGroup, null, "new role");
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_role_specified() throws Exception {
+            // when
+            final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) role or a new role");
+            final Contact contact = wrap(this.contact).addContactRole(contactGroup, null, null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_both_existing_role_and_new_role_specified() throws Exception {
+            // when
+            final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) role or a new role");
+            final Contact contact = wrap(this.contact).addContactRole(contactGroup, "existing role", "new role");
         }
 
-        @Ignore("TODO")
         @Test
         public void possible_groups_should_not_include_any_for_which_contact_already_has_a_role() throws Exception {
+            // given
+            final SortedSet<ContactRole> currentRoles = this.contact.getContactRoles();
+            assertThat(currentRoles).hasSize(1);
+            final List<ContactGroup> allGroups = contactGroupRepository.listAll();
+            assertThat(allGroups).contains(currentRoles.first().getContactGroup());
 
+            // when
+            final List<ContactGroup> possibleGroups = this.contact.choices0AddContactRole();
+
+            // then
+            assertThat(possibleGroups).hasSize(allGroups.size() - currentRoles.size());
+            assertThat(possibleGroups).doesNotContain(currentRoles.first().getContactGroup());
         }
     }
 
@@ -567,9 +595,19 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
         }
 
-        @Ignore("TODO")
         @Test
         public void remove_role_when_none_exists() throws Exception {
+            // given
+            final int contactRolesBefore = contact.getContactRoles().size();
+            assertThat(contactRolesBefore).isGreaterThan(0);
+
+            // when
+            final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
+            wrap(this.contact).removeContactRole(contactGroup);
+            nextTransaction();
+
+            // then
+            assertThat(contact.getContactRoles()).hasSize(contactRolesBefore);
 
         }
     }
