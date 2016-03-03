@@ -35,7 +35,7 @@ angular.module(
                 },
                 {
                     name: "Production",
-                    url: "http://contacts.ecpnv.com"
+                    url: "https://contacts.ecpnv.com"
                 }
             ],
             selected: window.localStorage[environmentKey]
