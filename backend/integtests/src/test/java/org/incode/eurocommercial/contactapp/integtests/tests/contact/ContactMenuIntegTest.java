@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
@@ -209,25 +210,22 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             assertThat(result).isEmpty();
         }
 
-        @Ignore("TODO")
         @Test
         public void no_role_specified() throws Exception {
+            // given
+            final String roleName = null;
 
+            // then
+            thrown.expect(JDOException.class);
+            thrown.expectMessage("Incorrect arguments for String.matches(StringExpression)");
+
+            // when
+            final List<Contact> result = contactMenu.findByRole(roleName);
         }
 
     }
 
     public static class ListAll extends ContactMenuIntegTest {
-
-        DemoFixture fs;
-
-        @Before
-        public void setUp() throws Exception {
-
-            fs = new DemoFixture();
-            fixtureScripts.runFixtureScript(fs, null);
-            nextTransaction();
-        }
 
         @Test
         public void happy_case() throws Exception {
@@ -252,16 +250,16 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
             // when
             final String name = fakeDataService.name().fullName();
-            final Contact contact = wrap(contactMenu).create(name, null, null, null, null, null);
+            final Contact newContact = wrap(contactMenu).create(name, null, null, null, null, null);
             nextTransaction();
 
             // then
-            assertThat(contact.getName()).isEqualTo(name);
-            assertThat(contact.getCompany()).isNull();
-            assertThat(contact.getEmail()).isNull();
-            assertThat(contact.getNotes()).isNull();
-            assertThat(contact.getContactNumbers()).isEmpty();
-            assertThat(contact.getContactRoles()).isEmpty();
+            assertThat(newContact.getName()).isEqualTo(name);
+            assertThat(newContact.getCompany()).isNull();
+            assertThat(newContact.getEmail()).isNull();
+            assertThat(newContact.getNotes()).isNull();
+            assertThat(newContact.getContactNumbers()).isEmpty();
+            assertThat(newContact.getContactRoles()).isEmpty();
         }
 
         @Test
@@ -275,42 +273,69 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             final String homePhoneNumber = randomPhoneNumber();
             final String email = fakeDataService.javaFaker().internet().emailAddress();
 
-            final Contact contact = wrap(contactMenu)
+            final Contact newContact = wrap(contactMenu)
                     .create(name, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
             nextTransaction();
 
             // then
-            assertThat(contact.getName()).isEqualTo(name);
-            assertThat(contact.getCompany()).isEqualTo(company);
-            assertThat(contact.getEmail()).isEqualTo(email);
+            assertThat(newContact.getName()).isEqualTo(name);
+            assertThat(newContact.getCompany()).isEqualTo(company);
+            assertThat(newContact.getEmail()).isEqualTo(email);
 
-            assertThat(contact.getContactNumbers()).hasSize(3);
+            assertThat(newContact.getContactNumbers()).hasSize(3);
 
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), officePhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.MOBILE.title(), mobilePhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.HOME.title(), homePhoneNumber);
+            assertContains(newContact.getContactNumbers(), ContactNumberType.OFFICE.title(), officePhoneNumber);
+            assertContains(newContact.getContactNumbers(), ContactNumberType.MOBILE.title(), mobilePhoneNumber);
+            assertContains(newContact.getContactNumbers(), ContactNumberType.HOME.title(), homePhoneNumber);
 
-            assertThat(contact.getContactRoles()).isEmpty();
+            assertThat(newContact.getContactRoles()).isEmpty();
 
-            assertThat(contact.getNotes()).isNull();
+            assertThat(newContact.getNotes()).isNull();
         }
 
-        @Ignore("TODO")
+        @Ignore("See ELI-88")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
+            // given
+            final String existingName = contact.getName();
+            assertThat(existingName).isNotNull();
 
+            // then
+            thrown.expect(InvalidException.class);
+            // TODO: Insert expected message
+            thrown.expectMessage("Reason: ");
+
+            // when
+            final Contact newContact = wrap(contactMenu).create(existingName, null, null, null, null, null);
         }
 
-        @Ignore("TODO")
+        @Ignore("See ELI-87")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
+            // given
+            final String existingName = contactGroupRepository.listAll().get(0).getName();
+            assertThat(existingName).isNotEmpty();
 
+            // then
+            thrown.expect(InvalidException.class);
+            // TODO: Insert expected message
+            thrown.expectMessage("Reason: ");
+
+            // when
+            final Contact newContact = wrap(contactMenu).create(existingName, null, null, null, null, null);
         }
 
-        @Ignore("TODO")
         @Test
         public void no_name_specified() throws Exception {
+            // given
+            final String name = null;
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Name' is mandatory");
+
+            // when
+            final Contact newContact = wrap(contactMenu).create(name, null, null, null, null, null);
         }
 
     }

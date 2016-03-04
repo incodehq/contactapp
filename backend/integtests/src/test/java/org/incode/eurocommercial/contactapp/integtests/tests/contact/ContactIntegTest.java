@@ -158,6 +158,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         public void name_already_in_use_by_contact_group() throws Exception {
             // given
             final String existingName = contactGroupRepository.listAll().get(0).getName();
+            assertThat(existingName).isNotEmpty();
 
             // when
             final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
