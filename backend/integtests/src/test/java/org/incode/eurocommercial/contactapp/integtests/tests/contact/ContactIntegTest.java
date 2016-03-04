@@ -232,6 +232,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         public void name_already_in_use_by_contact_group() throws Exception {
             // when
             final String existingName = contactGroupRepository.listAll().get(0).getName();
+            assertThat(existingName).isNotEmpty();
 
             // then
             thrown.expect(InvalidException.class);
@@ -311,7 +312,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void add_number_with_existing_type() throws Exception {
             // when
-            String newOfficePhoneNumber = randomPhoneNumber();
+            final String newOfficePhoneNumber = randomPhoneNumber();
             wrap(this.contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), null);
             nextTransaction();
 
@@ -324,8 +325,8 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void add_number_with_new_type() throws Exception {
             // when
-            String newAssistantPhoneNumber = randomPhoneNumber();
-            String newType = "ASSISTANT";
+            final String newAssistantPhoneNumber = randomPhoneNumber();
+            final String newType = "ASSISTANT";
             wrap(this.contact).addContactNumber(newAssistantPhoneNumber, null, newType);
             nextTransaction();
 
@@ -339,7 +340,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
             // when
-            String existingNumber = this.contact.getContactNumbers().first().getNumber();
+            final String existingNumber = this.contact.getContactNumbers().first().getNumber();
 
             // then
             thrown.expect(InvalidException.class);
@@ -351,7 +352,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void when_no_type_specified() throws Exception {
             // when
-            String newOfficePhoneNumber = randomPhoneNumber();
+            final String newOfficePhoneNumber = randomPhoneNumber();
 
             // then
             thrown.expect(InvalidException.class);
@@ -362,7 +363,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void when_both_existing_type_and_new_type_specified() throws Exception {
             // when
-            String newOfficePhoneNumber = randomPhoneNumber();
+            final String newOfficePhoneNumber = randomPhoneNumber();
 
             // then
             thrown.expect(InvalidException.class);
@@ -373,7 +374,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void when_no_number_provided() throws Exception {
             // when
-            String noNumber = null;
+            final String noNumber = null;
 
             // then
             thrown.expect(InvalidException.class);
@@ -384,7 +385,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void invalid_number_format() throws Exception {
             // when
-            String invalidNumber = "This is an invalid number";
+            final String invalidNumber = "This is an invalid number";
 
             // then
             thrown.expect(InvalidException.class);
@@ -608,7 +609,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             nextTransaction();
 
             // then
-            assertThat(contact.getContactRoles()).hasSize(contactRolesBefore);
+            assertThat(this.contact.getContactRoles()).hasSize(contactRolesBefore);
 
         }
     }
