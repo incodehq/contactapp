@@ -193,117 +193,6 @@ To run, recommend:
 ionic serve --lab
 ----
 
-
-== Ionic testing
-
-=== iOS
-
-[source, bash]
-----
-git clone
-cd frontend
-npm install -g cordova ionic gulp
-npm install gulp gulp-util bower gulp-concat gulp-sass gulp-minify-css gulp-rename shelljs gulp-tsc
-----
-You can test if everything went right by running:
-
-[source, bash]
-----
-ionic serve --lab
-----
-If there are no errors, continue:
-
-[source, bash]
-----
-sudo ionic platform add ios
-sudo chown -R `whoami` platforms
-----
-
-Next, open up Xcode and open the Project:
-contactapp-path/frontend/platforms/ios/ecp-contactapp.xcodeproj
-
-Inside Xcode, select the correct build destination (Emulator or a connected debugging device) and run: 
-
-* Product -> Clean (Cmd + Shift + K)
-* Product -> Build (Cmd + B)
-* Product -> Run (Cmd + R)
-
-=== Android
-
-per http://ionicframework.com/docs/guide/installation.html
-
-* install Ant
-* install Android SDK (24.4.1 at time of writing)
-* using Android SDK Manager
-  * install platform-tools (23.1)
-  * install
-* update `$ANDROID_HOME` to location
-* update `$PATH` to include `$ANDROID_HOME/tools` and `$ANDROID_HOME/platform-tools`
-
-
-per http://ionicframework.com/docs/cli/run.html
-
-[source,bash]
-----
-ionic platform add ios
-ionic platform add android
-----
-
-
-per http://ionicframework.com/docs/guide/testing.html
-
-[source,bash]
-----
-ionic build android
-----
-
-to emulate, need to create an emulator image (avd).  According to the error message, use (adjust for platform):
-
-[source,bash]
-----
-C:\Android-SDK\v24.4.1\tools\android.BAT avd
-----
-
-* download an intel image (I chose x86_64, since on a 64-bit windows)
-* download the HAXM device driver
-
-* enable VT-x in the bios...
-
-then run the install:
-
-* C:\Android-SDK\v24.4.1\extras\intel\Hardware_Accelerated_Execution_Manager\intelhaxm-android.exe
-
-
-
-
-per http://docs.ionic.io/docs/cordova-whitelist
-
-
-[source,bash]
-----
-ionic plugin add https://github.com/apache/cordova-plugin-whitelist.git
-----
-
-then edited `config.xml`
-
-
-could then deploy
-
-[source,bash]
-----
-ionic run android
-----
-
-
-nb: for debugging, use the link:https://developers.google.com/chrome-developer-tools/docs/remote-debugging[adb extension for Chrome]
-
-
-note that the `./plugins` directory is ignored (via `.gitignore`); looks like can use `ionic state restore` to restore all plugins.
-
-
-
-
-
 == Using swagger-ui
 
 The `web.xml` is set up using "auto" for the security challenge.  The `swagger-ui/index.html` doesn't (not sure why) seem to be logging in correctly.  the workaround is to access the `/restful/swagger/public` URI directly from the web browser (causing an HTTP Basic auth challenge),
@@ -320,7 +209,6 @@ for use by ionic viewer
 ionic upload --note "first attempt, configured to talk to contacts.ecpnv.com over http"
 ----
 
-
 generates an output such as:
 
 [source,bash]
@@ -333,44 +221,6 @@ Saved app_id, writing to ionic.io.bundle.min.js...
 Successfully uploaded (123d567f)
 
 ----
-
-
-
-
-== Publishing/Releasing
-
-=== Google Play
-
-for real, to the google play store
-
-per http://ionicframework.com/docs/guide/publishing.html
-
-
-[source,bash]
-----
-cordova build -release android
-----
-
-
-[source,bash]
-----
-mkdir keystore
-$JAVA_HOME/bin/keytool -genkey -v -keystore keystore/my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
-----
-
-[source,bash]
-----
-$JAVA_HOME/bin/jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore keystore/my-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name
-----
-
-zip align:
-
-[source,bash]
-----
-cd platforms/android/build/outputs/apk/
-$ANDROID_HOME/build-tools/23.0.2/zipalign -v 4 android-release-unsigned.apk ecp-contactapp.apk
-----
-
 
 == License
 
