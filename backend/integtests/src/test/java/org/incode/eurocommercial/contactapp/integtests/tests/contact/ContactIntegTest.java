@@ -138,7 +138,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void name_already_in_use_by_contact() throws Exception {
             // when
-            final String name = contact.getName();
+            final String name = this.contact.getName();
             final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
             final String officePhoneNumber = randomPhoneNumber();
             final String mobilePhoneNumber = randomPhoneNumber();
@@ -202,16 +202,16 @@ public class ContactIntegTest extends ContactAppIntegTest {
             final String email = fakeDataService.javaFaker().internet().emailAddress();
             final String notes = fakeDataService.lorem().sentence(3);
 
-            final Contact contact = wrap(this.contact).edit(name, company, email, notes);
+            final Contact newContact = wrap(this.contact).edit(name, company, email, notes);
             nextTransaction();
 
             // then
-            assertThat(contact).isSameAs(this.contact);
+            assertThat(newContact).isSameAs(this.contact);
 
-            assertThat(contact.getName()).isEqualTo(name);
-            assertThat(contact.getCompany()).isEqualTo(company);
-            assertThat(contact.getEmail()).isEqualTo(email);
-            assertThat(contact.getNotes()).isEqualTo(notes);
+            assertThat(newContact.getName()).isEqualTo(name);
+            assertThat(newContact.getCompany()).isEqualTo(company);
+            assertThat(newContact.getEmail()).isEqualTo(email);
+            assertThat(newContact.getNotes()).isEqualTo(notes);
         }
 
         @Ignore("See ELI-86")
@@ -224,7 +224,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             thrown.expect(InvalidException.class);
             // TODO: Insert invalidation message
             thrown.expectMessage("");
-            final Contact contact = wrap(this.contact).edit(existingName, null, null, null);
+            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
         }
 
         @Ignore("See ELI-85")
@@ -237,7 +237,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             thrown.expect(InvalidException.class);
             // TODO: Insert invalidation message
             thrown.expectMessage("");
-            final Contact contact = wrap(this.contact).edit(existingName, null, null, null);
+            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
         }
 
         @Test
@@ -248,7 +248,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: 'Name' is mandatory");
-            final Contact contact = wrap(this.contact).edit(name, null, null, null);
+            final Contact newContact = wrap(this.contact).edit(name, null, null, null);
         }
 
     }
@@ -280,7 +280,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             assertThat(FluentIterable.from(contactsAfter).filter(
                     contact -> {
-                        return Objects.equals(contact.getName(), someContactName);
+                        return Objects.equals(this.contact.getName(), someContactName);
                     }
             )).isEmpty();
 
@@ -304,21 +304,21 @@ public class ContactIntegTest extends ContactAppIntegTest {
             this.contact = wrap(contactMenu).create(name, null, officePhoneNumber, null, null, null);
             nextTransaction();
 
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), officePhoneNumber);
-            assertThat(contact.getContactNumbers()).hasSize(1);
+            assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), officePhoneNumber);
+            assertThat(this.contact.getContactNumbers()).hasSize(1);
         }
 
         @Test
         public void add_number_with_existing_type() throws Exception {
             // when
             String newOfficePhoneNumber = randomPhoneNumber();
-            wrap(contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), null);
             nextTransaction();
 
             // then
-            assertThat(contact.getContactNumbers()).hasSize(2);
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), newOfficePhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
+            assertThat(this.contact.getContactNumbers()).hasSize(2);
+            assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), newOfficePhoneNumber);
+            assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
         }
 
         @Test
@@ -326,26 +326,26 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // when
             String newAssistantPhoneNumber = randomPhoneNumber();
             String newType = "ASSISTANT";
-            wrap(contact).addContactNumber(newAssistantPhoneNumber, null, newType);
+            wrap(this.contact).addContactNumber(newAssistantPhoneNumber, null, newType);
             nextTransaction();
 
             // then
-            assertThat(contact.getContactNumbers()).hasSize(2);
-            assertContains(contact.getContactNumbers(), newType, newAssistantPhoneNumber);
-            assertContains(contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
+            assertThat(this.contact.getContactNumbers()).hasSize(2);
+            assertContains(this.contact.getContactNumbers(), newType, newAssistantPhoneNumber);
+            assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
         }
 
         @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
             // when
-            String existingNumber = contact.getContactNumbers().first().getNumber();
+            String existingNumber = this.contact.getContactNumbers().first().getNumber();
 
             // then
             thrown.expect(InvalidException.class);
             // TODO: Insert invalidation message
             thrown.expectMessage("");
-            wrap(contact).addContactNumber(existingNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contact).addContactNumber(existingNumber, ContactNumberType.OFFICE.title(), null);
         }
 
         @Test
@@ -356,7 +356,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
-            wrap(contact).addContactNumber(newOfficePhoneNumber, null, null);
+            wrap(this.contact).addContactNumber(newOfficePhoneNumber, null, null);
         }
 
         @Test
@@ -367,7 +367,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
-            wrap(contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), "ASSISTANT");
+            wrap(this.contact).addContactNumber(newOfficePhoneNumber, ContactNumberType.OFFICE.title(), "ASSISTANT");
         }
 
         @Test
@@ -378,7 +378,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: 'Number' is mandatory");
-            wrap(contact).addContactNumber(noNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contact).addContactNumber(noNumber, ContactNumberType.OFFICE.title(), null);
         }
 
         @Test
@@ -389,7 +389,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: Phone number should be in form: +44 1234 5678");
-            wrap(contact).addContactNumber(invalidNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contact).addContactNumber(invalidNumber, ContactNumberType.OFFICE.title(), null);
         }
 
     }
@@ -412,21 +412,21 @@ public class ContactIntegTest extends ContactAppIntegTest {
             this.contact = wrap(contactMenu).create(name, null, officePhoneNumber, null, homePhoneNumber, null);
             nextTransaction();
 
-            assertThat(contact.getContactNumbers()).hasSize(2);
+            assertThat(this.contact.getContactNumbers()).hasSize(2);
         }
 
         @Test
         public void remove_number() throws Exception {
 
-            final String existingNumber = fakeDataService.collections().anyOf(contact.choices0RemoveContactNumber());
+            final String existingNumber = fakeDataService.collections().anyOf(this.contact.choices0RemoveContactNumber());
             nextTransaction();
 
             // when
-            wrap(contact).removeContactNumber(existingNumber);
+            wrap(this.contact).removeContactNumber(existingNumber);
             nextTransaction();
 
             // then
-            assertNotContains(contact.getContactNumbers(), existingNumber);
+            assertNotContains(this.contact.getContactNumbers(), existingNumber);
         }
 
         @Ignore("See ELI-89")
@@ -437,7 +437,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            wrap(contact).removeContactNumber(nonexistingNumber);
+            wrap(this.contact).removeContactNumber(nonexistingNumber);
         }
     }
 
@@ -447,7 +447,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         public void happy_case_using_existing_role_name() throws Exception {
 
             // given
-            final int numRolesBefore = contact.getContactRoles().size();
+            final int numRolesBefore = this.contact.getContactRoles().size();
 
             // when
             final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
@@ -473,7 +473,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void happy_case_using_new_role_name() throws Exception {
             // given
-            final int numRolesBefore = contact.getContactRoles().size();
+            final int numRolesBefore = this.contact.getContactRoles().size();
 
             // when
             final ContactGroup contactGroup = fakeDataService.collections().anyOf(this.contact.choices0AddContactRole());
@@ -498,7 +498,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void happy_case_using_new_role_name_which_also_in_list() throws Exception {
             // given
-            final int numRolesBefore = contact.getContactRoles().size();
+            final int numRolesBefore = this.contact.getContactRoles().size();
 
             // when
             final List<ContactRole> contactRoles = contactRoleRepository.findByContact(contact);
@@ -583,7 +583,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         public void remove_role() throws Exception {
 
             // given
-            final int contactRolesBefore = contact.getContactRoles().size();
+            final int contactRolesBefore = this.contact.getContactRoles().size();
             assertThat(contactRolesBefore).isGreaterThan(0);
 
             // when
@@ -599,7 +599,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
         @Test
         public void remove_role_when_none_exists() throws Exception {
             // given
-            final int contactRolesBefore = contact.getContactRoles().size();
+            final int contactRolesBefore = this.contact.getContactRoles().size();
             assertThat(contactRolesBefore).isGreaterThan(0);
 
             // when

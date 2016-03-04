@@ -297,7 +297,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
         @Test
         public void name_already_in_use_by_contact() throws Exception {
             // given
-            final String existingName = contact.getName();
+            final String existingName = this.contact.getName();
             assertThat(existingName).isNotNull();
 
             // then
