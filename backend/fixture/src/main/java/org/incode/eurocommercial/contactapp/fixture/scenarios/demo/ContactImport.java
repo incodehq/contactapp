@@ -18,7 +18,7 @@ package org.incode.eurocommercial.contactapp.fixture.scenarios.demo;
 
 import java.util.Collections;
 
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -66,17 +66,17 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
             final org.isisaddons.module.excel.dom.ExcelFixture excelFixture,
             final Object previousRow) {
 
-        country = Strings.emptyToNull(country);
-        address = Strings.emptyToNull(address);
-        group = Strings.emptyToNull(group);
-        company = Strings.emptyToNull(company);
-        name = Strings.emptyToNull(name);
-        office = Strings.emptyToNull(office);
-        mobile = Strings.emptyToNull(mobile);
-        home = Strings.emptyToNull(home);
-        email = Strings.emptyToNull(email);
-        role = Strings.emptyToNull(role);
-        note = Strings.emptyToNull(note);
+        country = StringUtils.trimToNull(country);
+        address = StringUtils.trimToNull(address);
+        group   = StringUtils.trimToNull(group);
+        company = StringUtils.trimToNull(company);
+        name    = StringUtils.trimToNull(name);
+        office  = StringUtils.trimToNull(office);
+        mobile  = StringUtils.trimToNull(mobile);
+        home    = StringUtils.trimToNull(home);
+        email   = StringUtils.trimToNull(email);
+        role    = StringUtils.trimToNull(role);
+        note    = StringUtils.trimToNull(note);
 
         final ContactImport previousContactRow = (ContactImport) previousRow;
         if(previousContactRow != null) {
@@ -96,12 +96,18 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
         if(name == null) {
             if(office != null) contactGroup.addContactNumber(office, ContactNumberType.OFFICE.title(), null);
             if(mobile != null) contactGroup.addContactNumber(mobile, ContactNumberType.MOBILE.title(), null);
-            if(home   != null) contactGroup.addContactNumber(home, ContactNumberType.HOME.title(), null);
+            if(home   != null) contactGroup.addContactNumber(  home, ContactNumberType.  HOME.title(), null);
             if(email  != null) contactGroup.setEmail(email);
         }
         else {
             contact = contactRepository.findOrCreate(name, company, email, note, office, mobile, home);
             contact.addContactRole(contactGroup, role, null);
+
+            if(company != null && company.equals("Eurocommercial")) {
+                Country globalCountry = countryRepository.findOrCreate("Global");
+                ContactGroup ecpCompanyGroup = contactGroupRepository.findOrCreate(globalCountry, "ECP Company");
+                contact.addContactRole(ecpCompanyGroup, "Eurocommercial", null);
+            }
         }
         executionContext.addResult(excelFixture, contact);
 
