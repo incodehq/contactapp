@@ -84,6 +84,10 @@ public class ContactImport implements org.isisaddons.module.excel.dom.ExcelFixtu
             if(group   == null) group   = previousContactRow.getGroup();
         }
 
+        if(office != null) office = office.replace("(0)", "");
+        if(mobile != null) mobile = mobile.replace("(0)", "");
+        if(home   != null) home   = home  .replace("(0)", "");
+
         Country country = countryRepository.findOrCreate(this.country);
         ContactGroup contactGroup = contactGroupRepository.findOrCreate(country, group);
 
