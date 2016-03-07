@@ -27,7 +27,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.wrapper.InvalidException;
 
+import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
@@ -103,106 +105,240 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
                     .contains(newOfficePhoneNumber);
         }
 
-        @Ignore
+        @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
             // given
             final String existingNumber = this.contactNumber.getNumber();
             System.out.println(existingNumber);
 
-//            // then
-//            thrown.expect(ArrayIndexOutOfBoundsException.class);
-//            // TODO: Insert invalidation message
-//            thrown.expectMessage("");
-//
-//            // when
-//            wrap(this.contactNumber).create(existingNumber, ContactNumberType.OFFICE.title(), null);
+            // then
+            thrown.expect(InvalidException.class);
+            // TODO: Insert invalidation message
+            thrown.expectMessage("");
+
+            // when
+            wrap(this.contactNumber).create(existingNumber, ContactNumberType.OFFICE.title(), null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_type_specified() throws Exception {
+            // given
+            final String newPhoneNumber = randomPhoneNumber();
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
+
+            // when
+            wrap(this.contactNumber).create(newPhoneNumber, null, null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_both_existing_type_and_new_type_specified() throws Exception {
+            // given
+            final String newPhoneNumber = randomPhoneNumber();
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
+
+            // when
+            wrap(this.contactNumber).create(newPhoneNumber, ContactNumberType.OFFICE.title(), "New type");
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_number_provided() throws Exception {
+            // given
+            final String noNumber = null;
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Number' is mandatory");
+
+            // when
+            wrap(this.contactNumber).create(noNumber, ContactNumberType.OFFICE.title(), null);
         }
 
-        @Ignore("TODO")
         @Test
         public void invalid_number_format() throws Exception {
+            // given
+            final String invalidNumber = "This is an invalid number";
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Phone number should be in form: +44 1234 5678");
+
+            // when
+            wrap(this.contactNumber).create(invalidNumber, ContactNumberType.OFFICE.title(), null);
         }
 
     }
 
     public static class Edit extends ContactNumberIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void change_number() throws Exception {
+            // given
+            final String oldNumber = contactNumber.getNumber();
+            final String newNumber = randomPhoneNumber();
 
+            // when
+            wrap(this.contactNumber).edit(newNumber, this.contactNumber.default1Edit(), null);
+
+            // then
+            assertThat(contactNumber.getNumber()).isEqualTo(newNumber);
+            assertThat(contactNumberRepository.listAll())
+                    .extracting(ContactNumber::getNumber)
+                    .doesNotContain(oldNumber);
         }
 
-        @Ignore("TODO")
         @Test
         public void change_type_to_existing() throws Exception {
+            // given
+            final String currentType = this.contactNumber.getType();
+            final String existingType = ContactNumberType.OFFICE.title();
+            assertThat(currentType).isNotEqualToIgnoringCase(existingType);
+            final long amountOfCurrentType = contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(currentType))
+                    .count();
+            final long amountOfNewType = contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(existingType))
+                    .count();
 
+            // when
+            wrap(this.contactNumber).edit(this.contactNumber.default0Edit(), existingType, null);
+
+            // then
+            assertThat(this.contactNumber.getType()).isEqualToIgnoringCase(existingType);
+            assertThat(contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(currentType))
+                    .count()).isEqualTo(amountOfCurrentType - 1);
+            assertThat(contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(existingType))
+                    .count()).isEqualTo(amountOfNewType + 1);
         }
 
-        @Ignore("TODO")
         @Test
         public void change_type_to_new_type() throws Exception {
+            // given
+            final String currentType = this.contactNumber.getType();
+            final String newType = "New Tyoe";
+            assertThat(currentType).isNotEqualToIgnoringCase(newType);
+            final long amountOfCurrentType = contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(currentType))
+                    .count();
+            final long amountOfNewType = contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(newType))
+                    .count();
 
+            // when
+            wrap(this.contactNumber).edit(this.contactNumber.default0Edit(), null, newType);
+
+            // then
+            assertThat(this.contactNumber.getType()).isEqualToIgnoringCase(newType);
+            assertThat(contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(currentType))
+                    .count()).isEqualTo(amountOfCurrentType - 1);
+            assertThat(contactNumberRepository.listAll()
+                    .stream()
+                    .filter(conNum -> conNum.getType().equalsIgnoreCase(newType))
+                    .count()).isEqualTo(amountOfNewType + 1);
         }
 
-        @Ignore("TODO")
+        @Ignore("See ELI-113")
         @Test
         public void when_change_number_to_already_existing() throws Exception {
+            // given
+            final String existingNumber = fakeDataService.collections()
+                    .anyOfExcept(
+                            contactNumberRepository.listAll(),
+                            (ContactNumber conNum) -> conNum.compareTo(this.contactNumber) == 0)
+                    .getNumber();
+            assertThat(existingNumber).isNotEqualToIgnoringCase(this.contactNumber.getNumber());
 
+            // then
+            thrown.expect(InvalidException.class);
+            // TODO: insert invalidation message
+            thrown.expectMessage("");
+
+            // when
+            wrap(this.contactNumber).edit(existingNumber, this.contactNumber.default1Edit(), null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_type_specified() throws Exception {
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
 
+            // when
+            wrap(this.contactNumber).edit(this.contactNumber.default0Edit(), null, null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_both_existing_type_and_new_type_specified() throws Exception {
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Must specify either an (existing) type or a new type");
 
+            // when
+            wrap(this.contactNumber).edit(this.contactNumber.default0Edit(), this.contactNumber.default1Edit(), "New type");
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_number_provided() throws Exception {
+            // given
+            final String noNumber = null;
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Number' is mandatory");
+
+            // when
+            wrap(this.contactNumber).edit(noNumber, this.contactNumber.default1Edit(), null);
         }
 
-        @Ignore("TODO")
         @Test
         public void invalid_number_format() throws Exception {
+            // given
+            final String invalidNumber = "This is an invalid number";
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: Phone number should be in form: +44 1234 5678");
+
+            // when
+            wrap(this.contactNumber).edit(invalidNumber, this.contactNumber.default1Edit(), null);
         }
 
     }
 
     public static class Delete extends ContactNumberIntegTest {
 
-        @Ignore("TODO")
+        @Ignore("See ELI-114")
         @Test
         public void happy_case() throws Exception {
+            // given
+            final int contactNumbersBefore = contactNumberRepository.listAll().size();
+            final ContactableEntity owner = this.contactNumber.getOwner();
+            assertThat(contactNumbersBefore).isNotZero();
+            assertThat(owner.getContactNumbers().first()).isEqualTo(this.contactNumber);
+            assertThat(owner.getContactNumbers()).contains(this.contactNumber);
 
+            // when
+            this.contactNumber.delete();
+
+            // then
+            assertThat(contactNumberRepository.listAll()).doesNotContain(this.contactNumber);
+            assertThat(owner.getContactNumbers()).doesNotContain(this.contactNumber);
         }
 
     }
