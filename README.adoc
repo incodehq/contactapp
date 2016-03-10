@@ -4,6 +4,8 @@ The back-end is an Apache Isis app surfacing a REST API, with Swagger-generated 
 
 The front-end is an Ionic/Angular app using Typescript.
 
+Usage tutorials can be found on the https://github.com/incodehq/contactapp/wiki[Wiki]
+
 == Dan's setup of ionic-filter-bar
 
 === Stepping stones
