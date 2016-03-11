@@ -27,11 +27,13 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.contactapp.dom.seed.country.CountryRefData;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.users.AdminUser;
-import org.incode.eurocommercial.contactapp.dom.seed.users.ReaderUser;
 import org.incode.eurocommercial.contactapp.dom.seed.users.LockIsisModuleSecurityAdminUser;
+import org.incode.eurocommercial.contactapp.dom.seed.users.ReaderUser;
+import org.incode.eurocommercial.contactapp.dom.seed.users.SuperadminUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -59,10 +61,11 @@ public class ContactAppRolesAndPermissionsAndRefDataSeedService {
         @Override
         protected void execute(final ExecutionContext executionContext) {
 
-
+            executionContext.executeChild(this, new ContactAppSuperadminRoleAndPermissions());
             executionContext.executeChild(this, new ContactAppAdminRoleAndPermissions());
             executionContext.executeChild(this, new ContactAppReadOnlyRoleAndPermissions());
 
+            executionContext.executeChild(this, new SuperadminUser());
             executionContext.executeChild(this, new AdminUser());
             executionContext.executeChild(this, new ReaderUser());
             executionContext.executeChild(this, new LockIsisModuleSecurityAdminUser());

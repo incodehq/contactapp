@@ -21,20 +21,21 @@ import java.util.Arrays;
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
 
-public class AdminUser extends AbstractUserAndRolesFixtureScript {
+public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "admin";
+    public static final String USER_NAME = "superadmin";
     private static final String PASSWORD = "pass";
 
-    public AdminUser() {
+    public SuperadminUser() {
         super(USER_NAME, PASSWORD, null,
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
-//                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME
-                        ContactAppAdminRoleAndPermissions.ROLE_NAME
+                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
+                        ContactAppSuperadminRoleAndPermissions.ROLE_NAME
 
                         // configured by not required by any user:
                         //,SettingsModuleRoleAndPermissions.ROLE_NAME
