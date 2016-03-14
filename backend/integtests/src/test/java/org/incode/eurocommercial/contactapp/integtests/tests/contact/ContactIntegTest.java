@@ -224,21 +224,21 @@ public class ContactIntegTest extends ContactAppIntegTest {
             thrown.expect(InvalidException.class);
             // TODO: Insert invalidation message
             thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
+            wrap(this.contact).edit(existingName, null, null, null);
         }
 
-        @Ignore("See ELI-85")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
-            // when
+            // given
             final String existingName = contactGroupRepository.listAll().get(0).getName();
             assertThat(existingName).isNotEmpty();
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
+            thrown.expectMessage("Reason: This name is already in use by a contact group");
+
+            // when
+            wrap(this.contact).edit(existingName, null, null, null);
         }
 
         @Test
@@ -249,7 +249,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: 'Name' is mandatory");
-            final Contact newContact = wrap(this.contact).edit(name, null, null, null);
+            wrap(this.contact).edit(name, null, null, null);
         }
 
     }
