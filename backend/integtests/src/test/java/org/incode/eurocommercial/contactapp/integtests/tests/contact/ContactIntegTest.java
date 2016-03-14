@@ -214,16 +214,16 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertThat(newContact.getNotes()).isEqualTo(notes);
         }
 
-        @Ignore("See ELI-86")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
-            // when
+            // given
             final String existingName = fs.getContacts().get(1).getName();
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
+            thrown.expectMessage("Reason: This name is already in use by another contact");
+
+            // when
             wrap(this.contact).edit(existingName, null, null, null);
         }
 
