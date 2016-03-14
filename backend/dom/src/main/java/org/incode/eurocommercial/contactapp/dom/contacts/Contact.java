@@ -161,6 +161,18 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return this;
     }
 
+    public String validateEdit(
+            final String name,
+            final String company,
+            final String email,
+            final String notes) {
+        if (!contactGroupRepository.findByName(name).isEmpty()) {
+            return "This name is already in use by a contact group";
+        } else {
+            return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by another contact";
+        }
+    }
+
     public String default0Edit() {
         return getName();
     }

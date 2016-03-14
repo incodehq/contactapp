@@ -89,8 +89,6 @@ public class ContactNumberRepository {
         return types;
     }
 
-
-
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
 }

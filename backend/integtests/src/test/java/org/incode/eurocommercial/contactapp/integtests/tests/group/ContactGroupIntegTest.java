@@ -48,7 +48,6 @@ import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ContactGroupIntegTest extends ContactAppIntegTest {
 
@@ -314,7 +313,6 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
                     .contains(newOfficePhoneNumber);
         }
 
-        @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
             // given
@@ -323,14 +321,28 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             assertThat(this.contactGroup.getContactNumbers())
                     .extracting(ContactNumber::getNumber)
                     .contains(officePhoneNumber);
-
-            // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
+            final String newType = "New type";
 
             // when
-            wrap(this.contactGroup).addContactNumber(officePhoneNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contactGroup).addContactNumber(officePhoneNumber, null, newType);
+
+            // then
+            assertThat(this.contactGroup.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .doesNotContain(
+                            Tuple.tuple(
+                                    officePhoneNumber,
+                                    ContactNumberType.OFFICE.title()));
+            assertThat(this.contactGroup.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .contains(
+                            Tuple.tuple(
+                                    officePhoneNumber,
+                                    newType));
         }
 
         @Test

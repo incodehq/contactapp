@@ -41,6 +41,7 @@ import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
@@ -214,31 +215,31 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertThat(newContact.getNotes()).isEqualTo(notes);
         }
 
-        @Ignore("See ELI-86")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
-            // when
+            // given
             final String existingName = fs.getContacts().get(1).getName();
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
+            thrown.expectMessage("Reason: This name is already in use by another contact");
+
+            // when
+            wrap(this.contact).edit(existingName, null, null, null);
         }
 
-        @Ignore("See ELI-85")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
-            // when
+            // given
             final String existingName = contactGroupRepository.listAll().get(0).getName();
             assertThat(existingName).isNotEmpty();
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).edit(existingName, null, null, null);
+            thrown.expectMessage("Reason: This name is already in use by a contact group");
+
+            // when
+            wrap(this.contact).edit(existingName, null, null, null);
         }
 
         @Test
@@ -249,7 +250,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             // then
             thrown.expect(InvalidException.class);
             thrown.expectMessage("Reason: 'Name' is mandatory");
-            final Contact newContact = wrap(this.contact).edit(name, null, null, null);
+            wrap(this.contact).edit(name, null, null, null);
         }
 
     }
@@ -336,17 +337,34 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
         }
 
-        @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
-            // when
+            // given
             final String existingNumber = this.contact.getContactNumbers().first().getNumber();
+            final String currentType = this.contact.getContactNumbers().first().getType();
+            final String newType = "New type";
+            assertThat(this.contact.getContactNumbers().first().getType()).isNotEqualToIgnoringCase(newType);
+
+            // when
+            wrap(this.contact).addContactNumber(existingNumber, null, newType);
 
             // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            wrap(this.contact).addContactNumber(existingNumber, ContactNumberType.OFFICE.title(), null);
+            assertThat(this.contact.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .doesNotContain(
+                            Tuple.tuple(
+                                    existingNumber,
+                                    currentType));
+            assertThat(this.contact.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .contains(
+                            Tuple.tuple(
+                                    existingNumber,
+                                    newType));
         }
 
         @Test

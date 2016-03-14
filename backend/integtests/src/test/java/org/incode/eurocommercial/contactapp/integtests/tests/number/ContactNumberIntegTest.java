@@ -105,20 +105,19 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
                     .contains(newOfficePhoneNumber);
         }
 
-        @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
             // given
             final String existingNumber = this.contactNumber.getNumber();
-            System.out.println(existingNumber);
-
-            // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
+            final String newType = "New type";
+            assertThat(this.contactNumber.getType()).isNotEqualToIgnoringCase(newType);
 
             // when
-            wrap(this.contactNumber).create(existingNumber, ContactNumberType.OFFICE.title(), null);
+            wrap(this.contactNumber).create(existingNumber, null, newType);
+
+            // then
+            assertThat(this.contactNumber.getType()).isEqualTo(newType);
+            assertThat(this.contactNumber.getNumber()).isEqualTo(existingNumber);
         }
 
         @Test
@@ -227,7 +226,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
         public void change_type_to_new_type() throws Exception {
             // given
             final String currentType = this.contactNumber.getType();
-            final String newType = "New Tyoe";
+            final String newType = "New Type";
             assertThat(currentType).isNotEqualToIgnoringCase(newType);
             final long amountOfCurrentType = contactNumberRepository.listAll()
                     .stream()
