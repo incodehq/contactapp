@@ -24,6 +24,7 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -43,10 +44,16 @@ public class ContactAppTearDownService {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(cssClassFa = "fa-upload")
-    public HomePageViewModel tearDownData() {
+    public HomePageViewModel tearDownData(@ParameterLayout(named = "I am aware that this action will completely and irrevocably delete all data from the database") boolean aware,
+                                          @ParameterLayout(named = "I hereby confirm that this is my intention") boolean confirm) {
         FixtureScript script = new ContactAppTearDown();
         fixtureScripts.runFixtureScript(script, "");
         return new HomePageViewModel();
+    }
+
+    public String validateTearDownData(boolean aware, boolean confirm) {
+        return aware && confirm ? null : "You must confirm that your are aware of the implications of this action and this is your intention";
+
     }
 
 

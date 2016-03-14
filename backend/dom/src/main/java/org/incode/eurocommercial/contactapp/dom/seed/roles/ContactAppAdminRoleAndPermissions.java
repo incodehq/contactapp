@@ -38,6 +38,23 @@ public class ContactAppAdminRoleAndPermissions extends AbstractRoleAndPermission
                 "org.incode.eurocommercial.contactapp.app",
                 ContactAppDomainModule.class.getPackage().getName()
                 );
-    }
+        newClassPermissions(
+                ApplicationPermissionRule.VETO,
+                ApplicationPermissionMode.VIEWING,
+                classFor("org.incode.eurocommercial.contactapp.app.services.ContactAppImportService")
+        );
+        newClassPermissions(
+                ApplicationPermissionRule.VETO,
+                ApplicationPermissionMode.VIEWING,
+                classFor("org.incode.eurocommercial.contactapp.app.services.ContactAppTearDownService")
+        );
 
+    }
+    private static Class<?> classFor(final String className) {
+        try {
+            return Thread.currentThread().getContextClassLoader().loadClass(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
