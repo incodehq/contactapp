@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -287,44 +286,87 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
 
     public static class Edit extends ContactRoleIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case_using_existing_role_name() throws Exception {
+            // when
+            final String existingRoleName = fakeDataService.collections().anyOf(this.contactRole.choices0Edit());
+            wrap(this.contactRole).edit(existingRoleName, null);
 
+            // then
+            assertThat(this.contactRole.getRoleName()).isEqualTo(existingRoleName);
         }
 
-        @Ignore("TODO")
         @Test
         public void happy_case_using_new_role_name() throws Exception {
+            // given
+            final String newRoleName = "New role";
+            final String currentRoleName = this.contactRole.getRoleName();
+            List<String> rolesBefore = contactRoleRepository.listAll()
+                    .stream()
+                    .map(ContactRole::getRoleName)
+                    .collect(Collectors.toList());
+            assertThat(rolesBefore).doesNotContain(newRoleName);
 
+            // when
+            wrap(this.contactRole).edit(null, newRoleName);
+
+            // then
+            assertThat(this.contactRole.getRoleName()).isEqualTo(newRoleName);
+            List<String> rolesAfter = contactRoleRepository.listAll()
+                    .stream()
+                    .map(ContactRole::getRoleName)
+                    .collect(Collectors.toList());
+            assertThat(rolesAfter).contains(newRoleName);
         }
 
-        @Ignore("TODO")
         @Test
         public void happy_case_using_new_role_name_which_also_in_list() throws Exception {
+            // when
+            final String existingRoleNameAsNewRoleName = fakeDataService.collections().anyOf(this.contactRole.choices0Edit());
+            wrap(this.contactRole).edit(null, existingRoleNameAsNewRoleName);
 
+            // then
+            assertThat(this.contactRole.getRoleName()).isEqualTo(existingRoleNameAsNewRoleName);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_role_specified() throws Exception {
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Must specify either an (existing) role or a new role");
 
+            // when
+            wrap(this.contactRole).edit(null, null);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_both_existing_role_and_new_role_specified() throws Exception {
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Must specify either an (existing) role or a new role");
 
+            // when
+            final String newRoleName = fakeDataService.collections().anyOf(this.contactRole.choices0Edit());
+            wrap(this.contactRole).edit(newRoleName, "New role");
         }
 
     }
 
     public static class Delete extends ContactRoleIntegTest {
 
-        @Ignore("TODO")
         @Test
         public void happy_case() throws Exception {
+            // given
+            assertThat(contactRoleRepository.listAll()).contains(this.contactRole);
+            final int amountBefore = contactRoleRepository.listAll().size();
 
+            // when
+            wrap(this.contactRole).delete();
+
+            // then
+            List<ContactRole> allAfter = contactRoleRepository.listAll();
+            assertThat(allAfter).doesNotContain(this.contactRole);
+            assertThat(allAfter.size()).isEqualTo(amountBefore - 1);
         }
 
     }
