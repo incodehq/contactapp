@@ -41,6 +41,7 @@ import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
@@ -336,17 +337,34 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertContains(this.contact.getContactNumbers(), ContactNumberType.OFFICE.title(), this.officePhoneNumber);
         }
 
-        @Ignore("See ELI-84")
         @Test
         public void add_number_when_already_have_number_of_any_type() throws Exception {
-            // when
+            // given
             final String existingNumber = this.contact.getContactNumbers().first().getNumber();
+            final String currentType = this.contact.getContactNumbers().first().getType();
+            final String newType = "New type";
+            assertThat(this.contact.getContactNumbers().first().getType()).isNotEqualToIgnoringCase(newType);
+
+            // when
+            wrap(this.contact).addContactNumber(existingNumber, null, newType);
 
             // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            wrap(this.contact).addContactNumber(existingNumber, ContactNumberType.OFFICE.title(), null);
+            assertThat(this.contact.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .doesNotContain(
+                            Tuple.tuple(
+                                    existingNumber,
+                                    currentType));
+            assertThat(this.contact.getContactNumbers())
+                    .extracting(
+                            ContactNumber::getNumber,
+                            ContactNumber::getType)
+                    .contains(
+                            Tuple.tuple(
+                                    existingNumber,
+                                    newType));
         }
 
         @Test

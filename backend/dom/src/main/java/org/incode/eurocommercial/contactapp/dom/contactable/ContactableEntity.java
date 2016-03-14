@@ -91,14 +91,16 @@ import lombok.Setter;
         bookmarking = BookmarkPolicy.AS_ROOT
 )
 @MemberGroupLayout(
-        columnSpans={6,0,0,6}
+        columnSpans = { 6, 0, 0, 6 }
 )
 
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
-public class ContactableEntity  {
+public class ContactableEntity {
 
     public static class MaxLength {
-        private MaxLength(){}
+        private MaxLength() {
+        }
+
         public static final int NAME = 50;
         public static final int EMAIL = 50;
         public static final int NOTES = ContactAppDomainModule.MaxLength.NOTES;
@@ -133,8 +135,6 @@ public class ContactableEntity  {
     @Getter @Setter
     private SortedSet<ContactNumber> contactNumbers = new TreeSet<ContactNumber>();
 
-
-
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
     @MemberOrder(name = "contactNumbers", sequence = "1")
@@ -153,6 +153,7 @@ public class ContactableEntity  {
     public Set<String> choices1AddContactNumber() {
         return contactNumberRepository.existingTypes();
     }
+
     public String default1AddContactNumber() {
         return ContactNumberType.OFFICE.title();
     }
@@ -161,9 +162,9 @@ public class ContactableEntity  {
             final String number,
             final String type,
             final String newType) {
+
         return StringUtil.eitherOr(type, newType, "type");
     }
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
@@ -172,24 +173,25 @@ public class ContactableEntity  {
         final Optional<ContactNumber> contactNumberIfAny = Iterables
                 .tryFind(getContactNumbers(), cn -> Objects.equal(cn.getNumber(), number));
 
-        if(contactNumberIfAny.isPresent()) {
+        if (contactNumberIfAny.isPresent()) {
             getContactNumbers().remove(contactNumberIfAny.get());
         }
         return this;
     }
 
     public String disableRemoveContactNumber() {
-        return getContactNumbers().isEmpty()? "No contact numbers to remove": null;
+        return getContactNumbers().isEmpty() ? "No contact numbers to remove" : null;
     }
+
     public List<String> choices0RemoveContactNumber() {
         return Lists.transform(Lists.newArrayList(getContactNumbers()), ContactNumber::getNumber);
     }
+
     public String default0RemoveContactNumber() {
         final List<String> choices = choices0RemoveContactNumber();
-        return choices.isEmpty()? null : choices.get(0);
+        return choices.isEmpty() ? null : choices.get(0);
     }
 
-    
     @Override
     public String toString() {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "name");
