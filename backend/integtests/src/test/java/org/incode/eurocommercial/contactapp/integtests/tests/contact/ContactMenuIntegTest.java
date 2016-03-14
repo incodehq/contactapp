@@ -132,7 +132,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             thrown.expectMessage("Incorrect arguments for String.matches(StringExpression)");
 
             // when
-            final List<Contact> result = contactMenu.find(query);
+            contactMenu.find(query);
         }
     }
 
@@ -173,7 +173,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             thrown.expect(JDOException.class);
 
             // when
-            final List<Contact> result = contactMenu.findByGroup(contactGroup);
+            contactMenu.findByGroup(contactGroup);
         }
 
     }
@@ -220,7 +220,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             thrown.expectMessage("Incorrect arguments for String.matches(StringExpression)");
 
             // when
-            final List<Contact> result = contactMenu.findByRole(roleName);
+            contactMenu.findByRole(roleName);
         }
 
     }
@@ -293,7 +293,6 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             assertThat(newContact.getNotes()).isNull();
         }
 
-        @Ignore("See ELI-88")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
             // given
@@ -302,14 +301,12 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert expected message
-            thrown.expectMessage("Reason: ");
+            thrown.expectMessage("Reason: This name is already in use by another contact");
 
             // when
-            final Contact newContact = wrap(contactMenu).create(existingName, null, null, null, null, null);
+            wrap(contactMenu).create(existingName, null, null, null, null, null);
         }
 
-        @Ignore("See ELI-87")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
             // given
@@ -318,11 +315,10 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert expected message
-            thrown.expectMessage("Reason: ");
+            thrown.expectMessage("Reason: This name is already in use by a contact group");
 
             // when
-            final Contact newContact = wrap(contactMenu).create(existingName, null, null, null, null, null);
+            wrap(contactMenu).create(existingName, null, null, null, null, null);
         }
 
         @Test
@@ -335,7 +331,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             thrown.expectMessage("Reason: 'Name' is mandatory");
 
             // when
-            final Contact newContact = wrap(contactMenu).create(name, null, null, null, null, null);
+            wrap(contactMenu).create(name, null, null, null, null, null);
         }
 
     }

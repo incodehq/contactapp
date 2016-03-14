@@ -127,6 +127,20 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return getCompany();
     }
 
+    public String validateCreate(
+            final String name,
+            final String company,
+            final String officeNumber,
+            final String mobileNumber,
+            final String homeNumber,
+            final String email) {
+        if (!contactGroupRepository.findByName(name).isEmpty()) {
+            return "This name is already in use by a contact group";
+        } else {
+            return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by another contact";
+        }
+    }
+
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "2")
