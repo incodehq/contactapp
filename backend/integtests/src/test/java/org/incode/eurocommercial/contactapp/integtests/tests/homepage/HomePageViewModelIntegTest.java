@@ -24,11 +24,13 @@ import com.google.common.base.Objects;
 import com.google.common.collect.FluentIterable;
 
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.wrapper.DisabledException;
+import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
@@ -63,6 +65,9 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
     DemoFixture fs;
 
     HomePageViewModel homePageViewModel;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -114,16 +119,33 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
                     .hasSize(1);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_country_specified() throws Exception {
+            // given
+            final Country noCountry = null;
+            final String groupName = fakeDataService.strings().fixed(8);
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Country' is mandatory");
+
+            // when
+            wrap(homePageViewModel).createContactGroup(noCountry, groupName);
         }
 
-        @Ignore("TODO")
         @Test
         public void when_no_name_provided() throws Exception {
+            // given
+            final List<Country> list = countryRepository.listAll();
+            final Country someCountry = fakeDataService.collections().anyOf(list);
+            final String noName = null;
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: 'Name' is mandatory");
+
+            // when
+            wrap(homePageViewModel).createContactGroup(someCountry, noName);
         }
 
     }
@@ -165,19 +187,18 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             // then
             final List<ContactGroup> groupsAfter = homePageViewModel.getGroups();
-            assertThat(groupsAfter).hasSize(sizeBefore-1);
+            assertThat(groupsAfter).hasSize(sizeBefore - 1);
 
             assertThat(
                     FluentIterable
-                        .from(groupsAfter)
-                        .filter(contactGroupOf(someCountry, groupName))
+                            .from(groupsAfter)
+                            .filter(contactGroupOf(someCountry, groupName))
                             .toList())
                     .isEmpty();
         }
 
         @Test
         public void cannot_delete_group_that_has_contact_roles() throws Exception {
-
 
             // given
             final List<ContactGroup> groups = homePageViewModel.getGroups();
@@ -200,9 +221,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             wrap(homePageViewModel).deleteContactGroup(someGroup);
         }
 
-
     }
-
 
     private static com.google.common.base.Predicate<ContactGroup> contactGroupOf(
             final Country someCountry,
@@ -212,7 +231,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
     private static boolean matches(final Country someCountry, final String groupName, final ContactGroup contactGroup) {
         return Objects.equal(contactGroup.getName(), groupName) &&
-        Objects.equal(contactGroup.getCountry().getName(), someCountry.getName());
+                Objects.equal(contactGroup.getCountry().getName(), someCountry.getName());
     }
 
 }

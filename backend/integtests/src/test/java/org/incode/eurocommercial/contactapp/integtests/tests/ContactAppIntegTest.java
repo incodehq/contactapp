@@ -82,11 +82,11 @@ public abstract class ContactAppIntegTest extends IntegrationTestAbstract {
 
     protected static void assertContains(
             final Collection<ContactNumber> contactNumbers,
-            final ContactNumberType type,
+            final String type,
             final String number) {
         assertThat(FluentIterable
                     .from(contactNumbers)
-                    .filter(x -> Objects.equals(x.getType(), type.title())))
+                    .filter(x -> Objects.equals(x.getType(), type)))
                 .extracting(ContactNumber::getNumber)
                 .contains(number);
     }

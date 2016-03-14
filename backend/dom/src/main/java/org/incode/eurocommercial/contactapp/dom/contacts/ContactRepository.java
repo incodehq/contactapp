@@ -55,7 +55,7 @@ public class ContactRepository {
         contacts.addAll(findByName(regex));
         contacts.addAll(findByCompany(regex));
         contacts.addAll(findByContactRoleName(regex));
-        for(ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
+        for (ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
             contacts.addAll(findByContactGroup(contactGroup));
         }
         return asSortedList(contacts);
@@ -90,7 +90,7 @@ public class ContactRepository {
             ContactGroup contactGroup
     ) {
         java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
-        for(ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
+        for (ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
             contacts.add(contactRole.getContact());
         }
         return asSortedList(contacts);
@@ -102,7 +102,7 @@ public class ContactRepository {
     ) {
         java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
 
-        for(ContactRole contactRole : contactRoleRepository.findByName(regex)) {
+        for (ContactRole contactRole : contactRoleRepository.findByName(regex)) {
             contacts.add(contactRole.getContact());
         }
 
@@ -125,13 +125,13 @@ public class ContactRepository {
         contact.setNotes(notes);
         container.persistIfNotAlready(contact);
 
-        if(officeNumber != null) {
+        if (officeNumber != null) {
             contact.addContactNumber(officeNumber, ContactNumberType.OFFICE.title(), null);
         }
-        if(mobileNumber != null) {
+        if (mobileNumber != null) {
             contact.addContactNumber(mobileNumber, ContactNumberType.MOBILE.title(), null);
         }
-        if(homeNumber != null) {
+        if (homeNumber != null) {
             contact.addContactNumber(homeNumber, ContactNumberType.HOME.title(), null);
         }
 
@@ -171,13 +171,12 @@ public class ContactRepository {
         return contacts;
     }
 
-    private static  List<Contact> asSortedList(final SortedSet<Contact> contactsSet) {
+    private static List<Contact> asSortedList(final SortedSet<Contact> contactsSet) {
         final List<Contact> contacts = Lists.newArrayList();
         // no need to sort, just copy over
         contacts.addAll(contactsSet);
         return contacts;
     }
-
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
