@@ -17,6 +17,7 @@
 package org.incode.eurocommercial.contactapp.integtests.tests.group;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.jdo.JDOException;
@@ -48,7 +49,6 @@ import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ContactGroupIntegTest extends ContactAppIntegTest {
 
@@ -412,20 +412,29 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
                     .doesNotContain(number);
         }
 
-        @Ignore("See ELI-89")
         @Test
         public void remove_number_when_none_exists() throws Exception {
-            // given
-            final String nonexistingNumber = "+00 0000 0000";
-
             // need to add a number so remove is not disabled
             wrap(this.contactGroup).addContactNumber(randomPhoneNumber(), ContactNumberType.OFFICE.title(), null);
 
-            // then
-            thrown.expect(InvalidException.class);
+            // given
+            final int numbersBefore = this.contactGroup.getContactNumbers()
+                    .stream()
+                    .map(ContactNumber::getNumber)
+                    .collect(Collectors.toList())
+                    .size();
 
             // when
+            final String nonexistingNumber = "+00 0000 0000";
             wrap(this.contactGroup).removeContactNumber(nonexistingNumber);
+
+            // then
+            assertThat(this.contactGroup.getContactNumbers()
+                    .stream()
+                    .map(ContactNumber::getNumber)
+                    .collect(Collectors.toList())
+                    .size())
+                    .isEqualTo(numbersBefore);
         }
     }
 
