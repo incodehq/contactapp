@@ -77,7 +77,12 @@ import lombok.Setter;
                 name = "findByCompany", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
-                        + "WHERE company.matches(:regex) ")
+                        + "WHERE company.matches(:regex) "),
+        @Query(
+                name = "findByEmail", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "WHERE email.matches(:regex) ")
 })
 @DomainObject(
         editing = Editing.DISABLED

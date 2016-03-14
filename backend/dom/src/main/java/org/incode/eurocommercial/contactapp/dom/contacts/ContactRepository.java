@@ -55,6 +55,7 @@ public class ContactRepository {
         contacts.addAll(findByName(regex));
         contacts.addAll(findByCompany(regex));
         contacts.addAll(findByContactRoleName(regex));
+        contacts.addAll(findByEmail(regex));
         for (ContactGroup contactGroup : contactGroupRepository.findByName(regex)) {
             contacts.addAll(findByContactGroup(contactGroup));
         }
@@ -106,6 +107,18 @@ public class ContactRepository {
             contacts.add(contactRole.getContact());
         }
 
+        return asSortedList(contacts);
+    }
+
+    @Programmatic
+    public java.util.List<Contact> findByEmail(
+            String regex
+    ) {
+        final List<Contact> contacts = container.allMatches(
+                new QueryDefault<>(
+                        Contact.class,
+                        "findByEmail",
+                        "regex", regex));
         return asSortedList(contacts);
     }
 

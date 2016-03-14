@@ -70,10 +70,10 @@ public class ContactMenu {
     ) {
         return contactRepository.findByContactGroup(group);
     }
+
     public List<ContactGroup> choices0FindByGroup() {
         return contactGroupRepository.listAll();
     }
-
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
@@ -85,8 +85,19 @@ public class ContactMenu {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);
         return contactRepository.findByContactRoleName(roleNameRegex);
     }
+
     public SortedSet<String> choices0FindByRole() {
         return contactRoleRepository.roleNames();
+    }
+
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
+    @MemberOrder(sequence = "5")
+    public java.util.List<Contact> findByEmail(
+            final String query
+    ) {
+        String queryRegex = toCaseInsensitiveRegex(query);
+        return contactRepository.findByEmail(queryRegex);
     }
 
     @Action
@@ -108,10 +119,10 @@ public class ContactMenu {
     }
 
     public static String toCaseInsensitiveRegex(final String pattern) {
-        if(pattern == null) {
+        if (pattern == null) {
             return null;
         }
-        if(pattern.contains("*") || pattern.contains("?")) {
+        if (pattern.contains("*") || pattern.contains("?")) {
             final String regex = pattern.replace("*", ".*").replace("?", ".");
             return "(?i)" + regex;
         } else {

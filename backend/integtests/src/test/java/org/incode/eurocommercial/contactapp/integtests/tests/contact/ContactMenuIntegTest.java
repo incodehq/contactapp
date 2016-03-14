@@ -98,7 +98,6 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
             assertThat(result).contains(this.contact);
         }
 
-        @Ignore("ELI-90")
         @Test
         public void match_on_email() throws Exception {
             // when
