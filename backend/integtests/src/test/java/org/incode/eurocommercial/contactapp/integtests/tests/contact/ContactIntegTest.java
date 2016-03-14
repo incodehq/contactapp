@@ -19,6 +19,7 @@ package org.incode.eurocommercial.contactapp.integtests.tests.contact;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -448,15 +449,26 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertNotContains(this.contact.getContactNumbers(), existingNumber);
         }
 
-        @Ignore("See ELI-89")
         @Test
         public void remove_number_when_none_exists() throws Exception {
+            // given
+            final int numbersBefore = this.contact.getContactNumbers()
+                    .stream()
+                    .map(ContactNumber::getNumber)
+                    .collect(Collectors.toList())
+                    .size();
+
             // when
             final String nonexistingNumber = "+00 0000 0000";
+            wrap(this.contact).removeContactNumber(nonexistingNumber);
 
             // then
-            thrown.expect(InvalidException.class);
-            wrap(this.contact).removeContactNumber(nonexistingNumber);
+            assertThat(this.contact.getContactNumbers()
+                    .stream()
+                    .map(ContactNumber::getNumber)
+                    .collect(Collectors.toList())
+                    .size())
+                    .isEqualTo(numbersBefore);
         }
     }
 
