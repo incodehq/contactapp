@@ -134,32 +134,36 @@ public class ContactIntegTest extends ContactAppIntegTest {
             assertThat(newContact.getNotes()).isNull();
         }
 
-        @Ignore("See ELI-88")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
-            // when
+            // given
             final String name = this.contact.getName();
+
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: This name is already in use by another contact");
+
+            // when
             final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
             final String officePhoneNumber = randomPhoneNumber();
             final String mobilePhoneNumber = randomPhoneNumber();
             final String homePhoneNumber = randomPhoneNumber();
             final String email = fakeDataService.javaFaker().internet().emailAddress();
 
-            // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).create(name, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
+            wrap(this.contact).create(name, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
 
         }
 
-        @Ignore("See ELI-87")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
             // given
             final String existingName = contactGroupRepository.listAll().get(0).getName();
             assertThat(existingName).isNotEmpty();
 
+            // then
+            thrown.expect(InvalidException.class);
+            thrown.expectMessage("Reason: This name is already in use by a contact group");
+
             // when
             final String company = fakeDataService.strings().upper(Contact.MaxLength.COMPANY);
             final String officePhoneNumber = randomPhoneNumber();
@@ -167,11 +171,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
             final String homePhoneNumber = randomPhoneNumber();
             final String email = fakeDataService.javaFaker().internet().emailAddress();
 
-            // then
-            thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
-            final Contact newContact = wrap(this.contact).create(existingName, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
+            wrap(this.contact).create(existingName, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
         }
 
         @Test

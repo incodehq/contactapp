@@ -89,21 +89,20 @@ import lombok.Setter;
 public class Contact extends ContactableEntity implements Comparable<Contact> {
 
     public static class MaxLength {
-        private MaxLength(){}
+        private MaxLength() {
+        }
+
         public static final int COMPANY = 50;
     }
-
 
     public String title() {
         return getName();
     }
 
-
     @Column(allowsNull = "true", length = MaxLength.COMPANY)
     @Property
     @Getter @Setter
     private String company;
-
 
     @Action
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -128,6 +127,19 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return getCompany();
     }
 
+    public String validateCreate(
+            final String name,
+            final String company,
+            final String officeNumber,
+            final String mobileNumber,
+            final String homeNumber,
+            final String email) {
+        if (!contactGroupRepository.findByName(name).isEmpty()) {
+            return "This name is already in use by a contact group";
+        } else {
+            return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by another contact";
+        }
+    }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -152,17 +164,18 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     public String default0Edit() {
         return getName();
     }
+
     public String default1Edit() {
         return getCompany();
     }
+
     public String default2Edit() {
         return getEmail();
     }
+
     public String default3Edit() {
         return getNotes();
     }
-
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(
@@ -173,14 +186,11 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         contactRepository.delete(this);
     }
 
-
     @Persistent(mappedBy = "contact", dependentElement = "true")
     @Collection()
     @CollectionLayout(named = "Role of Contact in Groups", render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
-
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
@@ -207,6 +217,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         contactGroups.removeAll(currentGroups);
         return contactGroups;
     }
+
     public SortedSet<String> choices1AddContactRole() {
         return contactRoleRepository.roleNames();
     }
@@ -215,9 +226,6 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         return StringUtil.eitherOr(role, newRole, "role");
     }
 
-
-
-
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
     @MemberOrder(name = "contactRoles", sequence = "2")
@@ -225,20 +233,22 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
         final Optional<ContactRole> contactRoleIfAny = Iterables
                 .tryFind(getContactRoles(), cn -> Objects.equal(cn.getContactGroup(), contactGroup));
 
-        if(contactRoleIfAny.isPresent()) {
+        if (contactRoleIfAny.isPresent()) {
             getContactRoles().remove(contactRoleIfAny.get());
         }
         return this;
     }
 
     public ContactGroup default0RemoveContactRole() {
-        return getContactRoles().size() == 1? getContactRoles().iterator().next().getContactGroup(): null;
+        return getContactRoles().size() == 1 ? getContactRoles().iterator().next().getContactGroup() : null;
     }
+
     public List<ContactGroup> choices0RemoveContactRole() {
         return Lists.transform(Lists.newArrayList(getContactRoles()), ContactRole::getContactGroup);
     }
+
     public String disableRemoveContactRole() {
-        return getContactRoles().isEmpty()? "No contacts to remove": null;
+        return getContactRoles().isEmpty() ? "No contacts to remove" : null;
     }
 
     @Override
@@ -247,8 +257,8 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     }
 
     private static final Ordering<Contact> byName =
-                    Ordering.natural()
-                            .onResultOf(nameOf());
+            Ordering.natural()
+                    .onResultOf(nameOf());
 
     @Inject
     ContactRoleRepository contactRoleRepository;
@@ -258,6 +268,5 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     ContactNumberRepository contactNumberRepository;
     @Inject
     ContactRepository contactRepository;
-
 
 }

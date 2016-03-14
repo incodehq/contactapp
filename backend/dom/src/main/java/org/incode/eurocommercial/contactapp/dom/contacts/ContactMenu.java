@@ -70,10 +70,10 @@ public class ContactMenu {
     ) {
         return contactRepository.findByContactGroup(group);
     }
+
     public List<ContactGroup> choices0FindByGroup() {
         return contactGroupRepository.listAll();
     }
-
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
@@ -85,6 +85,7 @@ public class ContactMenu {
         String roleNameRegex = toCaseInsensitiveRegex(roleName);
         return contactRepository.findByContactRoleName(roleNameRegex);
     }
+
     public SortedSet<String> choices0FindByRole() {
         return contactRoleRepository.roleNames();
     }
@@ -107,11 +108,25 @@ public class ContactMenu {
         return contactRepository.create(name, company, email, null, officeNumber, mobileNumber, homeNumber);
     }
 
+    public String validateCreate(
+            final String name,
+            final String company,
+            final String officeNumber,
+            final String mobileNumber,
+            final String homeNumber,
+            final String email) {
+        if (!contactGroupRepository.findByName(name).isEmpty()) {
+            return "This name is already in use by a contact group";
+        } else {
+            return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by another contact";
+        }
+    }
+
     public static String toCaseInsensitiveRegex(final String pattern) {
-        if(pattern == null) {
+        if (pattern == null) {
             return null;
         }
-        if(pattern.contains("*") || pattern.contains("?")) {
+        if (pattern.contains("*") || pattern.contains("?")) {
             final String regex = pattern.replace("*", ".*").replace("?", ".");
             return "(?i)" + regex;
         } else {
