@@ -90,7 +90,8 @@ public class ContactRepository {
             ContactGroup contactGroup
     ) {
         java.util.SortedSet<Contact> contacts = Sets.newTreeSet();
-        for (ContactRole contactRole : contactRoleRepository.findByGroup(contactGroup)) {
+        final List<ContactRole> contactRoles = contactRoleRepository.findByGroup(contactGroup);
+        for (ContactRole contactRole : contactRoles) {
             contacts.add(contactRole.getContact());
         }
         return asSortedList(contacts);
@@ -174,8 +175,12 @@ public class ContactRepository {
     private static List<Contact> asSortedList(final SortedSet<Contact> contactsSet) {
         final List<Contact> contacts = Lists.newArrayList();
         // no need to sort, just copy over
-        contacts.addAll(contactsSet);
-        return contacts;
+        if (!contactsSet.isEmpty()) {
+            contacts.addAll(contactsSet);
+            return contacts;
+        } else {
+            return null;
+        }
     }
 
     @javax.inject.Inject
