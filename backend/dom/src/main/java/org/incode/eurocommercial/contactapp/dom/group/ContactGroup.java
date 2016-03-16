@@ -85,25 +85,26 @@ import lombok.Setter;
                         + "FROM org.incode.eurocommercial.contactapp.dom.group.ContactGroup "
                         + "WHERE name.matches(:regex) "),
 })
-@Unique(name = "ContactGroup_displayNumber_UNQ", members = {"displayOrder"})
+@Unique(name = "ContactGroup_displayNumber_UNQ", members = { "displayOrder" })
 @DomainObject(
         editing = Editing.DISABLED
 )
 @MemberGroupLayout(
-        columnSpans = {6,0,0,6},
-        left = {"General", "Other"}
+        columnSpans = { 6, 0, 0, 6 },
+        left = { "General", "Other" }
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactGroup extends ContactableEntity implements Comparable<ContactGroup> {
 
     public static class MaxLength {
-        private MaxLength(){}
+        private MaxLength() {
+        }
+
         public static final int ADDRESS = 255;
     }
 
-
     public String title() {
-        return getName() + " (" +  getCountry().getName() + ")";
+        return getName() + " (" + getCountry().getName() + ")";
     }
 
     @MemberOrder(name = "Other", sequence = "1")
@@ -126,7 +127,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private String address;
 
-
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Create", position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "Notes", sequence = "1")
@@ -136,10 +136,20 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
             final String name) {
         return contactGroupRepository.findOrCreate(country, name);
     }
+
     public Country default0Create() {
         return getCountry();
     }
 
+    public String validateCreate(
+            final Country country,
+            final String name) {
+        if (!contactGroupRepository.findByName(name).isEmpty()) {
+            return "This name is already in use by another contact group";
+        } else {
+            return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by a contact";
+        }
+    }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -164,16 +174,18 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     public String default0Edit() {
         return getName();
     }
+
     public String default1Edit() {
         return getAddress();
     }
+
     public String default2Edit() {
         return getEmail();
     }
+
     public String default3Edit() {
         return getNotes();
     }
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
@@ -183,10 +195,8 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     }
 
     public String disableDelete() {
-        return getContactRoles().isEmpty()? null: "This group has contacts";
+        return getContactRoles().isEmpty() ? null : "This group has contacts";
     }
-
-
 
     @NotPersistent
     @Collection
@@ -220,6 +230,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         contacts.removeAll(currentContacts);
         return contacts;
     }
+
     public SortedSet<String> choices1AddContactRole() {
         return contactRoleRepository.roleNames();
     }
@@ -235,24 +246,23 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         final Optional<ContactRole> contactRoleIfAny = Iterables
                 .tryFind(getContactRoles(), cn -> Objects.equal(cn.getContact(), contact));
 
-        if(contactRoleIfAny.isPresent()) {
+        if (contactRoleIfAny.isPresent()) {
             getContactRoles().remove(contactRoleIfAny.get());
         }
         return this;
     }
 
     public Contact default0RemoveContactRole() {
-        return getContactRoles().size() == 1? getContactRoles().iterator().next().getContact(): null;
+        return getContactRoles().size() == 1 ? getContactRoles().iterator().next().getContact() : null;
     }
+
     public List<Contact> choices0RemoveContactRole() {
         return Lists.transform(Lists.newArrayList(getContactRoles()), ContactRole::getContact);
     }
+
     public String disableRemoveContactRole() {
-        return getContactRoles().isEmpty()? "No contacts to remove": null;
+        return getContactRoles().isEmpty() ? "No contacts to remove" : null;
     }
-
-
-
 
     private static final Ordering<ContactGroup> byDisplayNumberThenName =
             Ordering
@@ -284,6 +294,5 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     ContactRepository contactRepository;
     @javax.inject.Inject
     ContactGroupRepository contactGroupRepository;
-
 
 }
