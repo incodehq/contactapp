@@ -177,7 +177,6 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
         }
 
-        @Ignore("See ELI-109")
         @Test
         public void name_already_in_use_by_contact() throws Exception {
             // given
@@ -187,14 +186,12 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
+            thrown.expectMessage("Reason: This name is already in use by a contact");
 
             // when
             wrap(this.contactGroup).edit(existingName, null, null, null);
         }
 
-        @Ignore("See ELI-110")
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
             // given
@@ -203,8 +200,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: Insert invalidation message
-            thrown.expectMessage("");
+            thrown.expectMessage("Reason: This name is already in use by another contact group");
 
             // when
             wrap(this.contactGroup).edit(existingName, null, null, null);
