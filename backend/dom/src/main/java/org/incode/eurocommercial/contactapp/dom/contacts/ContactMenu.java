@@ -90,6 +90,16 @@ public class ContactMenu {
         return contactRoleRepository.roleNames();
     }
 
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
+    @MemberOrder(sequence = "5")
+    public java.util.List<Contact> findByEmail(
+            final String query
+    ) {
+        String queryRegex = toCaseInsensitiveRegex(query);
+        return contactRepository.findByEmail(queryRegex);
+    }
+
     @Action
     @MemberOrder(sequence = "6")
     public Contact create(
