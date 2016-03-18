@@ -9,7 +9,11 @@
 }
 
 .col-66 span {
-    vertical-align: -webkit-baseline-middle;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
 .col-33 div.button,
