@@ -125,6 +125,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Column(allowsNull = "true", length = MaxLength.ADDRESS)
     @Property
+    @PropertyLayout(multiLine = 3)
     @Getter @Setter
     private String address;
 
@@ -159,6 +160,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
             @Parameter(maxLength = MaxLength.ADDRESS, optionality = Optionality.OPTIONAL)
+            @ParameterLayout(multiLine = 3)
             final String address,
             @Parameter(maxLength = ContactableEntity.MaxLength.EMAIL, optionality = Optionality.OPTIONAL)
             final String email,

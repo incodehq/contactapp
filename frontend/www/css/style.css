@@ -16,6 +16,10 @@
   vertical-align: middle;
 }
 
+.multiline {
+    white-space: pre-line;
+}
+
 .col-33 div.button,
 .col-33 a.button,
 .col-33 button {
