@@ -16,6 +16,7 @@
  */
 package org.incode.eurocommercial.contactapp.dom.group;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -214,7 +215,9 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Collection
     @CollectionLayout(named = "Role of Contacts in Group", defaultView = "table")
     public List<ContactRole> getContactRoles() {
-        return contactRoleRepository.findByGroup(this);
+        List<ContactRole> contactRoles =  contactRoleRepository.findByGroup(this);
+        Collections.sort(contactRoles);
+        return contactRoles;
     }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
