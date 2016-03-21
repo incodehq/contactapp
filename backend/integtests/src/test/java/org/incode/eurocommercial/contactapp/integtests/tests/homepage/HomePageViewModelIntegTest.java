@@ -17,6 +17,7 @@
 package org.incode.eurocommercial.contactapp.integtests.tests.homepage;
 
 import java.util.List;
+import java.util.SortedSet;
 
 import javax.inject.Inject;
 
@@ -170,7 +171,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             final int sizeBefore = groups.size();
 
-            final List<ContactRole> contactRoles = addedContactGroup.getContactRoles();
+            final SortedSet<ContactRole> contactRoles = addedContactGroup.getContactRoles();
             assertThat(contactRoles).isEmpty();
             nextTransaction();
 
@@ -205,7 +206,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             final ContactGroup someGroup = fakeDataService.collections().anyOf(groups);
 
-            final List<ContactRole> contactRoles = someGroup.getContactRoles();
+            final SortedSet<ContactRole> contactRoles = someGroup.getContactRoles();
             assertThat(contactRoles).isNotEmpty();
 
             // when

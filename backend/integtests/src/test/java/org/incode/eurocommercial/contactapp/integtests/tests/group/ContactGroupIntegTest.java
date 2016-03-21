@@ -17,19 +17,19 @@
 package org.incode.eurocommercial.contactapp.integtests.tests.group;
 
 import java.util.List;
+import java.util.SortedSet;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import javax.jdo.JDOException;
 
 import org.assertj.core.groups.Tuple;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
@@ -256,12 +256,13 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             // given
             final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroupRepository.listAll());
             assertThat(someContactGroup.getContactRoles()).isNotEmpty();
+            assertThat(someContactGroup.disableDelete()).isEqualToIgnoringCase("this group has contacts");
 
             // then
-            thrown.expect(JDOException.class);
+            thrown.expect(DisabledException.class);
 
             // when
-            someContactGroup.delete();
+            wrap(someContactGroup).delete();
         }
 
     }
@@ -456,6 +457,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             assertThat(existingRole).isNotEmpty();
 
             final ContactGroup contactGroup = wrap(this.contactGroup).addContactRole(contact, existingRole, null);
+            nextTransaction();
 
             // then
             assertThat(contactGroup.getContactRoles()).hasSize(numRolesBefore + 1);
@@ -481,7 +483,8 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             final Contact contact = fakeDataService.collections().anyOf(this.contactGroup.choices0AddContactRole());
             assertThat(newRole).isNotEmpty();
 
-            final ContactGroup contactGroup = wrap(this.contactGroup).addContactRole(contact, newRole, null);
+            final ContactGroup contactGroup = wrap(this.contactGroup).addContactRole(contact, null, newRole);
+            nextTransaction();
 
             // then
             assertThat(contactGroup.getContactRoles()).hasSize(numRolesBefore + 1);
@@ -570,24 +573,23 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
         @Test
         public void possible_contacts_should_not_include_any_for_which_contact_already_has_a_role() throws Exception {
             // given
-            final List<ContactRole> currentRoles = this.contactGroup.getContactRoles();
+            final SortedSet<ContactRole> currentRoles = this.contactGroup.getContactRoles();
             assertThat(currentRoles).hasSize(5);
 
             final List<Contact> allContacts = contactRepository.listAll();
-            assertThat(allContacts).contains(currentRoles.get(0).getContact());
+            assertThat(allContacts).contains(currentRoles.first().getContact());
 
             // when
             final List<Contact> possibleContacts = this.contactGroup.choices0AddContactRole();
 
             // then
             assertThat(possibleContacts).hasSize(allContacts.size() - currentRoles.size());
-            assertThat(possibleContacts).doesNotContain(currentRoles.get(0).getContact());
+            assertThat(possibleContacts).doesNotContain(currentRoles.first().getContact());
         }
     }
 
     public static class RemoveRole extends ContactGroupIntegTest {
 
-        @Ignore("See ELI-111")
         @Test
         public void remove_role() throws Exception {
             // given

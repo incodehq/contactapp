@@ -16,16 +16,16 @@
  */
 package org.incode.eurocommercial.contactapp.dom.group;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.InheritanceStrategy;
-import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.Queries;
 import javax.jdo.annotations.Query;
 import javax.jdo.annotations.Unique;
@@ -52,6 +52,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
@@ -213,14 +214,11 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return getContactRoles().isEmpty() ? null : "This group has contacts";
     }
 
-    @NotPersistent
-    @Collection
-    @CollectionLayout(named = "Role of Contacts in Group", defaultView = "table")
-    public List<ContactRole> getContactRoles() {
-        List<ContactRole> contactRoles =  contactRoleRepository.findByGroup(this);
-        Collections.sort(contactRoles);
-        return contactRoles;
-    }
+    @Persistent(mappedBy = "contactGroup", dependentElement = "true")
+    @Collection()
+    @CollectionLayout(named = "Role of Contacts in Group", render = RenderType.EAGERLY, defaultView = "table")
+    @Getter @Setter
+    private SortedSet<ContactRole> contactRoles = new TreeSet<ContactRole>();
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
