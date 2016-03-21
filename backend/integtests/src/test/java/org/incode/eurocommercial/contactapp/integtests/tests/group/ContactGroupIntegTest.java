@@ -248,7 +248,6 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             final int sizeAfter = contactGroupsAfter.size();
 
             assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
-            assertThat(contactGroupsAfter).doesNotContain(someContactGroup);
         }
 
         @Test

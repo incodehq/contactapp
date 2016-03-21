@@ -23,7 +23,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -68,7 +67,6 @@ public class ContactNumberRepositoryTest extends ContactAppIntegTest {
 
     public static class FindByNumber extends ContactNumberRepositoryTest {
 
-        @Ignore("See ELI-114")
         @Test
         public void happy_case() throws Exception {
             // given

@@ -196,7 +196,17 @@ public class ContactNumber implements Comparable<ContactNumber> {
 
     @Override
     public boolean equals(final Object obj) {
-        return ObjectContracts.equals(this, "owner", "number");
+        if (this == obj)
+            return true;
+        if (!(obj instanceof ContactNumber))
+            return false;
+
+        ContactNumber contactNumber = (ContactNumber) obj;
+        if (!contactNumber.getNumber().equals(this.getNumber())) {
+            return false;
+        } else {
+            return contactNumber.getType().equals(this.getType());
+        }
     }
 
     @Override
