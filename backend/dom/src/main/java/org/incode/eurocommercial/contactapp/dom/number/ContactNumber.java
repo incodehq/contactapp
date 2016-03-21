@@ -202,10 +202,10 @@ public class ContactNumber implements Comparable<ContactNumber> {
             return false;
 
         ContactNumber contactNumber = (ContactNumber) obj;
-        if (!contactNumber.getNumber().equals(this.getNumber())) {
+        if (!contactNumber.getNumber().equals(this.getNumber()) || !contactNumber.getType().equals(this.getType())) {
             return false;
         } else {
-            return contactNumber.getType().equals(this.getType());
+            return contactNumber.getOwner().equals(this.getOwner());
         }
     }
 
