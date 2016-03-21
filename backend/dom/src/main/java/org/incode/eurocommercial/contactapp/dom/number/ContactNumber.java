@@ -68,7 +68,12 @@ import lombok.Setter;
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.contactapp.dom.number.ContactNumber "
                         + "WHERE owner == :owner "
-                        + "   && number == :number ")
+                        + "   && number == :number "),
+        @Query(
+                name = "findByNumber", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.contactapp.dom.number.ContactNumber "
+                        + "WHERE number == :number ")
 })
 @Unique(name = "ContactNumber_owner_number_UNQ", members = { "owner", "number" })
 @DomainObject(
@@ -81,7 +86,9 @@ import lombok.Setter;
 public class ContactNumber implements Comparable<ContactNumber> {
 
     public static class MaxLength {
-        private MaxLength(){}
+        private MaxLength() {
+        }
+
         public static final int TYPE = 20;
         public static final int NUMBER = 30;
     }
@@ -108,7 +115,6 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Getter @Setter
     private String number;
 
-
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
@@ -128,6 +134,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     public Set<String> choices1Create() {
         return contactNumberRepository.existingTypes();
     }
+
     public String default1Create() {
         return ContactNumberType.OFFICE.title();
     }
@@ -138,9 +145,6 @@ public class ContactNumber implements Comparable<ContactNumber> {
             final String newType) {
         return StringUtil.eitherOr(type, newType, "type");
     }
-
-
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -164,6 +168,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     public String default0Edit() {
         return getNumber();
     }
+
     public String default1Edit() {
         return getType();
     }
@@ -172,10 +177,11 @@ public class ContactNumber implements Comparable<ContactNumber> {
             final String number,
             final String type,
             final String newType) {
+        if (number != getNumber() && contactNumberRepository.findByNumber(number) != null) {
+            return "A contact number with this number already exists";
+        }
         return StringUtil.eitherOr(type, newType, "type");
     }
-
-
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -185,8 +191,6 @@ public class ContactNumber implements Comparable<ContactNumber> {
         owner.getContactNumbers().remove(this);
         return owner;
     }
-
-
 
     //region > compareTo, toString
 

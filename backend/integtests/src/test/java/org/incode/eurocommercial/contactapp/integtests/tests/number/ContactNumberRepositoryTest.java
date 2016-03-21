@@ -23,11 +23,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
+import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
@@ -43,11 +44,14 @@ public class ContactNumberRepositoryTest extends ContactAppIntegTest {
     @Inject
     ContactNumberRepository contactNumberRepository;
 
+    Contact contact;
+
     @Before
     public void setUp() throws Exception {
         // given
-        FixtureScript fs = new DemoFixture();
+        DemoFixture fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        contact = fs.getContacts().get(0);
     }
 
     public static class ListAll extends ContactNumberRepositoryTest {
@@ -60,5 +64,22 @@ public class ContactNumberRepositoryTest extends ContactAppIntegTest {
             assertThat(contactNumbers.size()).isEqualTo(25);
         }
 
+    }
+
+    public static class FindByNumber extends ContactNumberRepositoryTest {
+
+        @Ignore("See ELI-114")
+        @Test
+        public void happy_case() throws Exception {
+            // given
+            final ContactNumber existingContactNumber = contact.getContactNumbers().first();
+            assertThat(existingContactNumber).isNotNull();
+
+            // when
+            final ContactNumber contactNumber = contactNumberRepository.findByNumber(existingContactNumber.getNumber());
+
+            // then
+            assertThat(contactNumber).isEqualTo(existingContactNumber);
+        }
     }
 }

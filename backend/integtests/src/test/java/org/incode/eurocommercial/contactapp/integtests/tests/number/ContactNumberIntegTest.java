@@ -252,7 +252,6 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
                     .count()).isEqualTo(amountOfNewType + 1);
         }
 
-        @Ignore("See ELI-113")
         @Test
         public void when_change_number_to_already_existing() throws Exception {
             // given
@@ -265,8 +264,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            // TODO: insert invalidation message
-            thrown.expectMessage("");
+            thrown.expectMessage("A contact number with this number already exists");
 
             // when
             wrap(this.contactNumber).edit(existingNumber, this.contactNumber.default1Edit(), null);

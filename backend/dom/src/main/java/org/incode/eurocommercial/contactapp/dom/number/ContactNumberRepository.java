@@ -16,6 +16,7 @@
  */
 package org.incode.eurocommercial.contactapp.dom.number;
 
+import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.FluentIterable;
@@ -61,6 +62,16 @@ public class ContactNumberRepository {
         owner.getContactNumbers().add(contactNumber);
         container.persistIfNotAlready(contactNumber);
         return contactNumber;
+    }
+
+    @Programmatic
+    public ContactNumber findByNumber(
+            final String number) {
+        return container.uniqueMatch(
+                new org.apache.isis.applib.query.QueryDefault<>(
+                        ContactNumber.class,
+                        "findByNumber",
+                        "number", number));
     }
 
     @Programmatic
