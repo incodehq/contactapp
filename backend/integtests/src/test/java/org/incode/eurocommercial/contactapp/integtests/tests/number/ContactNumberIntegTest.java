@@ -257,7 +257,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
             final String existingNumber = fakeDataService.collections()
                     .anyOfExcept(
                             contactNumberRepository.listAll(),
-                            (ContactNumber conNum) -> conNum.compareTo(this.contactNumber) == 0)
+                            (ContactNumber conNum) -> conNum.equals(this.contactNumber) == true)
                     .getNumber();
             assertThat(existingNumber).isNotEqualToIgnoringCase(this.contactNumber.getNumber());
 
@@ -318,7 +318,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
     }
 
     public static class Delete extends ContactNumberIntegTest {
-        
+
         @Test
         public void happy_case() throws Exception {
             // given
