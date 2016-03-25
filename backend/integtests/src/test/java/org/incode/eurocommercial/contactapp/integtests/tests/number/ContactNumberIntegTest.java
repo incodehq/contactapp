@@ -258,7 +258,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
             final String existingNumber = fakeDataService.collections()
                     .anyOfExcept(
                             contactNumberRepository.listAll(),
-                            (ContactNumber conNum) -> conNum.compareTo(this.contactNumber) == 0)
+                            (ContactNumber conNum) -> conNum.equals(this.contactNumber))
                     .getNumber();
             assertThat(existingNumber).isNotEqualToIgnoringCase(this.contactNumber.getNumber());
 
