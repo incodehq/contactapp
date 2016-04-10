@@ -21,7 +21,6 @@ package org.incode.eurocommercial.contactapp.integtests.tests.number;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -320,10 +319,11 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
 
     public static class Delete extends ContactNumberIntegTest {
 
-        @Ignore("See ELI-114")
         @Test
         public void happy_case() throws Exception {
             // given
+            final String numberToBeDeleted = this.contactNumber.getNumber();
+
             final int contactNumbersBefore = contactNumberRepository.listAll().size();
             final ContactableEntity owner = this.contactNumber.getOwner();
             assertThat(contactNumbersBefore).isNotZero();
@@ -331,11 +331,11 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
             assertThat(owner.getContactNumbers()).contains(this.contactNumber);
 
             // when
-            this.contactNumber.delete();
+            wrap(this.contactNumber).delete();
 
             // then
-            assertThat(contactNumberRepository.listAll()).doesNotContain(this.contactNumber);
-            assertThat(owner.getContactNumbers()).doesNotContain(this.contactNumber);
+            assertThat(contactNumberRepository.findByNumber(numberToBeDeleted)).isNull();
+            assertThat(owner.getContactNumbers()).extracting(ContactNumber::getNumber).doesNotContain(numberToBeDeleted);
         }
 
     }

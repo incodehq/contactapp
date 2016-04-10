@@ -192,6 +192,17 @@ public class ContactableEntity {
         return choices.isEmpty() ? null : choices.get(0);
     }
 
+    @Override public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+
+        if (!(obj instanceof ContactableEntity))
+            return false;
+
+        ContactableEntity contactableEntity = (ContactableEntity) obj;
+        return contactableEntity.getName().equals(this.getName());
+    }
+
     @Override
     public String toString() {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "name");
