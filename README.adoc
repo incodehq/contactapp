@@ -1,136 +1,16 @@
-= contact mgmt app
+= Contact App
 
-The back-end is an Apache Isis app surfacing a REST API, with Swagger-generated stubs for Typescript
+image:https://img.shields.io/travis/incodehq/contactapp.svg["Build Status", link="https://travis-ci.org/incodehq/contactapp"]
+image:https://img.shields.io/badge/license-Apache%202-blue.svg["License", link="http://www.apache.org/licenses/LICENSE-2.0"]
 
-The front-end is an Ionic/Angular app using Typescript.
+This is a contact management app made specifically for link:http://eurocommercial.com[Eurocommercial].
+For the backend it uses an link:https://isis.apache.org/[Apache Isis] application surfacing a REST API.
+For the frontend it uses an link:http://ionicframework.com/[Ionic]/link:https://angularjs.org/[Angular] application using Typescript
 
-Usage tutorials can be found on the https://github.com/incodehq/contactapp/wiki[Wiki]
+Refer to the link:https://github.com/incodehq/contactapp/wiki[Wiki] for detailed documentation.
 
-== Dan's setup of ionic-filter-bar
-
-=== Stepping stones
-
-first, had a go at building the ionic-filter-bar itself:
-
-[source,bash]
-----
-clone repo
-
-npm install
-bower install
-gulp   # failed, per https://github.com/dlmanning/gulp-sass/issues/185
-npm install gulp-sass
-gulp
-----
-
-this just ran the component's own integration tests.  so I realized I needed to do the same in the `demo` folder:
-
-
-[source,bash]
-----
-cd demo
-npm install
-bower install
-gulp   # failed, again per https://github.com/dlmanning/gulp-sass/issues/185
-npm install gulp-sass
-gulp
-----
-
-Could then run:
-
-[source,bash]
-----
-ionic serve
-----
-
-and all was happy.
-
-
-=== Configuring contactapp to use...
-
-following the setup instructions at https://github.com/djett41/ionic-filter-bar#setup:
-
-[source,bash]
-----
-cd frontend
-bower install ionic-filter-bar
-----
-
-installs the component over in `backend/webapp/src/main/webapp/mobile/lib`.
-
-update `config.xml` with:
-
-[source,xml]
-----
-<platform name="ios">
-    <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
-</platform>
-----
-
-update `index.html` (adjusting for our location of js library files):
-
-[source,html]
-----
-<link rel="stylesheet" href="lib/ionic-filter-bar/dist/ionic.filter.bar.css">
-<script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
-----
-
-update `app.js`:
-
-[source,javascript]
-----
-angular.module('starter', ['ionic', 'starter.controllers', 'ngResource', 'jett.ionic.filter.bar'])
-----
-
-update `ionic.app`:
-
-[source]
-----
-@import "../backend/webapp/src/main/webapp/mobile/lib/ionic-filter-bar/scss/ionic.filter.bar";
-----
-
-
-== CORS testing
-
-Moved `../backend/webapp/src/main/webapp/mobile` back to `www`.
-
-Now run via `ionic serve`, which is localhost:8100 connecting to localhost:8080 (hardcoded)
-
-To run, recommend:
-
-[source,bash]
-----
-ionic serve --lab
-----
-
-== Using swagger-ui
-
-The `web.xml` is set up using "auto" for the security challenge.  The `swagger-ui/index.html` doesn't (not sure why) seem to be logging in correctly.  the workaround is to access the `/restful/swagger/public` URI directly from the web browser (causing an HTTP Basic auth challenge),
-
-
-
-
-== Uploading
-
-for use by ionic viewer
-
-[source,bash]
-----
-ionic upload --note "first attempt, configured to talk to contacts.ecpnv.com over http"
-----
-
-generates an output such as:
-
-[source,bash]
-----
-Email: dan@XXXXXX
-Password: XXXXXXXXXXXXX
-Logged in! :)
-Uploading app....
-Saved app_id, writing to ionic.io.bundle.min.js...
-Successfully uploaded (123d567f)
-
-----
+== Domain Model
+image:http://yuml.me/0ec16938.svg["Domain Model", link="http://yuml.me/edit/0ec16938"]
 
 == License
 
