@@ -3,7 +3,7 @@
 image:https://img.shields.io/travis/incodehq/contactapp.svg["Build Status", link="https://travis-ci.org/incodehq/contactapp"]
 image:https://img.shields.io/badge/license-Apache%202-blue.svg["License", link="http://www.apache.org/licenses/LICENSE-2.0"]
 
-This is a contact management app made specifically for link:http://eurocommercial.com[Eurocommercial].
+This is a contact management app made specifically for link:http://eurocommercial.com[Eurocommercial]. It gives a quick and easy way to manage company contacts and display them in a mobile app for users. +
 For the backend it uses an link:https://isis.apache.org/[Apache Isis] application surfacing a REST API.
 For the frontend it uses an link:http://ionicframework.com/[Ionic]/link:https://angularjs.org/[Angular] application using Typescript
 
