@@ -20,5 +20,5 @@ image:http://i.imgur.com/zMX6OYq.png[width="32%"]
 image:http://i.imgur.com/qhXhKiu.png[width="32%"]
 
 As one of the first Apache Isis apps that makes use of mobile technologies this opens the doors for more to follow.
-Now that the waters have been tested regarding creating a mobile apps with Apache Isis, the next step could very well be
+Now that the waters have been tested regarding mobile apps with Apache Isis, the next step could very well be
 a general Apache Isis viewer for mobile applications. 
