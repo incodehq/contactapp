@@ -195,8 +195,8 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
         @Test
         public void name_already_in_use_by_contact_group() throws Exception {
             // given
-            final String existingName = contactGroupRepository.listAll().get(0).getName();
-            assertThat(existingName).isNotEmpty();
+            final String existingName = contactGroupRepository.listAll().get(1).getName();
+            assertThat(existingName).isNotEqualTo(this.contactGroup.getName());
 
             // then
             thrown.expect(InvalidException.class);
@@ -219,6 +219,20 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             wrap(this.contactGroup).edit(name, null, null, null);
         }
 
+        @Test
+        public void without_new_name() throws Exception {
+            // given
+            assertThat(this.contactGroup.getName()).isEqualTo("Amiens Property");
+
+            // when
+            wrap(this.contactGroup).edit(this.contactGroup.default0Edit(), "New Address", null, null);
+
+            // then
+            assertThat(this.contactGroup.getAddress()).isEqualTo("New Address");
+            // Naturally the name hasn't changed; this assertion merely ensures validateEdit
+            // does not throw an exception
+            assertThat(this.contactGroup.getName()).isEqualTo("Amiens Property");
+        }
     }
 
     public static class Delete extends ContactGroupIntegTest {
