@@ -106,7 +106,8 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     }
 
     public String title() {
-        return getName() + " (" + getCountry().getName() + ")";
+        // TODO: workaround, getCountry() sometimes returning null (eg after edit role name; don't know why as of yet).
+        return getName() + (getCountry() != null? " (" + getCountry().getName() + ")" : "");
     }
 
     @MemberOrder(name = "Other", sequence = "1")

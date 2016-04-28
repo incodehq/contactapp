@@ -7,23 +7,58 @@
         </bs3:col>
     </bs3:row>
     <bs3:row>
-        <bs3:col span="6">
-            <cpt:fieldSet name="General" id="general">
-                <cpt:property id="contact"/>
-                <cpt:property id="contactGroup"/>
-                <cpt:property id="roleName"/>
-            </cpt:fieldSet>
-            <cpt:fieldSet name="Other" id="other" unreferencedProperties="true">
-            </cpt:fieldSet>
-            <cpt:fieldSet name="Metadata" id="metadata">
-                <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
-                <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
-                <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
-                <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
-                <cpt:property id="datanucleusIdLong"/>
-                <cpt:property id="datanucleusVersionLong"/>
-                <cpt:property id="datanucleusVersionTimestamp"/>
-            </cpt:fieldSet>
+        <bs3:col span="12">
+            <bs3:tabGroup>
+                <bs3:tab name="Role Details">
+                    <bs3:row>
+                        <bs3:col span="4">
+                            <cpt:fieldSet name="Role Details" id="role-details">
+                                <cpt:property id="contact">
+                                    <cpt:action id="alsoInGroup"/>
+                                </cpt:property>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                        <bs3:col span="4">
+                            <cpt:fieldSet name="Role">
+                                <cpt:action id="delete"/>
+                                <cpt:property id="roleName">
+                                    <cpt:action id="edit"/>
+                                </cpt:property>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                        <bs3:col span="4">
+                            <cpt:fieldSet name="Group">
+                                <cpt:property id="contactGroup">
+                                    <cpt:action id="alsoWithContact"/>
+                                </cpt:property>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Other">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Other" id="other" unreferencedProperties="true">
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Metadata">
+                    <bs3:row>
+                        <bs3:col span="4">
+                            <cpt:fieldSet name="Metadata" id="metadata">
+                                <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
+                                <cpt:property id="datanucleusIdLong"/>
+                                <cpt:property id="datanucleusVersionLong"/>
+                                <cpt:property id="datanucleusVersionTimestamp"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+            </bs3:tabGroup>
         </bs3:col>
         <bs3:col span="6" unreferencedCollections="true"/>
     </bs3:row>

@@ -8,20 +8,39 @@
     </bs3:row>
     <bs3:row>
         <bs3:col span="4">
-            <cpt:fieldSet name="General" id="general">
-                <cpt:property id="name"/>
-            </cpt:fieldSet>
-            <cpt:fieldSet name="Metadata" id="metadata">
-                <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
-                <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
-                <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
-                <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
-                <cpt:property id="datanucleusIdLong"/>
-                <cpt:property id="datanucleusVersionLong"/>
-                <cpt:property id="datanucleusVersionTimestamp"/>
-            </cpt:fieldSet>
-            <cpt:fieldSet name="Other" id="other" unreferencedProperties="true">
-            </cpt:fieldSet>
+            <bs3:tabGroup>
+                <bs3:tab name="Country Details">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Country Details" id="country-details">
+                                <cpt:property id="name"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Metadata">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Metadata" id="metadata">
+                                <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
+                                <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
+                                <cpt:property id="datanucleusIdLong"/>
+                                <cpt:property id="datanucleusVersionLong"/>
+                                <cpt:property id="datanucleusVersionTimestamp"/>
+                            </cpt:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Other">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:fieldSet name="Other" id="other" unreferencedProperties="true"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+            </bs3:tabGroup>
         </bs3:col>
         <bs3:col span="8" unreferencedCollections="true">
             <cpt:collection id="contactGroups"/>

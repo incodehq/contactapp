@@ -49,6 +49,8 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+import org.apache.isis.applib.services.xactn.TransactionService;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;

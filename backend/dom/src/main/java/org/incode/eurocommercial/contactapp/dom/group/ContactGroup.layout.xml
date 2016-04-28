@@ -10,24 +10,48 @@
         <bs3:col span="6">
             <bs3:row>
                 <bs3:col span="12">
-                    <cpt:fieldSet name="General" id="general">
-                        <cpt:property id="country"/>
-                        <cpt:property id="notes"/>
-                        <cpt:property id="address"/>
-                        <cpt:property id="name"/>
-                        <cpt:property id="email"/>
-                    </cpt:fieldSet>
                 </bs3:col>
             </bs3:row>
             <bs3:row>
                 <bs3:col span="12">
                     <bs3:tabGroup>
+                        <bs3:tab name="Group Details">
+                            <bs3:row>
+                                <bs3:col span="12">
+                                    <cpt:fieldSet name="Group Details" id="group-details">
+                                        <cpt:action id="create"/>
+                                        <cpt:action id="edit"/>
+                                        <cpt:action id="delete"/>
+                                        <cpt:property id="name"/>
+                                        <cpt:property id="country"/>
+                                        <cpt:property id="address"/>
+                                        <cpt:property id="email"/>
+                                    </cpt:fieldSet>
+                                </bs3:col>
+                            </bs3:row>
+                        </bs3:tab>
+                        <bs3:tab name="Notes">
+                            <bs3:row>
+                                <bs3:col span="12">
+                                    <cpt:fieldSet name="Notes" id="notes">
+                                        <cpt:property id="notes"/>
+                                    </cpt:fieldSet>
+                                </bs3:col>
+                            </bs3:row>
+                        </bs3:tab>
                         <bs3:tab name="Presentation">
                             <bs3:row>
                                 <bs3:col span="12">
                                     <cpt:fieldSet name="Ordering" id="ui_ordering">
                                         <cpt:property id="displayOrder"/>
                                     </cpt:fieldSet>
+                                </bs3:col>
+                            </bs3:row>
+                        </bs3:tab>
+                        <bs3:tab name="Other">
+                            <bs3:row>
+                                <bs3:col span="12">
+                                    <cpt:fieldSet name="Other" id="other" unreferencedProperties="true"/>
                                 </bs3:col>
                             </bs3:row>
                         </bs3:tab>
@@ -43,13 +67,6 @@
                                         <cpt:property id="datanucleusVersionLong"/>
                                         <cpt:property id="datanucleusVersionTimestamp"/>
                                     </cpt:fieldSet>
-                                </bs3:col>
-                            </bs3:row>
-                        </bs3:tab>
-                        <bs3:tab name="Other">
-                            <bs3:row>
-                                <bs3:col span="12">
-                                    <cpt:fieldSet name="Other" id="other" unreferencedProperties="true"/>
                                 </bs3:col>
                             </bs3:row>
                         </bs3:tab>
