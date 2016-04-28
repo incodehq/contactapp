@@ -97,6 +97,8 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactableEntity {
 
+    //region > title
+
     public static class MaxLength {
         private MaxLength() {
         }
@@ -109,6 +111,8 @@ public class ContactableEntity {
     public String title() {
         return getName();
     }
+
+    //endregion
 
     @MemberOrder(sequence = "1.2")
     @Column(allowsNull = "false", length = MaxLength.NAME)
@@ -134,6 +138,9 @@ public class ContactableEntity {
     @CollectionLayout(render = RenderType.EAGERLY)
     @Getter @Setter
     private SortedSet<ContactNumber> contactNumbers = new TreeSet<ContactNumber>();
+
+    //region > addContactNumber (action)
+    //endregion
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Add")
@@ -166,6 +173,9 @@ public class ContactableEntity {
         return StringUtil.eitherOr(type, newType, "type");
     }
 
+    //region > removeContactNumber (action)
+    //endregion
+
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Remove")
     @MemberOrder(name = "contactNumbers", sequence = "2")
@@ -192,6 +202,9 @@ public class ContactableEntity {
         return choices.isEmpty() ? null : choices.get(0);
     }
 
+    //region > helpers
+
+
     @Override public boolean equals(final Object obj) {
         if (this == obj)
             return true;
@@ -208,9 +221,6 @@ public class ContactableEntity {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "name");
     }
 
-    @Inject
-    ContactNumberRepository contactNumberRepository;
-
     public static <T extends ContactableEntity> Function<T, String> nameOf() {
         return new Function<T, String>() {
             @Nullable @Override
@@ -219,4 +229,14 @@ public class ContactableEntity {
             }
         };
     }
+
+    //endregion
+
+    //region > injected services
+    //endregion
+
+    @Inject
+    ContactNumberRepository contactNumberRepository;
+
+
 }

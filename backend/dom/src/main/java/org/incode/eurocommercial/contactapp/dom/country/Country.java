@@ -73,12 +73,11 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class Country implements Comparable<Country> {
 
-
+    //region > iconName
     public static class MaxLength {
         private MaxLength(){}
         public static final int NAME = 50;
     }
-
 
     /**
      * eg matches <code>Country-Italy.png</code> etc.
@@ -87,13 +86,13 @@ public class Country implements Comparable<Country> {
         return getName();
     }
 
+    //endregion
+
     @Column(allowsNull = "false", length = MaxLength.NAME)
     @Property
     @Title
     @Getter @Setter
     private String name;
-
-
 
     //region > compareTo, toString
     @Override
@@ -106,7 +105,6 @@ public class Country implements Comparable<Country> {
         return org.apache.isis.applib.util.ObjectContracts.toString(this, "name");
     }
     //endregion
-
 
     @Inject
     ContactGroupRepository contactGroupRepository;

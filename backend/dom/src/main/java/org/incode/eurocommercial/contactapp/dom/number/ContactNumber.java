@@ -85,6 +85,7 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactNumber implements Comparable<ContactNumber> {
 
+    //region > title
     public static class MaxLength {
         private MaxLength() {
         }
@@ -98,6 +99,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
         buf.append(getNumber()).append(" (").append(getType()).append(")");
         return buf.toString();
     }
+    //endregion
 
     @Column(allowsNull = "false")
     @Property
@@ -115,6 +117,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
     @Getter @Setter
     private String number;
 
+    //region > create (action)
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "1")
@@ -145,6 +148,10 @@ public class ContactNumber implements Comparable<ContactNumber> {
             final String newType) {
         return StringUtil.eitherOr(type, newType, "type");
     }
+
+    //endregion
+
+    //region > edit (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -183,6 +190,9 @@ public class ContactNumber implements Comparable<ContactNumber> {
         return StringUtil.eitherOr(type, newType, "type");
     }
 
+    //endregion
+
+    //region > delete (action)
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
     @MemberOrder(name = "number", sequence = "3")
@@ -191,6 +201,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
         owner.getContactNumbers().remove(this);
         return owner;
     }
+    //endregion
 
     //region > compareTo, toString
 

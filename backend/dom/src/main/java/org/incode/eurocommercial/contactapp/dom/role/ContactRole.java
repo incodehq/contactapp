@@ -49,8 +49,6 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
-import org.apache.isis.applib.services.xactn.TransactionService;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
@@ -108,6 +106,7 @@ import lombok.Setter;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactRole implements Comparable<ContactRole> {
 
+    //region > title
     public static class MaxLength {
         private MaxLength(){}
         public static final int NAME = 50;
@@ -122,6 +121,7 @@ public class ContactRole implements Comparable<ContactRole> {
         buf.append(" in ").append(getContactGroup().getName());
         return buf.toString();
     }
+    //endregion
 
     @Column(allowsNull = "false")
     @Property
@@ -140,7 +140,7 @@ public class ContactRole implements Comparable<ContactRole> {
     @Getter @Setter
     private String roleName;
 
-
+    //region > alsoInGroup (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -174,7 +174,9 @@ public class ContactRole implements Comparable<ContactRole> {
     public String validateAlsoInGroup(final ContactGroup contactGroup, final String role, final String newRole) {
         return StringUtil.eitherOr(role, newRole, "role");
     }
+    //endregion
 
+    //region > alsoWithContact (action)
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
@@ -210,7 +212,9 @@ public class ContactRole implements Comparable<ContactRole> {
         return StringUtil.eitherOr(role, newRole, "role");
     }
 
+    //endregion
 
+    //region > edit (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -234,7 +238,9 @@ public class ContactRole implements Comparable<ContactRole> {
         return StringUtil.eitherOr(role, newRole, "role");
     }
 
+    //endregion
 
+    //region > delete (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
@@ -245,7 +251,7 @@ public class ContactRole implements Comparable<ContactRole> {
         return contact;
     }
 
-
+    //endregion
 
     //region > compareTo, toString
     @Override
@@ -259,6 +265,7 @@ public class ContactRole implements Comparable<ContactRole> {
     }
     //endregion
 
+    //region > injected services
 
     @Inject
     ContactRoleRepository contactRoleRepository;
@@ -266,4 +273,7 @@ public class ContactRole implements Comparable<ContactRole> {
     ContactGroupRepository contactGroupRepository;
     @Inject
     ContactRepository contactRepository;
+
+    //endregion
+
 }
