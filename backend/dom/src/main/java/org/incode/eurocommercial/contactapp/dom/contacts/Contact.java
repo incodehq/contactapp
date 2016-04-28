@@ -116,7 +116,6 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
 
     @Action
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Notes", sequence = "1")
     public Contact create(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
@@ -157,7 +156,6 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Notes", sequence = "2")
     public Contact edit(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
@@ -210,7 +208,6 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     @ActionLayout(
             position = ActionLayout.Position.PANEL
     )
-    @MemberOrder(name = "Notes", sequence = "3")
     public void delete() {
         contactRepository.delete(this);
     }

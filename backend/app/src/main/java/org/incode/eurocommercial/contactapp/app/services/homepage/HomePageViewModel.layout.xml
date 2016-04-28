@@ -14,7 +14,7 @@
             <ns2:fieldSet name="General" id="general" unreferencedProperties="true"/>
         </col>
         <col span="12" unreferencedCollections="true">
-            <ns2:collection id="groups">
+            <ns2:collection id="groups" defaultView="table">
                 <ns2:action id="createContactGroup"/>
                 <ns2:action id="deleteContactGroup"/>
             </ns2:collection>

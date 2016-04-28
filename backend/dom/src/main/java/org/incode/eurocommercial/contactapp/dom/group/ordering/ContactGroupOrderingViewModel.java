@@ -88,7 +88,6 @@ public class ContactGroupOrderingViewModel implements ViewModel {
             hidden = Where.PARENTED_TABLES
     )
     @Getter @Setter
-    @MemberOrder(name="Group", sequence = "1")
     private ContactGroup contactGroup;
 
 
@@ -97,7 +96,6 @@ public class ContactGroupOrderingViewModel implements ViewModel {
 
     @Property
     @PropertyLayout()
-    @MemberOrder(name = "Ordering", sequence = "2")
     public Integer getDisplayOrder() {
         return contactGroup.getDisplayOrder();
     }
@@ -109,7 +107,6 @@ public class ContactGroupOrderingViewModel implements ViewModel {
     @PropertyLayout(
             hidden = Where.OBJECT_FORMS
     )
-    @MemberOrder(name="Ordering", sequence = "3")
     public String getName() {
         return container.titleOf(contactGroup);
     }

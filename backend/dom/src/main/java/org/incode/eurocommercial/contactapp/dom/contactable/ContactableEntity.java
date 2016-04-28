@@ -114,19 +114,16 @@ public class ContactableEntity {
 
     //endregion
 
-    @MemberOrder(sequence = "1.2")
     @Column(allowsNull = "false", length = MaxLength.NAME)
     @Property
     @Getter @Setter
     private String name;
 
-    @MemberOrder(sequence = "2")
     @Column(allowsNull = "true", length = MaxLength.EMAIL)
     @Property
     @Getter @Setter
     private String email;
 
-    @MemberOrder(sequence = "3")
     @Column(allowsNull = "true", length = MaxLength.NOTES)
     @Property
     @PropertyLayout(multiLine = 6, hidden = Where.ALL_TABLES)

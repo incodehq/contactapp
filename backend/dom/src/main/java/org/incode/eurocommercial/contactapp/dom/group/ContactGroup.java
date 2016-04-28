@@ -114,15 +114,13 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     //endregion
 
-    @MemberOrder(name = "Other", sequence = "1")
     @Column(allowsNull = "true")
     @Property()
     @PropertyLayout(hidden = Where.ALL_TABLES)
     @Getter @Setter
     private Integer displayOrder;
 
-    @MemberOrder(sequence = "1.5") // after #name, before #address
-    @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
+    @javax.jdo.annotations.Persistent // (defaultFetchGroup = "true") // eager load, is this broken?
     @Column(allowsNull = "false")
     @Property()
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
@@ -139,7 +137,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Create", position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Notes", sequence = "1")
     public ContactGroup create(
             final Country country,
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
@@ -167,7 +164,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Notes", sequence = "2")
     public ContactableEntity edit(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,
@@ -220,7 +216,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "Notes", sequence = "3")
     public void delete() {
         contactGroupRepository.delete(this);
     }

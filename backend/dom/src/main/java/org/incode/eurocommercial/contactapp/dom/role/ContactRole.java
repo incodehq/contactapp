@@ -42,7 +42,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.MemberGroupLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
@@ -144,7 +143,6 @@ public class ContactRole implements Comparable<ContactRole> {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "roleName", sequence = "1")
     public ContactRole alsoInGroup(
             @Parameter(optionality = Optionality.MANDATORY)
             final ContactGroup contactGroup,
@@ -181,7 +179,6 @@ public class ContactRole implements Comparable<ContactRole> {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "roleName", sequence = "2")
     public ContactRole alsoWithContact(
             @Parameter(optionality = Optionality.MANDATORY)
             final Contact contact,
@@ -218,7 +215,6 @@ public class ContactRole implements Comparable<ContactRole> {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "roleName", sequence = "3")
     public ContactRole edit(
             @Parameter(maxLength = ContactRole.MaxLength.NAME, optionality = Optionality.OPTIONAL)
             final String role,
@@ -244,7 +240,6 @@ public class ContactRole implements Comparable<ContactRole> {
 
     @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(position = ActionLayout.Position.PANEL)
-    @MemberOrder(name = "roleName", sequence = "4")
     public ContactableEntity delete() {
         final Contact contact = getContact();
         contact.getContactRoles().remove(this);

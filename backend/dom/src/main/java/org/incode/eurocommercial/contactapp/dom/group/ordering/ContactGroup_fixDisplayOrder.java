@@ -41,7 +41,6 @@ public class ContactGroup_fixDisplayOrder {
             named = "Fix",
             cssClassFa = "sort-alpha-asc"
     )
-    @MemberOrder(name = "displayOrder", sequence = "1")
     public ContactGroupOrderingViewModel $$() {
         return container.injectServicesInto(new ContactGroupOrderingViewModel(contactGroup));
     }
