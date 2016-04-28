@@ -27,15 +27,14 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.isisaddons.module.settings.dom.UserSetting;
 
 @DomainService(
-        nature = NatureOfService.DOMAIN,
-        menuOrder = "1" // register before any domain services that post events
+        nature = NatureOfService.DOMAIN
 )
 public class HideContributionForSettings extends AbstractSubscriber {
 
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final org.isisaddons.module.command.dom.HasUsernameContributions.RecentCommandsByUserDomainEvent ev) {
+    public void on(final org.isisaddons.module.command.dom.HasUsername_recentCommandsByUser.RecentCommandsByUserDomainEvent ev) {
         final List<Object> arguments = ev.getArguments();
         if(arguments.size()==1 && arguments.get(0) instanceof UserSetting) {
             ev.veto("");
@@ -45,7 +44,7 @@ public class HideContributionForSettings extends AbstractSubscriber {
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final org.isisaddons.module.sessionlogger.dom.HasUsernameContributions.RecentSessionsForUserDomainEvent ev) {
+    public void on(final org.isisaddons.module.sessionlogger.dom.HasUsername_recentSessionsForUser.ActionDomainEvent ev) {
         final List<Object> arguments = ev.getArguments();
         if(arguments.size()==1 && arguments.get(0) instanceof UserSetting) {
             ev.veto("");
