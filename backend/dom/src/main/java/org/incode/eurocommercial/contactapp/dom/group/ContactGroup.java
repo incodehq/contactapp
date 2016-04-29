@@ -203,7 +203,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
             final String address,
             final String email,
             final String notes) {
-        if (!contactGroupRepository.findByName(name).isEmpty()) {
+        if (!name.equals(this.getName()) && !contactGroupRepository.findByName(name).isEmpty()) {
             return "This name is already in use by another contact group";
         } else {
             return contactRepository.findByName(name).isEmpty() ? null : "This name is already in use by a contact";

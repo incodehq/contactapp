@@ -315,6 +315,20 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
             wrap(this.contactNumber).edit(invalidNumber, this.contactNumber.default1Edit(), null);
         }
 
+        @Test
+        public void without_new_number() throws Exception {
+            // given
+            assertThat(this.contactNumber.getNumber()).isEqualTo("+44 1233 444 555");
+
+            // when
+            wrap(this.contactNumber).edit(this.contactNumber.default0Edit(), null, "New Type");
+
+            // then
+            assertThat(this.contactNumber.getType()).isEqualTo("New Type");
+            // Naturally the number hasn't changed; this assertion merely ensures validateEdit
+            // does not throw an exception
+            assertThat(this.contactNumber.getNumber()).isEqualTo("+44 1233 444 555");
+        }
     }
 
     public static class Delete extends ContactNumberIntegTest {
