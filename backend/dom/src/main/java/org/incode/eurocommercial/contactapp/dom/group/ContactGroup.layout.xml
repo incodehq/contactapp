@@ -43,7 +43,9 @@
                             <bs3:row>
                                 <bs3:col span="12">
                                     <cpt:fieldSet name="Ordering" id="ui_ordering">
-                                        <cpt:property id="displayOrder"/>
+                                        <cpt:property id="displayOrder">
+                                            <cpt:action id="fixDisplayOrder"/>
+                                        </cpt:property>
                                     </cpt:fieldSet>
                                 </bs3:col>
                             </bs3:row>

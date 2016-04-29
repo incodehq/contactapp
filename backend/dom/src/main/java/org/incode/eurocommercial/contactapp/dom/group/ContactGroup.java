@@ -120,7 +120,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private Integer displayOrder;
 
-    @javax.jdo.annotations.Persistent // (defaultFetchGroup = "true") // eager load, is this broken?
+    @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
     @Column(allowsNull = "false")
     @Property()
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
