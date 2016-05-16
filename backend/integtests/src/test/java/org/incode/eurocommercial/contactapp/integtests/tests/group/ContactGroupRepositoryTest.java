@@ -30,6 +30,7 @@ import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactGroupRepositoryTest extends ContactAppIntegTest {
@@ -100,6 +101,23 @@ public class ContactGroupRepositoryTest extends ContactAppIntegTest {
 
         }
 
+    }
+    public static class Delete extends ContactGroupRepositoryTest {
+
+        @Test
+        public void delete() throws Exception {
+
+            // given
+            ContactGroup contactGroup = contactGroupRepository.listAll().get(0);
+            assertThat(contactGroup.getContactRoles()).isNotEmpty();
+
+            // when
+            contactGroupRepository.delete(contactGroup);
+
+            // then
+            assertThat(contactGroup.getContactRoles()).isEmpty();
+
+        }
     }
 }
 

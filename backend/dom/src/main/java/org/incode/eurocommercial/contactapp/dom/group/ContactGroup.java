@@ -214,15 +214,20 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     //region > delete (action)
 
-    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
-    public void delete() {
-        contactGroupRepository.delete(this);
+    public void delete(final @ParameterLayout(named = "This might also delete all Contact Roles and Contacts connected to it, do you wish to proceed?") boolean delete) {
+        if (delete)
+            contactGroupRepository.delete(this);
     }
 
-    public String disableDelete() {
-        return getContactRoles().isEmpty() ? null : "This group has contacts";
+    public String validateDelete(final boolean delete) {
+        return delete ? null : "You have to agree";
     }
+
+//    public String disableDelete() {
+//        return getContactRoles().isEmpty() ? null : "This group has contacts";
+//    }
 
     @Persistent(mappedBy = "contactGroup", dependentElement = "true")
     @Collection()

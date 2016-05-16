@@ -29,7 +29,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
@@ -254,7 +253,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             nextTransaction();
 
             // when
-            someContactGroup.delete();
+            someContactGroup.delete(true);
             nextTransaction();
 
             // then
@@ -264,19 +263,19 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
         }
 
-        @Test
-        public void cannot_delete_when_has_contact_roles() throws Exception {
-            // given
-            final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroupRepository.listAll());
-            assertThat(someContactGroup.getContactRoles()).isNotEmpty();
-            assertThat(someContactGroup.disableDelete()).isEqualToIgnoringCase("this group has contacts");
-
-            // then
-            thrown.expect(DisabledException.class);
-
-            // when
-            wrap(someContactGroup).delete();
-        }
+//        @Test
+//        public void cannot_delete_when_has_contact_roles() throws Exception {
+//            // given
+//            final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroupRepository.listAll());
+//            assertThat(someContactGroup.getContactRoles()).isNotEmpty();
+//            assertThat(someContactGroup.disableDelete()).isEqualToIgnoringCase("this group has contacts");
+//
+//            // then
+//            thrown.expect(DisabledException.class);
+//
+//            // when
+//            wrap(someContactGroup).delete();
+//        }
 
     }
 

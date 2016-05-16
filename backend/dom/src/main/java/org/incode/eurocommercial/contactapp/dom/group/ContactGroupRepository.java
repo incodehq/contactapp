@@ -23,8 +23,10 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
+import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
+import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -95,9 +97,15 @@ public class ContactGroupRepository {
 
     @Programmatic
     public void delete(final ContactGroup contactGroup) {
+        for (ContactRole role : contactGroup.getContactRoles()) {
+            Contact contact = role.getContact();
+            role.delete();
+            if (contact.getContactRoles().isEmpty()) {
+                contact.delete();
+            }
+        }
         container.removeIfNotAlready(contactGroup);
     }
-
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;
