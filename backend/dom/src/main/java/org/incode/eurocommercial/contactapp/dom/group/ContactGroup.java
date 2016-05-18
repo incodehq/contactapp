@@ -216,7 +216,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
-    public void delete(final @ParameterLayout(named = "This might also delete all Contact Roles and Contacts connected to it, do you wish to proceed?") boolean delete) {
+    public void delete(final @ParameterLayout(named = "This will also delete all Contact Roles connected to it, do you wish to proceed?") boolean delete) {
         if (delete)
             contactGroupRepository.delete(this);
     }

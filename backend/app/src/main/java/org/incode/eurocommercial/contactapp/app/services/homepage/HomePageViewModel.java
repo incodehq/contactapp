@@ -62,7 +62,7 @@ public class HomePageViewModel {
     @ActionLayout(named = "Delete")
     @MemberOrder(name = "groups", sequence = "2")
     public HomePageViewModel deleteContactGroup(final ContactGroup contactGroup,
-                                                final @ParameterLayout(named = "This might also delete all Contact Roles and Contacts connected to it, do you wish to proceed?") boolean delete) {
+                                                final @ParameterLayout(named = "This will also delete all Contact Roles connected to it, do you wish to proceed?") boolean delete) {
         if (delete)
             contactGroupRepository.delete(contactGroup);
         return this;
