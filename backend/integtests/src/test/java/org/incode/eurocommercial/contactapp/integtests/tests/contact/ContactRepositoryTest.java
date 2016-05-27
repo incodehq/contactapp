@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.xactn.TransactionService;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
@@ -34,6 +35,7 @@ import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactRepositoryTest extends ContactAppIntegTest {
@@ -44,11 +46,18 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
     @Inject
     ContactRepository contactRepository;
 
+    @Inject
+    ContactGroupRepository contactGroupRepository;
+
+    @Inject
+    TransactionService transactionService;
+
     @Before
     public void setUp() throws Exception {
         // given
         FixtureScript fs = new DemoFixture();
         fixtureScripts.runFixtureScript(fs, null);
+        transactionService.nextTransaction();
     }
 
     public static class ListAll extends ContactRepositoryTest {
@@ -60,6 +69,22 @@ public class ContactRepositoryTest extends ContactAppIntegTest {
 
             // then
             assertThat(contacts.size()).isEqualTo(13);
+        }
+    }
+
+    public static class ListOrphanedContacts extends ContactRepositoryTest {
+
+        @Test
+        public void happyCase() throws Exception {
+            // given
+            assertThat(contactRepository.listOrphanedContacts()).isEmpty();
+
+            // when
+            final ContactGroup contactGroup = contactGroupRepository.listAll().get(0);
+            wrap(contactGroup).delete(true);
+
+            // then
+            assertThat(contactRepository.listOrphanedContacts().size()).isEqualTo(5);
         }
     }
 

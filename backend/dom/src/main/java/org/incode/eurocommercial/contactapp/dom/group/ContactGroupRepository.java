@@ -22,10 +22,10 @@ import java.util.List;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.services.repository.RepositoryService;
 
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
@@ -96,15 +96,16 @@ public class ContactGroupRepository {
 
     @Programmatic
     public void delete(final ContactGroup contactGroup) {
-        for (ContactRole role : contactGroup.getContactRoles()) {
-//            Contact contact = role.getContact();
-            role.delete();
-//            if (contact.getContactRoles().isEmpty()) {
-//                contact.delete();
-//            }
-        }
-        container.removeIfNotAlready(contactGroup);
+        contactGroup.getContactRoles().stream().forEach(cr -> {
+            // this is sufficient because CG -> CR is a dependent relationship (CR can't exist outside of a CG)
+            contactGroup.getContactRoles().remove(cr);
+        });
+        repositoryService.remove(contactGroup);
     }
+
+
+    @javax.inject.Inject
+    RepositoryService repositoryService;
 
     @javax.inject.Inject
     org.apache.isis.applib.DomainObjectContainer container;

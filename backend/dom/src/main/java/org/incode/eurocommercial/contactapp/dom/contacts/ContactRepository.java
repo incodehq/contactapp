@@ -123,6 +123,15 @@ public class ContactRepository {
     }
 
     @Programmatic
+    public java.util.List<Contact> listOrphanedContacts() {
+        final List<Contact> contacts = container.allMatches(
+                new QueryDefault<>(
+                        Contact.class,
+                        "listOrphanedContacts"));
+        return asSortedList(contacts);
+    }
+
+    @Programmatic
     public Contact create(
             final String name,
             final String company,

@@ -354,20 +354,20 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
 
     public static class Delete extends ContactRoleIntegTest {
 
-        @Test
-        public void happy_case() throws Exception {
-            // given
-            assertThat(contactRoleRepository.listAll()).contains(this.contactRole);
-            final int amountBefore = contactRoleRepository.listAll().size();
-
-            // when
-            wrap(this.contactRole).delete();
-
-            // then
-            List<ContactRole> allAfter = contactRoleRepository.listAll();
-            assertThat(allAfter).doesNotContain(this.contactRole);
-            assertThat(allAfter.size()).isEqualTo(amountBefore - 1);
-        }
+//        @Test
+//        public void happy_case() throws Exception {
+//            // given
+//            assertThat(contactRoleRepository.listAll()).contains(this.contactRole);
+//            final int amountBefore = contactRoleRepository.listAll().size();
+//
+//            // when
+//            wrap(this.contactRole).delete();
+//
+//            // then
+//            List<ContactRole> allAfter = contactRoleRepository.listAll();
+//            assertThat(allAfter).doesNotContain(this.contactRole);
+//            assertThat(allAfter.size()).isEqualTo(amountBefore - 1);
+//        }
 
     }
 

@@ -245,13 +245,6 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroups);
 
-            // first remove all contact roles
-            for (ContactRole contactRole : someContactGroup.getContactRoles()) {
-                contactRole.delete();
-            }
-            assertThat(someContactGroup.getContactRoles()).isEmpty();
-            nextTransaction();
-
             // when
             someContactGroup.delete(true);
             nextTransaction();
