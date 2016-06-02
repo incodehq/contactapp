@@ -22,6 +22,9 @@
     <groupId>org.incode.app</groupId>
     <artifactId>contactapp-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
+
+    <name>Incode ContactApp (Parent)</name>
+
     <packaging>pom</packaging>
 
     <modules>

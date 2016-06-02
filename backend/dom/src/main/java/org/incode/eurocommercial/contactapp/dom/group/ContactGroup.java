@@ -225,10 +225,6 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
         return delete ? null : "You have to agree";
     }
 
-//    public String disableDelete() {
-//        return getContactRoles().isEmpty() ? null : "This group has contacts";
-//    }
-
     @Persistent(mappedBy = "contactGroup", dependentElement = "true")
     @Collection()
     @CollectionLayout(named = "Role of Contacts in Group", render = RenderType.EAGERLY, defaultView = "table")

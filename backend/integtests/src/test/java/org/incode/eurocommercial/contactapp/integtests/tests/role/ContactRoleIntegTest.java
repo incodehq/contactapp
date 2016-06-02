@@ -300,7 +300,6 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
         public void happy_case_using_new_role_name() throws Exception {
             // given
             final String newRoleName = "New role";
-            final String currentRoleName = this.contactRole.getRoleName();
             List<String> rolesBefore = contactRoleRepository.listAll()
                     .stream()
                     .map(ContactRole::getRoleName)
@@ -349,25 +348,6 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
             final String newRoleName = fakeDataService.collections().anyOf(this.contactRole.choices0Edit());
             wrap(this.contactRole).edit(newRoleName, "New role");
         }
-
-    }
-
-    public static class Delete extends ContactRoleIntegTest {
-
-//        @Test
-//        public void happy_case() throws Exception {
-//            // given
-//            assertThat(contactRoleRepository.listAll()).contains(this.contactRole);
-//            final int amountBefore = contactRoleRepository.listAll().size();
-//
-//            // when
-//            wrap(this.contactRole).delete();
-//
-//            // then
-//            List<ContactRole> allAfter = contactRoleRepository.listAll();
-//            assertThat(allAfter).doesNotContain(this.contactRole);
-//            assertThat(allAfter.size()).isEqualTo(amountBefore - 1);
-//        }
 
     }
 

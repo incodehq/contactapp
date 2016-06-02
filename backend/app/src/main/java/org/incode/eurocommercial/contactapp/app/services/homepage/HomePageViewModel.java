@@ -61,10 +61,13 @@ public class HomePageViewModel {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Delete")
     @MemberOrder(name = "groups", sequence = "2")
-    public HomePageViewModel deleteContactGroup(final ContactGroup contactGroup,
-                                                final @ParameterLayout(named = "This will also delete all Contact Roles connected to it, do you wish to proceed?") boolean delete) {
-        if (delete)
+    public HomePageViewModel deleteContactGroup(
+            final ContactGroup contactGroup,
+            @ParameterLayout(named = "This will also delete all Contact Roles connected to it, do you wish to proceed?")
+            final boolean delete) {
+        if (delete) {
             contactGroupRepository.delete(contactGroup);
+        }
         return this;
     }
 
@@ -73,14 +76,7 @@ public class HomePageViewModel {
     }
 
     public List<ContactGroup> choices0DeleteContactGroup() {
-        final List<ContactGroup> contactGroups = contactGroupRepository.listAll();
-//        final List<Contact> contacts = contactRepository.listAll();
-//        final ImmutableList<ContactGroup> usedContactGroups = FluentIterable.from(contacts)
-//                .transformAndConcat(contact -> contact.getContactRoles())
-//                .transform(contactRole -> contactRole.getContactGroup())
-//                .toList();
-//        contactGroups.removeAll(usedContactGroups);
-        return contactGroups;
+        return contactGroupRepository.listAll();
     }
     public ContactGroup default0DeleteContactGroup() {
         final List<ContactGroup> choices = choices0DeleteContactGroup();

@@ -197,30 +197,6 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
                     .isEmpty();
         }
 
-//        @Test
-//        public void cannot_delete_group_that_has_contact_roles() throws Exception {
-//
-//            // given
-//            final List<ContactGroup> groups = homePageViewModel.getGroups();
-//
-//            final ContactGroup someGroup = fakeDataService.collections().anyOf(groups);
-//
-//            final SortedSet<ContactRole> contactRoles = someGroup.getContactRoles();
-//            assertThat(contactRoles).isNotEmpty();
-//
-//            // when
-//            final List<ContactGroup> contactGroupChoices = homePageViewModel.choices0DeleteContactGroup();
-//
-//            // then
-//            assertThat(contactGroupChoices).doesNotContain(someGroup);
-//
-//            // then
-//            expectedExceptions.expect(DisabledException.class);
-//
-//            // when
-//            wrap(homePageViewModel).deleteContactGroup(someGroup, true);
-//        }
-
     }
 
     private static com.google.common.base.Predicate<ContactGroup> contactGroupOf(
