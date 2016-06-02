@@ -120,7 +120,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     @Getter @Setter
     private Integer displayOrder;
 
-    @javax.jdo.annotations.Persistent // (defaultFetchGroup = "true") // eager load, is this broken?
+    @javax.jdo.annotations.Persistent(defaultFetchGroup = "true") // eager load
     @Column(allowsNull = "false")
     @Property()
     @PropertyLayout(hidden = Where.REFERENCES_PARENT)
@@ -214,14 +214,15 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
 
     //region > delete (action)
 
-    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
     @ActionLayout(named = "Delete", position = ActionLayout.Position.PANEL)
-    public void delete() {
-        contactGroupRepository.delete(this);
+    public void delete(final @ParameterLayout(named = "This will also delete all Contact Roles connected to it, do you wish to proceed?") boolean delete) {
+        if (delete)
+            contactGroupRepository.delete(this);
     }
 
-    public String disableDelete() {
-        return getContactRoles().isEmpty() ? null : "This group has contacts";
+    public String validateDelete(final boolean delete) {
+        return delete ? null : "You have to agree";
     }
 
     @Persistent(mappedBy = "contactGroup", dependentElement = "true")

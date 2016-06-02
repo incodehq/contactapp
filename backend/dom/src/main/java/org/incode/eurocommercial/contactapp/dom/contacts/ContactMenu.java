@@ -55,6 +55,13 @@ public class ContactMenu {
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
     @MemberOrder(sequence = "2")
+    public java.util.List<Contact> listOrphanedContacts() {
+        return contactRepository.listOrphanedContacts();
+    }
+
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
+    @MemberOrder(sequence = "3")
     public java.util.List<Contact> find(
             final String query
     ) {
@@ -64,7 +71,7 @@ public class ContactMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "3")
+    @MemberOrder(sequence = "4")
     public java.util.List<Contact> findByGroup(
             final ContactGroup group
     ) {
@@ -77,7 +84,7 @@ public class ContactMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "4")
+    @MemberOrder(sequence = "5")
     public java.util.List<Contact> findByRole(
             @Parameter(maxLength = ContactRole.MaxLength.NAME)
             final String roleName
@@ -92,7 +99,7 @@ public class ContactMenu {
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    @MemberOrder(sequence = "5")
+    @MemberOrder(sequence = "6")
     public java.util.List<Contact> findByEmail(
             final String query
     ) {
@@ -100,8 +107,10 @@ public class ContactMenu {
         return contactRepository.findByEmail(queryRegex);
     }
 
+
+
     @Action
-    @MemberOrder(sequence = "6")
+    @MemberOrder(sequence = "7")
     public Contact create(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,

@@ -236,17 +236,6 @@ public class ContactRole implements Comparable<ContactRole> {
 
     //endregion
 
-    //region > delete (action)
-
-    @Action(semantics = SemanticsOf.IDEMPOTENT_ARE_YOU_SURE)
-    @ActionLayout(position = ActionLayout.Position.PANEL)
-    public ContactableEntity delete() {
-        final Contact contact = getContact();
-        contact.getContactRoles().remove(this);
-        return contact;
-    }
-
-    //endregion
 
     //region > compareTo, toString
     @Override

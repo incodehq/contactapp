@@ -246,15 +246,8 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroups);
 
-            // first remove all contact roles
-            for (ContactRole contactRole : someContactGroup.getContactRoles()) {
-                contactRole.delete();
-            }
-            assertThat(someContactGroup.getContactRoles()).isEmpty();
-            nextTransaction();
-
             // when
-            someContactGroup.delete();
+            someContactGroup.delete(true);
             nextTransaction();
 
             // then
@@ -264,19 +257,6 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
             assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
         }
 
-        @Test
-        public void cannot_delete_when_has_contact_roles() throws Exception {
-            // given
-            final ContactGroup someContactGroup = fakeDataService.collections().anyOf(contactGroupRepository.listAll());
-            assertThat(someContactGroup.getContactRoles()).isNotEmpty();
-            assertThat(someContactGroup.disableDelete()).isEqualToIgnoringCase("this group has contacts");
-
-            // then
-            thrown.expect(DisabledException.class);
-
-            // when
-            wrap(someContactGroup).delete();
-        }
 
     }
 

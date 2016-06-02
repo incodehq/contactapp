@@ -82,7 +82,12 @@ import lombok.Setter;
                 name = "findByEmail", language = "JDOQL",
                 value = "SELECT "
                         + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
-                        + "WHERE email.matches(:regex) ")
+                        + "WHERE email.matches(:regex) "),
+        @Query(
+                name = "listOrphanedContacts", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "WHERE contactRoles.isEmpty() ")
 })
 @DomainObject(
         editing = Editing.DISABLED

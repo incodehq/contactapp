@@ -30,7 +30,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
@@ -183,7 +182,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             assertThat(contactGroupChoices).contains(addedContactGroup);
 
             // and when
-            wrap(homePageViewModel).deleteContactGroup(addedContactGroup);
+            wrap(homePageViewModel).deleteContactGroup(addedContactGroup, true);
             nextTransaction();
 
             // then
@@ -196,30 +195,6 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
                             .filter(contactGroupOf(someCountry, groupName))
                             .toList())
                     .isEmpty();
-        }
-
-        @Test
-        public void cannot_delete_group_that_has_contact_roles() throws Exception {
-
-            // given
-            final List<ContactGroup> groups = homePageViewModel.getGroups();
-
-            final ContactGroup someGroup = fakeDataService.collections().anyOf(groups);
-
-            final SortedSet<ContactRole> contactRoles = someGroup.getContactRoles();
-            assertThat(contactRoles).isNotEmpty();
-
-            // when
-            final List<ContactGroup> contactGroupChoices = homePageViewModel.choices0DeleteContactGroup();
-
-            // then
-            assertThat(contactGroupChoices).doesNotContain(someGroup);
-
-            // then
-            expectedExceptions.expect(DisabledException.class);
-
-            // when
-            wrap(homePageViewModel).deleteContactGroup(someGroup);
         }
 
     }
