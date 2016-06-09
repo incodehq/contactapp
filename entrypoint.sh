@@ -11,11 +11,8 @@ echo_error() {
 overrides="/usr/local/tomcat/webapps/contacts/WEB-INF/overrides.properties"
 props=""
 
-opted=""
-
 # Parsing opts
 while getopts ":p:" OPTION "$@" ; do
-    opted="1"
     case $OPTION in
         p)
             props="$OPTARG"
@@ -30,11 +27,6 @@ while getopts ":p:" OPTION "$@" ; do
             ;;
     esac
 done
-
-# If no opts were specifed
-if [ -z "$opted" ]; then
-    echo_error ${0##*/}
-fi
 
 # Parsing properties to overrides file
 if [ -n "$props" ]; then
