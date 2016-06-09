@@ -37,4 +37,4 @@ if [ -n "$props" ]; then
 fi
 
 # Uncomment if you wish to start a shell after running
-/usr/bin/env bash
+/usr/local/tomcat/bin/catalina.sh run & /usr/bin/env bash
