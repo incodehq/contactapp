@@ -27,6 +27,8 @@
 
     <packaging>pom</packaging>
 
+    <name>Incode ContactApp (Root)</name>
+
     <modules>
         <module>backend</module>
     </modules>

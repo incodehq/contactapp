@@ -34,7 +34,7 @@ public class HideContributionForSettings extends AbstractSubscriber {
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final org.isisaddons.module.command.dom.HasUsername_recentCommandsByUser.RecentCommandsByUserDomainEvent ev) {
+    public void on(final org.isisaddons.module.command.dom.HasUsername_recentCommandsByUser.ActionDomainEvent ev) {
         final List<Object> arguments = ev.getArguments();
         if(arguments.size()==1 && arguments.get(0) instanceof UserSetting) {
             ev.veto("");

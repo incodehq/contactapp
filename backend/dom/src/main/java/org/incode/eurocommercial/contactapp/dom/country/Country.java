@@ -40,9 +40,6 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @PersistenceCapable(
         identityType = IdentityType.DATASTORE
 )
@@ -91,8 +88,16 @@ public class Country implements Comparable<Country> {
     @Column(allowsNull = "false", length = MaxLength.NAME)
     @Property
     @Title
-    @Getter @Setter
+//    @Getter @Setter
     private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
 
     //region > compareTo, toString
     @Override
