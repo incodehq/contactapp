@@ -6,7 +6,7 @@ LABEL Vendor="Eurocommercial"
 # RUN cd /usr/local/tomcat/webapps/ && rm -rf ROOT && unzip contacts.war -d ROOT && rm contacts.war
 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
-COPY backend/webapp/target/contactapp-webapp-0.1.0-SNAPSHOT/ /usr/local/tomcat/webapps/ROOT/
+COPY backend/webapp/target/contactapp-webapp-1.1.0/ /usr/local/tomcat/webapps/ROOT/
 
 COPY entrypoint.sh /root/
 
