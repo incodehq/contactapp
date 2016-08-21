@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>contactapp-app</artifactId>
-    <name>Incode ContactApp Application</name>
+    <name>Incode App ContactApp Application</name>
 
     <build>
         <resources>

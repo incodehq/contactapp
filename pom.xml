@@ -23,7 +23,7 @@
     <artifactId>contactapp-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
-    <name>Incode ContactApp (Parent)</name>
+    <name>Incode App ContactApp (Parent)</name>
 
     <packaging>pom</packaging>
 

@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>contactapp-integtests</artifactId>
-    <name>Incode ContactApp Integration Tests</name>
+    <name>Incode App ContactApp Integration Tests</name>
 
     <build>
         <testResources>
