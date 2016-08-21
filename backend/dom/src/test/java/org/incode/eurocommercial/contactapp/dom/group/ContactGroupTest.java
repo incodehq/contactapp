@@ -38,7 +38,7 @@ public class ContactGroupTest {
             String name = "New name";
             String address = "New address";
             String email = "New email";
-            String notes = "New notes";
+            String notes = "New content";
 
             // when
             contactGroup.edit(name, address, email, notes);

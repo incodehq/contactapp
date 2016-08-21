@@ -54,7 +54,7 @@ public class ContactTest {
             String name = "New name";
             String company = "New company";
             String email = "New email";
-            String notes = "New notes";
+            String notes = "New content";
 
             // when
             contact.edit(name, company, email, notes);
