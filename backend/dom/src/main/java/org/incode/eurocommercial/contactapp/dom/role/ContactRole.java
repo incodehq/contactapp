@@ -50,7 +50,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
-import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
@@ -142,7 +141,7 @@ public class ContactRole implements Comparable<ContactRole> {
     //region > alsoInGroup (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL, cssClassFa = "fa fa-plus")
     public ContactRole alsoInGroup(
             @Parameter(optionality = Optionality.MANDATORY)
             final ContactGroup contactGroup,
@@ -178,7 +177,7 @@ public class ContactRole implements Comparable<ContactRole> {
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL, cssClassFa = "fa fa-plus")
     public ContactRole alsoWithContact(
             @Parameter(optionality = Optionality.MANDATORY)
             final Contact contact,

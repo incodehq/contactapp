@@ -30,6 +30,7 @@ public class CountryRefData extends FixtureScript {
         countryRepository.findOrCreate("France");
         countryRepository.findOrCreate("Italy");
         countryRepository.findOrCreate("Sweden");
+        countryRepository.findOrCreate("Belgium");
     }
 
     @Inject

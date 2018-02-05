@@ -119,7 +119,7 @@ public class ContactNumber implements Comparable<ContactNumber> {
 
     //region > create (action)
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL, cssClassFa = "fa fa-plus")
     @MemberOrder(name = "number", sequence = "1")
     public ContactNumber create(
             @Parameter(maxLength = ContactNumber.MaxLength.NUMBER, mustSatisfy = ContactNumberSpec.class)

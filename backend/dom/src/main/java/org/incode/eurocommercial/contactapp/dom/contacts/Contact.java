@@ -120,7 +120,7 @@ public class Contact extends ContactableEntity implements Comparable<Contact> {
     //region > create (action)
 
     @Action
-    @ActionLayout(position = ActionLayout.Position.PANEL)
+    @ActionLayout(position = ActionLayout.Position.PANEL, cssClassFa = "fa fa-plus")
     public Contact create(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)
             final String name,

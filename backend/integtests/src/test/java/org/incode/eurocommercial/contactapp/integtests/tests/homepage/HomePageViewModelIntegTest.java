@@ -106,7 +106,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             final Country someCountry = fakeDataService.collections().anyOf(list);
             final String groupName = fakeDataService.strings().fixed(8);
 
-            wrap(homePageViewModel).createContactGroup(someCountry, groupName);
+            wrap(homePageViewModel).newContactGroup(someCountry, groupName);
             nextTransaction();
 
             // then
@@ -130,7 +130,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             thrown.expectMessage("Reason: 'Country' is mandatory");
 
             // when
-            wrap(homePageViewModel).createContactGroup(noCountry, groupName);
+            wrap(homePageViewModel).newContactGroup(noCountry, groupName);
         }
 
         @Test
@@ -145,7 +145,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             thrown.expectMessage("Reason: 'Name' is mandatory");
 
             // when
-            wrap(homePageViewModel).createContactGroup(someCountry, noName);
+            wrap(homePageViewModel).newContactGroup(someCountry, noName);
         }
 
     }
@@ -160,7 +160,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
             final Country someCountry = fakeDataService.collections().anyOf(list);
             final String groupName = fakeDataService.strings().fixed(8);
 
-            wrap(homePageViewModel).createContactGroup(someCountry, groupName);
+            wrap(homePageViewModel).newContactGroup(someCountry, groupName);
 
             final List<ContactGroup> groups = homePageViewModel.getGroups();
 

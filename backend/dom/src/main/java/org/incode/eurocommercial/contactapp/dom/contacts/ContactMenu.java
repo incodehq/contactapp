@@ -110,6 +110,7 @@ public class ContactMenu {
 
 
     @Action
+    @ActionLayout(cssClassFa = "fa fa-plus")
     @MemberOrder(sequence = "7")
     public Contact create(
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)

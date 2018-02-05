@@ -49,9 +49,9 @@ public class HomePageViewModel {
     }
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Create")
+    @ActionLayout(named = "Create", cssClassFa = "fa fa-plus")
     @MemberOrder(name = "groups", sequence = "1")
-    public HomePageViewModel createContactGroup(
+    public HomePageViewModel newContactGroup(
             final Country country,
             final String name) {
         contactGroupRepository.findOrCreate(country, name);

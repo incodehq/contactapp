@@ -143,7 +143,7 @@ public class ContactGroup extends ContactableEntity implements Comparable<Contac
     //region > create (action)
 
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    @ActionLayout(named = "Create", position = ActionLayout.Position.PANEL)
+    @ActionLayout(named = "Create", position = ActionLayout.Position.PANEL, cssClassFa = "fa fa-plus")
     public ContactGroup create(
             final Country country,
             @Parameter(maxLength = ContactableEntity.MaxLength.NAME)

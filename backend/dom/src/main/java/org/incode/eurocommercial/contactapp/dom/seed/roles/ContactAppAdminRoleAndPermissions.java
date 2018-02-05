@@ -48,6 +48,11 @@ public class ContactAppAdminRoleAndPermissions extends AbstractRoleAndPermission
                 ApplicationPermissionMode.VIEWING,
                 classFor("org.incode.eurocommercial.contactapp.app.services.ContactAppTearDownService")
         );
+        newClassPermissions(
+                ApplicationPermissionRule.VETO,
+                ApplicationPermissionMode.VIEWING,
+                classFor("org.incode.eurocommercial.contactapp.app.services.ContactAppCreateCountriesService")
+        );
 
     }
     private static Class<?> classFor(final String className) {
