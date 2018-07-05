@@ -16,10 +16,10 @@ image:http://yuml.me/0ec16938.svg["Domain Model", link="http://yuml.me/edit/0ec1
 
 These screenshots (taken 13 april 2016) show usage of the mobile app as well as the backend app.
 
-image:/docs/contactapp-frontend.png[width="600"]
-image:/docs/contactapp-backend-homepage.png[width="600"]
-image:/docs/contactapp-backend-amiens-property.png[width="600"]
-image:/docs/contactapp-backend-benoit-foure.png[width="600"]
+image:/docs/contactapp-frontend.png[width="100%"]
+image:/docs/contactapp-backend-homepage.png[width="100%"]
+image:/docs/contactapp-backend-amiens-property.png[width="100%"]
+image:/docs/contactapp-backend-benoit-foure.png[width="100%"]
 
 == License
 
