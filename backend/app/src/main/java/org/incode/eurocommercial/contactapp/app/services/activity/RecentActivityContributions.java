@@ -39,7 +39,6 @@ import org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract;
 
 import org.isisaddons.module.audit.dom.AuditingServiceRepository;
 import org.isisaddons.module.command.dom.CommandServiceJdoRepository;
-import org.isisaddons.module.publishing.dom.PublishingServiceRepository;
 import org.isisaddons.module.sessionlogger.dom.SessionLogEntry;
 
 
@@ -72,9 +71,6 @@ public class RecentActivityContributions extends AbstractService {
         if(commandServiceRepository != null) {
             changes.addAll(commandServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
         } 
-        if(publishingServiceRepository != null) {
-            changes.addAll(publishingServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
-        }
         changes.addAll(auditingServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
         Collections.sort(changes, DomainChangeJdoAbstract.compareByTimestampDescThenType());
         return changes;
@@ -101,19 +97,16 @@ public class RecentActivityContributions extends AbstractService {
 
     
     @javax.inject.Inject
-    private CommandServiceJdoRepository commandServiceRepository;
+    CommandServiceJdoRepository commandServiceRepository;
     
     @javax.inject.Inject
-    private AuditingServiceRepository auditingServiceRepository;
+    AuditingServiceRepository auditingServiceRepository;
     
     @javax.inject.Inject
-    private PublishingServiceRepository publishingServiceRepository;
-    
-    @javax.inject.Inject
-    private BookmarkService bookmarkService;
+    BookmarkService bookmarkService;
 
     @javax.inject.Inject
-    private ClockService clockService;
+    ClockService clockService;
     
 }
 

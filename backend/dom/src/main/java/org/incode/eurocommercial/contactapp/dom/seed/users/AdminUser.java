@@ -22,6 +22,7 @@ import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
 
 public class AdminUser extends AbstractUserAndRolesFixtureScript {
@@ -34,7 +35,8 @@ public class AdminUser extends AbstractUserAndRolesFixtureScript {
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
 //                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME
-                        ContactAppAdminRoleAndPermissions.ROLE_NAME
+                        ContactAppAdminRoleAndPermissions.ROLE_NAME,
+                        ApacheIsisRoleAndPermissions.ROLE_NAME
 
                         // configured by not required by any user:
                         //,SettingsModuleRoleAndPermissions.ROLE_NAME

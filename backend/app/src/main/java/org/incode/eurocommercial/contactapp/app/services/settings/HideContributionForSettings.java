@@ -19,7 +19,6 @@ package org.incode.eurocommercial.contactapp.app.services.settings;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractSubscriber;
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -50,14 +49,5 @@ public class HideContributionForSettings extends AbstractSubscriber {
             ev.veto("");
         }
     }
-
-
-    //region > injected services
-    @javax.inject.Inject
-    private DomainObjectContainer container;
-
-    @javax.inject.Inject
-    private ContactAppSettingsService applicationSettingsService;
-    //endregion
 
 }

@@ -23,6 +23,7 @@ import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureSc
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
 
 public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
@@ -35,7 +36,8 @@ public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
                         IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
-                        ContactAppSuperadminRoleAndPermissions.ROLE_NAME
+                        ContactAppSuperadminRoleAndPermissions.ROLE_NAME,
+                        ApacheIsisRoleAndPermissions.ROLE_NAME
 
                         // configured by not required by any user:
                         //,SettingsModuleRoleAndPermissions.ROLE_NAME

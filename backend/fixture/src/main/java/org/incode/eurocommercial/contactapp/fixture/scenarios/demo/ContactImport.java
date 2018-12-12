@@ -18,7 +18,7 @@ package org.incode.eurocommercial.contactapp.fixture.scenarios.demo;
 
 import java.util.Collections;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 

@@ -16,31 +16,16 @@
  */
 package org.incode.eurocommercial.contactapp.app;
 
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Lists;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.AppManifestAbstract;
 
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 
-public class ContactAppAppManifestWithFixtures extends ContactAppAppManifest {
+public class ContactAppAppManifestWithFixtures extends AppManifestAbstract {
 
-    /**
-     * Fixtures to be installed.
-     */
-    @Override
-    public List<Class<? extends FixtureScript>> getFixtures() {
-        return Lists.newArrayList(DemoFixture.class);
+    static final Builder BUILDER = ContactAppAppManifest.BUILDER.withFixtureScripts(DemoFixture.class);
+
+    public ContactAppAppManifestWithFixtures() {
+        super(BUILDER);
     }
 
-    /**
-     * Force fixtures to be loaded.
-     */
-    @Override
-    protected void appendConfigurationProperties(final Map<String, String> props) {
-        super.appendConfigurationProperties(props);
-        props.put("isis.persistor.datanucleus.install-fixtures","true");
-    }
 }

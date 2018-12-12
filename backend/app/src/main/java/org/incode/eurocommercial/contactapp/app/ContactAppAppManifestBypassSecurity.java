@@ -16,15 +16,14 @@
  */
 package org.incode.eurocommercial.contactapp.app;
 
-public class ContactAppAppManifestBypassSecurity extends ContactAppAppManifest {
+import org.apache.isis.applib.AppManifestAbstract;
 
-    @Override
-    public String getAuthenticationMechanism() {
-        return "bypass";
+public class ContactAppAppManifestBypassSecurity extends AppManifestAbstract {
+
+    static final Builder BUILDER = ContactAppAppManifest.BUILDER.withAuthMechanism("bypass");
+
+    public ContactAppAppManifestBypassSecurity() {
+        super(BUILDER);
     }
 
-    @Override
-    public String getAuthorizationMechanism() {
-        return "bypass";
-    }
 }

@@ -21,7 +21,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 
 import org.isisaddons.module.settings.SettingsModule;
 
@@ -34,8 +33,7 @@ import org.isisaddons.module.settings.SettingsModule;
  * </p>
  */
 @DomainService(
-        nature = NatureOfService.DOMAIN,
-        menuOrder = "1" // register before any domain services that post events
+        nature = NatureOfService.DOMAIN
 )
 public class HideIsisAddonsSettingsFunctionality extends AbstractSubscriber {
 
@@ -47,10 +45,5 @@ public class HideIsisAddonsSettingsFunctionality extends AbstractSubscriber {
             event.hide();
         }
     }
-
-    //region > injected services
-    @javax.inject.Inject
-    private EventBusService eventBusService;
-    //endregion
 
 }

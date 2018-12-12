@@ -19,6 +19,7 @@
                             <bs3:row>
                                 <bs3:col span="12">
                                     <cpt:fieldSet name="Group Details" id="group-details">
+            <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
                                         <cpt:action id="create"/>
                                         <cpt:action id="edit"/>
                                         <cpt:action id="delete"/>
@@ -64,7 +65,6 @@
                                         <cpt:action id="clearHints" position="PANEL_DROPDOWN"/>
                                         <cpt:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
                                         <cpt:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
-                                        <cpt:action id="rebuildMetamodel" position="PANEL_DROPDOWN"/>
                                         <cpt:property id="datanucleusIdLong"/>
                                         <cpt:property id="datanucleusVersionLong"/>
                                         <cpt:property id="datanucleusVersionTimestamp"/>
@@ -76,9 +76,18 @@
                 </bs3:col>
             </bs3:row>
         </bs3:col>
-        <bs3:col span="6" unreferencedCollections="true">
-            <cpt:collection id="contactNumbers"/>
-            <cpt:collection id="contactRoles"/>
+        <bs3:col span="6">
+            <bs3:tabGroup collapseIfOne="false">
+                <bs3:tab name="Contacts">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <cpt:collection id="contactNumbers" defaultView="table"/>
+                            <cpt:collection id="contactRoles" defaultView="table"/>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+            </bs3:tabGroup>
         </bs3:col>
+        <bs3:col span="12" unreferencedCollections="true"/>
     </bs3:row>
 </bs3:grid>

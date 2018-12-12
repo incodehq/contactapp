@@ -27,6 +27,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.contactapp.dom.seed.country.CountryRefData;
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
@@ -64,6 +65,7 @@ public class ContactAppRolesAndPermissionsAndRefDataSeedService {
             executionContext.executeChild(this, new ContactAppSuperadminRoleAndPermissions());
             executionContext.executeChild(this, new ContactAppAdminRoleAndPermissions());
             executionContext.executeChild(this, new ContactAppReadOnlyRoleAndPermissions());
+            executionContext.executeChild(this, new ApacheIsisRoleAndPermissions());
 
             executionContext.executeChild(this, new SuperadminUser());
             executionContext.executeChild(this, new AdminUser());

@@ -55,6 +55,8 @@ import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.factory.FactoryService;
+import org.apache.isis.applib.services.layout.Object_rebuildMetamodel;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
@@ -97,6 +99,14 @@ import lombok.Setter;
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ContactGroup extends ContactableEntity implements Comparable<ContactGroup> {
+
+    public ContactGroup rebuild() {
+        factoryService.mixin(Object_rebuildMetamodel.class, this).act();
+        return this;
+    }
+
+    @Inject
+    FactoryService factoryService;
 
     //region > title
 

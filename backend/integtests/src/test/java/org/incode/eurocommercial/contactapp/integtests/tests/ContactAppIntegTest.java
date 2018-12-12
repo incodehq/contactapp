@@ -17,76 +17,36 @@
 package org.incode.eurocommercial.contactapp.integtests.tests;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
-import com.google.common.base.Throwables;
-import com.google.common.collect.FluentIterable;
-
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.BeforeClass;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
-import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
+import org.apache.isis.core.integtestsupport.IntegrationTestAbstract2;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
+import org.incode.eurocommercial.contactapp.app.ContactAppAppManifest;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
-import org.incode.eurocommercial.contactapp.integtests.bootstrap.ContactAppSystemInitializer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class ContactAppIntegTest extends IntegrationTestAbstract {
+public abstract class ContactAppIntegTest extends IntegrationTestAbstract2 {
 
-
-    @Inject protected
-    FixtureScripts fixtureScripts;
-    @Inject protected
-    FakeDataService fakeDataService;
-
+    @Inject
+    protected FakeDataService fakeDataService;
 
     @BeforeClass
     public static void initClass() {
-        org.apache.log4j.PropertyConfigurator.configure("logging.properties");
-        ContactAppSystemInitializer.initIsft();
-
-        // instantiating will install onto ThreadLocal
-        new ScenarioExecutionForIntegration();
-    }
-
-    protected static Matcher<? extends Throwable> causalChainContains(final Class<?> cls) {
-        return new TypeSafeMatcher<Throwable>() {
-            @Override
-            protected boolean matchesSafely(Throwable item) {
-                final List<Throwable> causalChain = Throwables.getCausalChain(item);
-                for (Throwable throwable : causalChain) {
-                    if(cls.isAssignableFrom(throwable.getClass())){
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("exception with causal chain containing " + cls.getSimpleName());
-            }
-        };
+        bootstrapUsing(ContactAppAppManifest.BUILDER.withAdditionalServices(FakeDataService.class));
     }
 
     protected static void assertContains(
             final Collection<ContactNumber> contactNumbers,
             final String type,
             final String number) {
-        assertThat(FluentIterable
-                    .from(contactNumbers)
-                    .filter(x -> Objects.equals(x.getType(), type)))
+        assertThat(contactNumbers.stream().filter(x -> Objects.equals(x.getType(), type)))
                 .extracting(ContactNumber::getNumber)
                 .contains(number);
     }

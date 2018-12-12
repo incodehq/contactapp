@@ -22,6 +22,7 @@ import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 
+import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
 
 public class ReaderUser extends AbstractUserAndRolesFixtureScript {
@@ -33,7 +34,8 @@ public class ReaderUser extends AbstractUserAndRolesFixtureScript {
         super(USER_NAME, PASSWORD, null,
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
-                        ContactAppReadOnlyRoleAndPermissions.ROLE_NAME
+                        ContactAppReadOnlyRoleAndPermissions.ROLE_NAME,
+                        ApacheIsisRoleAndPermissions.ROLE_NAME
                     ));
     }
 
