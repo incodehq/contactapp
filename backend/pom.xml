@@ -22,7 +22,8 @@
     <parent>
         <groupId>org.incode</groupId>
         <artifactId>incode-parent</artifactId>
-        <version>1.16.2</version>
+        <!-- NB: also update incode-platform.version property below. -->
+        <version>1.16.2.20181013-1017-b9a0574e</version>
         <relativePath/>
     </parent>
 
@@ -39,7 +40,7 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.16.2</isis.version>
+        <isis.version>1.16.2.20180921-0633-408d6647</isis.version>
 
         <incode-platform.version>1.16.2</incode-platform.version>
         <isis-metamodel-paraname8.version>${incode-platform.version}</isis-metamodel-paraname8.version>
@@ -78,19 +79,6 @@
 
         <warName>contacts</warName>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>Cloudbees snapshots</id>
-            <url>http://repository-estatio.forge.cloudbees.com/snapshot/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-    </repositories>
 
     <modules>
         <module>app</module>
@@ -286,5 +274,47 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <!-- required to pull down parent pom (incode-parent) -->
+        <profile>
+            <id>incode-cloud-maven</id>
+            <activation>
+                <property>
+                    <name>!skip.incode-cloud-maven</name>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>incode-cloud-maven</id>
+                    <url>https://repo.incode.cloud/repository/maven/</url>
+                    <name>Incode Cloud (maven)</name>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>fail</checksumPolicy>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>fail</checksumPolicy>
+                    </snapshots>
+                    <layout>default</layout>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>incode-cloud-maven</id>
+                    <name>Incode Cloud (maven)</name>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>never</updatePolicy>
+                        <checksumPolicy>fail</checksumPolicy>
+                    </releases>
+                    <url>https://repo.incode.cloud/repository/maven/</url>
+                    <layout>default</layout>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
 
+    </profiles>
 </project>

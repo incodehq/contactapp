@@ -19,8 +19,8 @@ package org.incode.eurocommercial.contactapp.webapp;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
-
 import org.apache.isis.core.runtime.system.session.IsisSessionFactory;
+
 import org.isisaddons.module.settings.dom.UserSetting;
 import org.isisaddons.module.settings.dom.UserSettingsService;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
@@ -46,7 +46,7 @@ public class ContactAppUserSettingsThemeProvider implements ActiveThemeProvider 
 
     @Override
     public ITheme getActiveTheme() {
-        if(getIsisSessionFactory().getSpecificationLoader().isInitialized()) {
+        try {
             final String themeName = getIsisSessionFactory().doInSession(() -> {
                 final String currentUserName = currentUserName();
 
@@ -57,8 +57,9 @@ public class ContactAppUserSettingsThemeProvider implements ActiveThemeProvider 
                 return activeTheme != null ? activeTheme.valueAsString() : null;
             });
             return themeFor(themeName);
+        } catch(Exception ex) {
+            return new SessionThemeProvider().getActiveTheme();
         }
-        return new SessionThemeProvider().getActiveTheme();
     }
 
     @Override
