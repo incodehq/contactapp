@@ -27,7 +27,7 @@ import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.app.ContactGroupOrderingViewModel;
 import org.incode.eurocommercial.contactapp.module.group.app.ContactGroup_fixDisplayOrder;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 
 public class ContactAppReadOnlyRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 

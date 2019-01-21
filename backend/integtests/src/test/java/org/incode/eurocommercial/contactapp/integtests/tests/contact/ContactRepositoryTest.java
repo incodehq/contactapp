@@ -31,8 +31,8 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRoleRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 

@@ -27,7 +27,7 @@ import org.incode.eurocommercial.contactapp.app.rest.v1.contacts.ContactableView
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 
 public class ContactRoleViewModel extends ViewModelWithUnderlying<ContactRole> {
 

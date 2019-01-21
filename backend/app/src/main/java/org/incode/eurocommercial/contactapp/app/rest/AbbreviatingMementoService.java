@@ -35,7 +35,7 @@ import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEn
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 
 /**
  * Highly abbreviated memento, to reduce network traffic and storage requirements of frontend/mobile app.

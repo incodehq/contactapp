@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.role;
+package org.incode.eurocommercial.contactapp.module.role.dom;
 
 import java.util.List;
 import java.util.Set;
@@ -72,22 +72,22 @@ import lombok.Setter;
         @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.role.ContactRole "
+                        + "FROM org.incode.eurocommercial.contactapp.module.role.dom.ContactRole "
                         + "WHERE roleName.matches(:regex) "),
         @Query(
                 name = "findByContactAndContactGroup", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.role.ContactRole "
+                        + "FROM org.incode.eurocommercial.contactapp.module.role.dom.ContactRole "
                         + "WHERE contact == :contact && contactGroup == :contactGroup "),
         @Query(
                 name = "findByContact", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.role.ContactRole "
+                        + "FROM org.incode.eurocommercial.contactapp.module.role.dom.ContactRole "
                         + "WHERE contact == :contact "),
         @Query(
                 name = "findByContactGroup", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.role.ContactRole "
+                        + "FROM org.incode.eurocommercial.contactapp.module.role.dom.ContactRole "
                         + "WHERE contactGroup == :contactGroup ")
 })
 @Unique(name = "ContactRole_roleName_UNQ", members = { "contact", "contactGroup" })

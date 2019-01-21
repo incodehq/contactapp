@@ -35,8 +35,8 @@ import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberSpec;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRoleRepository;
 
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(

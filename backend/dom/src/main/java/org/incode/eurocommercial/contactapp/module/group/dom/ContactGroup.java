@@ -63,8 +63,8 @@ import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEn
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.module.country.dom.Country;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRoleRepository;
 import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;

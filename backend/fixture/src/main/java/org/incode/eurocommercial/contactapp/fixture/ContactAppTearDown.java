@@ -25,7 +25,7 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
+import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 
 public class ContactAppTearDown extends FixtureScript {
 
