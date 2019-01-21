@@ -127,7 +127,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Country' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(homePageViewModel).newContactGroup(noCountry, groupName);
@@ -142,7 +142,7 @@ public class HomePageViewModelIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(homePageViewModel).newContactGroup(someCountry, noName);

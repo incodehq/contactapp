@@ -128,7 +128,7 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
         public void when_no_contact_group_specified() throws Exception {
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Contact Group' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             final ContactGroup contactGroup = null;
@@ -233,7 +233,7 @@ public class ContactRoleIntegTest extends ContactAppIntegTest {
         public void when_no_contact_specified() throws Exception {
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Contact' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             final Contact contact = null;

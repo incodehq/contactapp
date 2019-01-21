@@ -29,7 +29,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-import org.apache.isis.applib.services.wrapper.DisabledException;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
@@ -146,7 +145,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactGroup).create(country, name);
@@ -213,7 +212,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactGroup).edit(name, null, null, null);
@@ -365,7 +364,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Number' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactGroup).addContactNumber(noNumber, ContactNumberType.OFFICE.title(), null);
@@ -531,7 +530,7 @@ public class ContactGroupIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Contact' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactGroup).addContactRole(contact, null, "new role");

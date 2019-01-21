@@ -21,25 +21,19 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import org.junit.BeforeClass;
-
-import org.apache.isis.core.integtestsupport.IntegrationTestAbstract2;
+import org.apache.isis.applib.services.i18n.TranslationService;
+import org.apache.isis.core.integtestsupport.IntegrationTestAbstract3;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
-import org.incode.eurocommercial.contactapp.app.ContactAppAppManifest;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class ContactAppIntegTest extends IntegrationTestAbstract2 {
+public abstract class ContactAppIntegTest extends IntegrationTestAbstract3 {
 
-    @Inject
-    protected FakeDataService fakeDataService;
-
-    @BeforeClass
-    public static void initClass() {
-        bootstrapUsing(ContactAppAppManifest.BUILDER.withAdditionalServices(FakeDataService.class));
+    protected ContactAppIntegTest() {
+        super(new ContactAppIntegTestModule());
     }
 
     protected static void assertContains(
@@ -63,4 +57,10 @@ public abstract class ContactAppIntegTest extends IntegrationTestAbstract2 {
         return "+" + fakeDataService.strings().digits(2) + " " + fakeDataService.strings().digits(4) + " " + fakeDataService.strings().digits(6);
     }
 
+    @Inject
+    protected FakeDataService fakeDataService;
+
+    protected void nextTransaction() {
+        transactionService.nextTransaction();
+    }
 }

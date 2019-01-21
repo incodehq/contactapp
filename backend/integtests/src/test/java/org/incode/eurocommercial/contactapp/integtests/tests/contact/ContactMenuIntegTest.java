@@ -327,7 +327,7 @@ public class ContactMenuIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(contactMenu).create(name, null, null, null, null, null);

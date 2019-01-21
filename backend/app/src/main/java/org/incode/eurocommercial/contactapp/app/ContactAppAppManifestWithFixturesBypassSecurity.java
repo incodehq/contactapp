@@ -16,9 +16,9 @@
  */
 package org.incode.eurocommercial.contactapp.app;
 
-import org.apache.isis.applib.AppManifestAbstract;
+import org.apache.isis.applib.AppManifestAbstract2;
 
-public class ContactAppAppManifestWithFixturesBypassSecurity extends AppManifestAbstract {
+public class ContactAppAppManifestWithFixturesBypassSecurity extends AppManifestAbstract2 {
 
     static final Builder BUILDER = ContactAppAppManifestWithFixtures.BUILDER.withAuthMechanism("bypass");
 

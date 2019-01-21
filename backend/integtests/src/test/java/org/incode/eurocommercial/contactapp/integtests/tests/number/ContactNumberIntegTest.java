@@ -152,7 +152,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Number' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactNumber).create(noNumber, ContactNumberType.OFFICE.title(), null);
@@ -296,7 +296,7 @@ public class ContactNumberIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Number' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
 
             // when
             wrap(this.contactNumber).edit(noNumber, this.contactNumber.default1Edit(), null);

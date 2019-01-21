@@ -16,13 +16,14 @@
  */
 package org.incode.eurocommercial.contactapp.app;
 
-import org.apache.isis.applib.AppManifestAbstract;
+import org.apache.isis.applib.AppManifestAbstract2;
 
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 
-public class ContactAppAppManifestWithFixtures extends AppManifestAbstract {
+public class ContactAppAppManifestWithFixtures extends AppManifestAbstract2
+{
 
-    static final Builder BUILDER = ContactAppAppManifest.BUILDER.withFixtureScripts(DemoFixture.class);
+    static final AppManifestAbstract2.Builder BUILDER = ContactAppAppManifest.BUILDER.withFixtureScripts(DemoFixture.class);
 
     public ContactAppAppManifestWithFixtures() {
         super(BUILDER);

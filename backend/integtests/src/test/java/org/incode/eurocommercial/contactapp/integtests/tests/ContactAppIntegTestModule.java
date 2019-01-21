@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom;
+package org.incode.eurocommercial.contactapp.integtests.tests;
 
 import java.util.Set;
 
@@ -25,21 +25,14 @@ import com.google.common.collect.Sets;
 import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
 
-import org.isisaddons.module.excel.ExcelModule;
+import org.isisaddons.module.fakedata.FakeDataModule;
 
-import org.incode.module.settings.SettingsModule;
+import org.incode.eurocommercial.contactapp.app.ContactAppAppModule;
 
 @XmlRootElement(name = "module")
-public class ContactAppDomainModule extends ModuleAbstract {
+public class ContactAppIntegTestModule extends ModuleAbstract {
 
-    @Override
-    public Set<Module> getDependencies() {
-        return Sets.newHashSet(new ExcelModule(), new SettingsModule());
+    @Override public Set<Module> getDependencies() {
+        return Sets.newHashSet(new ContactAppAppModule(), new FakeDataModule());
     }
-
-    public static class MaxLength {
-        private MaxLength(){}
-        public static final int NOTES = 2048;
-    }
-
 }

@@ -186,7 +186,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
             final Contact newContact = wrap(this.contact).create(null, company, officePhoneNumber, mobilePhoneNumber, homePhoneNumber, email);
         }
 
@@ -249,7 +249,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Name' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
             wrap(this.contact).edit(name, null, null, null);
         }
 
@@ -410,7 +410,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Number' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
             wrap(this.contact).addContactNumber(noNumber, ContactNumberType.OFFICE.title(), null);
         }
 
@@ -578,7 +578,7 @@ public class ContactIntegTest extends ContactAppIntegTest {
 
             // then
             thrown.expect(InvalidException.class);
-            thrown.expectMessage("Reason: 'Contact Group' is mandatory");
+            thrown.expectMessage("Reason: Mandatory");
             final Contact contact = wrap(this.contact).addContactRole(contactGroup, null, "new role");
         }
 
