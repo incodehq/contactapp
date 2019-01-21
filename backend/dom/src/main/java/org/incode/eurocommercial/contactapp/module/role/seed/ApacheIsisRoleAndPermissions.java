@@ -14,18 +14,18 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles.NOTCONFIGURED;
+package org.incode.eurocommercial.contactapp.module.role.seed;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class PublishingModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ApacheIsisRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "contactapp-publishing-admin";
+    public static final String ROLE_NAME = "isis-role";
 
-    public PublishingModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to publishing module");
+    public ApacheIsisRoleAndPermissions() {
+        super(ROLE_NAME, "Access to contributed properties and actions");
     }
 
     @Override
@@ -33,7 +33,8 @@ public class PublishingModuleRoleAndPermissions extends AbstractRoleAndPermissio
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.isisaddons.module.publishing");
+                "org.apache.isis"
+        );
     }
 
 }

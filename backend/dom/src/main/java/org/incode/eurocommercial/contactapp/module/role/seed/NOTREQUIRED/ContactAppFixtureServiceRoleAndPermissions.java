@@ -14,27 +14,29 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles;
+package org.incode.eurocommercial.contactapp.module.role.seed.NOTREQUIRED;
+
+import org.apache.isis.applib.services.fixturespec.FixtureScriptsDefault;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class ContactAppSuperadminRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ContactAppFixtureServiceRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "contactapp-superadmin-role";
+    public static final String ROLE_NAME = "contactapp-fixture-scripts";
 
-    public ContactAppSuperadminRoleAndPermissions() {
-        super(ROLE_NAME, "Full access to the ContactApp");
+    public ContactAppFixtureServiceRoleAndPermissions() {
+        super(ROLE_NAME, "Execute the ContactApp fixture scripts");
     }
 
     @Override
-    protected void execute(final ExecutionContext executionContext) {
+    protected void execute(ExecutionContext executionContext) {
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.incode.eurocommercial.contactapp"
-                );
-
+                FixtureScriptsDefault.class.getPackage().getName(),
+                "org.incode.eurocommercial.contactapp.fixture");
     }
+
 }

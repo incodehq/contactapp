@@ -22,8 +22,8 @@ import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppAdminRoleAndPermissions;
 
 public class AdminUser extends AbstractUserAndRolesFixtureScript {
 

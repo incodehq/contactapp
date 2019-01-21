@@ -23,8 +23,8 @@ import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureSc
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppSuperadminRoleAndPermissions;
 
 public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
 

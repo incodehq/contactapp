@@ -14,28 +14,27 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.roles.NOTCONFIGURED;
+package org.incode.eurocommercial.contactapp.module.role.seed;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class TogglzModuleAdminRole extends AbstractRoleAndPermissionsFixtureScript {
+public class ContactAppSuperadminRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "isis-module-togglz-admin";
+    public static final String ROLE_NAME = "contactapp-superadmin-role";
 
-    public TogglzModuleAdminRole() {
-        super(ROLE_NAME, "Admin access to feature toggle");
+    public ContactAppSuperadminRoleAndPermissions() {
+        super(ROLE_NAME, "Full access to the ContactApp");
     }
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        // no Isis permissions required.
-        // dummy called required in order to set up the role.
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                new String[]{});
-    }
+                "org.incode.eurocommercial.contactapp"
+                );
 
+    }
 }

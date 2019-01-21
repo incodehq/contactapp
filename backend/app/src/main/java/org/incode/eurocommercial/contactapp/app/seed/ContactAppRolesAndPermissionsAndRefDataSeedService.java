@@ -27,10 +27,10 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.contactapp.module.country.seed.CountryRefData;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppSuperadminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppAdminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppReadOnlyRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppSuperadminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.users.AdminUser;
 import org.incode.eurocommercial.contactapp.dom.seed.users.LockIsisModuleSecurityAdminUser;
 import org.incode.eurocommercial.contactapp.dom.seed.users.ReaderUser;
