@@ -16,7 +16,6 @@
  */
 package org.incode.eurocommercial.contactapp.dom.number;
 
-import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.FluentIterable;
@@ -26,7 +25,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
-import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,

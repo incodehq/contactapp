@@ -47,7 +47,7 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
-import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;

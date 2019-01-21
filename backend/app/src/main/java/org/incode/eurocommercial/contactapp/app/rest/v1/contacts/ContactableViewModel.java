@@ -34,7 +34,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.incode.eurocommercial.contactapp.app.rest.ViewModelWithUnderlying;
 import org.incode.eurocommercial.contactapp.app.rest.v1.number.ContactNumberViewModel;
 import org.incode.eurocommercial.contactapp.app.rest.v1.role.ContactRoleViewModel;
-import org.incode.eurocommercial.contactapp.dom.contactable.ContactableEntity;
+import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;

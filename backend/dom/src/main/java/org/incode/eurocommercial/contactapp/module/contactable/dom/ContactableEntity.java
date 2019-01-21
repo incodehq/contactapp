@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.contactable;
+package org.incode.eurocommercial.contactapp.module.contactable.dom;
 
 import java.util.List;
 import java.util.Set;
