@@ -27,6 +27,8 @@ import org.apache.isis.applib.ModuleAbstract;
 
 import org.isisaddons.module.security.SecurityModule;
 
+import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
+
 @XmlRootElement(name = "module")
 public class ContactAppAppModule extends ModuleAbstract {
 
