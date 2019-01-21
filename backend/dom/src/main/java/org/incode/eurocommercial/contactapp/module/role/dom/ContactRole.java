@@ -54,7 +54,7 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
+import org.incode.eurocommercial.contactapp.module.base.dom.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;

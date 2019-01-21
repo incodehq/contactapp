@@ -60,7 +60,7 @@ import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberRepos
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 import org.incode.eurocommercial.contactapp.module.role.dom.ContactRoleRepository;
-import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
+import org.incode.eurocommercial.contactapp.module.base.dom.StringUtil;
 
 import lombok.Getter;
 import lombok.Setter;
