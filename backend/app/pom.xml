@@ -79,23 +79,6 @@
             <artifactId>contactapp-dom</artifactId>
         </dependency>
 
-<!--
-        <dependency>
-            <groupId>org.apache.isis.core</groupId>
-            <artifactId>isis-core-metamodel</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.isisaddons.module.fakedata</groupId>
-            <artifactId>isis-module-fakedata-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
--->
-
 
         <dependency>
             <groupId>org.apache.isis.core</groupId>

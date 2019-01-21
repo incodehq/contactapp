@@ -25,6 +25,7 @@ import com.google.common.collect.Sets;
 import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
 
+import org.isisaddons.module.docx.DocxModule;
 import org.isisaddons.module.security.SecurityModule;
 
 import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
@@ -34,7 +35,11 @@ public class ContactAppAppModule extends ModuleAbstract {
 
     @Override
     public Set<Module> getDependencies() {
-        return Sets.newHashSet(new ContactAppDomainModule(), new SecurityModule());
+        return Sets.newHashSet(
+                new ContactAppDomainModule(),
+                new DocxModule(),
+                new SecurityModule()
+        );
     }
 
     @Override public Set<Class<?>> getAdditionalServices() {
