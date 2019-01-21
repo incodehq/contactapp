@@ -23,7 +23,7 @@
         <groupId>org.incode</groupId>
         <artifactId>incode-parent</artifactId>
         <!-- NB: also update incode-platform.version property below. -->
-        <version>1.16.2.20181013-1017-b9a0574e</version>
+        <version>1.17.0</version>
         <relativePath/>
     </parent>
 
@@ -40,9 +40,9 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.16.2.20180921-0633-408d6647</isis.version>
+        <isis.version>1.17.0</isis.version>
 
-        <incode-platform.version>1.16.2</incode-platform.version>
+        <incode-platform.version>1.17.0</incode-platform.version>
         <isis-metamodel-paraname8.version>${incode-platform.version}</isis-metamodel-paraname8.version>
 
         <isis-module-audit.version>${incode-platform.version}</isis-module-audit.version>
