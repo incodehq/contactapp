@@ -18,7 +18,7 @@ package org.incode.eurocommercial.contactapp.app;
 
 import org.apache.isis.applib.AppManifestAbstract2;
 
-import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.contactapp.app.fixture.scenarios.DemoFixture;
 
 public class ContactAppAppManifestWithFixtures extends AppManifestAbstract2
 {

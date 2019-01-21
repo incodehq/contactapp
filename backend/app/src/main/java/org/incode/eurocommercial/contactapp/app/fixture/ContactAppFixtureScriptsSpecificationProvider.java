@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.fixture;
+package org.incode.eurocommercial.contactapp.app.fixture;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -22,7 +22,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.fixturespec.FixtureScriptsSpecification;
 import org.apache.isis.applib.services.fixturespec.FixtureScriptsSpecificationProvider;
 
-import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.contactapp.app.fixture.scenarios.DemoFixture;
 
 /**
  * Specifies where to find fixtures, and other settings.

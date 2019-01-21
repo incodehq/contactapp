@@ -28,7 +28,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.contactapp.app.fixture.scenarios.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;

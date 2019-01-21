@@ -45,7 +45,7 @@ import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
 import org.incode.eurocommercial.contactapp.module.role.dom.ContactRole;
 import org.incode.eurocommercial.contactapp.module.role.dom.ContactRoleRepository;
-import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.contactapp.app.fixture.scenarios.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;

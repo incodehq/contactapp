@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.fixture.scenarios.demo;
+package org.incode.eurocommercial.contactapp.app.fixture.scenarios;
 
 import java.net.URL;
 import java.util.List;

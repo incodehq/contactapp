@@ -32,7 +32,7 @@ import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEn
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
-import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
+import org.incode.eurocommercial.contactapp.app.fixture.scenarios.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;
 
 import static org.assertj.core.api.Assertions.assertThat;

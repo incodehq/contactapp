@@ -32,7 +32,7 @@ import org.apache.isis.core.runtime.system.context.IsisContext;
 
 import org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
-import org.incode.eurocommercial.contactapp.fixture.ContactAppTearDown;
+import org.incode.eurocommercial.contactapp.app.fixture.ContactAppTearDown;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY
