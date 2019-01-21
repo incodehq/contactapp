@@ -14,15 +14,12 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.number;
+package org.incode.eurocommercial.contactapp.module.number.dom;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
-
-import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
-import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

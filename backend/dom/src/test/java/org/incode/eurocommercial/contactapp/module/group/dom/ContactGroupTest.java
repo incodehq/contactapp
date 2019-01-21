@@ -14,12 +14,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.group;
+package org.incode.eurocommercial.contactapp.module.group.dom;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
