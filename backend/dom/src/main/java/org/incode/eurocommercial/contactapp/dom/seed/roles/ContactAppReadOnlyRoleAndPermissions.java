@@ -22,7 +22,7 @@ import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFix
 
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
-import org.incode.eurocommercial.contactapp.dom.country.Country;
+import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ordering.ContactGroupOrderingViewModel;
 import org.incode.eurocommercial.contactapp.dom.group.ordering.ContactGroup_fixDisplayOrder;

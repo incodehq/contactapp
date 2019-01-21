@@ -27,9 +27,7 @@ import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-import org.incode.eurocommercial.contactapp.dom.country.Country;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 
 @Mixin
 public class Country_contactGroups {

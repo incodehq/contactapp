@@ -33,7 +33,7 @@ import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
-import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
+import org.incode.eurocommercial.contactapp.module.country.dom.CountryRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;

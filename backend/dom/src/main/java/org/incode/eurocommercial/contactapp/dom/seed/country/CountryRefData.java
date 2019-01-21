@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
+import org.incode.eurocommercial.contactapp.module.country.dom.CountryRepository;
 
 public class CountryRefData extends FixtureScript {
 

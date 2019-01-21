@@ -62,7 +62,7 @@ import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
-import org.incode.eurocommercial.contactapp.dom.country.Country;
+import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 import org.incode.eurocommercial.contactapp.dom.util.StringUtil;

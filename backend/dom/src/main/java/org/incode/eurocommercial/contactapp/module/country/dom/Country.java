@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.country;
+package org.incode.eurocommercial.contactapp.module.country.dom;
 
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
@@ -53,7 +53,7 @@ import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
         @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.country.Country "
+                        + "FROM org.incode.eurocommercial.contactapp.module.country.dom.Country "
                         + "WHERE name == :name ")
 })
 @Unique(name = "Country_name_UNQ", members = { "name" })

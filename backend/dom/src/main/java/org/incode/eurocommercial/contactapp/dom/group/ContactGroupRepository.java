@@ -25,7 +25,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
-import org.incode.eurocommercial.contactapp.dom.country.Country;
+import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,
