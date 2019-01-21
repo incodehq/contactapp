@@ -27,6 +27,14 @@ import org.apache.isis.applib.ModuleAbstract;
 
 import org.isisaddons.module.excel.ExcelModule;
 
+import org.incode.eurocommercial.contactapp.module.base.ContactAppBaseModule;
+import org.incode.eurocommercial.contactapp.module.contactable.ContactAppContactableModule;
+import org.incode.eurocommercial.contactapp.module.contacts.ContactAppContactModule;
+import org.incode.eurocommercial.contactapp.module.country.ContactAppCountryModule;
+import org.incode.eurocommercial.contactapp.module.group.ContactAppGroupModule;
+import org.incode.eurocommercial.contactapp.module.number.ContactAppNumberModule;
+import org.incode.eurocommercial.contactapp.module.role.ContactAppRoleModule;
+import org.incode.eurocommercial.contactapp.module.user.ContactAppUserModule;
 import org.incode.module.settings.SettingsModule;
 
 @XmlRootElement(name = "module")
@@ -34,7 +42,18 @@ public class ContactAppDomainModule extends ModuleAbstract {
 
     @Override
     public Set<Module> getDependencies() {
-        return Sets.newHashSet(new ExcelModule(), new SettingsModule());
+        return Sets.newHashSet(
+                new ContactAppBaseModule(),
+                new ContactAppContactableModule(),
+                new ContactAppContactModule(),
+                new ContactAppCountryModule(),
+                new ContactAppGroupModule(),
+                new ContactAppNumberModule(),
+                new ContactAppRoleModule(),
+                new ContactAppUserModule(),
+                new ExcelModule(),
+                new SettingsModule()
+        );
     }
 
     public static class MaxLength {
