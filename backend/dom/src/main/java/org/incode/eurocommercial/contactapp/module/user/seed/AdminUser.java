@@ -14,29 +14,28 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.users;
+package org.incode.eurocommercial.contactapp.module.user.seed;
 
 import java.util.Arrays;
 
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
-import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
 import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppSuperadminRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppAdminRoleAndPermissions;
 
-public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
+public class AdminUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "superadmin";
+    public static final String USER_NAME = "admin";
     private static final String PASSWORD = "pass";
 
-    public SuperadminUser() {
+    public AdminUser() {
         super(USER_NAME, PASSWORD, null,
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
-                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
-                        ContactAppSuperadminRoleAndPermissions.ROLE_NAME,
+//                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME
+                        ContactAppAdminRoleAndPermissions.ROLE_NAME,
                         ApacheIsisRoleAndPermissions.ROLE_NAME
 
                         // configured by not required by any user:

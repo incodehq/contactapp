@@ -14,29 +14,43 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.users;
+package org.incode.eurocommercial.contactapp.module.user.seed;
 
 import java.util.Arrays;
 
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
 import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppReadOnlyRoleAndPermissions;
+import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppSuperadminRoleAndPermissions;
 
-public class ReaderUser extends AbstractUserAndRolesFixtureScript {
+public class SuperadminUser extends AbstractUserAndRolesFixtureScript {
 
-    public static final String USER_NAME = "reader";
+    public static final String USER_NAME = "superadmin";
     private static final String PASSWORD = "pass";
 
-    public ReaderUser() {
+    public SuperadminUser() {
         super(USER_NAME, PASSWORD, null,
                 GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(
-                        ContactAppReadOnlyRoleAndPermissions.ROLE_NAME,
+                        IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
+                        ContactAppSuperadminRoleAndPermissions.ROLE_NAME,
                         ApacheIsisRoleAndPermissions.ROLE_NAME
-                    ));
+
+                        // configured by not required by any user:
+                        //,SettingsModuleRoleAndPermissions.ROLE_NAME
+                        //,ContactAppFixtureServiceRoleAndPermissions.ROLE_NAME
+
+                        // not configured:
+                        //,TogglzModuleAdminRole.ROLE_NAME
+                        //,AuditModuleRoleAndPermissions.ROLE_NAME
+                        //,CommandModuleRoleAndPermissions.ROLE_NAME
+                        //,SessionLoggerModuleRoleAndPermissions.ROLE_NAME
+                        //,PublishingModuleRoleAndPermissions.ROLE_NAME
+                        //,TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
+                ));
     }
 
 

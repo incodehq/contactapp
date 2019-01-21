@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.seed.users;
+package org.incode.eurocommercial.contactapp.module.user.seed;
 
 import javax.inject.Inject;
 

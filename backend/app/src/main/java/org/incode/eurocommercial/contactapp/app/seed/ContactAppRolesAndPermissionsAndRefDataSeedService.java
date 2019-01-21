@@ -31,10 +31,10 @@ import org.incode.eurocommercial.contactapp.module.role.seed.ApacheIsisRoleAndPe
 import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppAdminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppReadOnlyRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.module.role.seed.ContactAppSuperadminRoleAndPermissions;
-import org.incode.eurocommercial.contactapp.dom.seed.users.AdminUser;
-import org.incode.eurocommercial.contactapp.dom.seed.users.LockIsisModuleSecurityAdminUser;
-import org.incode.eurocommercial.contactapp.dom.seed.users.ReaderUser;
-import org.incode.eurocommercial.contactapp.dom.seed.users.SuperadminUser;
+import org.incode.eurocommercial.contactapp.module.user.seed.AdminUser;
+import org.incode.eurocommercial.contactapp.module.user.seed.LockIsisModuleSecurityAdminUser;
+import org.incode.eurocommercial.contactapp.module.user.seed.ReaderUser;
+import org.incode.eurocommercial.contactapp.module.user.seed.SuperadminUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
