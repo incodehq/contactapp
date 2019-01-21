@@ -29,8 +29,8 @@ import org.apache.isis.applib.services.xactn.TransactionService;
 
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;

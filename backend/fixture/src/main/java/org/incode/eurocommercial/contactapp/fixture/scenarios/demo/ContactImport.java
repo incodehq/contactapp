@@ -26,8 +26,8 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.module.country.dom.CountryRepository;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
 
 import lombok.Getter;

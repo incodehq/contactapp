@@ -33,7 +33,7 @@ import org.apache.isis.applib.services.metamodel.MetaModelService;
 
 import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 

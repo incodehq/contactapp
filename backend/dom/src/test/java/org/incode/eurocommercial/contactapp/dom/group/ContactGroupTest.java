@@ -19,6 +19,8 @@ package org.incode.eurocommercial.contactapp.dom.group;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactGroupTest {

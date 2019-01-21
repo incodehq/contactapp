@@ -28,7 +28,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
-import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
+import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 
 @DomainService(
         nature = NatureOfService.DOMAIN,

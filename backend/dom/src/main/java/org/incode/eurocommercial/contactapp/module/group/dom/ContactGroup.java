@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.group;
+package org.incode.eurocommercial.contactapp.module.group.dom;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -76,17 +76,17 @@ import lombok.Setter;
         @Query(
                 name = "findByCountry", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.group.ContactGroup "
+                        + "FROM org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup "
                         + "WHERE country == :country "),
         @Query(
                 name = "findByCountryAndName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.group.ContactGroup "
+                        + "FROM org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup "
                         + "WHERE country == :country && name == :name "),
         @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.group.ContactGroup "
+                        + "FROM org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup "
                         + "WHERE name.matches(:regex) "),
 })
 @Unique(name = "ContactGroup_displayNumber_UNQ", members = { "displayOrder" })
