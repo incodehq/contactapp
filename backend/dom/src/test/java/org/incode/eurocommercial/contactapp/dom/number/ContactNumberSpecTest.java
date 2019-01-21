@@ -19,6 +19,8 @@ package org.incode.eurocommercial.contactapp.dom.number;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberSpec;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactNumberSpecTest {

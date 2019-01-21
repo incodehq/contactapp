@@ -21,12 +21,11 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import org.apache.isis.applib.services.i18n.TranslationService;
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract3;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.number;
+package org.incode.eurocommercial.contactapp.module.number.dom;
 
 import java.util.Set;
 

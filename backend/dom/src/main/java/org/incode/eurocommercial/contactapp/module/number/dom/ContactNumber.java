@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.number;
+package org.incode.eurocommercial.contactapp.module.number.dom;
 
 import java.util.Set;
 
@@ -66,13 +66,13 @@ import lombok.Setter;
         @Query(
                 name = "findByOwnerAndNumber", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.number.ContactNumber "
+                        + "FROM org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber "
                         + "WHERE owner == :owner "
                         + "   && number == :number "),
         @Query(
                 name = "findByNumber", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.number.ContactNumber "
+                        + "FROM org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber "
                         + "WHERE number == :number ")
 })
 @Unique(name = "ContactNumber_owner_number_UNQ", members = { "owner", "number" })

@@ -24,7 +24,7 @@ import com.google.common.base.Function;
 import org.apache.isis.applib.DomainObjectContainer;
 
 import org.incode.eurocommercial.contactapp.app.rest.ViewModelWithUnderlying;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 
 public class ContactNumberViewModel extends ViewModelWithUnderlying<ContactNumber> {
 

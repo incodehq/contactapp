@@ -61,10 +61,10 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.schema.utils.jaxbadapters.PersistentEntityAdapter;
 
 import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberRepository;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberSpec;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
 import org.incode.eurocommercial.contactapp.dom.util.StringUtil;
 
 import lombok.Getter;

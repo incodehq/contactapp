@@ -21,6 +21,9 @@ import org.junit.Test;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactNumberTest {

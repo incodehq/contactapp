@@ -36,7 +36,7 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
 import org.incode.eurocommercial.contactapp.module.country.dom.CountryRepository;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberType;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberType;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;
 import org.incode.eurocommercial.contactapp.integtests.tests.ContactAppIntegTest;

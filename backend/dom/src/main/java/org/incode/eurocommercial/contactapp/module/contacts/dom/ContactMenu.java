@@ -33,8 +33,8 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.incode.eurocommercial.contactapp.module.contactable.dom.ContactableEntity;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumberSpec;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumberSpec;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRoleRepository;
 

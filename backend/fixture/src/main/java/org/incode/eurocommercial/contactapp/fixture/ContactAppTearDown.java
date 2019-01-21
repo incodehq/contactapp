@@ -24,7 +24,7 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.module.country.dom.Country;
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroup;
-import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
+import org.incode.eurocommercial.contactapp.module.number.dom.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.role.ContactRole;
 
 public class ContactAppTearDown extends FixtureScript {
