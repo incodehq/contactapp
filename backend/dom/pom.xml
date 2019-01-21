@@ -148,8 +148,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.isisaddons.module.settings</groupId>
-            <artifactId>isis-module-settings-dom</artifactId>
+            <groupId>org.incode.module.settings</groupId>
+            <artifactId>incode-module-settings-dom</artifactId>
         </dependency>
 
         <dependency>
@@ -182,6 +182,7 @@
             <artifactId>isis-wicket-gmap3-cpt</artifactId>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.incode.module.commchannel</groupId>
             <artifactId>incode-module-commchannel-dom</artifactId>
@@ -191,6 +192,7 @@
             <groupId>org.incode.module.note</groupId>
             <artifactId>incode-module-note-dom</artifactId>
         </dependency>
+-->
 
     </dependencies>
 

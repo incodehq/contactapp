@@ -34,7 +34,7 @@ public class ContactAppAppManifest extends AppManifestAbstract {
             ,ContactAppAppModule.class       // ContactAppRolesAndPermissionsSeedService (requires security module)
 
             ,org.isisaddons.module.excel.ExcelModule.class // to run fixtures
-            ,org.isisaddons.module.settings.SettingsModule.class // used by ContactAppUserSettingsThemeProvider
+            ,org.incode.module.settings.SettingsModule.class // used by ContactAppUserSettingsThemeProvider
             ,org.isisaddons.module.security.SecurityModule.class
 
             // not required at the moment...

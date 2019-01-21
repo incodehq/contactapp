@@ -29,7 +29,9 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
+import org.incode.module.settings.dom.jdo.UserSettingJdo;
+
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class ContactAppUserSettingContributions {
 

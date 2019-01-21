@@ -33,7 +33,7 @@ public class SettingsModuleRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.isisaddons.module.settings");
+                "org.incode.module.settings");
     }
 
 }

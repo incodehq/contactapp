@@ -21,10 +21,10 @@ import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
 import org.apache.isis.core.runtime.system.session.IsisSessionFactory;
 
-import org.isisaddons.module.settings.dom.UserSetting;
-import org.isisaddons.module.settings.dom.UserSettingsService;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+import org.incode.module.settings.dom.UserSetting;
+import org.incode.module.settings.dom.UserSettingsService;
+import org.incode.module.settings.dom.UserSettingsServiceRW;
+import org.incode.module.settings.dom.jdo.UserSettingJdo;
 
 import de.agilecoders.wicket.core.settings.ActiveThemeProvider;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;

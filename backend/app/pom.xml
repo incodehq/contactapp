@@ -129,8 +129,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.isisaddons.module.settings</groupId>
-            <artifactId>isis-module-settings-dom</artifactId>
+            <groupId>org.incode.module.settings</groupId>
+            <artifactId>incode-module-settings-dom</artifactId>
         </dependency>
 
         <dependency>
