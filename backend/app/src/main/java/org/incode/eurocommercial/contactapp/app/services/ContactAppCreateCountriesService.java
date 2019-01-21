@@ -29,7 +29,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import org.incode.eurocommercial.contactapp.dom.seed.country.CountryRefData;
+import org.incode.eurocommercial.contactapp.module.country.seed.CountryRefData;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY

@@ -26,7 +26,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import org.incode.eurocommercial.contactapp.dom.seed.country.CountryRefData;
+import org.incode.eurocommercial.contactapp.module.country.seed.CountryRefData;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ApacheIsisRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppAdminRoleAndPermissions;
 import org.incode.eurocommercial.contactapp.dom.seed.roles.ContactAppReadOnlyRoleAndPermissions;
