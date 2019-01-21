@@ -14,16 +14,16 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.fixture.dom.country;
+package org.incode.eurocommercial.contactapp.module.number.fixture;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-public class CountryTearDown extends FixtureScript {
+public class ContactNumberTearDown extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        isisJdoSupport.executeUpdate("delete from \"Country\"");
+        isisJdoSupport.executeUpdate("delete from \"ContactNumber\"");
     }
 
     @javax.inject.Inject

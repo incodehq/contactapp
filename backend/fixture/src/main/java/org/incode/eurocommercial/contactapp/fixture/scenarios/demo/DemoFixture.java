@@ -29,12 +29,12 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
+import org.incode.eurocommercial.contactapp.module.contact.fixture.ContactTearDown;
 import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
-import org.incode.eurocommercial.contactapp.fixture.dom.contact.ContactTearDown;
-import org.incode.eurocommercial.contactapp.fixture.dom.country.CountryTearDown;
-import org.incode.eurocommercial.contactapp.fixture.dom.group.ContactGroupTearDown;
-import org.incode.eurocommercial.contactapp.fixture.dom.number.ContactNumberTearDown;
-import org.incode.eurocommercial.contactapp.fixture.dom.role.ContactRoleTearDown;
+import org.incode.eurocommercial.contactapp.module.country.fixture.CountryTearDown;
+import org.incode.eurocommercial.contactapp.module.group.fixture.ContactGroupTearDown;
+import org.incode.eurocommercial.contactapp.module.number.fixture.ContactNumberTearDown;
+import org.incode.eurocommercial.contactapp.module.role.fixture.ContactRoleTearDown;
 
 import lombok.Getter;
 
