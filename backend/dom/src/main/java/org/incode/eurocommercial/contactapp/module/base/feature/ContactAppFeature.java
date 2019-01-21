@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom;
+package org.incode.eurocommercial.contactapp.module.base.feature;
 
 import org.togglz.core.annotation.EnabledByDefault;
 import org.togglz.core.annotation.Label;
