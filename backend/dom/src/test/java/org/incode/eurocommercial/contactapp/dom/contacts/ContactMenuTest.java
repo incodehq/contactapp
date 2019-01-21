@@ -19,6 +19,8 @@ package org.incode.eurocommercial.contactapp.dom.contacts;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
+
 import static org.junit.Assert.assertEquals;
 
 public class ContactMenuTest {

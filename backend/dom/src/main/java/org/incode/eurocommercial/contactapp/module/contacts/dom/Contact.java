@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.contacts;
+package org.incode.eurocommercial.contactapp.module.contacts.dom;
 
 import java.util.List;
 import java.util.SortedSet;
@@ -71,22 +71,22 @@ import lombok.Setter;
         @Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "FROM org.incode.eurocommercial.contactapp.module.contacts.dom.Contact "
                         + "WHERE name.matches(:regex) "),
         @Query(
                 name = "findByCompany", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "FROM org.incode.eurocommercial.contactapp.module.contacts.dom.Contact "
                         + "WHERE company.matches(:regex) "),
         @Query(
                 name = "findByEmail", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "FROM org.incode.eurocommercial.contactapp.module.contacts.dom.Contact "
                         + "WHERE email.matches(:regex) "),
         @Query(
                 name = "listOrphanedContacts", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM org.incode.eurocommercial.contactapp.dom.contacts.Contact "
+                        + "FROM org.incode.eurocommercial.contactapp.module.contacts.dom.Contact "
                         + "WHERE contactRoles.isEmpty() ")
 })
 @DomainObject(

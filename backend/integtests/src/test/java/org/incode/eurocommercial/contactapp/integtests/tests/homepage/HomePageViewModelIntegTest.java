@@ -36,7 +36,7 @@ import org.isisaddons.module.fakedata.dom.FakeDataService;
 
 import org.incode.eurocommercial.contactapp.app.services.homepage.HomePageService;
 import org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.country.CountryRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;

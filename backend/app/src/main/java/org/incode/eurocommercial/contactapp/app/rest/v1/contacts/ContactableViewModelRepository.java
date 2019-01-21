@@ -27,7 +27,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 
 @DomainService(

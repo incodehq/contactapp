@@ -20,8 +20,8 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
 import org.incode.eurocommercial.contactapp.dom.country.Country;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ordering.ContactGroupOrderingViewModel;

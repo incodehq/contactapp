@@ -44,8 +44,8 @@ import org.isisaddons.module.docx.dom.DocxService;
 import org.isisaddons.module.docx.dom.LoadTemplateException;
 import org.isisaddons.module.docx.dom.MergeException;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 
 //@DomainService ... REMOVED FOR NOW.
 @DomainServiceLayout(

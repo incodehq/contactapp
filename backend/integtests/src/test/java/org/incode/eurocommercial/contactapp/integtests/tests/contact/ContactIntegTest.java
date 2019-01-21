@@ -36,9 +36,9 @@ import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import org.isisaddons.module.fakedata.dom.FakeDataService;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactMenu;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactMenu;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroup;
 import org.incode.eurocommercial.contactapp.dom.group.ContactGroupRepository;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;

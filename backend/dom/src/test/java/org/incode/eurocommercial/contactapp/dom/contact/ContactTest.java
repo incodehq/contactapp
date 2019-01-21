@@ -19,7 +19,7 @@ package org.incode.eurocommercial.contactapp.dom.contact;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ContactTest {

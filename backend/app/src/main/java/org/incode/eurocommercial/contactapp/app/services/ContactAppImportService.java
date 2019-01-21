@@ -35,7 +35,7 @@ import org.apache.isis.core.runtime.system.context.IsisContext;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.ContactImport;
 
 @DomainService(

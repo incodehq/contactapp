@@ -31,7 +31,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.core.runtime.system.context.IsisContext;
 
 import org.incode.eurocommercial.contactapp.app.services.homepage.HomePageViewModel;
-import org.incode.eurocommercial.contactapp.dom.contacts.ContactRepository;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepository;
 import org.incode.eurocommercial.contactapp.fixture.ContactAppTearDown;
 
 @DomainService(

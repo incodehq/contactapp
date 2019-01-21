@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.dom.contacts;
+package org.incode.eurocommercial.contactapp.module.contacts.dom;
 
 import java.util.List;
 import java.util.SortedSet;

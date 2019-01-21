@@ -27,7 +27,7 @@ import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumber;
 import org.incode.eurocommercial.contactapp.dom.number.ContactNumberRepository;
 import org.incode.eurocommercial.contactapp.fixture.scenarios.demo.DemoFixture;

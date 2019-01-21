@@ -29,7 +29,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.excel.dom.ExcelFixture;
 
-import org.incode.eurocommercial.contactapp.dom.contacts.Contact;
+import org.incode.eurocommercial.contactapp.module.contacts.dom.Contact;
 import org.incode.eurocommercial.contactapp.fixture.dom.contact.ContactTearDown;
 import org.incode.eurocommercial.contactapp.fixture.dom.country.CountryTearDown;
 import org.incode.eurocommercial.contactapp.fixture.dom.group.ContactGroupTearDown;
