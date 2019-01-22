@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package org.incode.eurocommercial.contactapp.app;
+package org.incode.eurocommercial.contactapp.integtests.tests.homepage;
 
 import java.util.Set;
 
@@ -25,26 +25,14 @@ import com.google.common.collect.Sets;
 import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
 
-import org.isisaddons.module.docx.DocxModule;
-import org.isisaddons.module.security.SecurityModule;
+import org.isisaddons.module.fakedata.FakeDataModule;
 
-import org.incode.eurocommercial.contactapp.module.ContactAppDomainModule;
+import org.incode.eurocommercial.contactapp.app.ContactAppAppModule;
 
 @XmlRootElement(name = "module")
-public class ContactAppAppModule extends ModuleAbstract {
+public class ContactAppAppIntegTestModule extends ModuleAbstract {
 
-    @Override
-    public Set<Module> getDependencies() {
-        return Sets.newHashSet(
-                new ContactAppDomainModule(),
-                new DocxModule(),
-                new SecurityModule()
-        );
-    }
-
-    @Override public Set<Class<?>> getAdditionalServices() {
-        return Sets.newHashSet(
-                org.isisaddons.module.security.dom.password.PasswordEncryptionServiceUsingJBcrypt.class
-        );
+    @Override public Set<Module> getDependencies() {
+        return Sets.newHashSet(new ContactAppAppModule(), new FakeDataModule());
     }
 }

@@ -20,7 +20,7 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-import org.incode.eurocommercial.contactapp.dom.ContactAppDomainModule;
+import org.incode.eurocommercial.contactapp.module.ContactAppDomainModule;
 
 public class ContactAppAdminRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 

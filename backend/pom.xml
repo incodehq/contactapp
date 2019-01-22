@@ -53,10 +53,6 @@
 
         <lombok.version>1.16.10</lombok.version>
 
-<!--
-        <assertj-core.version>3.3.0</assertj-core.version>
--->
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -66,7 +62,6 @@
     <modules>
         <module>app</module>
         <module>dom</module>
-        <module>integtests</module>
         <module>webapp</module>
     </modules>
 
@@ -96,11 +91,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>contactapp-dom</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>contactapp-integtests</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -226,19 +216,6 @@
                 <version>${incode-platform.version}</version>
             </dependency>
 
-<!--
-            <dependency>
-                <groupId>org.incode.module.commchannel</groupId>
-                <artifactId>incode-module-commchannel-dom</artifactId>
-                <version>${incode-platform.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.incode.module.note</groupId>
-                <artifactId>incode-module-note-dom</artifactId>
-                <version>${incode-platform.version}</version>
-            </dependency>
--->
 
         </dependencies>
     </dependencyManagement>
