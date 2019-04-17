@@ -31,4 +31,29 @@
         <module>backend</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>docker-deploy</id>
+            <activation>
+                <property>
+                    <name>docker-deploy</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- disable deploy for *this* parent pom, but not for child module -->
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <modules>
+                <module>backend/webapp</module>
+            </modules>
+        </profile>
+    </profiles>
+
 </project>
