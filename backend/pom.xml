@@ -23,13 +23,13 @@
         <groupId>org.incode</groupId>
         <artifactId>incode-parent</artifactId>
         <!-- NB: also update incode-platform.version property below. -->
-        <version>1.17.0</version>
+        <version>1.17.0.20190305-1828-b0e9bc8d</version>
         <relativePath/>
     </parent>
 
     <groupId>org.incode.app</groupId>
     <artifactId>contactapp</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <name>Incode App ContactApp</name>
 
@@ -40,9 +40,11 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.17.0</isis.version>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <isis.version>1.17.0.20190207-2036-bccfeda5</isis.version>
 
-        <incode-platform.version>1.17.0</incode-platform.version>
+        <!-- NB: also update the parent of this pom.  -->
+        <incode-platform.version>1.17.0.20190305-1828-b0e9bc8d</incode-platform.version>
         <isis-metamodel-paraname8.version>${incode-platform.version}</isis-metamodel-paraname8.version>
 
         <incode-module-note.version>1.15.1.1</incode-module-note.version>
@@ -58,6 +60,39 @@
 
         <warName>contacts</warName>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <pomElements>
+                        <dependencyManagement>resolve</dependencyManagement>
+                        <dependencies>resolve</dependencies>
+                    </pomElements>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <modules>
         <module>app</module>
@@ -233,17 +268,17 @@
     <profiles>
         <!-- required to pull down parent pom (incode-parent) -->
         <profile>
-            <id>incode-cloud-maven</id>
+            <id>incode-work-maven</id>
             <activation>
                 <property>
-                    <name>!skip.incode-cloud-maven</name>
+                    <name>!skip.incode-work-maven</name>
                 </property>
             </activation>
             <repositories>
                 <repository>
-                    <id>incode-cloud-maven</id>
-                    <url>https://repo.incode.cloud/repository/maven/</url>
-                    <name>Incode Cloud (maven)</name>
+                    <id>incode-work-maven</id>
+                    <url>https://repo.incode.work</url>
+                    <name>Incode Work (maven)</name>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
@@ -259,14 +294,14 @@
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
-                    <id>incode-cloud-maven</id>
-                    <name>Incode Cloud (maven)</name>
+                    <id>incode-work-maven</id>
+                    <url>https://repo.incode.work</url>
+                    <name>Incode Work (maven)</name>
                     <releases>
                         <enabled>true</enabled>
                         <updatePolicy>never</updatePolicy>
                         <checksumPolicy>fail</checksumPolicy>
                     </releases>
-                    <url>https://repo.incode.cloud/repository/maven/</url>
                     <layout>default</layout>
                 </pluginRepository>
             </pluginRepositories>

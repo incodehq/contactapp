@@ -10,6 +10,7 @@ logs/
 .classpath
 .idea
 *.iml
+.flattened-pom.xml
 
 JArchitectOut/
 *.jdproj
