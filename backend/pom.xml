@@ -308,6 +308,17 @@
         </profile>
 
         <profile>
+            <id>default-modules</id>
+            <activation>
+                <property>
+                    <name>!docker-deploy</name>
+                </property>
+            </activation>
+            <modules>
+                <module>webapp</module>
+            </modules>
+        </profile>
+        <profile>
             <id>docker-deploy</id>
             <activation>
                 <property>
@@ -319,6 +330,7 @@
                     <plugin>
                         <!-- disable deploy for *this* parent pom, but not for child module -->
                         <artifactId>maven-deploy-plugin</artifactId>
+                        <version>${maven-deploy-plugin.version}</version>
                         <configuration>
                             <skip>true</skip>
                         </configuration>
