@@ -8,7 +8,7 @@ LABEL Vendor="Eurocommercial"
 EXPOSE 8080/tcp
 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
-COPY ${docker-plugin.resource.include} /usr/local/tomcat/webapps/ROOT/
+COPY ${docker-plugin.resource.include} /usr/local/tomcat/webapps/
 
 COPY entrypoint.sh /root/
 
