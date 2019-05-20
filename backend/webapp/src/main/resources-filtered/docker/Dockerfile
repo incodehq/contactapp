@@ -5,6 +5,8 @@ LABEL Vendor="Eurocommercial"
 # COPY backend/webapp/target/contacts.war /usr/local/tomcat/webapps/contacts.war
 # RUN cd /usr/local/tomcat/webapps/ && rm -rf ROOT && unzip contacts.war -d ROOT && rm contacts.war
 
+EXPOSE 8080/tcp
+
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY ${docker-plugin.resource.include} /usr/local/tomcat/webapps/ROOT/
 
