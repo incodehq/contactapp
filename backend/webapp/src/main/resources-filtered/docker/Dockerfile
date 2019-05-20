@@ -10,4 +10,6 @@ COPY ${docker-plugin.resource.include} /usr/local/tomcat/webapps/ROOT/
 
 COPY entrypoint.sh /root/
 
-ENTRYPOINT ["/root/entrypoint.sh"]
+#ENTRYPOINT ["/root/entrypoint.sh"]
+ENTRYPOINT ["sh", "/root/entrypoint.sh"]
+
