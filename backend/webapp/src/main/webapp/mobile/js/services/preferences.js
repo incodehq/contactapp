@@ -31,11 +31,11 @@ angular.module(
                 },
                 {
                     name: "Test",
-                    url: "http://10.0.0.5:8080"
+                    url: "http://localhost:8080"
                 },
                 {
                     name: "Production",
-                    url: "https://contacts.ecpnv.com"
+                    url: "http://localhost:8080" // default to the isis app that runs parallel in the container
                 }
             ],
             selected: window.localStorage[environmentKey]
