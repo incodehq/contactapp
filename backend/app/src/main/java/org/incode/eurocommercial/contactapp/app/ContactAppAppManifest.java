@@ -28,6 +28,8 @@ public class ContactAppAppManifest extends AppManifestAbstract2 {
     static final Builder BUILDER = Builder.forModule(
             new ContactAppAppModule()
     ).withAuthMechanism("shiro")
+            .withConfigurationPropertiesFile(
+                    ContactAppAppManifest.class, "isis-non-changing.properties")
             .withConfigurationProperty(
                 "isis.reflector.facets.include",
                 Joiner.on(',').join(
