@@ -1,40 +1,28 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-echo_error() {
-    echo "Usage: ${1} [-p property_string]"
-    echo "Property strings have the following format:"
-    echo "xxx.yyy.zzz=42;aaa.bbb=xyz;"
-    exit 1
-}
+echo "CATALINA_HOME = " $CATALINA_HOME
 
-# place of the overrides file
-overrides="/usr/local/tomcat/webapps/contacts/WEB-INF/overrides.properties"
-props=""
+mkdir -p /run/conf
 
-# Parsing opts
-while getopts ":p:" OPTION "$@" ; do
-    case $OPTION in
-        p)
-            props="$OPTARG"
-            ;;
-        \?)
-            echo "Unknown option: -$OPTARG"
-            echo_error ${0##*/}
-            ;;
-        :)
-            echo "Option requires an argument: -$OPTARG"
-            echo_error ${0##*/}
-            ;;
-    esac
-done
-
-# Parsing properties to overrides file
-if [ -n "$props" ]; then
-    echo > $overrides
-    for prop in $(echo $props | tr ";" "\n"); do
-        echo "$prop;" >> $overrides
-    done
+if [ -s /run/secrets/*.context.xml ];
+  then
+    # Symlink context.xml.
+    ln -sf /run/secrets/*.context.xml $CATALINA_HOME/conf/Catalina/localhost/ROOT.xml
+    echo "FOUND context.xml."
+  else
+    echo "context.xml NOT FOUND, proceeding with default config"
 fi
 
-# Uncomment if you wish to start a shell after running
-/usr/local/tomcat/bin/catalina.sh run & /usr/bin/env bash
+if [ -s /run/secrets/*.isis.properties ] && [ -s /run/secrets/*.logging.properties ];
+  then
+    # Symlink isis.properties.
+    ln -sf /run/secrets/*.isis.properties /run/conf/isis.properties
+    ln -sf /run/secrets/*.logging.properties /run/conf/logging.properties
+    echo "FOUND isis.properties and logging.properties."
+  else
+    echo "isis.properties and/or logging.properties NOT FOUND, proceeding with default config"
+fi
+
+# Running Catalina
+echo "Starting Catalina:"
+${SERVER_HOME}/bin/catalina.sh run

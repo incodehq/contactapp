@@ -175,6 +175,12 @@
             <artifactId>togglz-console</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901.jdbc4</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
@@ -182,7 +188,7 @@
             <id>resolving-conflicts</id>
             <activation>
                 <property>
-                    <name>!skip.resolving-conflicts</name>
+                    <name>|skip.resolving-conflicts</name>
                 </property>
             </activation>
             <dependencyManagement>
@@ -238,35 +244,6 @@
             </dependencyManagement>
         </profile>
 
-        <profile>
-            <id>sqlserver</id>
-            <activation>
-                <property>
-                    <name>sqlserver</name>
-                </property>
-            </activation>
-            <dependencies>
-                <!--
-                mvn install:install-file -Dfile=sqljdbc4.jar \
-                                         -DgroupId=com.microsoft.sqlserver \
-                                         -DartifactId=jdbc \
-                                         -Dversion=4.0 \
-                                         -Dpackaging=jar
-                 -->
-                <dependency>
-                    <groupId>com.microsoft.sqlserver</groupId>
-                    <artifactId>sqljdbc4</artifactId>
-                    <version>4.0</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                    <version>9.1-901.jdbc4</version>
-                </dependency>
-
-            </dependencies>
-        </profile>
     </profiles>
 
 </project>
