@@ -13,6 +13,17 @@ if [ -s /run/secrets/*.context.xml ];
     echo "context.xml NOT FOUND, proceeding with default config"
 fi
 
+
+if [ -s /run/secrets/*.shiro.ini ];
+  then
+    # Symlink shiro.ini.
+    ln -sf /run/secrets/*.shiro.ini /run/conf/shiro.ini
+    echo "FOUND shiro.ini."
+  else
+    echo "shiro.ini NOT FOUND, proceeding with default config"
+fi
+
+
 if [ -s /run/secrets/*.isis.properties ] && [ -s /run/secrets/*.logging.properties ];
   then
     # Symlink isis.properties.
