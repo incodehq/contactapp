@@ -31,9 +31,13 @@ import org.incode.eurocommercial.contactapp.module.contacts.dom.ContactRepositor
 import org.incode.eurocommercial.contactapp.module.group.dom.ContactGroupRepository;
 
 @DomainService(
-        nature = NatureOfService.VIEW_REST_ONLY
+        nature = NatureOfService.VIEW_REST_ONLY,
+        objectType = "ContactableViewModelRepository"
 )
 public class ContactableViewModelRepository {
+
+
+    //public String id() { return ""; }
 
     @Action(
             semantics = SemanticsOf.SAFE,
