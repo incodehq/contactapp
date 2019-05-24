@@ -80,7 +80,7 @@ import lombok.Setter;
         strategy = VersionStrategy.DATE_TIME,
         column = "version")
 @javax.jdo.annotations.Discriminator(
-        strategy = DiscriminatorStrategy.CLASS_NAME,
+        strategy = DiscriminatorStrategy.VALUE_MAP,
         column = "discriminator")
 @Queries({
 })

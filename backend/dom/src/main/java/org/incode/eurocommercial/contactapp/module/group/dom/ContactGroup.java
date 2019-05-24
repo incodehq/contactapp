@@ -23,6 +23,7 @@ import java.util.TreeSet;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Discriminator;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -72,6 +73,7 @@ import lombok.Setter;
 
 @PersistenceCapable
 @javax.jdo.annotations.Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
+@Discriminator("org.incode.eurocommercial.contactapp.dom.group.ContactGroup")
 @Queries({
         @Query(
                 name = "findByCountry", language = "JDOQL",
