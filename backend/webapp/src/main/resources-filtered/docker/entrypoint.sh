@@ -23,6 +23,14 @@ if [ -s /run/secrets/*.shiro.ini ];
     echo "shiro.ini NOT FOUND, proceeding with default config"
 fi
 
+if [ -s /run/secrets/*.setenv.sh ];
+  then
+    # Symlink setenv.sh.
+    ln -sf /run/secrets/*.setenv.sh $CATALINA_HOME/bin/setenv.sh
+    echo "FOUND setenv.sh."
+  else
+    echo "setenv.sh NOT FOUND, proceeding with default config"
+fi
 
 if [ -s /run/secrets/*.isis.properties ] && [ -s /run/secrets/*.logging.properties ];
   then
