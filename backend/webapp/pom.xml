@@ -41,7 +41,7 @@
         <docker-plugin.serverId>docker-hub</docker-plugin.serverId>
         <docker-plugin.registryUrl>https://index.docker.io/v1/</docker-plugin.registryUrl>
 
-        <jetty.version>9.4.3.v20170317</jetty.version>
+        <jetty.version>9.4.34.v20201102</jetty.version>
         <commons-lang.version>2.6</commons-lang.version>
         <commons-io.version>2.4</commons-io.version>
     </properties>
