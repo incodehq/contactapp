@@ -176,9 +176,9 @@
         </dependency>
 
         <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901.jdbc4</version>
+            <version>42.2.16</version>
         </dependency>
 
     </dependencies>
@@ -188,7 +188,7 @@
             <id>resolving-conflicts</id>
             <activation>
                 <property>
-                    <name>|skip.resolving-conflicts</name>
+                    <name>!skip.resolving-conflicts</name>
                 </property>
             </activation>
             <dependencyManagement>
@@ -242,6 +242,22 @@
 
                 </dependencies>
             </dependencyManagement>
+        </profile>
+
+        <profile>
+            <!-- makes o.a.i.WebServer available when running with IntelliJ IDEA -->
+            <id>isis-mavendeps-webapp</id>
+            <activation>
+                <property>
+                    <name>idea.version</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.isis.core</groupId>
+                    <artifactId>isis-core-webserver</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
 
     </profiles>
