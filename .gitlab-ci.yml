@@ -1,40 +1,57 @@
-image: maven:latest
+image: docker:git
+services:
+  - docker:dind
+#  - docker:19.03.12-dind
+
+stages:
+  - build
+  - deploy
 
 variables:
-  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Xms1024m -Xmx1024m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+  # This will suppress any download for dependencies and plugins or upload messages which would clutter the console log.
+  # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true -Xms1024m -Xmx1024m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+  # As of Maven 3.3.0 instead of this you may define these options in `.mvn/maven.config` so the same config is used
+  # when running from the command line.
+  # `installAtEnd` and `deployAtEnd`are only effective with recent version of the corresponding plugins.
+  MAVEN_CLI_OPTS: "--batch-mode  -s .m2/settings.xml --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
 
+# Cache downloaded dependencies and plugins between builds.
 cache:
   paths:
     - .m2/repository/
     - target/
 
-build:
+
+mvn-package:
+  image: maven:3.3.9-jdk-8
   stage: build
-  services:
-    - docker:19.03.12-dind
   script:
-    - DATE=$(date +%Y%m%d.%H%M)
+    - >
+      DATE=$(date +%Y%m%d.%H%M)
     - BRANCH=$(echo $CI_COMMIT_BRANCH | sed 's|^rel/||g' | sed 's|[.]|_|g' | awk -F/ '{ print $NF }')
     - GIT_SHORT_COMMIT=$(echo $CI_COMMIT_SHA | cut -c1-8)
     - IMAGE_TAG=$DATE.$BRANCH.$GIT_SHORT_COMMIT
     - echo "IMAGE_TAG = $IMAGE_TAG"
     - >
+      mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    paths:
+      - backend/webapp/target/contactapp.war
+      - backend/webapp/target/classes/docker/Dockerfile
+      - backend/webapp/target/classes/docker/entrypoint.sh
+
+release:
+  stage: deploy
+  services:
+    - docker:dind
+  script:
+    - >
+      cp backend/webapp/target/contactapp.war .
+    - cp backend/webapp/target/classes/docker/Dockerfile .
+    - cp backend/webapp/target/classes/docker/entrypoint.sh .
+    - >
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
     - docker push $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
-
-    #mvn $MAVEN_CLI_OPTS package
-
-#test:
-#  stage: test
-#  script:
-#    - mvn $MAVEN_CLI_OPTS test
-#
-#deploy:
-#  stage: deploy
-#  script:
-#    - mvn $MAVEN_CLI_OPTS deploy
-#  only:
-#    - master
