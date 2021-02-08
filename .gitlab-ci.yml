@@ -35,7 +35,7 @@ mvn-package:
     - IMAGE_TAG=$DATE.$BRANCH.$GIT_SHORT_COMMIT
     - echo "IMAGE_TAG = $IMAGE_TAG"
     - >
-      mvn $MAVEN_CLI_OPTS package
+      mvn $MAVEN_CLI_OPTS package -DskipTests
   artifacts:
     paths:
       - backend/webapp/target/contactapp.war
@@ -53,5 +53,5 @@ release:
     - cp backend/webapp/target/classes/docker/entrypoint.sh .
     - >
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
-    - docker push $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
+    - docker build -t $CI_REGISTRY:ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
+    - docker push $CI_REGISTRY:ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
