@@ -55,7 +55,7 @@ release:
     - cp backend/webapp/target/classes/docker/Dockerfile .
     - cp backend/webapp/target/classes/docker/entrypoint.sh .
     - >
-      IMAGE_TAG=$(cat $IMAGE_TAG)
+      IMAGE_TAG=$(cat IMAGE_TAG)
     - >
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY:ecpnv.devops/apps/contactapp/contactapp:$IMAGE_TAG
