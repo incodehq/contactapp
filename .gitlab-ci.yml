@@ -1,0 +1,40 @@
+image: maven:latest
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Xms1024m -Xmx1024m -XX:+TieredCompilation -XX:TieredStopAtLevel=1"
+
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  script:
+    - DATE=$(date +%Y%m%d.%H%M)
+    - BRANCH=$(echo $CI_COMMIT_BRANCH | sed 's|^rel/||g' | sed 's|[.]|_|g' | awk -F/ '{ print $NF }')
+    - GIT_SHORT_COMMIT=$(echo $CI_COMMIT_SHA | cut -c1-8)
+    - IMAGE_TAG=$DATE.$BRANCH.$GIT_SHORT_COMMIT
+    - echo "IMAGE_TAG = $IMAGE_TAG"
+    - >
+      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
+    - docker push $CI_REGISTRY/ecpnv.devops/apps/estatio/contactapp/contactapp:$IMAGE_TAG
+
+    #mvn $MAVEN_CLI_OPTS package
+
+#test:
+#  stage: test
+#  script:
+#    - mvn $MAVEN_CLI_OPTS test
+#
+#deploy:
+#  stage: deploy
+#  script:
+#    - mvn $MAVEN_CLI_OPTS deploy
+#  only:
+#    - master
