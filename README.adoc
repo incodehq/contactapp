@@ -1,3 +1,5 @@
+CAUTION: this repo has been archived; the current version now resides in a (private) gitlab repo.
+
 = Contact App
 
 image:https://img.shields.io/travis/incodehq/contactapp.svg["Build Status", link="https://travis-ci.org/incodehq/contactapp"]
